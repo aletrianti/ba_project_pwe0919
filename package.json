@@ -1,0 +1,32 @@
+{
+  "name": "ba_project_pwe0919",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "start": "concurrently \"tsc -w\" \"nodemon dist/js/app.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aletrianti/ba_project_pwe0919.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aletrianti/ba_project_pwe0919/issues"
+  },
+  "homepage": "https://github.com/aletrianti/ba_project_pwe0919#readme",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.9",
+    "@types/node": "^14.14.10",
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.6"
+  }
+}
