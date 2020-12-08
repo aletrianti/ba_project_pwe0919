@@ -1,4 +1,5 @@
 node_modules
+variables.env
 client/node_modules
 config/dbKeys.js
 config/sessionConfig.js
