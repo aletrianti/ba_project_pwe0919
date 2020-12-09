@@ -1,10 +1,12 @@
+const db = require('../dbKeys')
+
 const config = {
   client: 'mysql2',
   connection: {
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
+    host: db.host,
+    user: db.user,
+    password: db.password,
+    database: db.database,
     typeCast: (field, next) => {
       if (field.type == 'TINY' && field.length == 1) {
         let value = field.string()
@@ -17,6 +19,4 @@ const config = {
 
 const knex = require('knex')(config)
 
-// import Knex from "knex";
-// const knex = new Knex.Client(config);
 export default knex
