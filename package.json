@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.ts",
-    "engines": {
+  "engines": {
     "node": "14.15.0",
     "npm": "6.14.8"
   },
@@ -24,8 +24,14 @@
   "homepage": "https://github.com/aletrianti/ba_project_pwe0919#readme",
   "dependencies": {
     "axios": "^0.21.0",
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-jwt": "^6.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "knex": "^0.21.13",
+    "mysql2": "^2.2.5"
   },
   "devDependencies": {
     "@types/express": "^4.17.9",
