@@ -1,47 +1,47 @@
-const express = require('express')
-const path = require('path')
-const bodyParser = require('body-parser')
-const exjwt = require('express-jwt')
+const express = require('express');
+const path = require('path');
+const bodyParser = require('body-parser');
+const exjwt = require('express-jwt');
 
-var port = process.env.PORT || 4000
+var port = process.env.PORT || 4000;
 
-const app = express()
-require('dotenv').config({ path: 'variables.env' })
+const app = express();
+require('dotenv').config({ path: 'variables.env' });
 // Serve static files from the React app
-if (process.env.NODE_ENV !== 'development') app.use(express.static('client/build'))
+if (process.env.NODE_ENV !== 'development') app.use(express.static('client/build'));
 
 // If url used by user is HTTP, redirect to HTTPS
 if (process.env.NODE_ENV !== 'development') {
   app.use((req, res, next) => {
-    if (req.header('x-forwarded-proto') !== 'https') res.redirect(`https://${req.header('host')}${req.url}`)
-    else next()
-  })
+    if (req.header('x-forwarded-proto') !== 'https') res.redirect(`https://${req.header('host')}${req.url}`);
+    else next();
+  });
 }
-var router = express.Router()
+var router = express.Router();
 
 // Initialize body parser
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 export const jwtMW = exjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ['HS256'],
-})
+});
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
   if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET')
-    return res.status(200).json({})
+    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
+    return res.status(200).json({});
   }
-  next()
-})
+  next();
+});
 
 // Setup route controllers
-router.use('/auth', require('./src/routes/auth'))
+router.use('/auth', require('./src/routes/auth'));
 // Initialize routes
-app.use('/api', router)
+app.use('/api', router);
 
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file for prod.
@@ -53,5 +53,5 @@ app.use('/api', router)
 
 // Start app
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`)
-})
+  console.log(`Server is running on http://localhost:${port}`);
+});

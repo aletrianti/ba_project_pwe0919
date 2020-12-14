@@ -1,4 +1,4 @@
-const db = require('../dbKeys')
+const db = require('../dbKeys');
 
 const config = {
   client: 'mysql2',
@@ -9,14 +9,14 @@ const config = {
     database: db.database,
     typeCast: (field, next) => {
       if (field.type == 'TINY' && field.length == 1) {
-        let value = field.string()
-        return value ? value == '1' : null
+        let value = field.string();
+        return value ? value == '1' : null;
       }
-      return next()
+      return next();
     },
   },
-}
+};
 
-const knex = require('knex')(config)
+const knex = require('knex')(config);
 
-export default knex
+export default knex;
