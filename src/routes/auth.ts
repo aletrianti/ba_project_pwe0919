@@ -4,7 +4,7 @@ import knex from '../knex';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 // import { jwtMW } from '../..'
-import { Api, dateDB } from '../utils';
+import { Api, dateDB, generateRandomCode } from '../utils';
 
 var router = Router();
 router.post('/register-company', async (req: Request, res: Response, next) => {
@@ -17,6 +17,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
     const company = await knex('company').insert({
       name: companyName,
+      companyCode: generateRandomCode(10),
       createdAt: dateDB(),
       updatedAt: dateDB(),
     });
