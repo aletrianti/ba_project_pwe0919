@@ -9,11 +9,11 @@ export const dateDB = (d?: Date | string) => {
 };
 
 class _Api {
-  sendSuccess = <T>(req: Request, res: Response, data: T, options = {}) => {
+  sendSuccess = <T>(req: Request, res: Response, data: T) => {
     return res.status(200).json(data);
   };
 
-  sendError = (req: Request, res: Response, error, options = {}) => {
+  sendError = (req: Request, res: Response, error) => {
     const errObj = {
       type: error.name || 'error',
       message: error.message,
@@ -30,6 +30,18 @@ export function getAuthorizationToken(req: Request) {
   if (Authorization) {
     return Authorization.replace('Bearer ', '');
   }
+
+  throw new Error();
+}
+
+export function getUserIds(req: Request) {
+  const token = getAuthorizationToken(req);
+  const { userId, companyId } = jwt.verify(token, process.env.JWT_SECRET);
+  if (userId)
+    return {
+      userId,
+      companyId,
+    };
 
   throw new Error();
 }

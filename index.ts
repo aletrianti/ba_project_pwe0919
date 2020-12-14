@@ -40,6 +40,8 @@ app.use((req, res, next) => {
 
 // Setup route controllers
 router.use('/auth', require('./src/routes/auth'));
+router.use('/company', jwtMW, require('./src/routes/company'));
+router.use('/role', jwtMW, require('./src/routes/role'));
 // Initialize routes
 app.use('/api', router);
 
