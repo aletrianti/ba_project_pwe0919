@@ -6,7 +6,6 @@ import { updateUser } from '../controllers/user';
 import knex from '../knex';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-// import { jwtMW } from '../..'
 import { Api, dateDB, generateRandomCode, getUserIds } from '../utils';
 
 var router = Router();
@@ -97,7 +96,12 @@ router.post('/create-profile', async (req: Request, res: Response, next) => {
     const userToUpdate: IUser = await knex('user').where('email', email).first();
 
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
-    Api.sendSuccess<IUser>(req, res, updatedUser);
+
+    const signupUser = {
+      token: jwt.sign({ userId: updatedUser.ID, companyId: company }, process.env.JWT_SECRET),
+      user: updatedUser,
+    };
+    Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
     Api.sendError(req, res, err);
   }
