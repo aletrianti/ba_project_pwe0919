@@ -61,23 +61,15 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
   }
 });
 
-router.post('/register-employee', async (req: Request, res: Response, next) => {
+router.post('/register-employee', jwtMW, async (req: Request, res: Response, next) => {
   try {
-    const { companyCode, newUser, password }: INewEmployeeInput = req.body;
+    const { companyCode, newUser }: INewEmployeeInput = req.body;
 
     const company: ICompany = await knex('company').where('companyCode', companyCode).first();
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
     const createdUser = await knex('user').insert({
       email: newUser.email,
-      firstName: newUser.firstName,
-      lastName: newUser.lastName,
       companyId: Number(company.ID),
-      password: hashedPassword,
-      roleId: newUser.roleId,
-      departmentId: newUser.departmentId,
       active: true,
       isAdmin: false,
       createdAt: dateDB(),
@@ -86,12 +78,7 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     const user: IUser = await knex('user').where('ID', createdUser).first();
 
-    const signupUser = {
-      token: jwt.sign({ userId: user.ID, companyId: company.ID }, process.env.JWT_SECRET),
-      user: user,
-    };
-
-    Api.sendSuccess<ISignUpUser>(req, res, signupUser);
+    Api.sendSuccess<IUser>(req, res, user);
   } catch (err) {
     Api.sendError(req, res, err);
   }

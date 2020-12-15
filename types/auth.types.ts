@@ -2,20 +2,21 @@ export interface IUser {
   ID: number;
   companyId: number;
   email: string;
-  password: string;
-  roleId: number;
+  password?: string;
+  roleId?: number;
   active: boolean;
   isAdmin: boolean;
   createdAt: string;
   updatedAt: string;
-  firstName: string;
-  lastName: string;
-  birthday: string;
-  atCompanySince: string;
-  description: string;
-  contactLink: string;
-  coverImageUrl: string;
-  profileImageUrl: string;
+  firstName?: string;
+  lastName?: string;
+  birthday?: string;
+  atCompanySince?: string;
+  description?: string;
+  contactLink?: string;
+  coverImageUrl?: string;
+  profileImageUrl?: string;
+  assignedBuddy?: number;
 }
 
 export interface ISignUpUser {
@@ -43,12 +44,7 @@ export interface INewEmployeeInput {
   companyCode: string;
   newUser: {
     email: string;
-    firstName: string;
-    lastName: string;
-    roleId?: number;
-    departmentId?: number;
   };
-  password: string;
 }
 
 export interface ILoginInput {
