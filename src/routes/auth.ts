@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
 import { ILoginInput, INewCompanyInput, INewEmployeeInput, ISignUpUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
+import { updateUser } from '../controllers/user';
 import knex from '../knex';
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
@@ -63,14 +64,16 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
 router.post('/register-employee', jwtMW, async (req: Request, res: Response, next) => {
   try {
-    const { companyCode, newUser }: INewEmployeeInput = req.body;
+    const { newUser }: INewEmployeeInput = req.body;
 
-    const company: ICompany = await knex('company').where('companyCode', companyCode).first();
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
 
     const createdUser = await knex('user').insert({
       email: newUser.email,
-      companyId: Number(company.ID),
-      active: true,
+      companyId: Number(companyId),
+      active: false,
       isAdmin: false,
       createdAt: dateDB(),
       updatedAt: dateDB(),
@@ -79,6 +82,36 @@ router.post('/register-employee', jwtMW, async (req: Request, res: Response, nex
     const user: IUser = await knex('user').where('ID', createdUser).first();
 
     Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/create-profile', async (req: Request, res: Response, next) => {
+  try {
+    const { companyCode, email, userData } = req.body;
+
+    const company: ICompany = await knex('company').where('companyCode', companyCode).first();
+    if (!company) throw Error(`Doesn't exist company with companyCode ${companyCode}`);
+
+    const userToUpdate: IUser = await knex('user').where('email', email).first();
+
+    const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
+    Api.sendSuccess<IUser>(req, res, updatedUser);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => {
+  try {
+    const { userToUpdate } = req.body;
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const updatedUser = await updateUser(userToUpdate, Number(userId));
+    Api.sendSuccess<IUser>(req, res, updatedUser);
   } catch (err) {
     Api.sendError(req, res, err);
   }

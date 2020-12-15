@@ -41,7 +41,6 @@ export interface INewCompanyInput {
 }
 
 export interface INewEmployeeInput {
-  companyCode: string;
   newUser: {
     email: string;
   };

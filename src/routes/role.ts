@@ -42,5 +42,17 @@ router.post('/', async (req: Request, res: Response, next) => {
     Api.sendError(req, res, err);
   }
 });
+router.get('/employees/:roleId', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const employeesByRole: IUser[] = await knex('user').where('roleId', Number(req.params.roleId));
+    Api.sendSuccess<IUser[]>(req, res, employeesByRole);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
 
 module.exports = router;
