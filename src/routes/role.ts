@@ -55,4 +55,8 @@ router.get('/employees/:roleId', async (req: Request, res: Response, next) => {
   }
 });
 
+// Add roles to category --> relation table
+// That route will take roleId and an array of CategoryID
+
+// Create categories first
 module.exports = router;
