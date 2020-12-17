@@ -9,10 +9,6 @@ interface FormSideBarProps {
 }
 
 class FormSideBar extends React.Component<FormSideBarProps> {
-    constructor(props: FormSideBarProps) {
-        super(props);
-    }
-
     render() {
         return (
             <div id="form__container">
