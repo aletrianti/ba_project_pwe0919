@@ -1,14 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import './App.scss';
 
 // import views
-import SignIn from './views/SignIn';
-import SignUp from './views/SignUp';
-import Dashboard from './views/Dashboard';
-import CompanyAndTeam from './views/CompanyAndTeam';
-import Documents from './views/Documents';
-import FAQs from './views/FAQs';
-import AdminPanel from './views/AdminPanel';
+import SignIn from './views/SignIn/SignIn';
+import SignUp from './views/SignUp/SignUp';
+import Dashboard from './views/Dashboard/Dashboard';
+import CompanyAndTeam from './views/CompanyAndTeam/CompanyAndTeam';
+import Documents from './views/Documents/Documents';
+import FAQs from './views/FAQs/FAQs';
+import AdminPanel from './views/AdminPanel/AdminPanel';
 
 // TODO: Add private routes and display AdminPanel only to admins
 const App = () => {

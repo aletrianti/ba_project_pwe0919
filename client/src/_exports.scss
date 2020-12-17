@@ -1,0 +1,10 @@
+@import './variables';
+
+// Export for tsx files
+:export {
+    primary: $primary;
+    text: $text;
+    white: $white;
+    primaryGrey: $primary-grey;
+    orangeAccent: $orange-accent;
+}

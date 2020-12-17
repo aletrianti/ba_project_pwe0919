@@ -1,0 +1,8 @@
+@import '../../../_variables';
+
+#initial-sidebar {
+    display: block;
+    height: 100vh;
+    width: 40%;
+    background: linear-gradient(162.32deg, $text 0%, rgba(2, 47, 64, 0) 101.04%), $primary;
+}
