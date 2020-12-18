@@ -1,0 +1,35 @@
+@import '../../../_variables';
+
+.regular-button__container {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn--dark-blue,
+    .btn--orange-accent {
+        font-weight: $bold;
+        padding: 7px 20px;
+        border-radius: 10px;
+        outline: none;
+        margin: 20px 20px 0 0;
+        font-size: $font-medium;
+        cursor: pointer;
+    }
+
+    .btn--dark-blue {
+        background-color: $white;
+        border: 1px solid $primary-grey;
+        color: $text;
+    }
+
+    .btn--orange-accent {
+        background-color: $orange-accent;
+        border: 1px solid $orange-accent;
+        color: $text;
+    }
+
+    .btn--long {
+        width: 100%;
+        padding: 10px 20px;
+        margin: 20px 0 0 0;
+    }
+}

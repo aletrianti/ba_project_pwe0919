@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { createStore } from '@reduxjs/toolkit';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { Provider } from 'react-redux';
-import reducers from './reducers/index.reducers';
+import reducers from './store/reducers/index.reducers';
 
 // create store
 const store = createStore(

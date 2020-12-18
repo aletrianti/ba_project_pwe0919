@@ -1,5 +1,28 @@
-
+@import '../../../_variables';
 
 .input-field__container {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    label {
+        color: $text;
+        font-weight: $bold;
+        font-size: $font-medium;
+        margin-bottom: 5px;
+    }
+
+    .input-field__password-text {
+        font-size: $font-small;
+        color: $primary-grey;
+        font-style: italic;
+    }
+
+    input {
+        padding: 15px;
+        border-radius: 10px;
+        border: 2px solid $primary-grey;
+        margin: 5px 0 20px;
+        outline: none;
+    }
 }

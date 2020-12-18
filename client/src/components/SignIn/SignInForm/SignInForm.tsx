@@ -1,16 +1,20 @@
 import React from 'react';
+import InputField from '../../common/InputField/InputField';
+import Button from '../../common/Button/Button';
 import './SignInForm.scss';
 
 class SignInForm extends React.Component {
     render() {
         return (
-            <div className="form__container">
-                <h1 className="header--h1">Sign in</h1>
-
-                <form className="form">
-                    add inputs here
-                </form>
-            </div>
+            <form className="form">
+                <InputField name={'Email'}/>
+                <InputField name={'Password'} isPassword={true}/>
+                <Button
+                    btnText={'Sign in'}
+                    isRegular={false}
+                    isSingleBtn={true}
+                />
+            </form>
         );
     }
 }

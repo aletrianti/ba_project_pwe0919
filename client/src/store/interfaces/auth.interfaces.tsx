@@ -19,14 +19,22 @@ export interface IUser {
     profilePicture?: string
 }
 
-// interfaces for actions
-export interface IAuthAction {
+// Sign In
+export interface ISignInData {
+    email: string,
+    password: string
+}
+export interface ISignInAction {
     type: string,
-    payload: number
+    payload: ISignInData
 }
 
-// type for auth state
+// Auth
 export interface IAuth {
     isLoggedIn: boolean,
     userId?: number
+}
+export interface IAuthAction {
+    type: string,
+    payload: number
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import SignUpForm from '../../SignUp/SignUpForm/SignUpForm';
-import SignIn from '../../SignIn/SignIn';
+import SignInContainer from '../../SignIn/SignInContainer/SignInContainer';
 import './FormSideBar.scss';
 
 // declare interfaces for props
@@ -10,11 +10,13 @@ interface FormSideBarProps {
 
 class FormSideBar extends React.Component<FormSideBarProps> {
     render() {
+        const { viewName } = this.props;
+
         return (
             <div id="form__container">
                 {
-                    this.props.viewName === 'sign-up' ? (<SignUpForm/>) : 
-                    this.props.viewName === 'sign-in' ? (<SignIn/>) :
+                    viewName === 'sign-up' ? (<SignUpForm/>) : 
+                    viewName === 'sign-in' ? (<SignInContainer/>) :
                     null
                 }
             </div>
