@@ -1,7 +1,6 @@
 import React from 'react';
 import BackgroundSideBar from '../../components/common/BackgroundSideBar/BackgroundSideBar';
 import FormSideBar from '../../components/common/FormSideBar/FormSideBar';
-import './SignIn.scss';
 
 const SignIn = () => {
     return (

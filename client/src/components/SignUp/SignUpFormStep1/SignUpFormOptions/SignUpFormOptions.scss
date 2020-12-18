@@ -1,0 +1,35 @@
+@import '../../../../_variables';
+
+#sign-up__form__options {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 10px;
+
+    .radio-btn__container {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        .radio-btn {
+            display: block;
+            width: 16px;
+            height: 16px;
+            border: 1px solid $primary-grey;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        input {
+            opacity: 0;
+            height: 0;
+            width: 0;
+
+            &:checked + .radio-btn {
+                background: radial-gradient($primary 0%, $primary 40%, transparent 50%, transparent);;
+                border: 1px solid $primary;
+            }
+        }
+    }
+}
+

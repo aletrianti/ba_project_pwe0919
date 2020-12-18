@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
 @import '_variables';
 
 * {
@@ -14,14 +14,19 @@ body, button, a, input, textarea, select {
     font-family: 'Poppins', sans-serif;
 }
 
-.form__container {
+#sign-in__container,
+#sign-up__container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+}
+
+.form__container {
+    display: block;
     margin: 100px 25% 50px;
 
     .header--h1 {
         font-size: 70px;
-        font-weight: 700;
+        font-weight: $bold;
         margin-bottom: 20px;
     }
 }

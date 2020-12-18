@@ -6,7 +6,7 @@ import './SignInForm.scss';
 class SignInForm extends React.Component {
     render() {
         return (
-            <form className="form">
+            <form className="sign-in__form">
                 <InputField name={'Email'}/>
                 <InputField name={'Password'} isPassword={true}/>
                 <Button

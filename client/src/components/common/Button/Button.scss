@@ -3,28 +3,45 @@
 .regular-button__container {
     display: flex;
     justify-content: flex-end;
+    
 
     .btn--dark-blue,
     .btn--orange-accent {
+        margin: 20px 20px 0 0;
         font-weight: $bold;
         padding: 7px 20px;
         border-radius: 10px;
         outline: none;
-        margin: 20px 20px 0 0;
         font-size: $font-medium;
         cursor: pointer;
+        transition: all 0.1s ease;
     }
 
     .btn--dark-blue {
         background-color: $white;
-        border: 1px solid $primary-grey;
+        border: 2px solid $primary-grey;
         color: $text;
+    }
+    .btn--dark-blue:hover {
+        background-color: darken($white, 5%);
+    }
+    .btn--dark-blue:focus {
+        background-color: darken($white, 10%);
+        border: 2px solid $primary;
     }
 
     .btn--orange-accent {
         background-color: $orange-accent;
-        border: 1px solid $orange-accent;
+        border: 2px solid $orange-accent;
         color: $text;
+    }
+    .btn--orange-accent:hover {
+        background-color: darken($orange-accent, 5%);
+        border: 2px solid darken($orange-accent, 5%);
+    }
+    .btn--orange-accent:focus {
+        background-color: darken($orange-accent, 10%);
+        border: 2px solid darken($orange-accent, 10%);
     }
 
     .btn--long {

@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUpForm from '../../SignUp/SignUpForm/SignUpForm';
+import SignUpContainer from '../../SignUp/SignUpContainer/SignUpContainer';
 import SignInContainer from '../../SignIn/SignInContainer/SignInContainer';
 import './FormSideBar.scss';
 
@@ -15,7 +15,7 @@ class FormSideBar extends React.Component<FormSideBarProps> {
         return (
             <div id="form__container">
                 {
-                    viewName === 'sign-up' ? (<SignUpForm/>) : 
+                    viewName === 'sign-up' ? (<SignUpContainer/>) : 
                     viewName === 'sign-in' ? (<SignInContainer/>) :
                     null
                 }

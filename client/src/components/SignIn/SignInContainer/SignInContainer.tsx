@@ -2,16 +2,13 @@ import React from 'react';
 import SignInForm from '../SignInForm/SignInForm';
 import Button from '../../common/Button/Button';
 
-// styles
-import './SignInContainer.scss';
-
-
 class SignInContainer extends React.Component {
     render() {
         return (
             <div id="sign-in__wrapper">
                 <Button 
                     isLink={true}
+                    link={'/sign-up'}
                     btnText={'Sign up'}
                     isRegular={true}
                 />
