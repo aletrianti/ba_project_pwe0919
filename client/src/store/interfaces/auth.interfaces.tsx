@@ -1,29 +1,29 @@
 // auth interfaces
 
-// TBD
-export interface IUser {
-    id?: number,
-    email: string,
-    created?: boolean,
-    password?: string,
-    firstName?: string,
-    lastName?: string,
-    jobPosition?: string,
-    department?: string,
-    buddy?: string,
-    birthday?: string,
-    companyDate?: string,
-    description?: string,
-    contactLink?: string,
-    hasProfilePicture?: boolean,
-    profilePicture?: string
+// Sign In
+export interface IEmail {
+    email: string
 }
 
-// Sign In
+export interface IPassword {
+    password: string
+}
+
 export interface ISignInData {
     email: string,
     password: string
 }
+
+export interface IEmailAction {
+    type: string,
+    payload: IEmail
+}
+
+export interface IPasswordAction {
+    type: string,
+    payload: IPassword
+}
+
 export interface ISignInAction {
     type: string,
     payload: ISignInData
@@ -34,6 +34,7 @@ export interface IAuth {
     isLoggedIn: boolean,
     userId?: number
 }
+
 export interface IAuthAction {
     type: string,
     payload: number

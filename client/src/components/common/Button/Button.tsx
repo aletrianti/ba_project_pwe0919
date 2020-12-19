@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Button.scss';
 
+import {} from '../../../store/interfaces/auth.interfaces';
+
 interface ButtonProps {
     isLink?: boolean,
     link?: any,
@@ -12,7 +14,13 @@ interface ButtonProps {
 
 class Button extends React.Component<ButtonProps> {
     render() {
-        const { isLink, link, btnText, isRegular, isSingleBtn } = this.props;
+        const { 
+            isLink, 
+            link, 
+            btnText, 
+            isRegular, 
+            isSingleBtn
+        } = this.props;
 
         return (
             <div className="regular-button__container">

@@ -1,12 +1,47 @@
 // import actions
-import { SIGN_IN, SIGN_OUT } from '../actions/authActions/auth.types';
-import { ISignInAction, ISignInData, IAuthAction, IAuth } from '../interfaces/auth.interfaces';
+import { SIGN_IN, SIGN_OUT, STORE_EMAIL, STORE_PASSWORD } from '../actions/authActions/auth.types';
+import { 
+    IEmail, 
+    IEmailAction, 
+    IPassword, 
+    IPasswordAction, 
+    ISignInAction, 
+    ISignInData,
+    IAuth, 
+    IAuthAction 
+} from '../interfaces/auth.interfaces';
 
 // define default states
+const initialEmailState: IEmail = { email: '' };
+const initialPasswordState: IPassword = { password: '' };
 const initialSignInState: ISignInData = { email: '', password: '' };
 const initialAuthState: IAuth = { isLoggedIn: false }; // userId === null
 
 // create reducers
+export const storeEmailReducer = (state: IEmail = initialEmailState, action: IEmailAction) => {
+    switch(action.type) {
+        case STORE_EMAIL:
+            return {
+                ...state,
+                email: action.payload.email
+            }
+        default:
+            return state;
+    }
+}
+
+export const storePasswordReducer = (state: IPassword = initialPasswordState, action: IPasswordAction) => {
+    switch(action.type) {
+        case STORE_PASSWORD:
+            return {
+                ...state,
+                password: action.payload.password
+            }
+        default:
+            return state;
+    }
+}
+
 export const signInReducer = (state: ISignInData = initialSignInState, action: ISignInAction) => {
     switch (action.type) {
         case SIGN_IN:

@@ -1,5 +1,5 @@
 // import all reducers
-import {authReducer, signInReducer } from './auth.reducers';
+import { authReducer, signInReducer, storeEmailReducer, storePasswordReducer } from './auth.reducers';
 
 // import redux method
 import { combineReducers } from '@reduxjs/toolkit';
@@ -9,6 +9,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 const reducers: any = combineReducers({
     auth: authReducer,
     signIn: signInReducer,
+    email: storeEmailReducer,
+    password: storePasswordReducer
     // ...
 });
 

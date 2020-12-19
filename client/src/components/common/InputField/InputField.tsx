@@ -5,13 +5,16 @@ import './InputField.scss';
 interface InputFieldProps {
     name: string,
     isPassword?: boolean,
-    validateContent?: void
+    onchange: any
 }
-
 
 class InputField extends React.Component<InputFieldProps> {
     render() {
-        const { name, isPassword,  } = this.props;
+        const { name, isPassword, onchange } = this.props;
+
+        const handleOnChange = (event: any): void => {
+            onchange(event.target.value);
+        };
 
         return (
             <div className="input-field__container">
@@ -24,7 +27,7 @@ class InputField extends React.Component<InputFieldProps> {
                     placeholder={name} 
                     alt={name} 
                     name={"Input" + name}
-                    //onChange={validateContent}
+                    onChange={handleOnChange}
                 />
             </div>
         );
