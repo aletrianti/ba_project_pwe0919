@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react';
+import { AnyAction } from '@reduxjs/toolkit';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 import './SignInForm.scss';
@@ -6,29 +7,28 @@ import './SignInForm.scss';
 // import store
 import store from '../../../index';
 
-import { STORE_EMAIL, STORE_PASSWORD, SIGN_IN } from '../../../store/actions/authActions/auth.types';
+import { STORE_EMAIL, STORE_PASSWORD, SIGN_IN } from '../../../store/actions/auth/auth.types';
 import { 
     IEmail, 
     IPassword, 
-    IEmailAction, 
-    IPasswordAction, 
+    IStoreEmailAction, 
+    IStorePasswordAction, 
     ISignInData, 
     ISignInAction 
 } from '../../../store/interfaces/auth.interfaces';
-import { AnyAction } from '@reduxjs/toolkit';
 
 class SignInForm extends React.Component {
     render() {
         const storeEmail = (data: string): void => {
             const payload: IEmail = { email: data };
-            const action: IEmailAction = { type: STORE_EMAIL, payload };
+            const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
             store.dispatch(action);
         };
 
         const storePassword = (data: string): void => {
             const payload: IPassword = { password: data };
-            const action: IPasswordAction = { type: STORE_PASSWORD, payload };
+            const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
 
             store.dispatch(action);
         };

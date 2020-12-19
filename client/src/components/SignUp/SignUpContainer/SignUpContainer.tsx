@@ -1,5 +1,5 @@
 import React from 'react';
-import SignUpFormStep1 from '../SignUpFormStep1/SignUpFormStep1';
+import SignUpFormStart from '../SignUpFormStart/SignUpFormStart/SignUpFormStart';
 import Button from '../../common/Button/Button';
 
 class SignUpContainer extends React.Component {
@@ -16,7 +16,7 @@ class SignUpContainer extends React.Component {
                 <div className="form__container">
                     <h1 className="header--h1">Sign up</h1>
 
-                    <SignUpFormStep1 />
+                    <SignUpFormStart />
                 </div>
             </div>
         );

@@ -1,48 +1,51 @@
 // import actions
-import { SIGN_IN, SIGN_OUT, STORE_EMAIL, STORE_PASSWORD } from '../actions/authActions/auth.types';
+import { SIGN_IN, SIGN_OUT, STORE_EMAIL, STORE_PASSWORD } from '../actions/auth/auth.types';
 import { 
     IEmail, 
-    IEmailAction, 
+    IStoreEmailAction, 
     IPassword, 
-    IPasswordAction, 
+    IStorePasswordAction, 
     ISignInAction, 
     ISignInData,
     IAuth, 
-    IAuthAction 
+    IAuthUserAction 
 } from '../interfaces/auth.interfaces';
 
-// define default states
-const initialEmailState: IEmail = { email: '' };
-const initialPasswordState: IPassword = { password: '' };
-const initialSignInState: ISignInData = { email: '', password: '' };
-const initialAuthState: IAuth = { isLoggedIn: false }; // userId === null
-
 // create reducers
-export const storeEmailReducer = (state: IEmail = initialEmailState, action: IEmailAction) => {
+export const storeEmailReducer = (
+    state: IEmail = { email: '' }, 
+    action: IStoreEmailAction
+) => {
     switch(action.type) {
         case STORE_EMAIL:
             return {
                 ...state,
                 email: action.payload.email
-            }
+            };
         default:
             return state;
     }
 }
 
-export const storePasswordReducer = (state: IPassword = initialPasswordState, action: IPasswordAction) => {
+export const storePasswordReducer = (
+    state: IPassword = { password: '' }, 
+    action: IStorePasswordAction
+) => {
     switch(action.type) {
         case STORE_PASSWORD:
             return {
                 ...state,
                 password: action.payload.password
-            }
+            };
         default:
             return state;
     }
 }
 
-export const signInReducer = (state: ISignInData = initialSignInState, action: ISignInAction) => {
+export const signInReducer = (
+    state: ISignInData = { email: '', password: '' }, 
+    action: ISignInAction
+) => {
     switch (action.type) {
         case SIGN_IN:
             return {
@@ -55,7 +58,10 @@ export const signInReducer = (state: ISignInData = initialSignInState, action: I
     }
 }
 
-export const authReducer = (state: IAuth = initialAuthState, action: IAuthAction) => {
+export const authReducer = (
+    state: IAuth = { isLoggedIn: false }, // userId === null
+    action: IAuthUserAction
+) => {
     switch (action.type) {
         case SIGN_IN:
             return {
