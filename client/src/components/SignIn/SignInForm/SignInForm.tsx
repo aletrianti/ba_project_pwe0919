@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
 import './SignInForm.scss';
@@ -15,34 +15,37 @@ import {
     ISignInData, 
     ISignInAction 
 } from '../../../store/interfaces/auth.interfaces';
+import { AnyAction } from '@reduxjs/toolkit';
 
 class SignInForm extends React.Component {
     render() {
-        const storeEmail = (data: string) => {
+        const storeEmail = (data: string): void => {
             const payload: IEmail = { email: data };
             const action: IEmailAction = { type: STORE_EMAIL, payload };
 
             store.dispatch(action);
         };
 
-        const storePassword = (data: string) => {
+        const storePassword = (data: string): void => {
             const payload: IPassword = { password: data };
             const action: IPasswordAction = { type: STORE_PASSWORD, payload };
 
             store.dispatch(action);
         };
 
-        const signIn = (event: any) => {
+        const signIn = (event: FormEvent): void => {
             event.preventDefault();
-            
-            const email: string = store.getState().email.email;
-            const password: string = store.getState().password.password;
 
-            const payload: ISignInData = { email, password };
+            const state: AnyAction = store.getState();
+            
+            const payload: ISignInData = { 
+                email: state.email.email, 
+                password: state.password.password 
+            };
+            
             const action: ISignInAction = { type: SIGN_IN, payload };
 
             store.dispatch(action);
-
             // include validation, then send data to the backend if everything is okay
             // ...
         };
