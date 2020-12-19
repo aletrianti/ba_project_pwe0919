@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import './App.scss';
 
@@ -21,7 +20,10 @@ const App = () => {
             <Redirect to="/sign-in"/>
           </Route>
           <Route path="/sign-in" component={SignIn}/>
+
           <Route path="/sign-up" component={SignUp}/>
+          <Route path="/sign-up/:accountType/:currentStep" component={SignUp}/>
+
           <Route path="/dashboard" component={Dashboard}/>
           <Route path="/company-and-team" component={CompanyAndTeam}/>
           <Route path="/documents" component={Documents}/>

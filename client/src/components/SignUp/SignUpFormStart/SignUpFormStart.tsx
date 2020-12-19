@@ -1,17 +1,18 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import SignUpFormOptions from './SignUpFormOptions/SignUpFormOptions';
-import Button from '../../../common/Button/Button';
+import Button from '../../common/Button/Button';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 import './SignUpFormStart.scss';
 
 // import store
-import store from '../../../../index';
+import store from '../../../index';
 
-import { SET_ACCOUNT_TYPE } from '../../../../store/actions/signUpSteps/signUpSteps.types';
-import { IAccountType, ISetAccountTypeAction } from '../../../../store/interfaces/signUpSteps.interfaces';
+import { SET_ACCOUNT_TYPE } from '../../../store/actions/signUpSteps/signUpSteps.types';
+import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/signUpSteps.interfaces';
 
-import { goToNextStep } from '../../GoToNextStep';
+import { goToNextStep } from '../GoToNextStep';
 
-class SignUpFormStart extends React.Component {
+class SignUpFormStart extends React.Component<RouteComponentProps> {
     render() {
         const storeAccountType = (data: string) => {
             const payload: IAccountType = { accountType: data };
@@ -21,7 +22,7 @@ class SignUpFormStart extends React.Component {
         };
 
         return (
-            <form id="sign-up__form__step1" onSubmit={goToNextStep}>
+            <form id="sign-up__form__step1" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
                 <h2>I want to create a...*</h2>
 
                 <SignUpFormOptions onclick={(e: any) => storeAccountType(e)}/>
@@ -38,4 +39,4 @@ class SignUpFormStart extends React.Component {
     }
 }
 
-export default SignUpFormStart;
+export default withRouter(SignUpFormStart);

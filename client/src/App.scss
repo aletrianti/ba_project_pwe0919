@@ -20,13 +20,20 @@ body, button, a, input, textarea, select {
     flex-direction: row;
 }
 
-.form__container {
-    display: block;
-    margin: 100px 25% 50px;
+#sign-in__form__container,
+#sign-up__form__container {
+    height: 100vh;
+    width: 60%;
 
-    .header--h1 {
-        font-size: 70px;
-        font-weight: $bold;
-        margin-bottom: 20px;
+    .form__container {
+        display: block;
+        margin: 100px 25% 50px;
+    
+        .header--h1 {
+            font-size: 70px;
+            font-weight: $bold;
+            margin-bottom: 20px;
+        }
     }
 }
+
