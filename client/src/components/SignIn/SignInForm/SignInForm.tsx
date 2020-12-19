@@ -6,8 +6,15 @@ import './SignInForm.scss';
 // import store
 import store from '../../../index';
 
-import { STORE_EMAIL, STORE_PASSWORD } from '../../../store/actions/authActions/auth.types';
-import { IEmail, IPassword, IEmailAction, IPasswordAction } from '../../../store/interfaces/auth.interfaces';
+import { STORE_EMAIL, STORE_PASSWORD, SIGN_IN } from '../../../store/actions/authActions/auth.types';
+import { 
+    IEmail, 
+    IPassword, 
+    IEmailAction, 
+    IPasswordAction, 
+    ISignInData, 
+    ISignInAction 
+} from '../../../store/interfaces/auth.interfaces';
 
 class SignInForm extends React.Component {
     render() {
@@ -28,8 +35,16 @@ class SignInForm extends React.Component {
         const signIn = (event: any) => {
             event.preventDefault();
             
-            const state = store.getState();
-            console.log(state);
+            const email: string = store.getState().email.email;
+            const password: string = store.getState().password.password;
+
+            const payload: ISignInData = { email, password };
+            const action: ISignInAction = { type: SIGN_IN, payload };
+
+            store.dispatch(action);
+
+            // include validation, then send data to the backend if everything is okay
+            // ...
         };
 
         return (
