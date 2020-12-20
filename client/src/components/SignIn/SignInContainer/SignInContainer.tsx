@@ -7,10 +7,9 @@ class SignInContainer extends React.Component {
         return (
             <div id="sign-in__wrapper">
                 <Button 
-                    isLink={true}
+                    isSignUpOrSignInBtn={true}
                     link={'/sign-up'}
                     btnText={'Sign up'}
-                    isRegular={true}
                 />
 
                 <div className="form__container">

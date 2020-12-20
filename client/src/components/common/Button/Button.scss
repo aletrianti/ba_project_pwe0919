@@ -7,7 +7,7 @@
 
     .btn--dark-blue,
     .btn--orange-accent {
-        margin: 20px 20px 0 0;
+        margin: 20px 0 0 0;
         font-weight: $bold;
         padding: 7px 20px;
         border-radius: 10px;
@@ -15,6 +15,10 @@
         font-size: $font-medium;
         cursor: pointer;
         transition: all 0.1s ease;
+    }
+
+    .btn__sign {
+        margin-right: 20px;
     }
 
     .btn--dark-blue {

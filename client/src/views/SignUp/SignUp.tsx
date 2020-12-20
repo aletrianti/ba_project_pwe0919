@@ -5,6 +5,7 @@ import Button from '../../components/common/Button/Button';
 import SignUpFormStart from '../../components/SignUp/SignUpFormStart/SignUpFormStart';
 
 import FirstStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm';
+import SecondStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm';
 import FinalStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm';
 
 import FirstStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm';
@@ -26,10 +27,9 @@ class SignUp extends React.Component {
                 <div id="sign-up__form__container">
                     <div id="sign-up__wrapper">
                         <Button 
-                            isLink={true}
+                            isSignUpOrSignInBtn={true}
                             link={'/sign-in'}
                             btnText={'Sign in'}
-                            isRegular={true}
                         />
     
                         <div className="form__container">
@@ -40,17 +40,17 @@ class SignUp extends React.Component {
                                     accountType === 'employee' ? [
                                         currentStep === 1 ? 
                                             (<FirstStepEmployeeForm key={currentStep}/>) : 
-                                            (<FinalStepEmployeeForm key={currentStep}/>)
+                                            currentStep === 2 ?
+                                                (<SecondStepEmployeeForm key={currentStep}/>) :
+                                                (<FinalStepEmployeeForm key={currentStep}/>)
                                     ] : [
                                         currentStep === 1 ?
-                                            (<FirstStepCompanyForm key={currentStep}/>) : [
+                                            (<FirstStepCompanyForm key={currentStep}/>) : 
                                                 currentStep === 2 ? 
-                                                    (<SecondStepCompanyForm key={currentStep}/>) : [
+                                                    (<SecondStepCompanyForm key={currentStep}/>) : 
                                                         currentStep === 3 ?
                                                             (<ThirdStepCompanyForm key={currentStep}/>) : 
                                                             (<FinalStepCompanyForm key={currentStep}/>)
-                                                    ]
-                                            ]
                                     ]
                                 ] 
                             }
