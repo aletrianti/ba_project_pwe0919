@@ -10,11 +10,11 @@ import store from '../../../index';
 import { SET_ACCOUNT_TYPE } from '../../../store/actions/signUpSteps/signUpSteps.types';
 import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/signUpSteps.interfaces';
 
-import { goToNextStep } from '../GoToNextStep';
+import { goToNextStep } from '../ChangeFormStep';
 
 class SignUpFormStart extends React.Component<RouteComponentProps> {
     render() {
-        const storeAccountType = (data: string) => {
+        const storeAccountType = (data: string): void => {
             const payload: IAccountType = { accountType: data };
             const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
         

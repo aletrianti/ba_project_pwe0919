@@ -1,32 +1,30 @@
 import React, { FormEvent } from 'react';
 import './FirstStepEmployeeForm.scss';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import InputField from '../../../common/InputField/InputField';
-import Button from '../../../common/Button/Button';
+import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 
-class FirstStepEmployeeForm extends React.Component {
+import { goToNextStep } from '../../ChangeFormStep';
+
+class FirstStepEmployeeForm extends React.Component<RouteComponentProps> {
     render() {
         const storeCompanyCode = (data: string): void => {
-
+            
         }
 
-        const signUp = (event: FormEvent): void => {
-
-        };
+        //const signUp = (event: FormEvent): void => {};
 
         return (
-            <form className="sign-up__form" onSubmit={signUp}>
+            <form className="sign-up__form" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
                 <InputField name={'Paste your code*'} onchange={(e: any) => storeCompanyCode(e)} />
 
                 <span className="required-field__span">* required field</span>
 
-                <div className="sign-up__form__btns">
-                    <Button btnText={'Back'} isRegular={true} />
-                    <Button btnText={'Confirm'} isRegular={false} />
-                </div>
+                <SignUpFormButtons />
             </form>
         );
     }
 }
 
-export default FirstStepEmployeeForm;
+export default withRouter(FirstStepEmployeeForm);

@@ -48,9 +48,9 @@ class SignUp extends React.Component {
                                             (<FirstStepCompanyForm key={currentStep}/>) : 
                                                 currentStep === 2 ? 
                                                     (<SecondStepCompanyForm key={currentStep}/>) : 
-                                                        currentStep === 3 ?
-                                                            (<ThirdStepCompanyForm key={currentStep}/>) : 
-                                                            (<FinalStepCompanyForm key={currentStep}/>)
+                                                    currentStep === 3 ?
+                                                        (<ThirdStepCompanyForm key={currentStep}/>) : 
+                                                        (<FinalStepCompanyForm key={currentStep}/>)
                                     ]
                                 ] 
                             }

@@ -1,10 +1,13 @@
 import React, { FormEvent } from 'react';
 import './SecondStepEmployeeForm.scss';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import InputField from '../../../common/InputField/InputField';
-import Button from '../../../common/Button/Button';
+import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 
-class SecondStepEmployeeForm extends React.Component {
+import { goToNextStep } from '../../ChangeFormStep';
+
+class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
     render() {
         const storeFirstName = (data: string): void => {
 
@@ -22,12 +25,10 @@ class SecondStepEmployeeForm extends React.Component {
 
         }
 
-        const signUp = (event: FormEvent): void => {
-
-        };
+        //const signUp = (event: FormEvent): void => {};
 
         return (
-            <form className="sign-up__form" onSubmit={signUp}>
+            <form className="sign-up__form" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
                 <div id="sign-up__form__name">
                     <InputField name={'First name*'} onchange={(e: any) => storeFirstName(e)} />
                     <InputField name={'Last name*'} onchange={(e: any) => storeLastName(e)} />
@@ -37,14 +38,11 @@ class SecondStepEmployeeForm extends React.Component {
 
                 <span className="required-field__span">* required field</span>
 
-                <div className="sign-up__form__btns">
-                    <Button btnText={'Back'} isRegular={true} />
-                    <Button btnText={'Confirm'} isRegular={false} />
-                </div>
+                <SignUpFormButtons />
             </form>
         );
     }
 }
 
-export default SecondStepEmployeeForm;
+export default withRouter(SecondStepEmployeeForm);
 
