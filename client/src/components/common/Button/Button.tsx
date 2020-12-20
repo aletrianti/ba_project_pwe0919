@@ -12,7 +12,9 @@ interface ButtonProps {
     btnText: string,
     isRegular?: boolean,
     isSingleBtn?: boolean,
-    isBackFormBtn?: boolean
+    isBackFormBtn?: boolean,
+    isInviteBtn?: boolean,
+    inviteEmployee?: any
 }
 
 class Button extends React.Component<ButtonProps & RouteComponentProps> {
@@ -25,6 +27,8 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
             isRegular, 
             isSingleBtn,
             isBackFormBtn,
+            isInviteBtn,
+            inviteEmployee,
             history
         } = this.props;
 
@@ -53,10 +57,19 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
                             (
                                 <button className="btn--dark-blue" key={btnText}>{ btnText }</button>
                             )
-                        ] : 
-                        (
-                            <button className="btn--orange-accent">{ btnText }</button>
-                        )
+                        ] :[ 
+                            !isInviteBtn ?
+                            (
+                                <button className="btn--orange-accent" key={btnText}>{ btnText }</button>
+                            ) :
+                            (
+                                <button 
+                                    className="btn--orange-accent btn__invite" 
+                                    onClick={inviteEmployee}
+                                    key={btnText}
+                                >{ btnText }</button>
+                            )
+                        ]
                 }
             </div>
         );

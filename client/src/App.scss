@@ -35,6 +35,20 @@ body, button, a, input, textarea, select {
             margin-bottom: 20px;
         }
 
+        .sign-up__form__subheaders {
+            margin: 0 0 20px;
+
+            .sign-up__form__subheader,
+            .sign-up__form__subheader__small {
+                font-size: $font-medium;
+                font-weight: $thin;
+                font-style: italic;
+            }
+            .sign-up__form__subheader__small {
+                font-size: $font-tiny;
+            }
+        }
+
         .required-field__span {
             font-weight: $thick;
             font-size: $font-small;

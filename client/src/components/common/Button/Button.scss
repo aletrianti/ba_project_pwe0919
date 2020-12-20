@@ -3,7 +3,6 @@
 .regular-button__container {
     display: flex;
     justify-content: flex-end;
-    
 
     .btn--dark-blue,
     .btn--orange-accent {
@@ -52,5 +51,10 @@
         width: 100%;
         padding: 10px 20px;
         margin: 20px 0 0 0;
+    }
+    
+    .btn__invite {
+        margin-top: 15px;
+        padding: 12px 20px;
     }
 }

@@ -29,4 +29,7 @@
     input:focus {
         border: 2px solid $primary;
     }
+    input.input-field__invite-users {
+        margin-right: 20px;
+    }
 }

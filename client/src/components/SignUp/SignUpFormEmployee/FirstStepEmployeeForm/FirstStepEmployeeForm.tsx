@@ -13,7 +13,7 @@ class FirstStepEmployeeForm extends React.Component<RouteComponentProps> {
             
         }
 
-        //const signUp = (event: FormEvent): void => {};
+        //const saveCode = (event: FormEvent): void => {};
 
         return (
             <form className="sign-up__form" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
