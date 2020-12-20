@@ -69,6 +69,36 @@ body, button, a, input, textarea, select {
     .app__container__topbar-and-content {
         display: flex;
         flex-direction: column;
+
+        .app__content {
+            padding: 10px 35px;
+        }
+    }
+}
+
+#dashboard__content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 50px 0;
+}
+
+#dashboard__first-half {
+    width: 60%;
+    margin: 0 20px;
+    
+    .section__link {
+        cursor: default;
+    }
+}
+
+#dashboard__second-half {
+    width: 40%;
+    margin: 0 20px;
+    
+    .section__link {
+        cursor: default;
     }
 }
 

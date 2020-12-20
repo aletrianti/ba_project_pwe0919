@@ -26,7 +26,7 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
                         <HomeIcon fontSize={'large'} />
                         <span className="menu__link__text">Dashboard</span>
                     </Link>
-                    <Link to={'/company-and-team'} className={activeSection === 'company-and-team' ? "menu__link menu__link--active" : "menu__link"}>
+                    <Link to={'/company-and-team/team'} className={activeSection === 'company-and-team' ? "menu__link menu__link--active" : "menu__link"}>
                         <PeopleIcon fontSize={'large'} />
                         <span className="menu__link__text">Company & Team</span>
                     </Link>
@@ -38,7 +38,7 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
                         <HelpIcon fontSize={'large'} />
                         <span className="menu__link__text">FAQs</span>
                     </Link>
-                    <Link to={'/admin-panel'} className={activeSection === 'admin-panel' ? "menu__link menu__link--active" : "menu__link"}>
+                    <Link to={'/admin-panel/users'} className={activeSection === 'admin-panel' ? "menu__link menu__link--active" : "menu__link"}>
                         <BuildIcon fontSize={'large'} />
                         <span className="menu__link__text">Admin panel</span>
                     </Link>
