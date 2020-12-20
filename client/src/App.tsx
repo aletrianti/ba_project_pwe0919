@@ -26,14 +26,12 @@ const App = () => {
 
           <Route path="/dashboard" component={Dashboard}/>
 
-          <Route path="/company-and-team" component={CompanyAndTeam}/>
           <Route path="/company-and-team/:section" component={CompanyAndTeam}/>
 
           <Route path="/documents" component={Documents}/>
           
           <Route path="/faqs" component={FAQs}/>
 
-          <Route path="/admin-panel" component={AdminPanel}/>
           <Route path="/admin-panel/:section" component={AdminPanel}/>
         </Switch>
       </BrowserRouter>
