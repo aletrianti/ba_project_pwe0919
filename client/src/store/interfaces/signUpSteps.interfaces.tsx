@@ -10,6 +10,46 @@ export interface IChangeStepAction {
     payload: ISignUpStep
 }
 
+export interface IFirstName {
+    firstName: string
+}
+export interface IStoreFirstNameAction {
+    type: string,
+    payload: IFirstName
+}
+
+export interface ILastName {
+    lastName: string
+}
+export interface IStoreLastNameAction {
+    type: string,
+    payload: ILastName
+}
+
+export interface IEmail {
+    email: string
+}
+export interface IStoreEmailAction {
+    type: string,
+    payload: IEmail
+}
+
+export interface IPassword {
+    password: string
+}
+export interface IStorePasswordAction {
+    type: string,
+    payload: IPassword
+}
+
+export interface IRole {
+    role: string
+}
+export interface IStoreRoleAction {
+    type: string,
+    payload: IRole
+}
+
 // Step 0 (general step)
 export interface IAccountType {
     accountType: string

@@ -7,7 +7,7 @@ import { IOptions } from '../../../store/interfaces/selectOptions.interfaces';
 interface SelectFieldProps {
     name: string,
     options: IOptions,
-    onchange: any
+    onchange?: any
 }
 
 class SelectField extends React.Component<SelectFieldProps> {
@@ -24,7 +24,7 @@ class SelectField extends React.Component<SelectFieldProps> {
 
                 <select name={`Select[${name}]`} >
                     {
-                        options.list.map((option, i) => <option value={option.value}>{option.label}</option>)
+                        options.list.map((option, i) => <option value={option.value} key={i}>{option.label}</option>)
                     }
                 </select>
             </div>

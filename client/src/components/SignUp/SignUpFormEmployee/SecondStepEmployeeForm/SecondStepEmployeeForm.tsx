@@ -7,34 +7,71 @@ import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 
 import { goToNextStep } from '../../ChangeFormStep';
 
+// import store
+import store from '../../../../index';
+
+import { 
+    STORE_FIRST_NAME,
+    STORE_LAST_NAME,
+    STORE_EMAIL,
+    STORE_PASSWORD,
+    STORE_EMPLOYEE_ACCOUNT 
+} from '../../../../store/actions/signUpSteps/signUpSteps.types';
+import { 
+    IFirstName, IStoreFirstNameAction,
+    ILastName, IStoreLastNameAction,
+    IEmail, IStoreEmailAction,
+    IPassword, IStorePasswordAction,
+    IEmployeeAccount, IStoreEmployeeAccountAction 
+} from '../../../../store/interfaces/signUpSteps.interfaces';
+
 class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
     render() {
         const storeFirstName = (data: string): void => {
+            const payload: IFirstName = { firstName: data };
+            const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
 
+            store.dispatch(action);
         }
 
         const storeLastName = (data: string): void => {
+            const payload: ILastName = { lastName: data };
+            const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
 
+            store.dispatch(action);
         }
 
         const storeEmail = (data: string): void => {
+            const payload: IEmail = { email: data };
+            const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
+            store.dispatch(action);
         }
 
         const storePassword = (data: string): void => {
+            const payload: IPassword = { password: data };
+            const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
 
+            store.dispatch(action);
         }
 
-        //const signUp = (event: FormEvent): void => {};
+        const signUp = (event: FormEvent, history = this.props.history): void => {
+            // dispatch action
+
+            // add validation
+            // add http request
+
+            return goToNextStep(event, history);
+        };
 
         return (
-            <form className="sign-up__form" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
+            <form className="sign-up__form" onSubmit={signUp}>
                 <div id="sign-up__form__name">
-                    <InputField name={'First name*'} onchange={(e: any) => storeFirstName(e)} />
-                    <InputField name={'Last name*'} onchange={(e: any) => storeLastName(e)} />
+                    <InputField name={'First name*'} onchange={storeFirstName} />
+                    <InputField name={'Last name*'} onchange={storeLastName} />
                 </div>
-                <InputField name={'Email*'} onchange={(e: any) => storeEmail(e)} />
-                <InputField name={'Password*'} onchange={(e: any) => storePassword(e)} />
+                <InputField name={'Email*'} onchange={storeEmail} />
+                <InputField name={'Password*'} onchange={storePassword} />
 
                 <span className="required-field__span">* required field</span>
 

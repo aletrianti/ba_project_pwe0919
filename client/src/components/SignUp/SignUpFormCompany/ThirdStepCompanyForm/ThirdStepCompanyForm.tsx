@@ -8,18 +8,32 @@ import Button from '../../../common/Button/Button';
 
 import { goToNextStep } from '../../ChangeFormStep';
 
+// import store
+import store from '../../../../index';
+
+import { STORE_INVITED_EMPLOYEE } from '../../../../store/actions/signUpSteps/signUpSteps.types';
+import { IInvitedEmployee, IStoreInvitedEmployeeAction } from '../../../../store/interfaces/signUpSteps.interfaces';
+
 class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
     private invitedUsers: string[] = [];
     
     render() {
         const storeInvitedEmployee = (data: string): void => {
-            
+            const payload: IInvitedEmployee = { email: data };
+            const action: IStoreInvitedEmployeeAction = { type: STORE_INVITED_EMPLOYEE, payload };
+
+            store.dispatch(action);
         }
 
-        const inviteEmployee = (): void => {};
+        const inviteEmployee = (event: FormEvent, history = this.props.history): void => {
+            // add validation
+            // add http request
+
+            return goToNextStep(event, history);
+        };
 
         return (
-            <form className="sign-up__form" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
+            <form className="sign-up__form" onSubmit={inviteEmployee}>
                 <div className="sign-up__form__subheaders">
                     <h2 className="sign-up__form__subheader">Time to add some coworkers! </h2>
                     <h3 className="sign-up__form__subheader__small">(You can also do it later through the admin panel.)</h3>
@@ -28,7 +42,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
                 <div className="sign-up__form__invite-users">
                     <InputField 
                         name={'Email'} 
-                        onchange={(e: any) => storeInvitedEmployee(e)} 
+                        onchange={storeInvitedEmployee} 
                         isInviteUsersField={true}
                     />
 

@@ -2,6 +2,11 @@ import {
     CHANGE_STEP, 
     SET_ACCOUNT_TYPE, 
     STORE_COMPANY_CODE,
+    STORE_FIRST_NAME,
+    STORE_LAST_NAME,
+    STORE_EMAIL,
+    STORE_PASSWORD,
+    STORE_ROLE,
     STORE_EMPLOYEE_ACCOUNT, 
     STORE_COMPANY,
     STORE_ADMIN_ACCOUNT,
@@ -11,6 +16,11 @@ import {
     ISignUpStep, IChangeStepAction,
     IAccountType, ISetAccountTypeAction,
     ICompanyCode, IStoreCompanyCodeAction,
+    IFirstName, IStoreFirstNameAction,
+    ILastName, IStoreLastNameAction,
+    IEmail, IStoreEmailAction,
+    IPassword, IStorePasswordAction,
+    IRole, IStoreRoleAction,
     IEmployeeAccount, IStoreEmployeeAccountAction,
     ICompany, IStoreCompanyAction,
     IAdminAccount, IStoreAdminAccountAction,
@@ -58,6 +68,80 @@ export const storeCompanyCode = (
             return {
                 ...state,
                 code: action.payload.code,
+            };
+        default:
+            return state;
+    }
+};
+export const storeFirstName = (
+    state: IFirstName = { firstName: '' },
+    action: IStoreFirstNameAction
+) => {
+    switch(action.type) {
+        case STORE_FIRST_NAME:
+            return {
+                ...state,
+                firstName: action.payload.firstName,
+            };
+        default:
+            return state;
+    }
+};
+
+export const storeLastName = (
+    state: ILastName = { lastName: '' },
+    action: IStoreLastNameAction
+) => {
+    switch(action.type) {
+        case STORE_LAST_NAME:
+            return {
+                ...state,
+                lastName: action.payload.lastName,
+            };
+        default:
+            return state;
+    }
+};
+
+export const storeEmail = (
+    state: IEmail = { email: '' },
+    action: IStoreEmailAction
+) => {
+    switch(action.type) {
+        case STORE_EMAIL:
+            return {
+                ...state,
+                email: action.payload.email,
+            };
+        default:
+            return state;
+    }
+};
+
+export const storePassword = (
+    state: IPassword = { password: '' },
+    action: IStorePasswordAction
+) => {
+    switch(action.type) {
+        case STORE_PASSWORD:
+            return {
+                ...state,
+                password: action.payload.password,
+            };
+        default:
+            return state;
+    }
+};
+
+export const storeRole = (
+    state: IRole = { role: '' },
+    action: IStoreRoleAction
+) => {
+    switch(action.type) {
+        case STORE_ROLE:
+            return {
+                ...state,
+                role: action.payload.role,
             };
         default:
             return state;
