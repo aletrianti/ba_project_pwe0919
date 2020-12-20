@@ -22,7 +22,7 @@ import {
     ILastName, IStoreLastNameAction,
     IEmail, IStoreEmailAction,
     IPassword, IStorePasswordAction,
-    IEmployeeAccount, IStoreEmployeeAccountAction 
+    IEmployeeAccount, IStoreEmployeeAccountAction
 } from '../../../../store/interfaces/signUpSteps.interfaces';
 
 class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
@@ -57,6 +57,16 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
 
         const signUp = (event: FormEvent, history = this.props.history): void => {
             // dispatch action
+            const state = store.getState();
+            const payload: IEmployeeAccount = {
+                firstName: state.signUpFirstName.firstName,
+                lastName: state.signUpLastName.lastName,
+                email: state.signUpEmail.email,
+                password: state.signUpPassword.password
+            };
+            const action: IStoreEmployeeAccountAction = { type: STORE_EMPLOYEE_ACCOUNT, payload };
+
+            store.dispatch(action);
 
             // add validation
             // add http request

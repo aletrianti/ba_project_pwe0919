@@ -28,7 +28,7 @@ class SignUpFinalStep extends React.Component<RouteComponentProps & StyleProps> 
                     <h3>You are good to go!</h3>
                 </div>
 
-                <SignUpFormButtons />
+                <SignUpFormButtons isFinalStep={true}/>
             </div>
         );
     }

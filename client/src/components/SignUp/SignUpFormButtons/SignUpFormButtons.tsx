@@ -2,8 +2,14 @@ import React from 'react';
 
 import Button from '../../common/Button/Button';
 
-class SignUpFormButtons extends React.Component {
+interface SignUpFormButtonProps {
+    isFinalStep?: boolean
+}
+
+class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
     render() {
+        const { isFinalStep } = this.props;
+
         return (
             <div className="sign-up__form__btns">
                 <Button 
@@ -11,7 +17,15 @@ class SignUpFormButtons extends React.Component {
                     isRegular={true} 
                     isBackFormBtn={true}
                 />
-                <Button btnText={'Confirm'} isRegular={false} />
+                {
+                    isFinalStep ? 
+                    (
+                        <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} />
+                    ) :
+                    (
+                        <Button btnText={'Confirm'} isRegular={false} />
+                    )
+                }
             </div>
         );
     }
