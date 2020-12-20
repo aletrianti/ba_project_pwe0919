@@ -12,6 +12,7 @@
 
 body, button, a, input, textarea, select {
     font-family: 'Poppins', sans-serif;
+    color: $text;
 }
 
 #sign-in__container,
@@ -58,6 +59,16 @@ body, button, a, input, textarea, select {
             display: flex;
             justify-content: space-between;
         }
+    }
+}
+
+.app__container {
+    display: flex;
+    flex-direction: row;
+
+    .app__container__topbar-and-content {
+        display: flex;
+        flex-direction: column;
     }
 }
 

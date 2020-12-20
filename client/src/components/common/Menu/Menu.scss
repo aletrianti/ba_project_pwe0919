@@ -1,0 +1,55 @@
+@import '../../../_variables';
+
+#menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+    width: 290px;
+    background: linear-gradient(162.32deg, $text 0%, rgba(2, 47, 64, 0) 101.04%), $primary;
+
+    #menu__links {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 0 20px;
+
+        .menu__link {
+            display: flex;
+            align-items: center;
+            color: $white;
+            padding: 15px;
+            margin: 10px 0;
+            font-size: $font-medium;
+            font-weight: $thick;
+
+            .menu__link__text {
+                margin-left: 15px;
+            }
+        }
+        .menu__link--active {
+            background-color: $text;
+            border: 1px solid $text;
+            border-radius: 10px;
+        }
+    }
+
+    #sign-out__btn {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        bottom: 20px;
+        left: 20px;
+        padding: 15px;
+        border: none;
+        background: transparent;
+        color: $white;
+
+        .sign-out__text {
+            font-size: $font-medium;
+            color: $white;
+            font-weight: $thick;
+            margin-left: 15px;
+        }
+    }
+}

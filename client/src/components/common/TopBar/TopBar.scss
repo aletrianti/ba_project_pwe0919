@@ -1,0 +1,59 @@
+@import '../../../_variables';
+
+#topbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: calc(100vw - 290px);
+    height: 108px;
+
+    #topbar__first-half,
+    #topbar__second-half {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        height: 100%;
+        padding: 0 35px;
+    }
+
+    #topbar__first-half {
+        h1 {
+            margin-right: 30px;
+            font-weight: $bold;
+        }
+
+        input {
+            padding: 5px 15px;
+            border-radius: 10px;
+            border: 1px solid $primary-grey;
+            outline: none;
+            transition: all 0.1s ease;
+        }
+        input:focus {
+            border: 1px solid $primary;
+        }
+    }
+
+    #topbar__second-half {
+        #topbar__img {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-right: 20px;
+
+            #topbar__img__no-picture {
+                color: $primary-grey;
+            }
+        }
+
+        #topbar__name {
+            border: none;
+            background-color: transparent;
+            font-size: $font-medium;
+            font-weight: $bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+}
