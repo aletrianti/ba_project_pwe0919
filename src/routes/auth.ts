@@ -44,6 +44,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
       roleId: Number(role),
       active: true,
       isAdmin: true,
+      availableToBuddy: false,
       createdAt: dateDB(),
       updatedAt: dateDB(),
     });
@@ -76,6 +77,7 @@ router.post('/register-employee', jwtMW, async (req: Request, res: Response, nex
       isAdmin: false,
       createdAt: dateDB(),
       updatedAt: dateDB(),
+      availableToBuddy: true,
     });
 
     const user: IUser = await knex('user').where('ID', createdUser).first();

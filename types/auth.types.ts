@@ -16,6 +16,7 @@ export interface IUser {
   contactLink?: string;
   coverImageUrl?: string;
   profileImageUrl?: string;
+  availableToBuddy: boolean;
   assignedBuddy?: number;
 }
 
