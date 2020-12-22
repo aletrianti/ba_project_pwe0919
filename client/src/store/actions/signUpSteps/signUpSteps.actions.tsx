@@ -4,8 +4,11 @@ import {
     STORE_COMPANY_CODE,
     STORE_EMPLOYEE_ACCOUNT, 
     STORE_COMPANY,
+    STORE_COMPANY_NAME,
+    STORE_COMPANY_SIZE,
     STORE_ADMIN_ACCOUNT,
-    STORE_INVITED_EMPLOYEE
+    STORE_INVITED_EMPLOYEE,
+    STORE_INVITED_EMPLOYEES
 } from './signUpSteps.types';
 import {
     ISignUpStep, IChangeStepAction,
@@ -13,8 +16,11 @@ import {
     ICompanyCode, IStoreCompanyCodeAction,
     IEmployeeAccount, IStoreEmployeeAccountAction,
     ICompany, IStoreCompanyAction,
+    ICompanyName, IStoreCompanyNameAction,
+    ICompanySize, IStoreCompanySizeAction,
     IAdminAccount, IStoreAdminAccountAction,
-    IInvitedEmployee, IStoreInvitedEmployeeAction
+    IInvitedEmployee, IStoreInvitedEmployeeAction,
+    IInvitedEmployees, IStoreInvitedEmployeesAction
 } from '../../interfaces/signUpSteps.interfaces';
 
 // actions
@@ -38,10 +44,22 @@ export const StoreCompanyAction = (data: ICompany): IStoreCompanyAction => {
     return { type: STORE_COMPANY, payload: data };
 }
 
+export const StoreCompanyNameAction = (data: ICompanyName): IStoreCompanyNameAction => {
+    return { type: STORE_COMPANY_NAME, payload: data };
+}
+
+export const StoreCompanySizeAction = (data: ICompanySize): IStoreCompanySizeAction => {
+    return { type: STORE_COMPANY_SIZE, payload: data };
+}
+
 export const StoreAdminAccountAction = (data: IAdminAccount): IStoreAdminAccountAction => {
     return { type: STORE_ADMIN_ACCOUNT, payload: data };
 }
 
 export const StoreInvitedEmployeeAction = (data: IInvitedEmployee): IStoreInvitedEmployeeAction => {
     return { type: STORE_INVITED_EMPLOYEE, payload: data };
+}
+
+export const StoreInvitedEmployeesAction = (data: IInvitedEmployees): IStoreInvitedEmployeesAction => {
+    return { type: STORE_INVITED_EMPLOYEES, payload: data };
 }

@@ -11,8 +11,11 @@ import {
     storeRole,
     storeEmployeeAccount,
     storeCompany,
+    storeCompanyName,
+    storeCompanySize,
     storeAdminAccount,
-    storeInvitedEmployee
+    storeInvitedEmployee,
+    storeInvitedEmployees
 } from './signUpSteps.reducers';
 
 // import redux method
@@ -35,8 +38,11 @@ const reducers: any = combineReducers({
     signUpRole: storeRole,
     signUpEmployeeInfo: storeEmployeeAccount,
     signUpCompanyInfo: storeCompany,
+    signUpCompanyName: storeCompanyName,
+    signUpCompanySize: storeCompanySize,
     signUpAdminInfo: storeAdminAccount,
     signUpLastInvitedEmployee: storeInvitedEmployee,
+    signUpLastInvitedEmployees: storeInvitedEmployees,
     // ...
 });
 

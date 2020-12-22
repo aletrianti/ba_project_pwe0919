@@ -90,6 +90,22 @@ export interface IStoreCompanyAction {
     payload: ICompany
 }
 
+export interface ICompanyName {
+    name: string
+}
+export interface IStoreCompanyNameAction {
+    type: string,
+    payload: ICompanyName
+}
+
+export interface ICompanySize {
+    size: string
+}
+export interface IStoreCompanySizeAction {
+    type: string,
+    payload: ICompanySize
+}
+
 // Step 2 - Company
 export interface IAdminAccount {
     firstName: string,
@@ -110,4 +126,12 @@ export interface IInvitedEmployee {
 export interface IStoreInvitedEmployeeAction {
     type: string,
     payload: IInvitedEmployee
+}
+
+export interface IInvitedEmployees {
+    emails: string[]
+}
+export interface IStoreInvitedEmployeesAction {
+    type: string,
+    payload: IInvitedEmployees
 }

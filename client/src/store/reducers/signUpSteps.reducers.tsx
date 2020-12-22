@@ -9,8 +9,11 @@ import {
     STORE_ROLE,
     STORE_EMPLOYEE_ACCOUNT, 
     STORE_COMPANY,
+    STORE_COMPANY_NAME,
+    STORE_COMPANY_SIZE,
     STORE_ADMIN_ACCOUNT,
-    STORE_INVITED_EMPLOYEE
+    STORE_INVITED_EMPLOYEE,
+    STORE_INVITED_EMPLOYEES
 } from '../actions/signUpSteps/signUpSteps.types';
 import {
     ISignUpStep, IChangeStepAction,
@@ -23,8 +26,11 @@ import {
     IRole, IStoreRoleAction,
     IEmployeeAccount, IStoreEmployeeAccountAction,
     ICompany, IStoreCompanyAction,
+    ICompanyName, IStoreCompanyNameAction,
+    ICompanySize, IStoreCompanySizeAction,
     IAdminAccount, IStoreAdminAccountAction,
-    IInvitedEmployee, IStoreInvitedEmployeeAction
+    IInvitedEmployee, IStoreInvitedEmployeeAction,
+    IInvitedEmployees, IStoreInvitedEmployeesAction
 } from '../interfaces/signUpSteps.interfaces';
 
 // create reducers
@@ -187,6 +193,36 @@ export const storeCompany = (
     }
 };
 
+export const storeCompanyName = (
+    state: ICompanyName = { name: '' },
+    action: IStoreCompanyNameAction
+) => {
+    switch(action.type) {
+        case STORE_COMPANY_NAME:
+            return {
+                ...state,
+                name: action.payload.name
+            };
+        default:
+            return state;
+    }
+};
+
+export const storeCompanySize = (
+    state: ICompanySize = { size: '' },
+    action: IStoreCompanySizeAction
+) => {
+    switch(action.type) {
+        case STORE_COMPANY_SIZE:
+            return {
+                ...state,
+                size: action.payload.size
+            };
+        default:
+            return state;
+    }
+};
+
 export const storeAdminAccount = (
     state: IAdminAccount = {
         firstName: '',
@@ -221,6 +257,21 @@ export const storeInvitedEmployee = (
             return {
                 ...state,
                 email: action.payload.email,
+            };
+        default:
+            return state;
+    }
+};
+
+export const storeInvitedEmployees = (
+    state: IInvitedEmployees = { emails: [] },
+    action: IStoreInvitedEmployeesAction
+) => {
+    switch(action.type) {
+        case STORE_INVITED_EMPLOYEES:
+            return {
+                ...state,
+                emails: [...state.emails, action.payload.emails],
             };
         default:
             return state;

@@ -13,8 +13,15 @@ import { goToNextStep } from '../../ChangeFormStep';
 // import store
 import store from '../../../../index';
 
-import { STORE_COMPANY } from '../../../../store/actions/signUpSteps/signUpSteps.types';
-import { ICompany, IStoreCompanyAction } from '../../../../store/interfaces/signUpSteps.interfaces';
+import { STORE_COMPANY, STORE_COMPANY_NAME, STORE_COMPANY_SIZE } from '../../../../store/actions/signUpSteps/signUpSteps.types';
+import { 
+    ICompany, 
+    IStoreCompanyAction,
+    ICompanyName, 
+    IStoreCompanyNameAction,
+    ICompanySize, 
+    IStoreCompanySizeAction 
+} from '../../../../store/interfaces/signUpSteps.interfaces';
 
 class FirstStepCompanyForm extends React.Component<RouteComponentProps> {
     private companySizes: IOptions = {
@@ -29,15 +36,30 @@ class FirstStepCompanyForm extends React.Component<RouteComponentProps> {
     render() {
         // Only handling the company name because the size is not needed in the backend, yet
         const storeCompanyName = (data: string): void => {
-            const payload: ICompany = { name: data, size: '' };
-            const action: IStoreCompanyAction = { type: STORE_COMPANY, payload };
+            const payload: ICompanyName = { name: data };
+            const action: IStoreCompanyNameAction = { type: STORE_COMPANY_NAME, payload };
+
+            store.dispatch(action);
+        }
+
+        const storeCompanySize = (data: string): void => {
+            const payload: ICompanySize = { size: data };
+            const action: IStoreCompanySizeAction = { type: STORE_COMPANY_SIZE, payload };
 
             store.dispatch(action);
         }
 
         const saveCompany = (event: FormEvent, history = this.props.history): void => {
+            const state: any = store.getState();
+            const companyName: string = state.signUpCompanyName.name;
+            const companySize: string = state.signUpCompanySize.size;
+
+            const payload: ICompany = { name: companyName, size: companySize };
+            const action: IStoreCompanyAction = { type: STORE_COMPANY, payload };
+
+            store.dispatch(action);
+
             // add validation
-            // add http request
 
             return goToNextStep(event, history);
         };
@@ -48,6 +70,7 @@ class FirstStepCompanyForm extends React.Component<RouteComponentProps> {
                 <SelectField 
                     name={'Company size*'} 
                     options={this.companySizes}
+                    onchange={storeCompanySize}
                 />
 
                 <span className="required-field__span">* required field</span>

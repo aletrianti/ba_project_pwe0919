@@ -72,14 +72,13 @@ class SecondStepCompanyForm extends React.Component<RouteComponentProps> {
                 lastName: state.signUpLastName.lastName,
                 email: state.signUpEmail.email,
                 password: state.signUpPassword.password,
-                role: state.signUpPassword.role
+                role: state.signUpRole.role
             };
             const action: IStoreAdminAccountAction = { type: STORE_ADMIN_ACCOUNT, payload };
 
             store.dispatch(action);
 
             // add validation
-            // add http request
 
             return goToNextStep(event, history);
         };

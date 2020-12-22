@@ -63,6 +63,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 });
 
 router.post('/register-employees', async (req: Request, res: Response, next) => {
+  console.log('erfsdsdf')
   try {
     const { newUsers }: INewEmployeeInput = req.body;
 

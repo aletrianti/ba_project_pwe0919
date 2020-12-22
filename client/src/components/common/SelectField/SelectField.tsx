@@ -7,7 +7,7 @@ import { IOptions } from '../../../store/interfaces/selectOptions.interfaces';
 interface SelectFieldProps {
     name: string,
     options: IOptions,
-    onchange?: any
+    onchange: any
 }
 
 class SelectField extends React.Component<SelectFieldProps> {
