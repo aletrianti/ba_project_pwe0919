@@ -55,6 +55,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
       token: jwt.sign({ userId: user.ID, companyId: companyID }, process.env.JWT_SECRET),
       user: user,
     };
+    console.log(signupUser);
 
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
@@ -63,7 +64,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 });
 
 router.post('/register-employees', async (req: Request, res: Response, next) => {
-  console.log('erfsdsdf')
+  console.log('erfsdsdf');
   try {
     const { newUsers }: INewEmployeeInput = req.body;
 
