@@ -42,9 +42,11 @@ export interface INewCompanyInput {
 }
 
 export interface INewEmployeeInput {
-  newUser: {
-    email: string;
-  };
+  newUsers: [
+    {
+      email: string;
+    }
+  ];
 }
 
 export interface ILoginInput {

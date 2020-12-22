@@ -64,25 +64,30 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
 router.post('/register-employee', jwtMW, async (req: Request, res: Response, next) => {
   try {
-    const { newUser }: INewEmployeeInput = req.body;
+    const { newUsers }: INewEmployeeInput = req.body;
 
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const createdUser = await knex('user').insert({
-      email: newUser.email,
-      companyId: Number(companyId),
-      active: false,
-      isAdmin: false,
-      createdAt: dateDB(),
-      updatedAt: dateDB(),
-      availableToBuddy: true,
+    const createdUsers: any[] = [];
+    newUsers.forEach(async newUser => {
+      createdUsers.push(
+        await knex('user').insert({
+          email: newUser.email,
+          companyId: Number(companyId),
+          active: false,
+          isAdmin: false,
+          createdAt: dateDB(),
+          updatedAt: dateDB(),
+          availableToBuddy: true,
+        })
+      );
     });
 
-    const user: IUser = await knex('user').where('ID', createdUser).first();
+    const user: IUser[] = await knex('user').where('ID', createdUsers);
 
-    Api.sendSuccess<IUser>(req, res, user);
+    Api.sendSuccess<IUser[]>(req, res, user);
   } catch (err) {
     Api.sendError(req, res, err);
   }
