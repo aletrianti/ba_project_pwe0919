@@ -1,0 +1,13 @@
+@import '../../../_variables';
+
+#sign-up__form__step1 {
+    h2 {
+        font-size: $font-medium;
+        font-weight: $bold;
+    }
+
+    span {
+        font-size: $font-small;
+        font-weight: $thick;
+    }
+}
