@@ -62,7 +62,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
   }
 });
 
-router.post('/register-employee', jwtMW, async (req: Request, res: Response, next) => {
+router.post('/register-employees', async (req: Request, res: Response, next) => {
   try {
     const { newUsers }: INewEmployeeInput = req.body;
 
@@ -74,7 +74,7 @@ router.post('/register-employee', jwtMW, async (req: Request, res: Response, nex
     newUsers.forEach(async newUser => {
       createdUsers.push(
         await knex('user').insert({
-          email: newUser.email,
+          email: newUser,
           companyId: Number(companyId),
           active: false,
           isAdmin: false,
