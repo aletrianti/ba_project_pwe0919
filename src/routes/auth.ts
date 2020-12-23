@@ -55,7 +55,6 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
       token: jwt.sign({ userId: user.ID, companyId: companyID }, process.env.JWT_SECRET),
       user: user,
     };
-    console.log(signupUser);
 
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
@@ -64,9 +63,11 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
   }
 });
 
-router.post('/register-employees', async (req: Request, res: Response, next) => {
+router.post('/invite-employees', async (req: Request, res: Response, next) => {
   try {
     const { newUsers }: INewEmployees = req.body;
+    console.log('=============================================================');
+    console.log(newUsers);
 
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');
@@ -96,7 +97,7 @@ router.post('/register-employees', async (req: Request, res: Response, next) => 
   }
 });
 
-router.post('/create-profile', async (req: Request, res: Response, next) => {
+router.post('/register-employee', async (req: Request, res: Response, next) => {
   try {
     const { companyCode, email, userData, password } = req.body;
 

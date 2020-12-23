@@ -68,7 +68,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       };
 
       axios
-        .post('http://localhost:4000/api/auth/register-employees', data)
+        .post('http://localhost:4000/api/auth/invite-employees', data)
         .then(data => {
           console.log('New employee invited!');
           console.log(data);
@@ -102,7 +102,6 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       // add http request
       axios
         .post('http://localhost:4000/api/auth/register-company', data)
-        .then(response => console.log(response.data.signUpUser))
         .then(() => inviteUsers)
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
