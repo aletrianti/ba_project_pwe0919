@@ -107,6 +107,7 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     // Add hashed password to userData
     userData.password = hashedPassword;
+    userData.active = true;
 
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
@@ -114,6 +115,7 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
       token: jwt.sign({ userId: updatedUser.ID, companyId: company }, process.env.JWT_SECRET),
       user: updatedUser,
     };
+
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
     console.error(err);
@@ -141,6 +143,7 @@ router.post('/login', async (req: Request, res: Response, next) => {
     const { email, password }: ILoginInput = req.body;
 
     const user: IUser = await knex('user').where('email', email).first();
+    console.log(user.password);
 
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) throw new Error(`Invalid password for email ${email}`);
