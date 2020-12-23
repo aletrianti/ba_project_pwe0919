@@ -64,7 +64,6 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 });
 
 router.post('/register-employees', async (req: Request, res: Response, next) => {
-  console.log('erfsdsdf');
   try {
     const { newUsers }: INewEmployees = req.body;
 
@@ -97,13 +96,21 @@ router.post('/register-employees', async (req: Request, res: Response, next) => 
 
 router.post('/create-profile', async (req: Request, res: Response, next) => {
   try {
-    const { companyCode, email, userData } = req.body;
+    const { companyCode, email, userData, password } = req.body;
 
     const company: ICompany = await knex('company').where('companyCode', companyCode).first();
     if (!company) throw Error(`Doesn't exist company with companyCode ${companyCode}`);
 
     const userToUpdate: IUser = await knex('user').where('email', email).first();
 
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    
+    // Add hashed password to userData
+    userData.password = hashedPassword;
+
+    console.log(userData)
+    
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
     const signupUser = {

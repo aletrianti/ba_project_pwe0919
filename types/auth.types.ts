@@ -45,6 +45,16 @@ export interface INewEmployees {
   newUsers: string[];
 }
 
+export interface INewEmployeeInput {
+  companyCode: string,
+  email: string,
+  userData: {
+    firstName: string,
+    lastName: string
+  },
+  password: string
+}
+
 export interface ILoginInput {
   email: string;
   password: string;

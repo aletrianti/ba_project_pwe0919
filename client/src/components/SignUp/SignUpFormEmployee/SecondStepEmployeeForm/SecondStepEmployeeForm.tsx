@@ -1,4 +1,5 @@
 import React, { FormEvent } from 'react';
+import axios from 'axios';
 import './SecondStepEmployeeForm.scss';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
@@ -30,6 +31,9 @@ import {
   IStoreEmployeeAccountAction,
 } from '../../../../store/interfaces/signUpSteps.interfaces';
 
+// Data from backend
+import { INewEmployeeInput } from '../../../../../../types/auth.types';
+
 class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
   render() {
     const storeFirstName = (data: string): void => {
@@ -60,9 +64,10 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
       store.dispatch(action);
     };
 
-    const signUp = (event: FormEvent, history = this.props.history): void => {
+    const dispatchSignUpAction = (): void => {
       // dispatch action
       const state = store.getState();
+
       const payload: IEmployeeAccount = {
         firstName: state.signUpFirstName.firstName,
         lastName: state.signUpLastName.lastName,
@@ -72,11 +77,38 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
       const action: IStoreEmployeeAccountAction = { type: STORE_EMPLOYEE_ACCOUNT, payload };
 
       store.dispatch(action);
+    };
+
+    const signUpRequest = (event: FormEvent, history = this.props.history): void => {
+      const state = store.getState();
 
       // add validation
-      // add http request
 
-      return goToNextStep(event, history);
+      // add http request
+      const data: INewEmployeeInput = {
+        companyCode: state.signUpCompanyCode.code,
+        email: state.signUpEmployeeInfo.email,
+        userData: {
+          firstName: state.signUpEmployeeInfo.firstName,
+          lastName: state.signUpEmployeeInfo.lastName,
+        },
+        password: state.signUpEmployeeInfo.password,
+      };
+
+      console.log(data);
+
+      axios
+        .post('http://localhost:4000/api/auth/create-profile', data)
+        .then(response => console.log(response.data.signUpUser))
+        .then(() => goToNextStep(event, history))
+        .catch(err => console.error(err));
+    };
+
+    const signUp = async (event: FormEvent): Promise<any> => {
+      event.preventDefault();
+
+      await dispatchSignUpAction();
+      await signUpRequest(event);
     };
 
     return (

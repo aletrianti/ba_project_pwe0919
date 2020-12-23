@@ -39,9 +39,7 @@ class SignInForm extends React.Component<RouteComponentProps> {
       store.dispatch(action);
     };
 
-    const signIn = (event: FormEvent, history = this.props.history): void => {
-      event.preventDefault();
-
+    const dispatchSignInAction = (): void => {
       const state: AnyAction = store.getState();
 
       const payload: ISignInData = {
@@ -52,6 +50,10 @@ class SignInForm extends React.Component<RouteComponentProps> {
       const action: ISignInAction = { type: SIGN_IN, payload };
 
       store.dispatch(action);
+    };
+
+    const signInRequest = (history = this.props.history) => {
+      const state: AnyAction = store.getState();
 
       // include validation, then send data to the backend if everything is okay
 
@@ -67,6 +69,13 @@ class SignInForm extends React.Component<RouteComponentProps> {
           history.push('/dashboard');
         })
         .catch(err => console.error(err));
+    };
+
+    const signIn = async (event: FormEvent): Promise<any> => {
+      event.preventDefault();
+
+      await dispatchSignInAction();
+      await signInRequest();
     };
 
     return (
