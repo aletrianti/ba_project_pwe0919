@@ -99,7 +99,9 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
 
       axios
         .post('http://localhost:4000/api/auth/register-employee', data)
-        .then(response => console.log(response.data.signUpUser))
+        .then(response => {
+          localStorage['user_token'] = response.data.token;
+        })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
     };
