@@ -81,7 +81,7 @@ router.post('/invite-employees', async (req: Request, res: Response, next) => {
 
       createdUsers.push(userCreated);
     });
-    const user: IUser[] = await knex('user').where('ID', createdUsers);
+    const user: IUser[] = await knex('user').whereIn('ID', createdUsers);
 
     Api.sendSuccess<IUser[]>(req, res, user);
   } catch (err) {
