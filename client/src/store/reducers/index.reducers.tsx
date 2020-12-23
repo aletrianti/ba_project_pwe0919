@@ -26,8 +26,8 @@ import { combineReducers } from '@reduxjs/toolkit';
 const reducers: any = combineReducers({
   auth: authReducer,
   signIn: signInReducer,
-  email: storeEmailReducer,
-  password: storePasswordReducer,
+  signInEmail: storeEmailReducer,
+  signInPassword: storePasswordReducer,
   signUpInfo: changeSignUpStep,
   signUpAccountType: setAccountType,
   signUpCompanyCode: storeCompanyCode,

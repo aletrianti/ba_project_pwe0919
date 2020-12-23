@@ -1,8 +1,11 @@
 import React, { FormEvent } from 'react';
+import axios from 'axios';
+import './SignInForm.scss';
 import { AnyAction } from '@reduxjs/toolkit';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+
 import InputField from '../../common/InputField/InputField';
 import Button from '../../common/Button/Button';
-import './SignInForm.scss';
 
 // import store
 import store from '../../../index';
@@ -17,7 +20,10 @@ import {
   ISignInAction,
 } from '../../../store/interfaces/auth.interfaces';
 
-class SignInForm extends React.Component {
+// Data from backend
+import { ILoginInput } from '../../../../../types/auth.types';
+
+class SignInForm extends React.Component<RouteComponentProps> {
   render() {
     const storeEmail = (data: string): void => {
       const payload: IEmail = { email: data };
@@ -33,21 +39,36 @@ class SignInForm extends React.Component {
       store.dispatch(action);
     };
 
-    const signIn = (event: FormEvent): void => {
+    const signIn = (event: FormEvent, history = this.props.history): void => {
       event.preventDefault();
 
       const state: AnyAction = store.getState();
 
       const payload: ISignInData = {
-        email: state.email.email,
-        password: state.password.password,
+        email: state.signInEmail.email,
+        password: state.signInPassword.password,
       };
 
       const action: ISignInAction = { type: SIGN_IN, payload };
 
       store.dispatch(action);
+
       // include validation, then send data to the backend if everything is okay
-      // ...
+
+      const data: ILoginInput = {
+        email: state.signIn.email,
+        password: state.signIn.password,
+      };
+
+      console.log(data);
+
+      axios
+        .post('http://localhost:4000/api/auth/login', data)
+        .then(() => {
+          console.log('Logged in!');
+          history.push('/dashboard');
+        })
+        .catch(err => console.error(err));
     };
 
     return (
@@ -60,4 +81,4 @@ class SignInForm extends React.Component {
   }
 }
 
-export default SignInForm;
+export default withRouter(SignInForm);
