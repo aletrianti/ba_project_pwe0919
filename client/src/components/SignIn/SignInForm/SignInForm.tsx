@@ -60,8 +60,6 @@ class SignInForm extends React.Component<RouteComponentProps> {
         password: state.signIn.password,
       };
 
-      console.log(data);
-
       axios
         .post('http://localhost:4000/api/auth/login', data)
         .then(() => {
