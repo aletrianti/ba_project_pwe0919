@@ -59,6 +59,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
@@ -90,6 +91,7 @@ router.post('/register-employees', async (req: Request, res: Response, next) => 
 
     Api.sendSuccess<IUser[]>(req, res, user);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
@@ -103,8 +105,8 @@ router.post('/create-profile', async (req: Request, res: Response, next) => {
 
     const userToUpdate: IUser = await knex('user').where('email', email).first();
     if (!userToUpdate) throw Error(`Doesn't exist user with email ${email}`);
+
     if (userToUpdate.password) throw Error(`User already in use`);
-    console.log(userToUpdate);
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -122,6 +124,7 @@ router.post('/create-profile', async (req: Request, res: Response, next) => {
     };
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
@@ -136,6 +139,7 @@ router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => 
     const updatedUser = await updateUser(userToUpdate, Number(userId));
     Api.sendSuccess<IUser>(req, res, updatedUser);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
@@ -156,6 +160,7 @@ router.post('/login', async (req: Request, res: Response, next) => {
 
     Api.sendSuccess<ISignUpUser>(req, res, loginUser);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
@@ -170,6 +175,7 @@ router.get('/', jwtMW, async (req, res, next) => {
 
     Api.sendSuccess<IUser>(req, res, user);
   } catch (err) {
+    console.error(err);
     Api.sendError(req, res, err);
   }
 });
