@@ -43,16 +43,17 @@ export interface INewCompanyInput {
 
 export interface INewEmployees {
   newUsers: string[];
+  companyId: string;
 }
 
 export interface INewEmployeeInput {
-  companyCode: string,
-  email: string,
+  companyCode: string;
+  email: string;
   userData: {
-    firstName: string,
-    lastName: string
-  },
-  password: string
+    firstName: string;
+    lastName: string;
+  };
+  password: string;
 }
 
 export interface ILoginInput {

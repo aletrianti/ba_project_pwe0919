@@ -65,29 +65,22 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
 router.post('/invite-employees', async (req: Request, res: Response, next) => {
   try {
-    const { newUsers }: INewEmployees = req.body;
-    console.log('=============================================================');
-    console.log(newUsers);
-
-    const { userId, companyId } = getUserIds(req);
-    if (!userId) throw new Error('User does not exists');
-    if (!companyId) throw new Error('User not assigned to a company');
+    const { newUsers, companyId }: INewEmployees = req.body;
 
     const createdUsers: any[] = [];
     newUsers.forEach(async newUser => {
-      createdUsers.push(
-        await knex('user').insert({
-          email: newUser,
-          companyId: Number(companyId),
-          active: false,
-          isAdmin: false,
-          createdAt: dateDB(),
-          updatedAt: dateDB(),
-          availableToBuddy: true,
-        })
-      );
-    });
+      const userCreated = await knex('user').insert({
+        email: newUser,
+        companyId: Number(companyId),
+        active: false,
+        isAdmin: false,
+        createdAt: dateDB(),
+        updatedAt: dateDB(),
+        availableToBuddy: true,
+      });
 
+      createdUsers.push(userCreated);
+    });
     const user: IUser[] = await knex('user').where('ID', createdUsers);
 
     Api.sendSuccess<IUser[]>(req, res, user);
@@ -114,8 +107,6 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     // Add hashed password to userData
     userData.password = hashedPassword;
-
-    console.log(userData);
 
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 

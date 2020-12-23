@@ -53,27 +53,21 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       store.dispatch(action);
     };
 
-    const inviteUsers = (): void => {
+    const inviteUsers = (companyId: string): void => {
       const state = store.getState();
 
       const emails = state.signUpLastInvitedEmployees.emails;
 
       emails.forEach((email: string) => {
-        console.log(email);
         usersEmails.push(email[0]);
       });
 
       const data: INewEmployees = {
         newUsers: usersEmails,
+        companyId: companyId,
       };
 
-      axios
-        .post('http://localhost:4000/api/auth/invite-employees', data)
-        .then(data => {
-          console.log('New employee invited!');
-          console.log(data);
-        })
-        .catch(err => console.error(err));
+      axios.post('http://localhost:4000/api/auth/invite-employees', data).catch(err => console.error(err));
     };
 
     const registerCompany = (event: FormEvent, history = this.props.history): void => {
@@ -102,7 +96,9 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       // add http request
       axios
         .post('http://localhost:4000/api/auth/register-company', data)
-        .then(() => inviteUsers)
+        .then(response => {
+          inviteUsers(response.data.user.companyId);
+        })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
     };
