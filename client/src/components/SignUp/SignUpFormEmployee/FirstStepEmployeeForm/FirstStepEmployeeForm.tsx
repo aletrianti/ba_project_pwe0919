@@ -24,7 +24,6 @@ class FirstStepEmployeeForm extends React.Component<RouteComponentProps> {
 
     const saveCode = (event: FormEvent, history = this.props.history): void => {
       // add validation
-      // add http request
 
       return goToNextStep(event, history);
     };

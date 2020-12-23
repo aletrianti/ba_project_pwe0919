@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployeeInput, ISignUpUser, IUser } from '../../types/auth.types';
+import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { updateUser } from '../controllers/user';
 import knex from '../knex';
@@ -66,7 +66,7 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 router.post('/register-employees', async (req: Request, res: Response, next) => {
   console.log('erfsdsdf');
   try {
-    const { newUsers }: INewEmployeeInput = req.body;
+    const { newUsers }: INewEmployees = req.body;
 
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');

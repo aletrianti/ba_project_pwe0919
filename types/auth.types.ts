@@ -41,7 +41,7 @@ export interface INewCompanyInput {
   password: string;
 }
 
-export interface INewEmployeeInput {
+export interface INewEmployees {
   newUsers: string[];
 }
 

@@ -21,7 +21,8 @@ import {
 } from '../../../../store/interfaces/signUpSteps.interfaces';
 
 // Data from backend
-import { INewCompanyInput, INewEmployeeInput } from '../../../../../../types/auth.types';
+import { INewCompanyInput, INewEmployees } from '../../../../../../types/auth.types';
+
 class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
   render() {
     let invitedUsers: string[] = [];
@@ -46,12 +47,8 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       // push invited employee to array
       users.push(lastInvitedEmployee);
 
-      console.log(users);
-
       const payload: IInvitedEmployees = { emails: users };
       const action: IStoreInvitedEmployeesAction = { type: STORE_INVITED_EMPLOYEES, payload };
-
-      console.log(payload);
 
       store.dispatch(action);
     };
@@ -66,10 +63,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
         usersEmails.push(email[0]);
       });
 
-      console.log('usersEmails');
-      console.log(usersEmails);
-
-      const data: INewEmployeeInput = {
+      const data: INewEmployees = {
         newUsers: usersEmails,
       };
 
