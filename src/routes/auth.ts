@@ -102,15 +102,18 @@ router.post('/create-profile', async (req: Request, res: Response, next) => {
     if (!company) throw Error(`Doesn't exist company with companyCode ${companyCode}`);
 
     const userToUpdate: IUser = await knex('user').where('email', email).first();
+    if (!userToUpdate) throw Error(`Doesn't exist user with email ${email}`);
+    if (userToUpdate.password) throw Error(`User already in use`);
+    console.log(userToUpdate);
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    
+
     // Add hashed password to userData
     userData.password = hashedPassword;
 
-    console.log(userData)
-    
+    console.log(userData);
+
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
     const signupUser = {
