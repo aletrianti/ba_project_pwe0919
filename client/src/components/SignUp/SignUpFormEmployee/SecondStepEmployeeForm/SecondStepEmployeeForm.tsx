@@ -98,7 +98,7 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
       console.log(data);
 
       axios
-        .post('http://localhost:4000/api/auth/create-profile', data)
+        .post('http://localhost:4000/api/auth/register-employee', data)
         .then(response => console.log(response.data.signUpUser))
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
@@ -118,7 +118,7 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
           <InputField name={'Last name*'} onchange={storeLastName} />
         </div>
         <InputField name={'Email*'} onchange={storeEmail} />
-        <InputField name={'Password*'} onchange={storePassword} />
+        <InputField name={'Password*'} onchange={storePassword} isPassword={true} />
 
         <span className="required-field__span">* required field</span>
 
