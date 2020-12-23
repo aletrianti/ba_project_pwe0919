@@ -14,52 +14,56 @@ import ThirdStepCompanyForm from '../../components/SignUp/SignUpFormCompany/Thir
 import FinalStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm';
 
 class SignUp extends React.Component {
-    render() {
-        const pathname = window.location.pathname.split('/');
-        // ex. pathname = ["", "sign-up", "1", "company"]
-        const accountType = pathname[2];
-        const currentStep = Number(pathname[3]);
-        
-        return (
-            <div id="sign-up__container">
-                <BackgroundSideBar />
-    
-                <div id="sign-up__form__container">
-                    <div id="sign-up__wrapper">
-                        <Button 
-                            isSignUpOrSignInBtn={true}
-                            link={'/sign-in'}
-                            btnText={'Sign in'}
-                        />
-    
-                        <div className="form__container">
-                            <h1 className="header--h1">Sign up</h1>
-    
-                            { 
-                                !accountType ? (<SignUpFormStart />) : [
-                                    accountType === 'employee' ? [
-                                        currentStep === 1 ? 
-                                            (<FirstStepEmployeeForm key={currentStep}/>) : 
-                                            currentStep === 2 ?
-                                                (<SecondStepEmployeeForm key={currentStep}/>) :
-                                                (<FinalStepEmployeeForm key={currentStep}/>)
-                                    ] : [
-                                        currentStep === 1 ?
-                                            (<FirstStepCompanyForm key={currentStep}/>) : 
-                                                currentStep === 2 ? 
-                                                    (<SecondStepCompanyForm key={currentStep}/>) : 
-                                                    currentStep === 3 ?
-                                                        (<ThirdStepCompanyForm key={currentStep}/>) : 
-                                                        (<FinalStepCompanyForm key={currentStep}/>)
-                                    ]
-                                ] 
-                            }
-                        </div>
-                    </div>
-                </div>
+  render() {
+    const pathname = window.location.pathname.split('/');
+    // ex. pathname = ["", "sign-up", "1", "company"]
+    const accountType = pathname[2];
+    const currentStep = Number(pathname[3]);
+
+    return (
+      <div id="sign-up__container">
+        <BackgroundSideBar />
+
+        <div id="sign-up__form__container">
+          <div id="sign-up__wrapper">
+            <Button isSignUpOrSignInBtn={true} link={'/sign-in'} btnText={'Sign in'} />
+
+            <div className="form__container">
+              <h1 className="header--h1">Sign up</h1>
+
+              {!accountType ? (
+                <SignUpFormStart />
+              ) : (
+                [
+                  accountType === 'employee'
+                    ? [
+                        currentStep === 1 ? (
+                          <FirstStepEmployeeForm key={currentStep} />
+                        ) : currentStep === 2 ? (
+                          <SecondStepEmployeeForm key={currentStep} />
+                        ) : (
+                          <FinalStepEmployeeForm key={currentStep} />
+                        ),
+                      ]
+                    : [
+                        currentStep === 1 ? (
+                          <FirstStepCompanyForm key={currentStep} />
+                        ) : currentStep === 2 ? (
+                          <SecondStepCompanyForm key={currentStep} />
+                        ) : currentStep === 3 ? (
+                          <ThirdStepCompanyForm key={currentStep} />
+                        ) : (
+                          <FinalStepCompanyForm key={currentStep} />
+                        ),
+                      ],
+                ]
+              )}
             </div>
-        );
-    }
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default SignUp;

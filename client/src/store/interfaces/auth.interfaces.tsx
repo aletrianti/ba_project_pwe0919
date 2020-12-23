@@ -2,36 +2,36 @@
 
 // Sign In
 export interface IEmail {
-    email: string
+  email: string;
 }
 export interface IStoreEmailAction {
-    type: string,
-    payload: IEmail
+  type: string;
+  payload: IEmail;
 }
 
 export interface IPassword {
-    password: string
+  password: string;
 }
 export interface IStorePasswordAction {
-    type: string,
-    payload: IPassword
+  type: string;
+  payload: IPassword;
 }
 
 export interface ISignInData {
-    email: string,
-    password: string
+  email: string;
+  password: string;
 }
 export interface ISignInAction {
-    type: string,
-    payload: ISignInData
+  type: string;
+  payload: ISignInData;
 }
 
 // Auth
 export interface IAuth {
-    isLoggedIn: boolean,
-    userId?: number
+  isLoggedIn: boolean;
+  userId?: number;
 }
 export interface IAuthUserAction {
-    type: string,
-    payload: number
+  type: string;
+  payload: number;
 }

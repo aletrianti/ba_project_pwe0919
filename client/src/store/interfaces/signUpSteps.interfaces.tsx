@@ -2,136 +2,136 @@
 
 // General
 export interface ISignUpStep {
-    currentStep: number,
-    accountType: string
+  currentStep: number;
+  accountType: string;
 }
 export interface IChangeStepAction {
-    type: string,
-    payload: ISignUpStep
+  type: string;
+  payload: ISignUpStep;
 }
 
 export interface IFirstName {
-    firstName: string
+  firstName: string;
 }
 export interface IStoreFirstNameAction {
-    type: string,
-    payload: IFirstName
+  type: string;
+  payload: IFirstName;
 }
 
 export interface ILastName {
-    lastName: string
+  lastName: string;
 }
 export interface IStoreLastNameAction {
-    type: string,
-    payload: ILastName
+  type: string;
+  payload: ILastName;
 }
 
 export interface IEmail {
-    email: string
+  email: string;
 }
 export interface IStoreEmailAction {
-    type: string,
-    payload: IEmail
+  type: string;
+  payload: IEmail;
 }
 
 export interface IPassword {
-    password: string
+  password: string;
 }
 export interface IStorePasswordAction {
-    type: string,
-    payload: IPassword
+  type: string;
+  payload: IPassword;
 }
 
 export interface IRole {
-    role: string
+  role: string;
 }
 export interface IStoreRoleAction {
-    type: string,
-    payload: IRole
+  type: string;
+  payload: IRole;
 }
 
 // Step 0 (general step)
 export interface IAccountType {
-    accountType: string
+  accountType: string;
 }
 export interface ISetAccountTypeAction {
-    type: string,
-    payload: IAccountType
+  type: string;
+  payload: IAccountType;
 }
 
 // Step 1 - Employee
 export interface ICompanyCode {
-    code: string
+  code: string;
 }
 export interface IStoreCompanyCodeAction {
-    type: string,
-    payload: ICompanyCode
+  type: string;
+  payload: ICompanyCode;
 }
 
 // Step 2 - Employee
 export interface IEmployeeAccount {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 }
 export interface IStoreEmployeeAccountAction {
-    type: string,
-    payload: IEmployeeAccount
+  type: string;
+  payload: IEmployeeAccount;
 }
 
 // Step 1 - Company
 export interface ICompany {
-    name: string,
-    size: string
+  name: string;
+  size: string;
 }
 export interface IStoreCompanyAction {
-    type: string,
-    payload: ICompany
+  type: string;
+  payload: ICompany;
 }
 
 export interface ICompanyName {
-    name: string
+  name: string;
 }
 export interface IStoreCompanyNameAction {
-    type: string,
-    payload: ICompanyName
+  type: string;
+  payload: ICompanyName;
 }
 
 export interface ICompanySize {
-    size: string
+  size: string;
 }
 export interface IStoreCompanySizeAction {
-    type: string,
-    payload: ICompanySize
+  type: string;
+  payload: ICompanySize;
 }
 
 // Step 2 - Company
 export interface IAdminAccount {
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    role: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  role: string;
 }
 export interface IStoreAdminAccountAction {
-    type: string,
-    payload: IAdminAccount
+  type: string;
+  payload: IAdminAccount;
 }
 
 // Step 3 - Company
 export interface IInvitedEmployee {
-    email: string
+  email: string;
 }
 export interface IStoreInvitedEmployeeAction {
-    type: string,
-    payload: IInvitedEmployee
+  type: string;
+  payload: IInvitedEmployee;
 }
 
 export interface IInvitedEmployees {
-    emails: string[]
+  emails: string[];
 }
 export interface IStoreInvitedEmployeesAction {
-    type: string,
-    payload: IInvitedEmployees
+  type: string;
+  payload: IInvitedEmployees;
 }

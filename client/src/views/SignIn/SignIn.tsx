@@ -3,14 +3,14 @@ import BackgroundSideBar from '../../components/common/BackgroundSideBar/Backgro
 import SignInContainer from '../../components/SignIn/SignInContainer/SignInContainer';
 
 const SignIn = () => {
-    return (
-        <div id="sign-in__container">
-            <BackgroundSideBar />
-            <div id="sign-in__form__container">
-                <SignInContainer />
-            </div>
-        </div>
-    );
+  return (
+    <div id="sign-in__container">
+      <BackgroundSideBar />
+      <div id="sign-in__form__container">
+        <SignInContainer />
+      </div>
+    </div>
+  );
 };
 
 export default SignIn;

@@ -7,9 +7,7 @@ import { Provider } from 'react-redux';
 import reducers from './store/reducers/index.reducers';
 
 // create store
-const store = configureStore(
-  {reducer: reducers}
-);
+const store = configureStore({ reducer: reducers });
 
 ReactDOM.render(
   <React.StrictMode>

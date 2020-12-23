@@ -13,30 +13,26 @@ import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/s
 import { goToNextStep } from '../ChangeFormStep';
 
 class SignUpFormStart extends React.Component<RouteComponentProps> {
-    render() {
-        const storeAccountType = (data: string): void => {
-            const payload: IAccountType = { accountType: data };
-            const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
-        
-            store.dispatch(action);
-        };
+  render() {
+    const storeAccountType = (data: string): void => {
+      const payload: IAccountType = { accountType: data };
+      const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
 
-        return (
-            <form id="sign-up__form__step1" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
-                <h2>I want to create a...*</h2>
+      store.dispatch(action);
+    };
 
-                <SignUpFormOptions onclick={(e: any) => storeAccountType(e)}/>
+    return (
+      <form id="sign-up__form__step1" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
+        <h2>I want to create a...*</h2>
 
-                <span>* required field</span>
+        <SignUpFormOptions onclick={(e: any) => storeAccountType(e)} />
 
-                <Button
-                    btnText={'Start'}
-                    isRegular={false}
-                    isSingleBtn={true}
-                />
-            </form>
-        );
-    }
+        <span>* required field</span>
+
+        <Button btnText={'Start'} isRegular={false} isSingleBtn={true} />
+      </form>
+    );
+  }
 }
 
 export default withRouter(SignUpFormStart);

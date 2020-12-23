@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import './App.scss';
 
 // import views
@@ -17,26 +17,26 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/sign-in"/>
+            <Redirect to="/sign-in" />
           </Route>
-          <Route path="/sign-in" component={SignIn}/>
+          <Route path="/sign-in" component={SignIn} />
 
-          <Route path="/sign-up" component={SignUp}/>
-          <Route path="/sign-up/:accountType/:currentStep" component={SignUp}/>
+          <Route path="/sign-up" component={SignUp} />
+          <Route path="/sign-up/:accountType/:currentStep" component={SignUp} />
 
-          <Route path="/dashboard" component={Dashboard}/>
+          <Route path="/dashboard" component={Dashboard} />
 
-          <Route path="/company-and-team/:section" component={CompanyAndTeam}/>
+          <Route path="/company-and-team/:section" component={CompanyAndTeam} />
 
-          <Route path="/documents" component={Documents}/>
-          
-          <Route path="/faqs" component={FAQs}/>
+          <Route path="/documents" component={Documents} />
 
-          <Route path="/admin-panel/:section" component={AdminPanel}/>
+          <Route path="/faqs" component={FAQs} />
+
+          <Route path="/admin-panel/:section" component={AdminPanel} />
         </Switch>
       </BrowserRouter>
     </div>
   );
-}
+};
 
 export default App;
