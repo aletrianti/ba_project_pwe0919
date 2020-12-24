@@ -29,9 +29,9 @@ export interface ISignInAction {
 // Auth
 export interface IAuth {
   isLoggedIn: boolean;
-  userId?: number;
+  token?: string;
 }
 export interface IAuthUserAction {
   type: string;
-  payload: number;
+  payload: IAuth;
 }

@@ -7,6 +7,7 @@ import {
   IStorePasswordAction,
   ISignInAction,
   ISignInData,
+  IAuth,
   IAuthUserAction,
 } from '../../interfaces/auth.interfaces';
 
@@ -23,6 +24,6 @@ export const SignInAction = (data: ISignInData): ISignInAction => {
   return { type: SIGN_IN, payload: data };
 };
 
-export const AuthAction = (userId: number): IAuthUserAction => {
-  return { type: SIGN_OUT, payload: userId };
+export const AuthAction = (data: IAuth): IAuthUserAction => {
+  return { type: SIGN_OUT, payload: data };
 };

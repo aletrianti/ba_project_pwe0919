@@ -50,7 +50,7 @@ export const signInReducer = (state: ISignInData = { email: '', password: '' }, 
 };
 
 export const authReducer = (
-  state: IAuth = { isLoggedIn: false }, // userId === null
+  state: IAuth = { isLoggedIn: false }, // token === null
   action: IAuthUserAction
 ) => {
   switch (action.type) {
@@ -58,13 +58,12 @@ export const authReducer = (
       return {
         ...state,
         isLoggedIn: true,
-        userId: action.payload,
+        token: action.payload,
       };
     case SIGN_OUT:
       return {
         ...state,
         isLoggedIn: false,
-        userId: action.payload, // should we store the userId on logout?
       };
     default:
       return state;
