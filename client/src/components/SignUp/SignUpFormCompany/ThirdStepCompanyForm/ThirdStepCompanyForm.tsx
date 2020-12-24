@@ -6,6 +6,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import Button from '../../../common/Button/Button';
+import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
 import { goToNextStep } from '../../ChangeFormStep';
 
@@ -125,6 +126,8 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
         </div>
 
         <SignUpFormButtons />
+
+        <SignUpProgressCircles currentStep={3} signUpMode={'company'} totalSteps={4} />
       </form>
     );
   }

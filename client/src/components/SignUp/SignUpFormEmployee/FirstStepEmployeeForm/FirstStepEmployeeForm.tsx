@@ -4,6 +4,7 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
+import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
 import { goToNextStep } from '../../ChangeFormStep';
 
@@ -35,6 +36,8 @@ class FirstStepEmployeeForm extends React.Component<RouteComponentProps> {
         <span className="required-field__span">* required field</span>
 
         <SignUpFormButtons />
+
+        <SignUpProgressCircles currentStep={1} signUpMode={'employee'} totalSteps={3} />
       </form>
     );
   }
