@@ -15,6 +15,10 @@ body, button, a, input, textarea, select {
     color: $text;
 }
 
+input::placeholder {
+    padding: 0 15px;
+}
+
 #sign-in__container,
 #sign-up__container {
     display: flex;
@@ -26,38 +30,55 @@ body, button, a, input, textarea, select {
     height: 100vh;
     width: 60%;
 
-    .form__container {
-        display: block;
-        margin: 100px 25% 50px;
-    
-        .header--h1 {
-            font-size: 70px;
-            font-weight: $bold;
-            margin-bottom: 20px;
-        }
+    #sign-in__wrapper,
+    #sign-up__wrapper {
+        height: 100%;
 
-        .sign-up__form__subheaders {
-            margin: 0 0 20px;
-
-            .sign-up__form__subheader,
-            .sign-up__form__subheader__small {
-                font-size: $font-medium;
-                font-weight: $thin;
-                font-style: italic;
-            }
-            .sign-up__form__subheader__small {
-                font-size: $font-tiny;
-            }
-        }
-
-        .required-field__span {
-            font-weight: $thick;
-            font-size: $font-small;
-        }
-
-        .sign-up__form__btns {
+        .form__container {
+            height: calc(100% - 63px);
+            width: 50%;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        
+            .header--h1 {
+                font-size: 70px;
+                font-weight: $bold;
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            .sign-in__form,
+            .sign-up__form,
+            .sign-up__final-step {
+                width: 100%;
+            }
+
+            .sign-up__form__subheaders {
+                margin: 0 0 20px;
+
+                .sign-up__form__subheader,
+                .sign-up__form__subheader__small {
+                    font-size: $font-medium;
+                    font-weight: $thin;
+                    font-style: italic;
+                }
+                .sign-up__form__subheader__small {
+                    font-size: $font-tiny;
+                }
+            }
+
+            .required-field__span {
+                font-weight: $thick;
+                font-size: $font-small;
+            }
+
+            .sign-up__form__btns {
+                display: flex;
+                justify-content: space-between;
+            }
         }
     }
 }

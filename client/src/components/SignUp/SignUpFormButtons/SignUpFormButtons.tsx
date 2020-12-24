@@ -16,7 +16,7 @@ class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
         {isFinalStep ? (
           <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} />
         ) : (
-          <Button btnText={'Confirm'} isRegular={false} />
+          <Button btnText={'Next'} isRegular={false} />
         )}
       </div>
     );
