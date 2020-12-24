@@ -7,11 +7,13 @@ interface InputFieldProps {
   isPassword?: boolean;
   isInviteUsersField?: boolean;
   onchange: any;
+  isValid?: boolean;
+  errorMessage?: string;
 }
 
 class InputField extends React.Component<InputFieldProps> {
   render() {
-    const { name, isPassword, onchange, isInviteUsersField } = this.props;
+    const { name, isPassword, onchange, isInviteUsersField, isValid, errorMessage } = this.props;
 
     const handleOnChange = (event: any): void => {
       onchange(event.target.value);
@@ -30,6 +32,7 @@ class InputField extends React.Component<InputFieldProps> {
             alt={name}
             name={`Input[${name}]`}
             onChange={handleOnChange}
+            className={!isValid ? 'input-field__invalid' : ''}
           />
         ) : (
           <input
@@ -41,6 +44,8 @@ class InputField extends React.Component<InputFieldProps> {
             className={'input-field__invite-users'}
           />
         )}
+
+        {!isValid ? <span className="error__message">{errorMessage}</span> : null}
       </div>
     );
   }
