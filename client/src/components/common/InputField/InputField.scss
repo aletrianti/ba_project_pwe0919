@@ -4,6 +4,7 @@
     width: 100%;
     display: flex;
     flex-direction: column;
+    margin-bottom: 20px;
 
     label {
         color: $text;
@@ -19,10 +20,10 @@
     }
 
     input {
-        padding: 15px 0;
+        padding: 15px;
         border-radius: 10px;
         border: 2px solid $primary-grey;
-        margin: 5px 0 20px;
+        margin: 5px 0;
         outline: none;
         transition: all 0.1s ease;
     }
@@ -33,12 +34,12 @@
         margin-right: 20px;
     }
     input.input-field__invalid {
-        border: 2px solid red;
+        border: 2px solid $error;
     }
 
     .error__message {
         font-size: $font-small;
-        color: red;
+        color: $error;
         font-style: italic;
     }
 }

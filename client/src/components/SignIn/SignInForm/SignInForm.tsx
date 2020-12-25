@@ -23,20 +23,29 @@ import {
 // Data from backend
 import { ILoginInput } from '../../../../../types/auth.types';
 
+// Validator
+import { validator } from '../../../formValidation';
+
 class SignInForm extends React.Component<RouteComponentProps> {
   render() {
-    const storeEmail = (data: string): void => {
-      const payload: IEmail = { email: data };
+    const storeEmail = (data: string): any => {
+      const { isValid, message } = validator(data, 'email');
+      const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
       store.dispatch(action);
+
+      return { isValid, message };
     };
 
-    const storePassword = (data: string): void => {
-      const payload: IPassword = { password: data };
+    const storePassword = (data: string): any => {
+      const { isValid, message } = validator(data, 'password');
+      const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
       const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
 
       store.dispatch(action);
+
+      return { isValid, message };
     };
 
     const dispatchSignInAction = (): void => {
@@ -45,6 +54,7 @@ class SignInForm extends React.Component<RouteComponentProps> {
       const payload: ISignInData = {
         email: state.signInEmail.email,
         password: state.signInPassword.password,
+        areAllFieldsValid: true,
       };
 
       const action: ISignInAction = { type: SIGN_IN, payload };

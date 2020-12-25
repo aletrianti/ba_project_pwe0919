@@ -12,37 +12,48 @@ import {
 } from '../interfaces/auth.interfaces';
 
 // create reducers
-export const storeEmailReducer = (state: IEmail = { email: '' }, action: IStoreEmailAction) => {
+export const storeEmailReducer = (state: IEmail = { email: '', isValid: false, errorMessage: '' }, action: IStoreEmailAction) => {
   switch (action.type) {
     case STORE_EMAIL:
       return {
         ...state,
         email: action.payload.email,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storePasswordReducer = (state: IPassword = { password: '' }, action: IStorePasswordAction) => {
+export const storePasswordReducer = (
+  state: IPassword = { password: '', isValid: false, errorMessage: '' },
+  action: IStorePasswordAction
+) => {
   switch (action.type) {
     case STORE_PASSWORD:
       return {
         ...state,
         password: action.payload.password,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const signInReducer = (state: ISignInData = { email: '', password: '' }, action: ISignInAction) => {
+export const signInReducer = (
+  state: ISignInData = { email: '', password: '', areAllFieldsValid: false },
+  action: ISignInAction
+) => {
   switch (action.type) {
     case SIGN_IN:
       return {
         ...state,
         email: action.payload.email,
         password: action.payload.password,
+        areAllFieldsValid: action.payload.areAllFieldsValid,
       };
     default:
       return state;

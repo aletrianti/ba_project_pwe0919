@@ -4,7 +4,46 @@ interface IValidatorResult {
   message: string;
 }
 
-export const validator = (props: any): IValidatorResult => {
+// types
+export const validatorTypes = {
+  EMAIL: 'email',
+  PASSWORD: 'password',
+};
+
+// General validators
+const isNotUndefined = (data: any): boolean => (data ? true : false);
+
+// Specific validators
+const validateEmail = (email: string): IValidatorResult => {
+  if (isNotUndefined(email)) {
+    const regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}/g;
+
+    return regex.test(email)
+      ? { isValid: true, message: '' }
+      : { isValid: false, message: 'This is not a valid email. Please, try again.' };
+  } else {
+    return { isValid: false, message: '"Email" is required.' };
+  }
+};
+
+const validatePassword = (password: string): IValidatorResult => {
+  if (isNotUndefined(password)) {
+    return password.length >= 8
+      ? { isValid: true, message: '' }
+      : { isValid: false, message: 'Passwords must be min. 8 characters. Please, try again.' };
+  } else {
+    return { isValid: false, message: '"Email" is required.' };
+  }
+};
+
+export const validator = (field: string, type: string): IValidatorResult => {
   // modify with switch statements
-  return { isValid: true, message: '' };
+  switch (type) {
+    case validatorTypes.EMAIL:
+      return validateEmail(field);
+    case validatorTypes.PASSWORD:
+      return validatePassword(field);
+    default:
+      return { isValid: false, message: '' };
+  }
 };

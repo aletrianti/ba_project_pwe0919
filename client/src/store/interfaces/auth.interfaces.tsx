@@ -3,6 +3,8 @@
 // Sign In
 export interface IEmail {
   email: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreEmailAction {
   type: string;
@@ -11,6 +13,8 @@ export interface IStoreEmailAction {
 
 export interface IPassword {
   password: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStorePasswordAction {
   type: string;
@@ -20,6 +24,7 @@ export interface IStorePasswordAction {
 export interface ISignInData {
   email: string;
   password: string;
+  areAllFieldsValid: boolean;
 }
 export interface ISignInAction {
   type: string;

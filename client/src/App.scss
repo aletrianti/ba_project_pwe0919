@@ -15,10 +15,6 @@ body, button, a, input, textarea, select {
     color: $text;
 }
 
-input::placeholder {
-    padding: 0 15px;
-}
-
 #sign-in__container,
 #sign-up__container {
     display: flex;
