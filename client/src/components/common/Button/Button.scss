@@ -38,14 +38,32 @@
         background-color: $orange-accent;
         border: 2px solid $orange-accent;
         color: $text;
+
+        &:disabled {
+           background-color: lighten($orange-accent, 10%);
+           color: darken($primary-grey, 20%);
+           cursor: default;
+        }
     }
     .btn--orange-accent:hover {
         background-color: darken($orange-accent, 5%);
         border: 2px solid darken($orange-accent, 5%);
+
+        &:disabled {
+           background-color: lighten($orange-accent, 10%);
+           color: darken($primary-grey, 20%);
+           cursor: default;
+        }
     }
     .btn--orange-accent:focus {
         background-color: darken($orange-accent, 10%);
         border: 2px solid darken($orange-accent, 10%);
+
+        &:disabled {
+           background-color: lighten($orange-accent, 10%);
+           color: darken($primary-grey, 20%);
+           cursor: default;
+        }
     }
 
     .btn--long {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Button.scss';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { goToPreviousStep, resetFormStateOnRedirect } from '../../SignUp/ChangeFormStep';
+import { goToPreviousStep, resetFormStateOnRedirect } from '../../../utils/changeFormStep';
 
 interface ButtonProps {
   isSignUpOrSignInBtn?: boolean;
@@ -15,6 +15,8 @@ interface ButtonProps {
   isBackFormBtn?: boolean;
   isInviteBtn?: boolean;
   inviteEmployee?: any;
+  isConfirmBtn: boolean;
+  areAllFieldsValid?: boolean;
 }
 
 class Button extends React.Component<ButtonProps & RouteComponentProps> {
@@ -29,6 +31,8 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
       isBackFormBtn,
       isInviteBtn,
       inviteEmployee,
+      areAllFieldsValid,
+      isConfirmBtn,
       history,
     } = this.props;
 
@@ -48,7 +52,9 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
             {btnText}
           </Link>
         ) : isSingleBtn ? (
-          <button className="btn--orange-accent btn--long">{btnText}</button>
+          <button className="btn--orange-accent btn--long" disabled={isConfirmBtn ? !areAllFieldsValid : false}>
+            {btnText}
+          </button>
         ) : isRegular ? (
           [
             isBackFormBtn ? (
@@ -68,11 +74,16 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
         ) : (
           [
             !isInviteBtn ? (
-              <button className="btn--orange-accent" key={btnText}>
+              <button className="btn--orange-accent" key={btnText} disabled={isConfirmBtn ? !areAllFieldsValid : false}>
                 {btnText}
               </button>
             ) : (
-              <button className="btn--orange-accent btn__invite" onClick={inviteEmployee} key={btnText}>
+              <button
+                className="btn--orange-accent btn__invite"
+                onClick={inviteEmployee}
+                key={btnText}
+                disabled={isConfirmBtn ? !areAllFieldsValid : false}
+              >
                 {btnText}
               </button>
             ),

@@ -7,7 +7,7 @@ import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../ChangeFormStep';
+import { goToNextStep } from '../../../../utils/changeFormStep';
 
 // import store
 import store from '../../../../index';
@@ -35,34 +35,78 @@ import {
 // Data from backend
 import { INewEmployeeInput } from '../../../../../../types/auth.types';
 
-class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
+// Validators
+import { validator, validatorTypes } from '../../../../utils/formValidation';
+import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
+
+interface SecondStepEmployeeFormState {
+  areAllFieldsValid: boolean;
+}
+
+class SecondStepEmployeeForm extends React.Component<RouteComponentProps, SecondStepEmployeeFormState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      areAllFieldsValid: false,
+    };
+  }
+
   render() {
-    const storeFirstName = (data: string): void => {
-      const payload: IFirstName = { firstName: data };
+    // Check that all fields are valid and enable confirm button
+    const checkFields = (): any => {
+      const formValues: string[] = ['signUpFirstName', 'signUpLastName', 'signUpEmail', 'signUpPassword'];
+      const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+      this.setState(areFieldsValid);
+    };
+
+    const storeFirstName = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const payload: IFirstName = { firstName: data, isValid: isValid, errorMessage: message };
       const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
-    const storeLastName = (data: string): void => {
-      const payload: ILastName = { lastName: data };
+    const storeLastName = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const payload: ILastName = { lastName: data, isValid: isValid, errorMessage: message };
       const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
-    const storeEmail = (data: string): void => {
-      const payload: IEmail = { email: data };
+    const storeEmail = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.EMAIL);
+      const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
-    const storePassword = (data: string): void => {
-      const payload: IPassword = { password: data };
+    const storePassword = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.PASSWORD);
+      const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
       const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
     const dispatchSignUpAction = (): void => {
@@ -96,8 +140,6 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
         password: state.signUpEmployeeInfo.password,
       };
 
-      console.log(data);
-
       axios
         .post('http://localhost:4000/api/auth/register-employee', data)
         .then(response => {
@@ -125,7 +167,7 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps> {
 
         <span className="required-field__span">* required field</span>
 
-        <SignUpFormButtons />
+        <SignUpFormButtons areFieldsValid={this.state.areAllFieldsValid} />
 
         <SignUpProgressCircles currentStep={2} signUpMode={'employee'} totalSteps={3} />
       </form>

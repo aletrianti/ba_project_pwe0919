@@ -26,7 +26,7 @@ class SignUp extends React.Component {
 
         <div id="sign-up__form__container">
           <div id="sign-up__wrapper">
-            <Button isSignUpOrSignInBtn={true} link={'/sign-in'} btnText={'Sign in'} />
+            <Button isSignUpOrSignInBtn={true} link={'/sign-in'} btnText={'Sign in'} isConfirmBtn={false} />
 
             <div className="form__container">
               <h1 className="header--h1">Sign up</h1>

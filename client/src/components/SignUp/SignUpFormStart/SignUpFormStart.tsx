@@ -3,6 +3,7 @@ import SignUpFormOptions from './SignUpFormOptions/SignUpFormOptions';
 import Button from '../../common/Button/Button';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import './SignUpFormStart.scss';
+import { AnyAction } from '@reduxjs/toolkit';
 
 // import store
 import store from '../../../index';
@@ -10,15 +11,44 @@ import store from '../../../index';
 import { SET_ACCOUNT_TYPE } from '../../../store/actions/signUpSteps/signUpSteps.types';
 import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/signUpSteps.interfaces';
 
-import { goToNextStep } from '../ChangeFormStep';
+import { goToNextStep } from '../../../utils/changeFormStep';
 
-class SignUpFormStart extends React.Component<RouteComponentProps> {
+// Validators
+import { validator, validatorTypes } from '../../../utils/formValidation';
+import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
+
+interface SignUpFormStartState {
+  areAllFieldsValid: boolean;
+}
+
+class SignUpFormStart extends React.Component<RouteComponentProps, SignUpFormStartState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      areAllFieldsValid: false,
+    };
+  }
+
   render() {
-    const storeAccountType = (data: string): void => {
-      const payload: IAccountType = { accountType: data };
+    // Check that all fields are valid and enable confirm button
+    const checkFields = (): void => {
+      const formValues: string[] = ['signUpAccountType'];
+      const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+      this.setState(areFieldsValid);
+    };
+
+    const storeAccountType = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const payload: IAccountType = { accountType: data, isValid: isValid, errorMessage: message };
       const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
     return (
@@ -29,7 +59,13 @@ class SignUpFormStart extends React.Component<RouteComponentProps> {
 
         <span>* required field</span>
 
-        <Button btnText={'Start'} isRegular={false} isSingleBtn={true} />
+        <Button
+          btnText={'Start'}
+          isRegular={false}
+          isSingleBtn={true}
+          isConfirmBtn={true}
+          areAllFieldsValid={this.state.areAllFieldsValid}
+        />
       </form>
     );
   }

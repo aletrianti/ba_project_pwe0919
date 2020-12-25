@@ -9,12 +9,27 @@ interface InputFieldProps {
   onchange: any;
 }
 
-class InputField extends React.Component<InputFieldProps> {
+interface InputFieldState {
+  isFieldValid: boolean;
+  errorMessage: string;
+}
+
+class InputField extends React.Component<InputFieldProps, InputFieldState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isFieldValid: true,
+      errorMessage: '',
+    };
+  }
+
   render() {
     const { name, isPassword, onchange, isInviteUsersField } = this.props;
 
     const handleOnChange = (event: any): void => {
-      onchange(event.target.value);
+      const { isValid, message } = onchange(event.target.value);
+
+      this.setState({ isFieldValid: isValid, errorMessage: message });
     };
 
     return (
@@ -30,6 +45,7 @@ class InputField extends React.Component<InputFieldProps> {
             alt={name}
             name={`Input[${name}]`}
             onChange={handleOnChange}
+            className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
           />
         ) : (
           <input
@@ -41,6 +57,8 @@ class InputField extends React.Component<InputFieldProps> {
             className={'input-field__invite-users'}
           />
         )}
+
+        {!this.state.isFieldValid ? <span className="error__message">{this.state.errorMessage}</span> : null}
       </div>
     );
   }

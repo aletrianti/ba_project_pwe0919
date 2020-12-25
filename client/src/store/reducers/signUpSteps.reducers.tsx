@@ -62,83 +62,112 @@ export const changeSignUpStep = (state: ISignUpStep = { currentStep: 0, accountT
   }
 };
 
-export const setAccountType = (state: IAccountType = { accountType: '' }, action: ISetAccountTypeAction) => {
+export const setAccountType = (
+  state: IAccountType = { accountType: '', isValid: false, errorMessage: '' },
+  action: ISetAccountTypeAction
+) => {
   switch (action.type) {
     case SET_ACCOUNT_TYPE:
       return {
         ...state,
         accountType: action.payload.accountType,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storeCompanyCode = (state: ICompanyCode = { code: '' }, action: IStoreCompanyCodeAction) => {
+export const storeCompanyCode = (
+  state: ICompanyCode = { code: '', isValid: false, errorMessage: '' },
+  action: IStoreCompanyCodeAction
+) => {
   switch (action.type) {
     case STORE_COMPANY_CODE:
       return {
         ...state,
         code: action.payload.code,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
-export const storeFirstName = (state: IFirstName = { firstName: '' }, action: IStoreFirstNameAction) => {
+export const storeFirstName = (
+  state: IFirstName = { firstName: '', isValid: false, errorMessage: '' },
+  action: IStoreFirstNameAction
+) => {
   switch (action.type) {
     case STORE_FIRST_NAME:
       return {
         ...state,
         firstName: action.payload.firstName,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storeLastName = (state: ILastName = { lastName: '' }, action: IStoreLastNameAction) => {
+export const storeLastName = (
+  state: ILastName = { lastName: '', isValid: false, errorMessage: '' },
+  action: IStoreLastNameAction
+) => {
   switch (action.type) {
     case STORE_LAST_NAME:
       return {
         ...state,
         lastName: action.payload.lastName,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storeEmail = (state: IEmail = { email: '' }, action: IStoreEmailAction) => {
+export const storeEmail = (state: IEmail = { email: '', isValid: false, errorMessage: '' }, action: IStoreEmailAction) => {
   switch (action.type) {
     case STORE_EMAIL:
       return {
         ...state,
         email: action.payload.email,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storePassword = (state: IPassword = { password: '' }, action: IStorePasswordAction) => {
+export const storePassword = (
+  state: IPassword = { password: '', isValid: false, errorMessage: '' },
+  action: IStorePasswordAction
+) => {
   switch (action.type) {
     case STORE_PASSWORD:
       return {
         ...state,
         password: action.payload.password,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storeRole = (state: IRole = { role: '' }, action: IStoreRoleAction) => {
+export const storeRole = (state: IRole = { role: '', isValid: false, errorMessage: '' }, action: IStoreRoleAction) => {
   switch (action.type) {
     case STORE_ROLE:
       return {
         ...state,
         role: action.payload.role,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
@@ -181,24 +210,34 @@ export const storeCompany = (state: ICompany = { name: '', size: '' }, action: I
   }
 };
 
-export const storeCompanyName = (state: ICompanyName = { name: '' }, action: IStoreCompanyNameAction) => {
+export const storeCompanyName = (
+  state: ICompanyName = { name: '', isValid: false, errorMessage: '' },
+  action: IStoreCompanyNameAction
+) => {
   switch (action.type) {
     case STORE_COMPANY_NAME:
       return {
         ...state,
         name: action.payload.name,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
   }
 };
 
-export const storeCompanySize = (state: ICompanySize = { size: '' }, action: IStoreCompanySizeAction) => {
+export const storeCompanySize = (
+  state: ICompanySize = { size: '', isValid: false, errorMessage: '' },
+  action: IStoreCompanySizeAction
+) => {
   switch (action.type) {
     case STORE_COMPANY_SIZE:
       return {
         ...state,
         size: action.payload.size,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
@@ -230,12 +269,17 @@ export const storeAdminAccount = (
   }
 };
 
-export const storeInvitedEmployee = (state: IInvitedEmployee = { email: '' }, action: IStoreInvitedEmployeeAction) => {
+export const storeInvitedEmployee = (
+  state: IInvitedEmployee = { email: '', isValid: false, errorMessage: '' },
+  action: IStoreInvitedEmployeeAction
+) => {
   switch (action.type) {
     case STORE_INVITED_EMPLOYEE:
       return {
         ...state,
         email: action.payload.email,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;

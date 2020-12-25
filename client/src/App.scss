@@ -15,8 +15,10 @@ body, button, a, input, textarea, select {
     color: $text;
 }
 
-input::placeholder {
-    padding: 0 15px;
+.error__message {
+    font-size: $font-small;
+    color: $error;
+    font-style: italic;
 }
 
 #sign-in__container,

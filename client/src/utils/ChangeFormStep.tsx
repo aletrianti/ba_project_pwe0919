@@ -2,10 +2,10 @@ import { FormEvent, MouseEvent } from 'react';
 import { AnyAction } from '@reduxjs/toolkit';
 
 // import store
-import store from '../../index';
+import store from '../index';
 
-import { CHANGE_STEP } from '../../store/actions/signUpSteps/signUpSteps.types';
-import { ISignUpStep, IChangeStepAction } from '../../store/interfaces/signUpSteps.interfaces';
+import { CHANGE_STEP } from '../store/actions/signUpSteps/signUpSteps.types';
+import { ISignUpStep, IChangeStepAction } from '../store/interfaces/signUpSteps.interfaces';
 
 const dispatchAction = (step: number, accountType: string): ISignUpStep => {
   const payload: ISignUpStep = {
