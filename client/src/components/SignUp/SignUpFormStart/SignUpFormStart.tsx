@@ -11,10 +11,11 @@ import store from '../../../index';
 import { SET_ACCOUNT_TYPE } from '../../../store/actions/signUpSteps/signUpSteps.types';
 import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/signUpSteps.interfaces';
 
-import { goToNextStep } from '../ChangeFormStep';
+import { goToNextStep } from '../../../utils/ChangeFormStep';
 
-// Validator
+// Validators
 import { validator } from '../../../formValidation';
+import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 interface SignUpFormStartState {
   areAllFieldsValid: boolean;
@@ -32,9 +33,10 @@ class SignUpFormStart extends React.Component<RouteComponentProps, SignUpFormSta
   render() {
     // Check that all fields are valid and enable confirm button
     const checkFields = (): void => {
-      const state: AnyAction = store.getState();
+      const formValues: string[] = ['signUpAccountType'];
+      const areFieldsValid: ICheckFields = checkFormFields(formValues);
 
-      this.setState({ areAllFieldsValid: state.signUpAccountType.isValid });
+      this.setState(areFieldsValid);
     };
 
     const storeAccountType = (data: string): any => {

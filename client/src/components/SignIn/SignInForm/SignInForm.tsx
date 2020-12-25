@@ -23,8 +23,9 @@ import {
 // Data from backend
 import { ILoginInput } from '../../../../../types/auth.types';
 
-// Validator
+// Validators
 import { validator } from '../../../formValidation';
+import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 interface SignInFormState {
   areAllFieldsValid: boolean;
@@ -41,12 +42,11 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
 
   render() {
     // Check that all fields are valid and enable confirm button
-    const checkFields = (): void => {
-      const state: AnyAction = store.getState();
-      const formValues = [state.signInEmail.isValid, state.signInPassword.isValid];
-      const areAllFieldsValid = formValues.every(value => value === true);
+    const checkFields = (): any => {
+      const formValues: string[] = ['signInEmail', 'signInPassword'];
+      const areFieldsValid: ICheckFields = checkFormFields(formValues);
 
-      this.setState({ areAllFieldsValid: areAllFieldsValid });
+      this.setState(areFieldsValid);
     };
 
     const storeEmail = (data: string): any => {

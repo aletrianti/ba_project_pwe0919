@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import './Button.scss';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
-import { goToPreviousStep, resetFormStateOnRedirect } from '../../SignUp/ChangeFormStep';
+import { goToPreviousStep, resetFormStateOnRedirect } from '../../../utils/ChangeFormStep';
 
 interface ButtonProps {
   isSignUpOrSignInBtn?: boolean;
