@@ -26,7 +26,19 @@ import { ILoginInput } from '../../../../../types/auth.types';
 // Validator
 import { validator } from '../../../formValidation';
 
-class SignInForm extends React.Component<RouteComponentProps> {
+interface SignInFormState {
+  areAllFieldsValid: boolean;
+}
+
+class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      areAllFieldsValid: false,
+    };
+  }
+
   render() {
     const storeEmail = (data: string): any => {
       const { isValid, message } = validator(data, 'email');
@@ -34,6 +46,8 @@ class SignInForm extends React.Component<RouteComponentProps> {
       const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
       store.dispatch(action);
+
+      checkFields();
 
       return { isValid, message };
     };
@@ -45,7 +59,19 @@ class SignInForm extends React.Component<RouteComponentProps> {
 
       store.dispatch(action);
 
+      checkFields();
+
       return { isValid, message };
+    };
+
+    const checkFields = () => {
+      const state: AnyAction = store.getState();
+
+      // Check that all fields are valid and enable confirm button
+      const formValues = [state.signInEmail.isValid, state.signInPassword.isValid];
+      const areAllFieldsValid = formValues.every(value => value === true);
+
+      this.setState({ areAllFieldsValid: areAllFieldsValid });
     };
 
     const dispatchSignInAction = (): void => {
@@ -54,7 +80,6 @@ class SignInForm extends React.Component<RouteComponentProps> {
       const payload: ISignInData = {
         email: state.signInEmail.email,
         password: state.signInPassword.password,
-        areAllFieldsValid: true,
       };
 
       const action: ISignInAction = { type: SIGN_IN, payload };
@@ -64,8 +89,6 @@ class SignInForm extends React.Component<RouteComponentProps> {
 
     const signInRequest = (history = this.props.history) => {
       const state: AnyAction = store.getState();
-
-      // include validation, then send data to the backend if everything is okay
 
       const data: ILoginInput = {
         email: state.signIn.email,
@@ -95,7 +118,7 @@ class SignInForm extends React.Component<RouteComponentProps> {
       <form className="sign-in__form" onSubmit={signIn}>
         <InputField name={'Email'} onchange={(e: any) => storeEmail(e)} />
         <InputField name={'Password'} isPassword={true} onchange={(e: any) => storePassword(e)} />
-        <Button btnText={'Sign in'} isRegular={false} isSingleBtn={true} />
+        <Button btnText={'Sign in'} isRegular={false} isSingleBtn={true} areAllFieldsValid={this.state.areAllFieldsValid} />
       </form>
     );
   }

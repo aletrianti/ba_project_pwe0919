@@ -43,17 +43,13 @@ export const storePasswordReducer = (
   }
 };
 
-export const signInReducer = (
-  state: ISignInData = { email: '', password: '', areAllFieldsValid: false },
-  action: ISignInAction
-) => {
+export const signInReducer = (state: ISignInData = { email: '', password: '' }, action: ISignInAction) => {
   switch (action.type) {
     case SIGN_IN:
       return {
         ...state,
         email: action.payload.email,
         password: action.payload.password,
-        areAllFieldsValid: action.payload.areAllFieldsValid,
       };
     default:
       return state;

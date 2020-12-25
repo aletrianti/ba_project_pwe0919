@@ -24,7 +24,6 @@ export interface IStorePasswordAction {
 export interface ISignInData {
   email: string;
   password: string;
-  areAllFieldsValid: boolean;
 }
 export interface ISignInAction {
   type: string;

@@ -15,6 +15,7 @@ interface ButtonProps {
   isBackFormBtn?: boolean;
   isInviteBtn?: boolean;
   inviteEmployee?: any;
+  areAllFieldsValid?: boolean;
 }
 
 class Button extends React.Component<ButtonProps & RouteComponentProps> {
@@ -29,6 +30,7 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
       isBackFormBtn,
       isInviteBtn,
       inviteEmployee,
+      areAllFieldsValid,
       history,
     } = this.props;
 
@@ -48,7 +50,9 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
             {btnText}
           </Link>
         ) : isSingleBtn ? (
-          <button className="btn--orange-accent btn--long">{btnText}</button>
+          <button className="btn--orange-accent btn--long" disabled={!areAllFieldsValid}>
+            {btnText}
+          </button>
         ) : isRegular ? (
           [
             isBackFormBtn ? (
@@ -68,11 +72,16 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
         ) : (
           [
             !isInviteBtn ? (
-              <button className="btn--orange-accent" key={btnText}>
+              <button className="btn--orange-accent" key={btnText} disabled={!areAllFieldsValid}>
                 {btnText}
               </button>
             ) : (
-              <button className="btn--orange-accent btn__invite" onClick={inviteEmployee} key={btnText}>
+              <button
+                className="btn--orange-accent btn__invite"
+                onClick={inviteEmployee}
+                key={btnText}
+                disabled={!areAllFieldsValid}
+              >
                 {btnText}
               </button>
             ),
