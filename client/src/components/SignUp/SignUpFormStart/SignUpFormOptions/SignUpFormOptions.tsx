@@ -5,12 +5,27 @@ interface SignUpFormOptionsProps {
   onclick: any;
 }
 
-class SignUpFormOptions extends React.Component<SignUpFormOptionsProps> {
+interface SignUpFormOptionsState {
+  isFieldValid: boolean;
+  errorMessage: string;
+}
+
+class SignUpFormOptions extends React.Component<SignUpFormOptionsProps, SignUpFormOptionsState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isFieldValid: true,
+      errorMessage: '',
+    };
+  }
+
   render() {
     const { onclick } = this.props;
 
     const handleOnClick = (event: any): void => {
-      onclick(event.target.value);
+      const { isValid, message } = onclick(event.target.value);
+
+      this.setState({ isFieldValid: isValid, errorMessage: message });
     };
 
     return (
@@ -25,6 +40,8 @@ class SignUpFormOptions extends React.Component<SignUpFormOptionsProps> {
           <span className="radio-btn"></span>
           Employee account
         </label>
+
+        {!this.state.isFieldValid ? <span className="error__message">{this.state.errorMessage}</span> : null}
       </div>
     );
   }

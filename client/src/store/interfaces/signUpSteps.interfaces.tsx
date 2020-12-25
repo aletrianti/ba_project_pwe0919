@@ -53,6 +53,8 @@ export interface IStoreRoleAction {
 // Step 0 (general step)
 export interface IAccountType {
   accountType: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface ISetAccountTypeAction {
   type: string;

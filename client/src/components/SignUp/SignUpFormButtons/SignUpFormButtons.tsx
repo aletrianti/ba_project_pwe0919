@@ -12,11 +12,11 @@ class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
 
     return (
       <div className="sign-up__form__btns">
-        <Button btnText={'Back'} isRegular={true} isBackFormBtn={true} />
+        <Button btnText={'Back'} isRegular={true} isBackFormBtn={true} isConfirmBtn={false} />
         {isFinalStep ? (
-          <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} />
+          <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} isConfirmBtn={true} />
         ) : (
-          <Button btnText={'Next'} isRegular={false} />
+          <Button btnText={'Next'} isRegular={false} isConfirmBtn={false} />
         )}
       </div>
     );

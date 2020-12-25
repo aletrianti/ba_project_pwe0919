@@ -3,6 +3,7 @@ import SignUpFormOptions from './SignUpFormOptions/SignUpFormOptions';
 import Button from '../../common/Button/Button';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import './SignUpFormStart.scss';
+import { AnyAction } from '@reduxjs/toolkit';
 
 // import store
 import store from '../../../index';
@@ -12,13 +13,40 @@ import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/s
 
 import { goToNextStep } from '../ChangeFormStep';
 
-class SignUpFormStart extends React.Component<RouteComponentProps> {
+// Validator
+import { validator } from '../../../formValidation';
+
+interface SignUpFormStartState {
+  areAllFieldsValid: boolean;
+}
+
+class SignUpFormStart extends React.Component<RouteComponentProps, SignUpFormStartState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      areAllFieldsValid: false,
+    };
+  }
+
   render() {
-    const storeAccountType = (data: string): void => {
-      const payload: IAccountType = { accountType: data };
+    // Check that all fields are valid and enable confirm button
+    const checkFields = (): void => {
+      const state: AnyAction = store.getState();
+
+      this.setState({ areAllFieldsValid: state.signUpAccountType.isValid });
+    };
+
+    const storeAccountType = (data: string): any => {
+      const { isValid, message } = validator(data, 'account_type');
+      const payload: IAccountType = { accountType: data, isValid: isValid, errorMessage: message };
       const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
     return (
@@ -29,7 +57,13 @@ class SignUpFormStart extends React.Component<RouteComponentProps> {
 
         <span>* required field</span>
 
-        <Button btnText={'Start'} isRegular={false} isSingleBtn={true} />
+        <Button
+          btnText={'Start'}
+          isRegular={false}
+          isSingleBtn={true}
+          isConfirmBtn={true}
+          areAllFieldsValid={this.state.areAllFieldsValid}
+        />
       </form>
     );
   }

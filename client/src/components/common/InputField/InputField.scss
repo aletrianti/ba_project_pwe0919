@@ -36,10 +36,4 @@
     input.input-field__invalid {
         border: 2px solid $error;
     }
-
-    .error__message {
-        font-size: $font-small;
-        color: $error;
-        font-style: italic;
-    }
 }

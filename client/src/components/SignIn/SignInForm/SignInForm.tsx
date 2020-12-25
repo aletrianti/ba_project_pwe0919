@@ -40,6 +40,15 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
   }
 
   render() {
+    // Check that all fields are valid and enable confirm button
+    const checkFields = (): void => {
+      const state: AnyAction = store.getState();
+      const formValues = [state.signInEmail.isValid, state.signInPassword.isValid];
+      const areAllFieldsValid = formValues.every(value => value === true);
+
+      this.setState({ areAllFieldsValid: areAllFieldsValid });
+    };
+
     const storeEmail = (data: string): any => {
       const { isValid, message } = validator(data, 'email');
       const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
@@ -62,16 +71,6 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       checkFields();
 
       return { isValid, message };
-    };
-
-    const checkFields = () => {
-      const state: AnyAction = store.getState();
-
-      // Check that all fields are valid and enable confirm button
-      const formValues = [state.signInEmail.isValid, state.signInPassword.isValid];
-      const areAllFieldsValid = formValues.every(value => value === true);
-
-      this.setState({ areAllFieldsValid: areAllFieldsValid });
     };
 
     const dispatchSignInAction = (): void => {
@@ -118,7 +117,13 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       <form className="sign-in__form" onSubmit={signIn}>
         <InputField name={'Email'} onchange={(e: any) => storeEmail(e)} />
         <InputField name={'Password'} isPassword={true} onchange={(e: any) => storePassword(e)} />
-        <Button btnText={'Sign in'} isRegular={false} isSingleBtn={true} areAllFieldsValid={this.state.areAllFieldsValid} />
+        <Button
+          btnText={'Sign in'}
+          isRegular={false}
+          isSingleBtn={true}
+          isConfirmBtn={true}
+          areAllFieldsValid={this.state.areAllFieldsValid}
+        />
       </form>
     );
   }

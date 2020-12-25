@@ -8,6 +8,7 @@ interface IValidatorResult {
 export const validatorTypes = {
   EMAIL: 'email',
   PASSWORD: 'password',
+  ACCOUNT_TYPE: 'account_type',
 };
 
 // General validators
@@ -43,6 +44,10 @@ export const validator = (field: string, type: string): IValidatorResult => {
       return validateEmail(field);
     case validatorTypes.PASSWORD:
       return validatePassword(field);
+    case validatorTypes.ACCOUNT_TYPE:
+      return isNotUndefined(field)
+        ? { isValid: true, message: '' }
+        : { isValid: false, message: 'You must choose an account type.' };
     default:
       return { isValid: false, message: '' };
   }

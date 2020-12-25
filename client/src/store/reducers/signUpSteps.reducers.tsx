@@ -62,12 +62,17 @@ export const changeSignUpStep = (state: ISignUpStep = { currentStep: 0, accountT
   }
 };
 
-export const setAccountType = (state: IAccountType = { accountType: '' }, action: ISetAccountTypeAction) => {
+export const setAccountType = (
+  state: IAccountType = { accountType: '', isValid: false, errorMessage: '' },
+  action: ISetAccountTypeAction
+) => {
   switch (action.type) {
     case SET_ACCOUNT_TYPE:
       return {
         ...state,
         accountType: action.payload.accountType,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;
