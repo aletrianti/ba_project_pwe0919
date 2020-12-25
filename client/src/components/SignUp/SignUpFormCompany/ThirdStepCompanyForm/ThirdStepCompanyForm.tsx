@@ -8,7 +8,7 @@ import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import Button from '../../../common/Button/Button';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../../../utils/ChangeFormStep';
+import { goToNextStep } from '../../../../utils/changeFormStep';
 
 // import store
 import store from '../../../../index';
@@ -25,7 +25,7 @@ import {
 import { INewCompanyInput, INewEmployees } from '../../../../../../types/auth.types';
 
 // Validators
-import { validator, validatorTypes } from '../../../../formValidation';
+import { validator, validatorTypes } from '../../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
 interface ThirdStepCompanyFormState {

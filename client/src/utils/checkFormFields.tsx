@@ -6,6 +6,7 @@ export interface ICheckFields {
   areAllFieldsValid: boolean;
 }
 
+// Check if ALL fields are valid
 export const checkFormFields = (fields: string[]): ICheckFields => {
   const state: AnyAction = store.getState();
 

@@ -6,7 +6,7 @@ import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../../../utils/ChangeFormStep';
+import { goToNextStep } from '../../../../utils/changeFormStep';
 
 // import store
 import store from '../../../../index';
@@ -35,7 +35,7 @@ import {
 } from '../../../../store/interfaces/signUpSteps.interfaces';
 
 // Validators
-import { validator, validatorTypes } from '../../../../formValidation';
+import { validator, validatorTypes } from '../../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
 interface SecondStepCompanyFormState {

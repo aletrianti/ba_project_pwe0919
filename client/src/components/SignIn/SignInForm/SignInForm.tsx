@@ -24,7 +24,7 @@ import {
 import { ILoginInput } from '../../../../../types/auth.types';
 
 // Validators
-import { validator, validatorTypes } from '../../../formValidation';
+import { validator, validatorTypes } from '../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 interface SignInFormState {
