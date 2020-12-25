@@ -79,12 +79,17 @@ export const setAccountType = (
   }
 };
 
-export const storeCompanyCode = (state: ICompanyCode = { code: '' }, action: IStoreCompanyCodeAction) => {
+export const storeCompanyCode = (
+  state: ICompanyCode = { code: '', isValid: false, errorMessage: '' },
+  action: IStoreCompanyCodeAction
+) => {
   switch (action.type) {
     case STORE_COMPANY_CODE:
       return {
         ...state,
         code: action.payload.code,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;

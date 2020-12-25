@@ -64,6 +64,8 @@ export interface ISetAccountTypeAction {
 // Step 1 - Employee
 export interface ICompanyCode {
   code: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreCompanyCodeAction {
   type: string;

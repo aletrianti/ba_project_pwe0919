@@ -14,7 +14,7 @@ import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/s
 import { goToNextStep } from '../../../utils/ChangeFormStep';
 
 // Validators
-import { validator } from '../../../formValidation';
+import { validator, validatorTypes } from '../../../formValidation';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 interface SignUpFormStartState {
@@ -40,7 +40,7 @@ class SignUpFormStart extends React.Component<RouteComponentProps, SignUpFormSta
     };
 
     const storeAccountType = (data: string): any => {
-      const { isValid, message } = validator(data, 'account_type');
+      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
       const payload: IAccountType = { accountType: data, isValid: isValid, errorMessage: message };
       const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
 

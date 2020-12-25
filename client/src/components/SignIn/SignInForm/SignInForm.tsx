@@ -24,7 +24,7 @@ import {
 import { ILoginInput } from '../../../../../types/auth.types';
 
 // Validators
-import { validator } from '../../../formValidation';
+import { validator, validatorTypes } from '../../../formValidation';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 interface SignInFormState {
@@ -50,7 +50,7 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
     };
 
     const storeEmail = (data: string): any => {
-      const { isValid, message } = validator(data, 'email');
+      const { isValid, message } = validator(data, validatorTypes.EMAIL);
       const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
 
@@ -62,7 +62,7 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
     };
 
     const storePassword = (data: string): any => {
-      const { isValid, message } = validator(data, 'password');
+      const { isValid, message } = validator(data, validatorTypes.PASSWORD);
       const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
       const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
 
