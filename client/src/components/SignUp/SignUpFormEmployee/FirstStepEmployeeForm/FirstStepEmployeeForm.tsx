@@ -18,11 +18,11 @@ import { ICompanyCode, IStoreCompanyCodeAction } from '../../../../store/interfa
 import { validator, validatorTypes } from '../../../../formValidation';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
-interface SignInFormState {
+interface FirstStepEmployeeFormState {
   areAllFieldsValid: boolean;
 }
 
-class FirstStepEmployeeForm extends React.Component<RouteComponentProps, SignInFormState> {
+class FirstStepEmployeeForm extends React.Component<RouteComponentProps, FirstStepEmployeeFormState> {
   constructor(props: any) {
     super(props);
 

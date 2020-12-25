@@ -24,16 +24,46 @@ import {
 // Data from backend
 import { INewCompanyInput, INewEmployees } from '../../../../../../types/auth.types';
 
-class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
-  render() {
-    let invitedUsers: string[] = [];
-    let usersEmails: string[] = [];
+// Validators
+import { validator, validatorTypes } from '../../../../formValidation';
+import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
-    const storeInvitedEmployee = (data: string): void => {
-      const payload: IInvitedEmployee = { email: data };
+interface ThirdStepCompanyFormState {
+  areAllFieldsValid: boolean;
+  invitedUsers: string[];
+  usersEmails: string[];
+}
+
+class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdStepCompanyFormState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      areAllFieldsValid: false,
+      invitedUsers: [],
+      usersEmails: [],
+    };
+  }
+
+  render() {
+    // Check that all fields are valid and enable confirm button
+    const checkFields = (): any => {
+      const formValues: string[] = ['signUpLastInvitedEmployee'];
+      const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+      this.setState(areFieldsValid);
+    };
+
+    const storeInvitedEmployee = (data: string): any => {
+      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const payload: IInvitedEmployee = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreInvitedEmployeeAction = { type: STORE_INVITED_EMPLOYEE, payload };
 
       store.dispatch(action);
+
+      checkFields();
+
+      return { isValid, message };
     };
 
     const addInvitedEmployees = (event: FormEvent): void => {
@@ -43,7 +73,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       const lastInvitedEmployee = state.signUpLastInvitedEmployee.email;
 
       // make a copy of the array
-      const users = [...invitedUsers];
+      const users = [...this.state.invitedUsers];
 
       // push invited employee to array
       users.push(lastInvitedEmployee);
@@ -60,11 +90,11 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
       const emails = state.signUpLastInvitedEmployees.emails;
 
       emails.forEach((email: string) => {
-        usersEmails.push(email[0]);
+        this.state.usersEmails.push(email[0]);
       });
 
       const data: INewEmployees = {
-        newUsers: usersEmails,
+        newUsers: this.state.usersEmails,
         companyId: companyId,
       };
 
@@ -119,7 +149,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps> {
 
         <div className="sign-up__form__invited-users">
           <ul>
-            {invitedUsers.map((email, i) => (
+            {this.state.invitedUsers.map((email, i) => (
               <li key={i}>{email}</li>
             ))}
           </ul>

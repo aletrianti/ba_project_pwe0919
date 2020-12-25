@@ -12,6 +12,8 @@ export interface IChangeStepAction {
 
 export interface IFirstName {
   firstName: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreFirstNameAction {
   type: string;
@@ -20,6 +22,8 @@ export interface IStoreFirstNameAction {
 
 export interface ILastName {
   lastName: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreLastNameAction {
   type: string;
@@ -28,6 +32,8 @@ export interface IStoreLastNameAction {
 
 export interface IEmail {
   email: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreEmailAction {
   type: string;
@@ -36,6 +42,8 @@ export interface IStoreEmailAction {
 
 export interface IPassword {
   password: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStorePasswordAction {
   type: string;
@@ -44,6 +52,8 @@ export interface IStorePasswordAction {
 
 export interface IRole {
   role: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreRoleAction {
   type: string;
@@ -96,6 +106,8 @@ export interface IStoreCompanyAction {
 
 export interface ICompanyName {
   name: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreCompanyNameAction {
   type: string;
@@ -104,6 +116,8 @@ export interface IStoreCompanyNameAction {
 
 export interface ICompanySize {
   size: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreCompanySizeAction {
   type: string;
@@ -126,6 +140,8 @@ export interface IStoreAdminAccountAction {
 // Step 3 - Company
 export interface IInvitedEmployee {
   email: string;
+  isValid: boolean;
+  errorMessage: string;
 }
 export interface IStoreInvitedEmployeeAction {
   type: string;
