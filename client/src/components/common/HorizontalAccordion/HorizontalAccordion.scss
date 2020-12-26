@@ -1,0 +1,49 @@
+@import '../../../_variables';
+
+.accordion__container {
+    margin: 20px;
+    padding-top: 20px;
+
+    .accordion__item__container {
+        position: relative;
+        margin-bottom: 5px;
+
+        .accordion__item {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 14em;
+            padding: 10px 30px;
+            background-color: rgba(163, 163, 163, 0.05);
+            border: 1px solid rgba(1, 17, 23, 0.1);
+            border-radius: 5px;
+            cursor: pointer;
+
+            h3 {
+                margin-right: 15px;
+            }
+        }
+
+        .accordion__item__info {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 17.8em;
+            padding: 30px;
+            max-width: 37em;
+            background-color: rgba(163, 163, 163, 0.05);
+            border: 1px solid rgba(1, 17, 23, 0.1);
+            border-radius: 5px;
+            border-top-left-radius: 0;
+
+            .info__description {
+                margin-bottom: 20px;
+            }
+        }
+
+        .item--open {
+            display: block;
+        }
+    }
+}
