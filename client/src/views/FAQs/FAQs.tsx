@@ -3,6 +3,8 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
+import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
+import { IQuestion } from '../../store/interfaces/questions.interfaces';
 
 class FAQs extends React.Component {
   render() {
@@ -13,6 +15,20 @@ class FAQs extends React.Component {
 
     // TODO: Replace this with categories from the DB
     const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+    // TODO: Replace this with roles & responsibilities from the DB
+    const questions: IQuestion[] = [
+      {
+        question: 'Who can I ask for help?',
+        answer:
+          'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
+      },
+      {
+        question: 'Who can I ask for help?',
+        answer:
+          'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
+      },
+    ];
 
     return (
       <div className="app__container">
@@ -25,6 +41,8 @@ class FAQs extends React.Component {
             <SectionBar sections={sections} activeSection={sectionName} />
 
             <Categories categories={categories} />
+
+            {sectionName === 'faqs' ? <HorizontalAccordion questions={questions} section={sectionName} /> : null}
           </div>
         </div>
       </div>

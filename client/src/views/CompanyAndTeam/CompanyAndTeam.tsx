@@ -4,6 +4,7 @@ import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
+import { IRole } from '../../store/interfaces/roles.interfaces';
 
 class CompanyAndTeam extends React.Component {
   render() {
@@ -20,7 +21,7 @@ class CompanyAndTeam extends React.Component {
     const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
 
     // TODO: Replace this with roles & responsibilities from the DB
-    const roles = [
+    const roles: IRole[] = [
       {
         title: 'Software engineer',
         description:
@@ -53,7 +54,7 @@ class CompanyAndTeam extends React.Component {
 
             <Categories categories={categories} />
 
-            {sectionName === 'roles-and-responsibilities' ? <HorizontalAccordion roles={roles} /> : null}
+            {sectionName === 'roles-and-responsibilities' ? <HorizontalAccordion roles={roles} section={sectionName} /> : null}
           </div>
         </div>
       </div>
