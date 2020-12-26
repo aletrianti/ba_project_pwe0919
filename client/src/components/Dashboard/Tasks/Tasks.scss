@@ -23,6 +23,10 @@
             border-radius: 50px;
             margin-right: 20px;
         }
+        .task__num--confirmed {
+            color: $white;
+            background-color: $primary;
+        }
 
         .task__info {
             position: relative;

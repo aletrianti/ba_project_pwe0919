@@ -45,7 +45,7 @@ class Task extends React.Component<TaskProps, TaskState> {
 
     return (
       <div className="dashboard__tasks__item">
-        <span className="task__num">{taskNum}</span>
+        <span className={!this.state.isConfirmed ? 'task__num' : 'task__num task__num--confirmed'}>{taskNum}</span>
         <div className="task__info">
           <div id={`name__task__${taskNum}`} className={!this.state.isOpen ? 'task__name' : 'task__name task__name--open'}>
             <h3>
