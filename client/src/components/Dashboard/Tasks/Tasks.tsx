@@ -36,9 +36,11 @@ class Tasks extends React.Component {
 
     return (
       <div id="dashboard__tasks">
-        {tasks.map((task, i) => {
-          return <Task name={task.name} deadline={task.deadline} description={task.description} taskNum={i + 1} key={i} />;
-        })}
+        <div id="tasks__container">
+          {tasks.map((task, i) => {
+            return <Task name={task.name} deadline={task.deadline} description={task.description} taskNum={i + 1} key={i} />;
+          })}
+        </div>
       </div>
     );
   }

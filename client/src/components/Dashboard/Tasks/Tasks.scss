@@ -98,7 +98,7 @@
             .task__description {
                 display: none;
                 position: relative;
-                width: calc(100% - 42px);
+                width: 100%;
                 padding: 15px 20px 10px;
                 margin-top: -1px;
                 background-color: lighten($primary-grey, 32%);
@@ -111,11 +111,14 @@
                 p {
                     padding: 0 0 10px;
                     font-size: $font-small;
+                    width: 100%;
+                    max-width: 100%;
+                    word-wrap: break-word;
                 }
             }
 
             .task__description--open {
-                display: block;
+                display: inline-block;
             }
         }
     }
