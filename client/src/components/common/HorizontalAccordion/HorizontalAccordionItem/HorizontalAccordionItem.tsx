@@ -32,11 +32,11 @@ class HorizontalAccordionItem extends React.Component<HorizontalAccordionItemPro
 
     return (
       <div className="accordion__item__container">
-        <div className="accordion__item" onClick={toggleInfo}>
+        <div className={!this.state.isOpen ? 'accordion__item' : 'accordion__item item--open'} onClick={toggleInfo}>
           <h3>{title}</h3>
           {!this.state.isOpen ? <ChevronRightIcon /> : <ChevronLeftIcon />}
         </div>
-        <div className={!this.state.isOpen ? 'accordion__item__info' : 'accordion__item__info item--open'}>
+        <div className={!this.state.isOpen ? 'accordion__item__info' : 'accordion__item__info item__info--open'}>
           <div className="info__description">
             <h4>Description</h4>
             <p>{description}</p>

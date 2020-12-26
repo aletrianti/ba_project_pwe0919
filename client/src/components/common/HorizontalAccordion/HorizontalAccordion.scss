@@ -9,20 +9,29 @@
         margin-bottom: 5px;
 
         .accordion__item {
+            position: relative;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: space-between;
             max-width: 14em;
             padding: 10px 30px;
-            background-color: rgba(163, 163, 163, 0.05);
-            border: 1px solid rgba(1, 17, 23, 0.1);
+            background-color: lighten($primary-grey, 33%);
+            border: 1px solid lighten($primary-grey, 30%);
             border-radius: 5px;
             cursor: pointer;
 
             h3 {
                 margin-right: 15px;
             }
+        }
+
+        .item--open {
+            border: 1px solid lighten($primary-grey, 20%);
+            border-right: 1px solid lighten($primary-grey, 33%);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            z-index: 10;
         }
 
         .accordion__item__info {
@@ -32,17 +41,19 @@
             left: 17.8em;
             padding: 30px;
             max-width: 37em;
-            background-color: rgba(163, 163, 163, 0.05);
-            border: 1px solid rgba(1, 17, 23, 0.1);
+            background-color: lighten($primary-grey, 33%);
+            border: 1px solid lighten($primary-grey, 30%);
             border-radius: 5px;
             border-top-left-radius: 0;
+            z-index: 1;
 
             .info__description {
                 margin-bottom: 20px;
             }
         }
 
-        .item--open {
+        .item__info--open {
+            border: 1px solid lighten($primary-grey, 20%);
             display: block;
         }
     }
