@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
+import Tasks from '../../components/Dashboard/Tasks/Tasks';
 
 class Dashboard extends React.Component {
   render() {
@@ -22,6 +23,8 @@ class Dashboard extends React.Component {
             <div id="dashboard__content">
               <div id="dashboard__first-half">
                 <SectionBar sections={firstComponentSections} activeSection={'tasks'} />
+
+                <Tasks />
               </div>
 
               <div id="dashboard__second-half">

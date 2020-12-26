@@ -1,0 +1,118 @@
+@import '../../../variables';
+
+#dashboard__tasks {
+    padding: 30px 20px;
+    height: 100%; 
+    max-height: 100%;
+    overflow-y: auto;
+
+    .dashboard__tasks__item {
+        display: flex;
+        margin-bottom: 30px;
+
+        .task__num {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 45px;
+            font-size: $font-huge2;
+            font-weight: $bold;
+            color: $primary;
+            border: 2px solid $primary;
+            border-radius: 50px;
+            margin-right: 20px;
+        }
+
+        .task__info {
+            position: relative;
+            width: 100%;
+
+            .task__name {
+                display: flex;
+                position: relative;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 10px 20px;
+                background-color: $white;
+                border: 1px solid $primary-grey;
+                border-radius: 10px;
+                z-index: 2;
+
+                h3 {
+                    font-size: $font-regular;
+                    margin-right: 10px;
+
+                    span {
+                        font-size: $font-small;
+                    }
+                }
+
+                .task__info__actions {
+                    display: flex;
+                    align-items: center;
+
+                    .confirm__btn {
+                        padding: 5px 15px;
+                        font-size: $font-small;
+                        font-weight: $thick;
+                        background-color: $orange-accent;
+                        border: 1px solid $orange-accent;
+                        border-radius: 50px;
+                        cursor: pointer;
+                    }
+                    .confirm__btn:hover {
+                        background-color: darken($orange-accent, 5%);
+                        border: 1px solid darken($orange-accent, 5%);
+                    }
+                    .confirm__btn:focus {
+                        background-color: darken($orange-accent, 10%);
+                        border: 1px solid darken($orange-accent, 10%);
+                    }
+
+                    .confirmed__btn {
+                        display: flex;
+                        align-items: center;
+                        color: $primary;
+                    }
+
+                    .task__arrow {
+                        display: flex;
+                        padding: 0 10px;
+                        color: $text;
+                        cursor: pointer;
+                    }
+                }
+            }
+
+            .task__name--open {
+                border-bottom-left-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+
+            .task__description {
+                display: none;
+                position: relative;
+                width: calc(100% - 42px);
+                padding: 15px 20px 10px;
+                margin-top: -1px;
+                background-color: lighten($primary-grey, 32%);
+                border: 1px solid $primary-grey;
+                border-radius: 10px;
+                border-top-left-radius: 0;
+                border-top-right-radius: 0;
+                z-index: -1;
+
+                p {
+                    padding: 0 0 10px;
+                    font-size: $font-small;
+                }
+            }
+
+            .task__description--open {
+                display: block;
+            }
+        }
+    }
+}
