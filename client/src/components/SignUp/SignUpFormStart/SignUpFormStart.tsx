@@ -3,7 +3,6 @@ import SignUpFormOptions from './SignUpFormOptions/SignUpFormOptions';
 import Button from '../../common/Button/Button';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 import './SignUpFormStart.scss';
-import { AnyAction } from '@reduxjs/toolkit';
 
 // import store
 import store from '../../../index';
