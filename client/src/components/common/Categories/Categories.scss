@@ -1,0 +1,32 @@
+@import '../../../_variables';
+
+.categories__container {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+
+    .category {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 10px;
+        padding: 10px 30px;
+        border: 1px solid transparent;
+        border-radius: 50px;
+        background-color: lighten($primary-grey, 25%);
+        color: $text;
+        font-weight: $thick;
+        font-size: $font-regular;
+        cursor: pointer;
+    }
+    .category:first-of-type {
+        margin-left: 0;
+    }
+    .category__all {
+        background-color: $orange-accent;
+    }
+
+    .category__add-btn {
+        padding: 10px;
+    }
+}

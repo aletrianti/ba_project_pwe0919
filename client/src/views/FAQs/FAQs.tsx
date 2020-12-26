@@ -2,6 +2,7 @@ import React from 'react';
 import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
+import Categories from '../../components/common/Categories/Categories';
 
 class FAQs extends React.Component {
   render() {
@@ -9,6 +10,9 @@ class FAQs extends React.Component {
     const sectionName = pathname[1];
 
     const sections = [{ name: 'FAQs', pathname: 'faqs' }];
+
+    // TODO: Replace this with categories from the DB
+    const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
 
     return (
       <div className="app__container">
@@ -19,6 +23,8 @@ class FAQs extends React.Component {
 
           <div className="app__content">
             <SectionBar sections={sections} activeSection={sectionName} />
+
+            <Categories categories={categories} />
           </div>
         </div>
       </div>
