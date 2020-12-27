@@ -4,7 +4,10 @@ import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
+import Member from '../../components/common/Member/Member';
+
 import { IRole } from '../../store/interfaces/roles.interfaces';
+import { IMember } from '../../store/interfaces/members.interfaces';
 
 class CompanyAndTeam extends React.Component {
   render() {
@@ -19,6 +22,26 @@ class CompanyAndTeam extends React.Component {
 
     // TODO: Replace this with categories from the DB
     const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+    // TODO: Dynamic content/data for users/members
+    const members: IMember[] = [
+      {
+        fullName: 'Mathias Nielsen',
+        jobTitle: 'Software Developer',
+        department: 'Engineering',
+        birthday: '19-03',
+        memberSince: '18-02-19',
+        description: 'I love making music and programming.',
+      },
+      {
+        fullName: 'Mathias Nielsen',
+        jobTitle: 'Software Developer',
+        department: 'Engineering',
+        birthday: '19-03',
+        memberSince: '18-02-19',
+        description: 'I love making music and programming.',
+      },
+    ];
 
     // TODO: Replace this with roles & responsibilities from the DB
     const roles: IRole[] = [
@@ -53,6 +76,22 @@ class CompanyAndTeam extends React.Component {
             <SectionBar sections={sections} activeSection={sectionName} />
 
             <Categories categories={categories} />
+
+            {sectionName === 'team' ? (
+              <div className="team__members">
+                {members.map((member, i) => (
+                  <Member
+                    fullName={member.fullName}
+                    jobTitle={member.jobTitle}
+                    department={member.department}
+                    birthday={member.birthday}
+                    memberSince={member.memberSince}
+                    description={member.description}
+                    key={i}
+                  />
+                ))}
+              </div>
+            ) : null}
 
             {sectionName === 'roles-and-responsibilities' ? <HorizontalAccordion roles={roles} section={sectionName} /> : null}
           </div>

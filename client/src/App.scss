@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
-@import '_variables';
+@import 'variables';
 
 * {
     margin: 0;
@@ -100,7 +100,6 @@ body {
 
         .app__content {
             margin: 10px 35px;
-            overflow: hidden;
             height: calc(100vh - 138px);
         }
     }
