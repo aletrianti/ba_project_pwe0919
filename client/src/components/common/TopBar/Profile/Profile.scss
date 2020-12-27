@@ -1,0 +1,114 @@
+@import '../../../../variables';
+
+.profile__container {
+    position: absolute;
+    bottom: -630px;
+    left: -15px;
+    padding: 8px;
+    z-index: 10000;
+    background-color: $white;
+    border: 1px solid $primary-grey;
+    border-radius: 32px;
+
+    #profile__container__internal {
+        position: relative;
+
+        #arrow {
+            position: absolute;
+            right: 3em;
+            top: -16px;
+            background-image: url(../../../../static/dialog-arrow-top.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 1em;
+            height: .5em;
+            z-index: -1;
+        }
+
+        #profile__card {
+            position: relative;
+            height: 40em;
+            width: 15em;
+            border: 1px solid $primary-grey;
+            border-radius: 25px;
+            
+            #profile__card__photo__container {
+                border-top-right-radius: 32px;
+                border-top-left-radius: 32px;
+                height: 35%;
+                overflow: hidden;
+
+                .profile__card__photo__img {
+                    width: 100%;
+                    height: 100%;
+                }
+                .img--no-picture {
+                    background-image: url(../../../../static/no-image-user.png);
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    background-size: cover;
+                }
+            }
+
+            #profile__card__main__content,
+            #profile__card__info p {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #profile__card__main__content {
+                align-items: center;
+                padding: 20px 0;
+                border-bottom: 1px solid $primary-grey;
+
+                #profile__name {
+                    display: flex;
+                    flex-direction: row;
+
+                    #profile__full-name {
+                        font-size: $font-medium;
+                        margin-right: 10px;
+                    }
+                }
+
+                #profile__availability {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    font-size: $font-small;
+                }
+            }
+
+            #profile__card__info {
+                padding: 20px;
+
+                span {
+                    margin-bottom: 15px;
+                    font-size: $font-regular;
+                }
+
+                #profile__card__info__contact__wrapper {
+                    margin: 0 auto;
+
+                    #profile__card__info__contact {
+                        display: flex;
+                        align-items: center;
+                        background-color: $primary;
+                        border: 1px solid $primary;
+                        border-radius: 15px;
+                        color: $white;
+                        padding: 5px 15px;
+                        outline: none;
+                        cursor: pointer;
+
+                        svg {
+                            margin-left: 10px;
+                            font-size: $font-regular;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
