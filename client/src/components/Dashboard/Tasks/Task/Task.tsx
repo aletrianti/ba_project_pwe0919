@@ -4,11 +4,17 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
+import store from '../../../..';
+import { ISetTaskAsCompletedAction, ITask } from '../../../../store/interfaces/tasks.interfaces';
+
 interface TaskProps {
   name: string;
   deadline: string;
   description: string;
   taskNum: number;
+  isCompleted: boolean;
+  assignedTo: string;
+  actionType: string;
 }
 
 interface TaskState {
@@ -23,13 +29,13 @@ class Task extends React.Component<TaskProps, TaskState> {
 
     this.state = {
       isOpen: false,
-      isConfirmed: false,
+      isConfirmed: props.isCompleted,
       divHeight: undefined,
     };
   }
 
   render() {
-    const { name, deadline, description, taskNum } = this.props;
+    const { name, deadline, description, taskNum, isCompleted, assignedTo, actionType } = this.props;
 
     const toggleInfo = (): void => {
       this.setState({
@@ -38,21 +44,31 @@ class Task extends React.Component<TaskProps, TaskState> {
       });
     };
 
-    // TODO: don't store in the components's state, but in redux with the tasks
     const confirmTask = (): void => {
-      this.setState({ isConfirmed: true });
+      const payload: ITask = {
+        num: taskNum,
+        name: name,
+        deadline: deadline,
+        description: description,
+        isCompleted: true,
+        assignedTo: assignedTo,
+      };
+
+      const action: ISetTaskAsCompletedAction = { type: actionType, payload };
+
+      store.dispatch(action);
     };
 
     return (
       <div className="dashboard__tasks__item">
-        <span className={!this.state.isConfirmed ? 'task__num' : 'task__num task__num--confirmed'}>{taskNum}</span>
+        <span className={!isCompleted ? 'task__num' : 'task__num task__num--confirmed'}>{taskNum}</span>
         <div className="task__info">
           <div id={`name__task__${taskNum}`} className={!this.state.isOpen ? 'task__name' : 'task__name task__name--open'}>
             <h3>
               {name} <span>{deadline}</span>
             </h3>
             <div className="task__info__actions">
-              {!this.state.isConfirmed ? (
+              {!isCompleted ? (
                 <span className="confirm__btn" onClick={confirmTask}>
                   Confirm
                 </span>

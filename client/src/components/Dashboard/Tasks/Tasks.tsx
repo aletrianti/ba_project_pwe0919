@@ -3,47 +3,71 @@ import './Tasks.scss';
 
 import Task from './Task/Task';
 
-class Tasks extends React.Component {
+import store from '../../../index';
+import {
+  SET_TASK_ONE_AS_COMPLETED,
+  SET_TASK_TWO_AS_COMPLETED,
+  SET_TASK_THREE_AS_COMPLETED,
+  SET_TASK_FOUR_AS_COMPLETED,
+  SET_TASK_FIVE_AS_COMPLETED,
+} from '../../../store/actions/tasks/tasks.types';
+import { ITask } from '../../../store/interfaces/tasks.interfaces';
+import { connect } from 'react-redux';
+
+interface TasksProps {
+  tasks?: ITask[];
+}
+
+class Tasks extends React.Component<TasksProps> {
   render() {
-    // TODO: make tasks dynamic
-    const tasks = [
-      {
-        name: 'Complete your profile ',
-        deadline: '(within 1 day)',
-        description:
-          'On the top-right corner, you will find your name and profile picture: click there to go to your profile. Once you’re there, go to the “Settings” section and complete your profile to get started!',
-      },
-      {
-        name: 'Say hi to your buddy ',
-        deadline: '(within 1 day)',
-        description:
-          'On the right side, you will find the name of a fellow team member under the “Buddy” category.  That person has been assigned to you to help you integrate into the company: you can ask them for help at any time during your onboarding process, and they will be right there to help you. Start by presenting yourself to them!',
-      },
-      {
-        name: 'Get to know your new company ',
-        deadline: '(within 2 days)',
-        description:
-          'In the “Company & Team” section, you will find your team members and some information about your company, such as roles and responsibilities, and achievements. Take some time to explore this section and don’t hesitate to ask for more information to your buddy!',
-      },
-      {
-        name: 'Read documents ',
-        deadline: '(within 4 days)',
-        description:
-          'In the “Documents” section, you will find files under some categories. Take your time to go through them and, when you’re done reading a file, check the corresponding “Read” box. Have fun learning!',
-      },
-      { name: 'Complete your first assignment ', deadline: '(within 5 days)', description: 'A task' },
-    ];
+    const { tasks } = this.props;
+
+    const setActionType = (num: number): string => {
+      switch (num) {
+        case 1:
+          return SET_TASK_ONE_AS_COMPLETED;
+        case 2:
+          return SET_TASK_TWO_AS_COMPLETED;
+        case 3:
+          return SET_TASK_THREE_AS_COMPLETED;
+        case 4:
+          return SET_TASK_FOUR_AS_COMPLETED;
+        case 5:
+          return SET_TASK_FIVE_AS_COMPLETED;
+        default:
+          return '';
+      }
+    };
 
     return (
       <div id="dashboard__tasks">
         <div id="tasks__container">
-          {tasks.map((task, i) => {
-            return <Task name={task.name} deadline={task.deadline} description={task.description} taskNum={i + 1} key={i} />;
-          })}
+          {tasks
+            ? tasks.map((task, i) => {
+                return (
+                  <Task
+                    name={task.name}
+                    deadline={task.deadline}
+                    description={task.description}
+                    taskNum={task.num}
+                    isCompleted={task.isCompleted}
+                    assignedTo={task.assignedTo}
+                    actionType={setActionType(task.num)}
+                    key={i}
+                  />
+                );
+              })
+            : null}
         </div>
       </div>
     );
   }
 }
 
-export default Tasks;
+const mapStateToProps = (state: any = store.getState()): any => {
+  const { taskOne, taskTwo, taskThree, taskFour, taskFive } = state;
+
+  return { tasks: [taskOne, taskTwo, taskThree, taskFour, taskFive] };
+};
+
+export default connect(mapStateToProps)(Tasks);
