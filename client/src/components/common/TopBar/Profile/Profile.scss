@@ -7,7 +7,8 @@
     padding: 8px;
     z-index: 10000;
     background-color: $white;
-    border: 1px solid $primary-grey;
+    border: 1px solid $very-light-grey;
+    box-shadow: 0px 1px 5px 1px $very-light-grey;
     border-radius: 32px;
 
     #profile__container__internal {
@@ -30,7 +31,8 @@
             position: relative;
             height: 40em;
             width: 15em;
-            border: 1px solid $primary-grey;
+            border: 1px solid $very-light-grey;
+            box-shadow: 0px 1px 2px 0.5px $very-light-grey;
             border-radius: 25px;
             
             #profile__card__photo__container {

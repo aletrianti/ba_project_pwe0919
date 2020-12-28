@@ -28,7 +28,8 @@
 
 
 .member__card {
-    border: 1px solid $primary-grey;
+    border: 1px solid $very-light-grey;
+    box-shadow: 0px 1px 4px 1px $very-light-grey;
     border-radius: 32px;
     height: 25em;
 

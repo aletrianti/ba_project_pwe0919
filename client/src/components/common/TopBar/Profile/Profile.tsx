@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import './Profile.scss';
 
+import Actions from '../../Actions/Actions';
+
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Switch from '@material-ui/core/Switch';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -63,6 +64,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
       updateCurrentUserAvailability(!this.state.isChecked);
     };
 
+    const openEditProfileModal = (e: MouseEvent): void => {};
+
+    const openDeleteProfileModal = (e: MouseEvent): void => {};
+
     return (
       <div className="profile__container">
         <div id="profile__container__internal">
@@ -80,9 +85,13 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                 <h5 id="profile__full-name">
                   {firstName} {lastName}
                 </h5>
-                <div id="profile__actions">
-                  <MoreVertIcon />
-                </div>
+
+                <Actions
+                  actions={[
+                    { name: 'Edit', function: openEditProfileModal },
+                    { name: 'Delete', function: openDeleteProfileModal },
+                  ]}
+                />
               </div>
               <div id="profile__availability">
                 <span>Buddy availability:</span>
