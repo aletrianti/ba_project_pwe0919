@@ -7,7 +7,7 @@ import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../../../utils/changeFormStep';
+import { goToNextStep } from '../../../../utils/ChangeFormStep';
 
 // import store
 import store from '../../../../index';
