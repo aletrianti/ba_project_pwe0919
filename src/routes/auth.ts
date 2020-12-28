@@ -118,6 +118,14 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
+    for (let index = 1; index < 6; index++) {
+      await knex('assignedTask').insert({
+        taskId: index,
+        userId: updatedUser.ID,
+        completed: false,
+      });
+    }
+
     const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
     const userDepartment: IDepartment = updatedUser.departmentId
       ? await knex('department').where('ID', updatedUser.departmentId).first()

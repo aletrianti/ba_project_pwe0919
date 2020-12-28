@@ -21,19 +21,20 @@ router.get('/', async (req: Request, res: Response, next) => {
 router.post('/', async (req: Request, res: Response, next) => {
   try {
     const { userId, companyId } = getUserIds(req);
-    console.log(req)
-    console.log(userId)
-    console.log(companyId)
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
-    const newRoleTitle: INewRoleInput = req.body;
+    const newRoleInput: INewRoleInput = req.body;
 
-    const roleExists: IRole = await knex('role').where('title', newRoleTitle).first();
+    // TaskName - TaskDescription
+
+    const roleExists: IRole = await knex('role').where('title', newRoleInput.title).first();
     if (roleExists) throw Error(`${roleExists.title} already exists for company: ${companyId}`);
 
     const newRole = await knex('role').insert({
-      title: newRoleTitle,
+      title: newRoleInput.title,
       companyId: companyId,
+      customTaskName: newRoleInput.customTaskName,
+      customTaskDescription: newRoleInput.customTaskDescription,
       createdAt: dateDB(),
       updatedAt: dateDB(),
     });

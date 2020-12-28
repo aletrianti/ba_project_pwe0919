@@ -12,4 +12,6 @@ export interface IRole {
 
 export interface INewRoleInput {
   title: string;
+  customTaskName: string;
+  customTaskDescription: string;
 }
