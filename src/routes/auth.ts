@@ -195,4 +195,22 @@ router.get('/', jwtMW, async (req, res, next) => {
   }
 });
 
+router.get('/delete', jwtMW, async (req, res, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const user: IUser = await knex('user').where('ID', userId).update({
+      active: false,
+      updatedAt: dateDB(),
+    });
+
+    Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
 module.exports = router;
