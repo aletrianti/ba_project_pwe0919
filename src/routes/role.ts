@@ -21,6 +21,9 @@ router.get('/', async (req: Request, res: Response, next) => {
 router.post('/', async (req: Request, res: Response, next) => {
   try {
     const { userId, companyId } = getUserIds(req);
+    console.log(req)
+    console.log(userId)
+    console.log(companyId)
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
     const newRoleTitle: INewRoleInput = req.body;

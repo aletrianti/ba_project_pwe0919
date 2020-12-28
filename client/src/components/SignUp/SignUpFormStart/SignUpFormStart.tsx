@@ -10,7 +10,7 @@ import store from '../../../index';
 import { SET_ACCOUNT_TYPE } from '../../../store/actions/signUpSteps/signUpSteps.types';
 import { IAccountType, ISetAccountTypeAction } from '../../../store/interfaces/signUpSteps.interfaces';
 
-import { goToNextStep } from '../../../utils/changeFormStep';
+import { goToNextStep } from '../../../utils/ChangeFormStep';
 
 // Validators
 import { validator, validatorTypes } from '../../../utils/formValidation';
