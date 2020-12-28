@@ -37,6 +37,10 @@ export interface IUpdatedUser {
   userDepartment: IDepartment;
 }
 
+export interface IUpdateUser {
+  user: IUser;
+}
+
 export interface INewCompanyInput {
   company: {
     companyName: string;

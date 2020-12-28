@@ -39,6 +39,9 @@ import { INewEmployeeInput } from '../../../../../../types/auth.types';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
+// localStorage
+import { storeTokenInLocalStorage } from '../../../../utils/localStorageActions';
+
 interface SecondStepEmployeeFormState {
   areAllFieldsValid: boolean;
 }
@@ -142,8 +145,8 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps, Second
 
       axios
         .post('/api/auth/register-employee', data)
-        .then(response => {
-          localStorage['user_token'] = response.data.token;
+        .then(res => {
+          storeTokenInLocalStorage(res);
         })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
