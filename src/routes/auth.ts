@@ -139,7 +139,7 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
 router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => {
   try {
-    const { userToUpdate } = req.body;
+    const userToUpdate = req.body;
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
