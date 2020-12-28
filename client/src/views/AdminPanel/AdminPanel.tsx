@@ -3,6 +3,9 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 
+import User from '../../components/AdminPanel/Users/Users';
+import Achievements from '../../components/AdminPanel/Achievements/Achievements';
+
 class AdminPanel extends React.Component {
   render() {
     const pathname = window.location.pathname.split('/');
@@ -24,6 +27,9 @@ class AdminPanel extends React.Component {
 
           <div className="app__content">
             <SectionBar sections={sections} activeSection={sectionName} />
+
+            {sectionName === 'users' ? <User /> : null}
+            {sectionName === 'achievements' ? <Achievements /> : null}
           </div>
         </div>
       </div>

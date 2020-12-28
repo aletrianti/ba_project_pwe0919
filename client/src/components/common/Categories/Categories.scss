@@ -13,11 +13,18 @@
         padding: 10px 30px;
         border: 1px solid transparent;
         border-radius: 50px;
-        background-color: lighten($primary-grey, 25%);
+        background-color: $very-light-grey;
         color: $text;
         font-weight: $thick;
         font-size: $font-regular;
         cursor: pointer;
+        outline: none;
+    }
+    .category:hover {
+        background-color: darken($very-light-grey, 5%);
+    }
+    .category:focus {
+        background-color: darken($very-light-grey, 7%);
     }
     .category:first-of-type {
         margin-left: 0;
@@ -25,8 +32,16 @@
     .category__all {
         background-color: $orange-accent;
     }
+    .category__all:hover {
+        background-color: darken($orange-accent, 5%);
+    }
+    .category__all:focus {
+        background-color: darken($orange-accent, 7%);
+    }
 
     .category__add-btn {
         padding: 10px;
+        cursor: pointer;
+        outline: none;
     }
 }

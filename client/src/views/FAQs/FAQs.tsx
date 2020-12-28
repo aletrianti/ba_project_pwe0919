@@ -3,6 +3,7 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
+import AddButton from '../../components/common/AddButton/AddButton';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
 import { IQuestion } from '../../store/interfaces/questions.interfaces';
 
@@ -30,6 +31,8 @@ class FAQs extends React.Component {
       },
     ];
 
+    const openAddFAQModal = (): void => {};
+
     return (
       <div className="app__container">
         <Menu activeSection={'faqs'} />
@@ -41,6 +44,8 @@ class FAQs extends React.Component {
             <SectionBar sections={sections} activeSection={sectionName} />
 
             <Categories categories={categories} />
+
+            <AddButton name={'Add FAQ'} function={openAddFAQModal} />
 
             {sectionName === 'faqs' ? <HorizontalAccordion questions={questions} section={sectionName} /> : null}
           </div>
