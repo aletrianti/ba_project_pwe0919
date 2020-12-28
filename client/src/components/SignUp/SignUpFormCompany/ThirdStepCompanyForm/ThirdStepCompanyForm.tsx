@@ -128,7 +128,9 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       axios
         .post('http://localhost:4000/api/auth/register-company', data)
         .then(response => {
+          localStorage['user_token'] = response.data.token;
           inviteUsers(response.data.user.companyId);
+          console.log(response);
         })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));

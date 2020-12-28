@@ -3,6 +3,7 @@ import React from 'react';
 import { IRole } from '../../../../store/interfaces/roles.interfaces';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Axios from 'axios';
 
 interface RoleItemProps {
   content: IRole;
@@ -14,6 +15,21 @@ class RoleItem extends React.Component<RoleItemProps> {
   render() {
     const { content, isOpen, toggle } = this.props;
     const { title, description, responsibilities } = content;
+
+    const createRole = () => {
+      const token = localStorage['user_token'];
+      const role = 'CTO';
+
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+
+      const bodyParameters = {
+        title: role,
+      };
+
+      Axios.post('http://localhost:4000/api/role/', bodyParameters, config).then(console.log).catch(console.log);
+    };
 
     return (
       <>
@@ -27,7 +43,7 @@ class RoleItem extends React.Component<RoleItemProps> {
             <p>{description}</p>
           </div>
           <div className="info__responsibilities">
-            <h4>Responsibilities</h4>
+            <h4 onClick={createRole}>Responsibilities</h4>
             <ul>
               {responsibilities.map((responsibility, i) => {
                 return <li key={i}>{responsibility.text}</li>;
