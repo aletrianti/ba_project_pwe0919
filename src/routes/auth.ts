@@ -67,8 +67,6 @@ router.post('/invite-employees', async (req: Request, res: Response, next) => {
   try {
     const { newUsers, companyId }: INewEmployees = req.body;
 
-    console.log(newUsers);
-
     const createdUsers: any[] = [];
     newUsers.forEach(async newUser => {
       const userCreated = await knex('user').insert({
