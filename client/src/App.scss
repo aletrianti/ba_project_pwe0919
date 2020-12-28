@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap');
-@import '_variables';
+@import 'variables';
 
 * {
     margin: 0;
@@ -8,11 +8,16 @@
     list-style-type: none;
     text-decoration: none;
     text-transform: none;
+    box-sizing: border-box;
 }
 
 body, button, a, input, textarea, select {
     font-family: 'Poppins', sans-serif;
     color: $text;
+}
+
+body {
+    overflow: hidden;
 }
 
 .error__message {
@@ -94,7 +99,8 @@ body, button, a, input, textarea, select {
         flex-direction: column;
 
         .app__content {
-            padding: 10px 35px;
+            margin: 10px 35px;
+            height: calc(100vh - 138px);
         }
     }
 }
@@ -103,13 +109,14 @@ body, button, a, input, textarea, select {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
-    margin: 50px 0;
+    margin: 30px 0;
+    height: 100%;
 }
 
 #dashboard__first-half {
     width: 60%;
     margin: 0 20px;
+    overflow: hidden;
     
     .section__link {
         cursor: default;

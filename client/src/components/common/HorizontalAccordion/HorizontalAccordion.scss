@@ -1,0 +1,65 @@
+@import '../../../variables';
+
+.accordion__container {
+    margin: 20px;
+    padding-top: 20px;
+
+    .accordion__item__container {
+        position: relative;
+        margin-bottom: 5px;
+
+        .accordion__item {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 17.9em;
+            padding: 10px 30px;
+            background-color: lighten($primary-grey, 33%);
+            border: 1px solid lighten($primary-grey, 30%);
+            border-radius: 5px;
+            cursor: pointer;
+
+            h3 {
+                margin-right: 15px;
+            }
+        }
+
+        .item--open {
+            border: 1px solid lighten($primary-grey, 20%);
+            border-right: 1px solid lighten($primary-grey, 33%);
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0;
+            z-index: 10;
+        }
+
+        .accordion__item__info {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 17.8em;
+            padding: 30px;
+            max-width: 37em;
+            background-color: lighten($primary-grey, 33%);
+            border: 1px solid lighten($primary-grey, 30%);
+            border-radius: 5px;
+            border-top-left-radius: 0;
+            z-index: 1;
+
+            .info__description {
+                margin-bottom: 20px;
+            }
+
+            .info__responsibilities li {
+                margin-left: 20px;
+                list-style-type: circle;
+            }
+        }
+
+        .item__info--open {
+            border: 1px solid lighten($primary-grey, 20%);
+            display: block;
+        }
+    }
+}
