@@ -26,6 +26,10 @@ export interface ISignUpUser {
   user: IUser;
 }
 
+export interface IUpdateUser {
+  user: IUser;
+}
+
 export interface INewCompanyInput {
   company: {
     companyName: string;

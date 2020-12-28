@@ -8,12 +8,16 @@ import { IProfile } from '../../../store/interfaces/members.interfaces';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
+// localStorage
+import { getUserInfoFromLocalStorage } from '../../../utils/localStorageActions';
+
 interface TopBarProps {
   sectionName: string;
 }
 
 interface TopBarState {
   isOpen: boolean;
+  currentUser: IProfile;
 }
 
 class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarState> {
@@ -22,24 +26,16 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
 
     this.state = {
       isOpen: false,
+      currentUser: getUserInfoFromLocalStorage(),
     };
   }
 
   render() {
     const { sectionName } = this.props;
-
-    const currentUser: IProfile = {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    };
+    const { isOpen, currentUser } = this.state;
 
     const toggleProfile = (): void => {
-      this.setState({ isOpen: !this.state.isOpen });
-      console.log(this.state.isOpen);
+      this.setState({ isOpen: !isOpen });
     };
 
     return (
@@ -53,11 +49,12 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
             <AccountCircleIcon id="topbar__img__no-picture" fontSize={'large'} />
           </div>
           <button id="topbar__name" onClick={() => toggleProfile()}>
-            Name Surname
+            {currentUser.firstName} {currentUser.lastName}
           </button>
-          {this.state.isOpen ? (
+          {isOpen ? (
             <Profile
-              fullName={currentUser.fullName}
+              firstName={currentUser.firstName}
+              lastName={currentUser.lastName}
               jobTitle={currentUser.jobTitle}
               department={currentUser.department}
               birthday={currentUser.birthday}

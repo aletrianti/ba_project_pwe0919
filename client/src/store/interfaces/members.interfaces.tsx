@@ -11,12 +11,14 @@ export interface IMember {
 }
 
 export interface IProfile {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   jobTitle: string;
   department?: string;
   birthday?: string; // Date
   memberSince?: string; // Date
   description?: string;
   profilePicture?: any; // ?
-  isAvailable?: boolean;
+  isAvailable: boolean;
+  isAdmin?: boolean;
 }

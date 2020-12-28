@@ -7,21 +7,23 @@ import Switch from '@material-ui/core/Switch';
 
 import { withStyles } from '@material-ui/core/styles';
 
-import store from '../../../..';
+// localStorage
+import { updateCurrentUserAvailability } from '../../../../utils/localStorageActions';
 
 interface ProfileProps {
-  fullName: string;
+  firstName: string;
+  lastName: string;
   jobTitle: string;
   department?: string;
   birthday?: string; // Date
   memberSince?: string; // Date
   description?: string;
   profilePicture?: any; // ?
-  isAvailable?: boolean;
+  isAvailable: boolean;
 }
 
 interface ProfileState {
-  isChecked: boolean | undefined;
+  isChecked: boolean;
 }
 
 class Profile extends React.Component<ProfileProps, ProfileState> {
@@ -29,13 +31,12 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     super(props);
 
     this.state = {
-      //isChecked: this.props.isAvailable
-      isChecked: false,
+      isChecked: this.props.isAvailable,
     };
   }
 
   render() {
-    const { fullName, jobTitle, department, birthday, memberSince, description, profilePicture, isAvailable } = this.props;
+    const { firstName, lastName, jobTitle, department, birthday, memberSince, description, profilePicture } = this.props;
 
     const CustomSwitch = withStyles({
       switchBase: {
@@ -58,11 +59,8 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     })(Switch);
 
     const setAvailability = () => {
-      const state = store.getState();
-
-      //this.setState({ isChecked: isAvailable });
       this.setState({ isChecked: !this.state.isChecked });
-      console.log(this.state.isChecked);
+      updateCurrentUserAvailability(!this.state.isChecked);
     };
 
     return (
@@ -79,7 +77,9 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
             </div>
             <div id="profile__card__main__content">
               <div id="profile__name">
-                <h5 id="profile__full-name">{fullName}</h5>
+                <h5 id="profile__full-name">
+                  {firstName} {lastName}
+                </h5>
                 <div id="profile__actions">
                   <MoreVertIcon />
                 </div>
@@ -87,10 +87,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
               <div id="profile__availability">
                 <span>Buddy availability:</span>
                 <div className="profile__switch">
-                  <CustomSwitch
-                    checked={this.state.isChecked ? this.state.isChecked : false}
-                    onChange={() => setAvailability()}
-                  />
+                  <CustomSwitch checked={this.state.isChecked} onChange={() => setAvailability()} />
                 </div>
               </div>
             </div>

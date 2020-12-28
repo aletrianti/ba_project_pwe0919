@@ -5,9 +5,24 @@ import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Tasks from '../../components/Dashboard/Tasks/Tasks';
 import Member from '../../components/common/Member/Member';
 
-import { IMember } from '../../store/interfaces/members.interfaces';
+import { IMember, IProfile } from '../../store/interfaces/members.interfaces';
 
-class Dashboard extends React.Component {
+// localStorage
+import { getUserInfoFromLocalStorage } from '../../utils/localStorageActions';
+
+interface DashboardState {
+  currentUser: IProfile;
+}
+
+class Dashboard extends React.Component<{}, DashboardState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      currentUser: getUserInfoFromLocalStorage(),
+    };
+  }
+
   render() {
     const firstComponentSections = [{ name: 'Tasks', pathname: 'tasks' }];
     const secondComponentSections = [{ name: 'Buddy', pathname: 'buddy' }];
@@ -30,7 +45,7 @@ class Dashboard extends React.Component {
           <TopBar sectionName={'Dashboard'} />
 
           <div className="app__content">
-            <h2 id="dashboard__greeting">Hi, Name!</h2>
+            <h2 id="dashboard__greeting">Hi, {this.state.currentUser.firstName}!</h2>
 
             <div id="dashboard__content">
               <div id="dashboard__first-half">
