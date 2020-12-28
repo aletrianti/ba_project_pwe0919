@@ -8,7 +8,7 @@ import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import Button from '../../../common/Button/Button';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../../../utils/changeFormStep';
+import { goToNextStep } from '../../../../utils/ChangeFormStep';
 
 // import store
 import store from '../../../../index';
@@ -55,7 +55,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
     };
 
     const storeInvitedEmployee = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const { isValid, message } = validator(data, validatorTypes.EMAIL);
       const payload: IInvitedEmployee = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreInvitedEmployeeAction = { type: STORE_INVITED_EMPLOYEE, payload };
 
@@ -98,7 +98,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
         companyId: companyId,
       };
 
-      axios.post('http://localhost:4000/api/auth/invite-employees', data).catch(err => console.error(err));
+      axios.post('/api/auth/invite-employees', data).catch(err => console.error(err));
     };
 
     const registerCompany = (event: FormEvent, history = this.props.history): void => {
@@ -126,9 +126,11 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
 
       // add http request
       axios
-        .post('http://localhost:4000/api/auth/register-company', data)
+        .post('/api/auth/register-company', data)
         .then(response => {
+          localStorage['user_token'] = response.data.token;
           inviteUsers(response.data.user.companyId);
+          console.log(response);
         })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));
@@ -144,7 +146,13 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
         <div className="sign-up__form__invite-users">
           <InputField name={'Email'} onchange={storeInvitedEmployee} isInviteUsersField={true} />
 
-          <Button btnText={'Invite'} isInviteBtn={true} inviteEmployee={addInvitedEmployees} isConfirmBtn={true} />
+          <Button
+            btnText={'Invite'}
+            isInviteBtn={true}
+            inviteEmployee={addInvitedEmployees}
+            isConfirmBtn={true}
+            areAllFieldsValid={this.state.areAllFieldsValid}
+          />
         </div>
 
         <div className="sign-up__form__invited-users">
@@ -155,7 +163,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
           </ul>
         </div>
 
-        <SignUpFormButtons />
+        <SignUpFormButtons areFieldsValid={this.state.areAllFieldsValid} />
 
         <SignUpProgressCircles currentStep={3} signUpMode={'company'} totalSteps={4} />
       </form>

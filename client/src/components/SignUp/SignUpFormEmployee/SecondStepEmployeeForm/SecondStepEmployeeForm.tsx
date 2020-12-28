@@ -7,7 +7,7 @@ import InputField from '../../../common/InputField/InputField';
 import SignUpFormButtons from '../../SignUpFormButtons/SignUpFormButtons';
 import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCircles';
 
-import { goToNextStep } from '../../../../utils/changeFormStep';
+import { goToNextStep } from '../../../../utils/ChangeFormStep';
 
 // import store
 import store from '../../../../index';
@@ -141,7 +141,7 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps, Second
       };
 
       axios
-        .post('http://localhost:4000/api/auth/register-employee', data)
+        .post('/api/auth/register-employee', data)
         .then(response => {
           localStorage['user_token'] = response.data.token;
         })

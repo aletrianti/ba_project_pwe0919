@@ -95,9 +95,10 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       };
 
       axios
-        .post('http://localhost:4000/api/auth/login', data)
+        .post('/api/auth/login', data)
         .then(response => {
           localStorage['user_token'] = response.data.token;
+          console.log(response);
         })
         .then(() => {
           console.log('Logged in!');

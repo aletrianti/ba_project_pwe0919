@@ -19,6 +19,10 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
   render() {
     const { activeSection } = this.props;
 
+    const signOut = () => {
+      localStorage.removeItem('user_token');
+    };
+
     return (
       <div id="menu">
         <div id="menu__links">
@@ -50,9 +54,11 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
           </Link>
         </div>
 
-        <button id="sign-out__btn">
+        <button id="sign-out__btn" onClick={signOut}>
           <ExitToAppIcon fontSize={'large'} />
-          <span className="sign-out__text">Sign out</span>
+          <Link to="/sign-in" className="sign-out__text">
+            Sign out
+          </Link>
         </button>
       </div>
     );
