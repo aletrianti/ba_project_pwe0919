@@ -32,6 +32,8 @@ import { storeTokenInLocalStorage } from '../../../utils/localStorageActions';
 
 interface SignInFormState {
   areAllFieldsValid: boolean;
+  areCredentialsValid: boolean;
+  errorMessage: string;
 }
 
 class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
@@ -40,6 +42,8 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
 
     this.state = {
       areAllFieldsValid: false,
+      areCredentialsValid: true,
+      errorMessage: 'Invalid credentials. Please, try again.',
     };
   }
 
@@ -101,13 +105,15 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
         .post('/api/auth/login', data)
         .then(res => {
           storeTokenInLocalStorage(res);
-          console.log(res);
         })
         .then(() => {
           console.log('Logged in!');
           history.push('/dashboard');
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          this.setState({ areCredentialsValid: false });
+          console.error(err);
+        });
     };
 
     const signIn = async (event: FormEvent): Promise<any> => {
@@ -121,6 +127,9 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       <form className="sign-in__form" onSubmit={signIn}>
         <InputField name={'Email'} onchange={(e: any) => storeEmail(e)} />
         <InputField name={'Password'} isPassword={true} onchange={(e: any) => storePassword(e)} />
+
+        {!this.state.areCredentialsValid ? <span className="error__message">{this.state.errorMessage}</span> : null}
+
         <Button
           btnText={'Sign in'}
           isRegular={false}

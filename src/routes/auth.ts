@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdateUser, IUser } from '../../types/auth.types';
+import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdatedUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
@@ -139,7 +139,7 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
 router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => {
   try {
-    const { userToUpdate } = req.body;
+    const userToUpdate = req.body;
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
@@ -151,13 +151,13 @@ router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => 
       ? await knex('department').where('ID', updatedUser.departmentId).first()
       : '';
 
-    const updatedUserObj = {
+    const signupUser = {
       user: updatedUser,
       userRole: userRole,
       userDepartment: userDepartment,
     };
 
-    Api.sendSuccess<IUpdateUser>(req, res, updatedUserObj);
+    Api.sendSuccess<IUpdatedUser>(req, res, signupUser);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
@@ -198,6 +198,49 @@ router.get('/', jwtMW, async (req, res, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
 
     const user: IUser = await knex('user').where('ID', userId).first();
+
+    Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/update-password', jwtMW, async (req: Request, res: Response, next) => {
+  try {
+    const { password } = req.body;
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await knex('user').where('ID', userId).update({
+      password: hashedPassword,
+    });
+
+    const updatedPassword = {
+      token: '',
+    };
+
+    Api.sendSuccess<any>(req, res, updatedPassword);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.get('/delete', jwtMW, async (req, res, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const user: IUser = await knex('user').where('ID', userId).update({
+      active: false,
+      updatedAt: dateDB(),
+    });
 
     Api.sendSuccess<IUser>(req, res, user);
   } catch (err) {

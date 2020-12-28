@@ -4,3 +4,7 @@ export interface IDepartment {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface INewDepartmentInput {
+  name: string;
+}
