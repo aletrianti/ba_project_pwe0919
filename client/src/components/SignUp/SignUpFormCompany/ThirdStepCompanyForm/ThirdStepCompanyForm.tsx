@@ -55,7 +55,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
     };
 
     const storeInvitedEmployee = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+      const { isValid, message } = validator(data, validatorTypes.EMAIL);
       const payload: IInvitedEmployee = { email: data, isValid: isValid, errorMessage: message };
       const action: IStoreInvitedEmployeeAction = { type: STORE_INVITED_EMPLOYEE, payload };
 
@@ -146,7 +146,13 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
         <div className="sign-up__form__invite-users">
           <InputField name={'Email'} onchange={storeInvitedEmployee} isInviteUsersField={true} />
 
-          <Button btnText={'Invite'} isInviteBtn={true} inviteEmployee={addInvitedEmployees} isConfirmBtn={true} />
+          <Button
+            btnText={'Invite'}
+            isInviteBtn={true}
+            inviteEmployee={addInvitedEmployees}
+            isConfirmBtn={true}
+            areAllFieldsValid={this.state.areAllFieldsValid}
+          />
         </div>
 
         <div className="sign-up__form__invited-users">
