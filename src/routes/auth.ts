@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUser } from '../../types/auth.types';
+import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdatedUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
@@ -146,7 +146,18 @@ router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => 
 
     const updatedUser = await updateUser(userToUpdate, Number(userId));
 
-    Api.sendSuccess<IUser>(req, res, updatedUser);
+    const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
+    const userDepartment: IDepartment = updatedUser.departmentId
+      ? await knex('department').where('ID', updatedUser.departmentId).first()
+      : '';
+
+    const signupUser = {
+      user: updatedUser,
+      userRole: userRole,
+      userDepartment: userDepartment,
+    };
+
+    Api.sendSuccess<IUpdatedUser>(req, res, signupUser);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
@@ -189,6 +200,31 @@ router.get('/', jwtMW, async (req, res, next) => {
     const user: IUser = await knex('user').where('ID', userId).first();
 
     Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/update-password', jwtMW, async (req: Request, res: Response, next) => {
+  try {
+    const { password } = req.body;
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    await knex('user').where('ID', userId).update({
+      password: hashedPassword,
+    });
+
+    const updatedPassword = {
+      token: '',
+    };
+
+    Api.sendSuccess<any>(req, res, updatedPassword);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
