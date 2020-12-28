@@ -4,6 +4,7 @@ export interface IUser {
   email: string;
   password?: string;
   roleId?: number;
+  departmentId?: string;
   active: boolean;
   isAdmin: boolean;
   createdAt: string;
