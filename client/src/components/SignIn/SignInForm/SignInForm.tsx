@@ -105,7 +105,6 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
         .post('/api/auth/login', data)
         .then(res => {
           storeTokenInLocalStorage(res);
-          console.log(res);
         })
         .then(() => {
           console.log('Logged in!');
