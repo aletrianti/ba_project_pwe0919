@@ -7,6 +7,10 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage['current_user'] = JSON.stringify(res.data.user);
 };
 
+export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
+  localStorage.setItem('current_user', JSON.stringify(res.data.user));
+};
+
 export const removeAllItemsFromLocalStorage = () => {
   localStorage.clear();
 };
