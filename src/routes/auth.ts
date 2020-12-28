@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUser } from '../../types/auth.types';
+import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdateUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
@@ -146,7 +146,18 @@ router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => 
 
     const updatedUser = await updateUser(userToUpdate, Number(userId));
 
-    Api.sendSuccess<IUser>(req, res, updatedUser);
+    const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
+    const userDepartment: IDepartment = updatedUser.departmentId
+      ? await knex('department').where('ID', updatedUser.departmentId).first()
+      : '';
+
+    const updatedUserObj = {
+      user: updatedUser,
+      userRole: userRole,
+      userDepartment: userDepartment,
+    };
+
+    Api.sendSuccess<IUpdateUser>(req, res, updatedUserObj);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
