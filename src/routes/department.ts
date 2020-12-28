@@ -1,7 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { IUser } from '../../types/auth.types';
-import { IDepartment } from '../../types/department.types';
-import { INewRoleInput, IRole } from '../../types/role.types';
+import { IDepartment, INewDepartmentInput } from '../../types/department.types';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
 
@@ -24,21 +22,21 @@ router.post('/', async (req: Request, res: Response, next) => {
     const { userId, companyId } = getUserIds(req);
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
-    const newRoleTitle: INewRoleInput = req.body;
+    const newDepartmentName: INewDepartmentInput = req.body;
 
-    const roleExists: IRole = await knex('role').where('title', newRoleTitle).first();
-    if (roleExists) throw Error(`${roleExists.title} already exists for company: ${companyId}`);
+    const departmentExists: IDepartment = await knex('department').where('name', newDepartmentName).first();
+    if (departmentExists) throw Error(`${departmentExists.name} already exists for company: ${companyId}`);
 
-    const newRole = await knex('role').insert({
-      title: newRoleTitle,
+    const newDepartment = await knex('role').insert({
+      name: newDepartmentName,
       companyId: companyId,
       createdAt: dateDB(),
       updatedAt: dateDB(),
     });
 
-    const role = await knex('role').where('ID', newRole).first();
+    const department = await knex('role').where('ID', newDepartment).first();
 
-    Api.sendSuccess<IRole>(req, res, role);
+    Api.sendSuccess<IDepartment>(req, res, department);
   } catch (err) {
     Api.sendError(req, res, err);
   }
