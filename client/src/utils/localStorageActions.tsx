@@ -7,7 +7,7 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   const role = res.data.userRole;
   const department = res.data.userDepartment;
 
-  const availability = user.availableToBuddy;
+  const availability = user.availableToBuddy === 0 ? false : true;
 
   const currentUser: IProfile = {
     firstName: user.firstName,
@@ -31,7 +31,7 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   const role = res.data.userRole;
   const department = res.data.userDepartment;
 
-  const availability = user.availableToBuddy;
+  const availability = user.availableToBuddy === 0 ? false : true;
 
   const currentUser: IProfile = {
     firstName: user.firstName,
