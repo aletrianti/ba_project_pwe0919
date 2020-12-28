@@ -75,13 +75,9 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       const state = store.getState();
       const lastInvitedEmployee = state.signUpLastInvitedEmployee.email;
 
-      // make a copy of the array
-      const users = [...this.state.invitedUsers];
+      this.setState({ invitedUsers: [...this.state.invitedUsers, lastInvitedEmployee] });
 
-      // push invited employee to array
-      users.push(lastInvitedEmployee);
-
-      const payload: IInvitedEmployees = { emails: users };
+      const payload: IInvitedEmployees = { emails: this.state.invitedUsers };
       const action: IStoreInvitedEmployeesAction = { type: STORE_INVITED_EMPLOYEES, payload };
 
       store.dispatch(action);
@@ -92,16 +88,15 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
 
       const emails = state.signUpLastInvitedEmployees.emails;
 
-      emails.forEach((email: string) => {
-        this.state.usersEmails.push(email[0]);
-      });
-
       const data: INewEmployees = {
-        newUsers: this.state.usersEmails,
+        newUsers: emails,
         companyId: companyId,
       };
 
-      axios.post('/api/auth/invite-employees', data).catch(err => console.error(err));
+      axios
+        .post('/api/auth/invite-employees', data)
+        .then(() => console.log('Sent emails!'))
+        .catch(err => console.error(err));
     };
 
     const registerCompany = (event: FormEvent, history = this.props.history): void => {
