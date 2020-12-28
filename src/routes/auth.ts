@@ -2,6 +2,8 @@ import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
 import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUser } from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
+import { IDepartment } from '../../types/department.types';
+import { IRole } from '../../types/role.types';
 import { updateUser } from '../controllers/user';
 import knex from '../knex';
 const jwt = require('jsonwebtoken');
@@ -51,9 +53,14 @@ router.post('/register-company', async (req: Request, res: Response, next) => {
 
     const user: IUser = await knex('user').where('ID', createdUser).first();
 
+    const userRole: IRole = user.roleId ? await knex('role').where('ID', user.roleId).first() : '';
+    const userDepartment: IDepartment = user.departmentId ? await knex('department').where('ID', user.departmentId).first() : '';
+
     const signupUser = {
       token: jwt.sign({ userId: user.ID, companyId: companyID }, process.env.JWT_SECRET),
       user: user,
+      userRole: userRole,
+      userDepartment: userDepartment,
     };
 
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
@@ -111,9 +118,16 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
+    const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
+    const userDepartment: IDepartment = updatedUser.departmentId
+      ? await knex('department').where('ID', updatedUser.departmentId).first()
+      : '';
+
     const signupUser = {
       token: jwt.sign({ userId: updatedUser.ID, companyId: company }, process.env.JWT_SECRET),
       user: updatedUser,
+      userRole: userRole,
+      userDepartment: userDepartment,
     };
 
     Api.sendSuccess<ISignUpUser>(req, res, signupUser);
@@ -131,6 +145,7 @@ router.post('/update-user', jwtMW, async (req: Request, res: Response, next) => 
     if (!companyId) throw new Error('User not assigned to a company');
 
     const updatedUser = await updateUser(userToUpdate, Number(userId));
+
     Api.sendSuccess<IUser>(req, res, updatedUser);
   } catch (err) {
     console.error(err);
@@ -148,9 +163,14 @@ router.post('/login', async (req: Request, res: Response, next) => {
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) throw new Error(`Invalid password for email ${email}`);
 
+    const userRole: IRole = user.roleId ? await knex('role').where('ID', user.roleId).first() : '';
+    const userDepartment: IDepartment = user.departmentId ? await knex('department').where('ID', user.departmentId).first() : '';
+
     const loginUser = {
       token: jwt.sign({ userId: user.ID, companyId: user.companyId }, process.env.JWT_SECRET),
       user: user,
+      userRole: userRole,
+      userDepartment: userDepartment,
     };
 
     Api.sendSuccess<ISignUpUser>(req, res, loginUser);
