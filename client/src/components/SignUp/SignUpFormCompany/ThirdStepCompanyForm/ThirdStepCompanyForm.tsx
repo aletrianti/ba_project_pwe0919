@@ -28,6 +28,9 @@ import { INewCompanyInput, INewEmployees } from '../../../../../../types/auth.ty
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 
+// localStorage
+import { storeTokenInLocalStorage } from '../../../../utils/localStorageActions';
+
 interface ThirdStepCompanyFormState {
   areAllFieldsValid: boolean;
   invitedUsers: string[];
@@ -127,10 +130,10 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       // add http request
       axios
         .post('/api/auth/register-company', data)
-        .then(response => {
-          localStorage['user_token'] = response.data.token;
-          inviteUsers(response.data.user.companyId);
-          console.log(response);
+        .then(res => {
+          storeTokenInLocalStorage(res);
+          inviteUsers(res.data.user.companyId);
+          console.log(res);
         })
         .then(() => goToNextStep(event, history))
         .catch(err => console.error(err));

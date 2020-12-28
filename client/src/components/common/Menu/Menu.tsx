@@ -11,6 +11,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import BuildIcon from '@material-ui/icons/Build';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+// localStorage
+import { removeAllItemsFromLocalStorage } from '../../../utils/localStorageActions';
+
 interface MenuProps {
   activeSection: string;
 }
@@ -18,10 +21,6 @@ interface MenuProps {
 class Menu extends React.Component<RouteComponentProps & MenuProps> {
   render() {
     const { activeSection } = this.props;
-
-    const signOut = () => {
-      localStorage.removeItem('user_token');
-    };
 
     return (
       <div id="menu">
@@ -54,7 +53,7 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
           </Link>
         </div>
 
-        <button id="sign-out__btn" onClick={signOut}>
+        <button id="sign-out__btn" onClick={removeAllItemsFromLocalStorage}>
           <ExitToAppIcon fontSize={'large'} />
           <Link to="/sign-in" className="sign-out__text">
             Sign out
