@@ -163,7 +163,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
           </ul>
         </div>
 
-        <SignUpFormButtons />
+        <SignUpFormButtons areFieldsValid={this.state.areAllFieldsValid} />
 
         <SignUpProgressCircles currentStep={3} signUpMode={'company'} totalSteps={4} />
       </form>
