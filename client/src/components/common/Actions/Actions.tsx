@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 import './Actions.scss';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 interface ActionsState {
   isOpen: boolean;
@@ -57,19 +58,23 @@ class Actions extends React.Component<ActionsProps, ActionsState> {
             ) : null}
           </div>
         ) : (
-          <div className="actions__btns__wrapper">
-            {this.props.actions.map((action, i) => {
-              return (
-                <button
-                  onClick={action.function}
-                  key={i}
-                  className={action.name === 'Edit' ? 'action__btn edit__btn' : 'action__btn delete__btn'}
-                >
-                  <span>{action.name}</span>
-                </button>
-              );
-            })}
-          </div>
+          [
+            isCurrentUserAnAdmin() ? (
+              <div className="actions__btns__wrapper">
+                {this.props.actions.map((action, i) => {
+                  return (
+                    <button
+                      onClick={action.function}
+                      key={i}
+                      className={action.name === 'Edit' ? 'action__btn edit__btn' : 'action__btn delete__btn'}
+                    >
+                      <span>{action.name}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            ) : null,
+          ]
         )}
       </>
     );
