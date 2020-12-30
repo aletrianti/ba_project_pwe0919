@@ -3,7 +3,8 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
-import DocumentsTable from '../../components/Documents/DocumentsTable/DocumentsTable';
+import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/DocumentsAccordion';
+import Actions from '../../components/common/Actions/Actions';
 
 class Documents extends React.Component {
   render() {
@@ -14,6 +15,41 @@ class Documents extends React.Component {
 
     // TODO: Replace this with categories from the DB
     const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+    // TODO: Replace this with documents' data from the DB
+    const data = [
+      {
+        filename: 'PDF',
+        created: '10-03-19',
+        actions: (
+          <Actions
+            actions={[
+              { name: 'Edit', function: () => {} },
+              { name: 'Delete', function: () => {} },
+            ]}
+          />
+        ),
+      },
+      {
+        filename: 'PNG',
+        created: '09-06-20',
+        actions: (
+          <Actions
+            actions={[
+              { name: 'Edit', function: () => {} },
+              { name: 'Delete', function: () => {} },
+            ]}
+          />
+        ),
+      },
+    ];
+
+    const content = [
+      {
+        category: 'All',
+        data: data,
+      },
+    ];
 
     return (
       <div className="app__container">
@@ -28,7 +64,7 @@ class Documents extends React.Component {
             <Categories categories={categories} />
 
             <div id="documents__content">
-              <DocumentsTable />
+              <DocumentsAccordion content={content} />
             </div>
           </div>
         </div>
