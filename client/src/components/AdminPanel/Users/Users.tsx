@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 import './Users.scss';
 
 import AddButton from '../../common/AddButton/AddButton';
+import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 class Users extends React.Component {
   constructor(props: any) {
@@ -13,7 +14,7 @@ class Users extends React.Component {
 
     return (
       <div className="admin-panel__users">
-        <AddButton name={'Add user'} function={openAddUserModal} />
+        {isCurrentUserAnAdmin() ? <AddButton name={'Add user'} function={openAddUserModal} /> : null}
       </div>
     );
   }

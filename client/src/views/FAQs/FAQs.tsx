@@ -6,6 +6,7 @@ import Categories from '../../components/common/Categories/Categories';
 import AddButton from '../../components/common/AddButton/AddButton';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
 import { IQuestion } from '../../store/interfaces/questions.interfaces';
+import { isCurrentUserAnAdmin } from '../../utils/localStorageActions';
 
 class FAQs extends React.Component {
   render() {
@@ -45,7 +46,7 @@ class FAQs extends React.Component {
 
             <Categories categories={categories} />
 
-            <AddButton name={'Add FAQ'} function={openAddFAQModal} />
+            {isCurrentUserAnAdmin() ? <AddButton name={'Add FAQ'} function={openAddFAQModal} /> : null}
 
             {sectionName === 'faqs' ? <HorizontalAccordion questions={questions} section={sectionName} /> : null}
           </div>

@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 import './Achievements.scss';
 
 import AddButton from '../../common/AddButton/AddButton';
+import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 class Achievements extends React.Component {
   constructor(props: any) {
@@ -13,7 +14,7 @@ class Achievements extends React.Component {
 
     return (
       <div className="admin-panel__achievements">
-        <AddButton name={'Add achievement'} function={openAddUserModal} />
+        {isCurrentUserAnAdmin() ? <AddButton name={'Add achievement'} function={openAddUserModal} /> : null}
       </div>
     );
   }

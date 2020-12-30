@@ -20,5 +20,5 @@ export interface IProfile {
   description?: string;
   profilePicture?: any; // ?
   isAvailable: boolean;
-  isAdmin?: boolean;
+  isAdmin: boolean;
 }
