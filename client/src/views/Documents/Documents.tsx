@@ -3,6 +3,7 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
+import DocumentsTable from '../../components/Documents/DocumentsTable/DocumentsTable';
 
 class Documents extends React.Component {
   render() {
@@ -25,6 +26,10 @@ class Documents extends React.Component {
             <SectionBar sections={sections} activeSection={sectionName} />
 
             <Categories categories={categories} />
+
+            <div id="documents__content">
+              <DocumentsTable />
+            </div>
           </div>
         </div>
       </div>

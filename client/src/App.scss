@@ -132,3 +132,13 @@ body {
     }
 }
 
+#documents__content,
+#admin-panel__users__content {
+    width: calc(100vw - 20em);
+    height: 40em; 
+    max-width: calc(100vw - 20em);
+    max-height: 40em;
+    margin: 0 auto;
+    display: inline-block;
+}
+

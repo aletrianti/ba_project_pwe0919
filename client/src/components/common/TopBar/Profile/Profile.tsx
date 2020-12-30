@@ -91,6 +91,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                     { name: 'Edit', function: openEditProfileModal },
                     { name: 'Delete', function: openDeleteProfileModal },
                   ]}
+                  type={'profile'}
                 />
               </div>
               <div id="profile__availability">
