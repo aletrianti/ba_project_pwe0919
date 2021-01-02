@@ -9,12 +9,12 @@ class Users extends React.Component {
     super(props);
   }
 
-  render() {
-    const openAddUserModal = () => {};
+  openAddUserModal = () => {};
 
+  render() {
     return (
       <div className="admin-panel__users">
-        <AddButton name={'Add user'} function={openAddUserModal} />
+        <AddButton name={'Add user'} function={this.openAddUserModal} />
 
         <div id="admin-panel__users__content">
           <UsersTable />

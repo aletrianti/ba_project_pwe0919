@@ -34,30 +34,30 @@ class Task extends React.Component<TaskProps, TaskState> {
     };
   }
 
+  toggleInfo = (): void => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+      divHeight: document.getElementById(`name__task__${this.props.taskNum}`)?.offsetHeight,
+    });
+  };
+
+  confirmTask = (): void => {
+    const payload: ITask = {
+      num: this.props.taskNum,
+      name: this.props.name,
+      deadline: this.props.deadline,
+      description: this.props.description,
+      isCompleted: true,
+      assignedTo: this.props.assignedTo,
+    };
+
+    const action: ISetTaskAsCompletedAction = { type: this.props.actionType, payload };
+
+    store.dispatch(action);
+  };
+
   render() {
-    const { name, deadline, description, taskNum, isCompleted, assignedTo, actionType } = this.props;
-
-    const toggleInfo = (): void => {
-      this.setState({
-        isOpen: !this.state.isOpen,
-        divHeight: document.getElementById(`name__task__${this.props.taskNum}`)?.offsetHeight,
-      });
-    };
-
-    const confirmTask = (): void => {
-      const payload: ITask = {
-        num: taskNum,
-        name: name,
-        deadline: deadline,
-        description: description,
-        isCompleted: true,
-        assignedTo: assignedTo,
-      };
-
-      const action: ISetTaskAsCompletedAction = { type: actionType, payload };
-
-      store.dispatch(action);
-    };
+    const { name, deadline, description, taskNum, isCompleted } = this.props;
 
     return (
       <div className="dashboard__tasks__item">
@@ -69,7 +69,7 @@ class Task extends React.Component<TaskProps, TaskState> {
             </h3>
             <div className="task__info__actions">
               {!isCompleted ? (
-                <span className="confirm__btn" onClick={confirmTask}>
+                <span className="confirm__btn" onClick={this.confirmTask}>
                   Confirm
                 </span>
               ) : (
@@ -77,7 +77,7 @@ class Task extends React.Component<TaskProps, TaskState> {
                   <CheckCircleIcon />
                 </div>
               )}
-              <div className="task__arrow" onClick={toggleInfo}>
+              <div className="task__arrow" onClick={this.toggleInfo}>
                 {!this.state.isOpen ? <ExpandMore /> : <ExpandLess />}
               </div>
             </div>

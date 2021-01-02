@@ -7,16 +7,16 @@ import User from '../../components/AdminPanel/Users/Users';
 import Achievements from '../../components/AdminPanel/Achievements/Achievements';
 
 class AdminPanel extends React.Component {
+  sections = [
+    { name: 'Users', pathname: 'users' },
+    { name: 'Progress', pathname: 'progress' },
+    { name: 'Achievements', pathname: 'achievements' },
+    { name: 'Documents', pathname: 'documents' },
+  ];
+
   render() {
     const pathname = window.location.pathname.split('/');
     const sectionName = pathname[2];
-
-    const sections = [
-      { name: 'Users', pathname: 'users' },
-      { name: 'Progress', pathname: 'progress' },
-      { name: 'Achievements', pathname: 'achievements' },
-      { name: 'Documents', pathname: 'documents' },
-    ];
 
     return (
       <div className="app__container">
@@ -26,7 +26,7 @@ class AdminPanel extends React.Component {
           <TopBar sectionName={'Admin Panel'} />
 
           <div className="app__content">
-            <SectionBar sections={sections} activeSection={sectionName} />
+            <SectionBar sections={this.sections} activeSection={sectionName} />
 
             {sectionName === 'users' ? <User /> : null}
             {sectionName === 'achievements' ? <Achievements /> : null}

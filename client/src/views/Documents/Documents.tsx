@@ -7,49 +7,49 @@ import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/Do
 import Actions from '../../components/common/Actions/Actions';
 
 class Documents extends React.Component {
+  sections = [{ name: 'Documents', pathname: 'documents' }];
+
+  // TODO: Replace this with categories from the DB
+  categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+  // TODO: Replace this with documents' data from the DB
+  data = [
+    {
+      filename: 'PDF',
+      created: '10-03-19',
+      actions: (
+        <Actions
+          actions={[
+            { name: 'Edit', function: () => {} },
+            { name: 'Delete', function: () => {} },
+          ]}
+        />
+      ),
+    },
+    {
+      filename: 'PNG',
+      created: '09-06-20',
+      actions: (
+        <Actions
+          actions={[
+            { name: 'Edit', function: () => {} },
+            { name: 'Delete', function: () => {} },
+          ]}
+        />
+      ),
+    },
+  ];
+
+  content = [
+    {
+      category: 'All',
+      data: this.data,
+    },
+  ];
+
   render() {
     const pathname = window.location.pathname.split('/');
     const sectionName = pathname[1];
-
-    const sections = [{ name: 'Documents', pathname: 'documents' }];
-
-    // TODO: Replace this with categories from the DB
-    const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
-
-    // TODO: Replace this with documents' data from the DB
-    const data = [
-      {
-        filename: 'PDF',
-        created: '10-03-19',
-        actions: (
-          <Actions
-            actions={[
-              { name: 'Edit', function: () => {} },
-              { name: 'Delete', function: () => {} },
-            ]}
-          />
-        ),
-      },
-      {
-        filename: 'PNG',
-        created: '09-06-20',
-        actions: (
-          <Actions
-            actions={[
-              { name: 'Edit', function: () => {} },
-              { name: 'Delete', function: () => {} },
-            ]}
-          />
-        ),
-      },
-    ];
-
-    const content = [
-      {
-        category: 'All',
-        data: data,
-      },
-    ];
 
     return (
       <div className="app__container">
@@ -59,12 +59,12 @@ class Documents extends React.Component {
           <TopBar sectionName={'Documents'} />
 
           <div className="app__content">
-            <SectionBar sections={sections} activeSection={sectionName} />
+            <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={categories} />
+            <Categories categories={this.categories} />
 
             <div id="documents__content">
-              <DocumentsAccordion content={content} />
+              <DocumentsAccordion content={this.content} />
             </div>
           </div>
         </div>

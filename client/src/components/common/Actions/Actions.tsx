@@ -27,16 +27,16 @@ class Actions extends React.Component<ActionsProps, ActionsState> {
     };
   }
 
-  render() {
-    const toggleActions = (): void => {
-      this.setState({ isOpen: !this.state.isOpen });
-    };
+  toggleActions = (): void => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
 
+  render() {
     return (
       <>
         {this.props.type === 'profile' ? (
           <div className="actions__container">
-            <div className="actions__icon" onClick={() => toggleActions()}>
+            <div className="actions__icon" onClick={() => this.toggleActions()}>
               <MoreVertIcon />
             </div>
 

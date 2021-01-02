@@ -11,16 +11,16 @@ interface DocumentsTableProps {
 }
 
 class DocumentsTable extends React.Component<DocumentsTableProps> {
-  render() {
-    const columns = [
-      { title: 'Filename', columnData: (data: any) => data.filename },
-      { title: 'Created', columnData: (data: any) => data.created },
-      { title: '', columnData: (data: any) => data.actions },
-    ];
+  columns = [
+    { title: 'Filename', columnData: (data: any) => data.filename },
+    { title: 'Created', columnData: (data: any) => data.created },
+    { title: '', columnData: (data: any) => data.actions },
+  ];
 
+  render() {
     return (
       <div id="documents__table">
-        <Table data={this.props.data} columns={columns} />
+        <Table data={this.props.data} columns={this.columns} />
       </div>
     );
   }

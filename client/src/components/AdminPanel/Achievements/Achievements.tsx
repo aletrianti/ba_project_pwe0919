@@ -9,12 +9,12 @@ class Achievements extends React.Component {
     super(props);
   }
 
-  render() {
-    const openAddUserModal = () => {};
+  openAddUserModal = () => {};
 
+  render() {
     return (
       <div className="admin-panel__achievements">
-        <AddButton name={'Add achievement'} function={openAddUserModal} />
+        <AddButton name={'Add achievement'} function={this.openAddUserModal} />
 
         <div id="admin-panel__achievements__content">
           <AchievementsTable />

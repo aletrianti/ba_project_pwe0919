@@ -26,14 +26,14 @@ class DocumentsAccordionItem extends React.Component<DocumentsAccordionItemProps
     };
   }
 
-  render() {
-    const toggleInfo = (): void => {
-      this.setState({
-        isOpen: !this.state.isOpen,
-        divHeight: document.getElementById(`name__task__${this.props.itemId}`)?.offsetHeight,
-      });
-    };
+  toggleInfo = (): void => {
+    this.setState({
+      isOpen: !this.state.isOpen,
+      divHeight: document.getElementById(`name__task__${this.props.itemId}`)?.offsetHeight,
+    });
+  };
 
+  render() {
     return (
       <div className="documents__accordion__item">
         <div className="item__category" id={`name__task__${this.props.itemId}`}>
@@ -45,7 +45,7 @@ class DocumentsAccordionItem extends React.Component<DocumentsAccordionItemProps
                 { name: 'Delete', function: () => {} },
               ]}
             />
-            <div className="task__arrow" onClick={toggleInfo}>
+            <div className="task__arrow" onClick={this.toggleInfo}>
               {!this.state.isOpen ? <ExpandMore /> : <ExpandLess />}
             </div>
           </div>
