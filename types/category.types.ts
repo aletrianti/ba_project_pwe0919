@@ -6,3 +6,7 @@ export interface ICategory {
   createAt: string;
   updatedAt: string;
 }
+
+export interface INewCategoryInput {
+  name: string;
+}

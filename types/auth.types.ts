@@ -1,3 +1,6 @@
+import { IDepartment } from './department.types';
+import { IRole } from './role.types';
+
 export interface IUser {
   ID: number;
   companyId: number;
@@ -24,6 +27,14 @@ export interface IUser {
 export interface ISignUpUser {
   token: string;
   user: IUser;
+  userRole: IRole;
+  userDepartment: IDepartment;
+}
+
+export interface IUpdatedUser {
+  user: IUser;
+  userRole: IRole;
+  userDepartment: IDepartment;
 }
 
 export interface IUpdateUser {
