@@ -206,6 +206,29 @@ router.get('/', jwtMW, async (req, res, next) => {
   }
 });
 
+router.get('/mailtest', async (req, res, next) => {
+  try {
+    const sendmail = require('sendmail')();
+
+    sendmail(
+      {
+        from: 'info@hoppin.com',
+        to: 'josecarlosesparza@gmail.com ',
+        subject: 'Company Code',
+        html: 'Mail of test sendmail ',
+      },
+      function (err, reply) {
+        console.log(err && err.stack);
+        console.dir(reply);
+      }
+    );
+    Api.sendSuccess<string>(req, res, 'sent');
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
 router.post('/update-password', jwtMW, async (req: Request, res: Response, next) => {
   try {
     const { password } = req.body;
