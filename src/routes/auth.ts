@@ -11,6 +11,8 @@ const bcrypt = require('bcryptjs');
 import { Api, dateDB, generateRandomCode, getUserIds } from '../utils';
 
 var router = Router();
+const sendmail = require('sendmail')();
+
 router.post('/register-company', async (req: Request, res: Response, next) => {
   try {
     const { company, newRole, newUser, password }: INewCompanyInput = req.body;
@@ -88,7 +90,27 @@ router.post('/invite-employees', async (req: Request, res: Response, next) => {
 
       createdUsers.push(userCreated);
     });
-    const user: IUser[] = await knex('user').whereIn('ID', createdUsers);
+    const [user, company]: [IUser[], ICompany] = await Promise.all([
+      knex('user').whereIn('ID', createdUsers),
+      knex('company').where('ID', Number(companyId)).first(),
+    ]);
+
+    sendmail(
+      {
+        from: 'info@hoppin.com',
+        to: `${newUsers.toString()}`,
+        subject: `Welcome to ${company.name}`,
+        html: `<p>Hi,</p>
+              <p>We are really excited to work with you at ${company.name}. To join the team create aprofile <a href="https://hoppin.herokuapp.com/sign-up">here</a>, don't forget to user the company code: ${company.companyCode}.</p>
+              <p>Kind regards,</p>
+              <p>${company.name}.</p>
+        `,
+      },
+      function (err, reply) {
+        // console.log(err && err.stack);
+        // console.dir(reply);
+      }
+    );
 
     Api.sendSuccess<IUser[]>(req, res, user);
   } catch (err) {
