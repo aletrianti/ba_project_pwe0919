@@ -10,60 +10,60 @@ import { IRole } from '../../store/interfaces/roles.interfaces';
 import { IMember } from '../../store/interfaces/members.interfaces';
 
 class CompanyAndTeam extends React.Component {
+  sections = [
+    { name: 'Team', pathname: 'team' },
+    { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
+    { name: 'Achievements', pathname: 'achievements' },
+  ];
+
+  // TODO: Replace this with categories from the DB
+  categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+  // TODO: Dynamic content/data for users/members
+  members: IMember[] = [
+    {
+      fullName: 'Mathias Nielsen',
+      jobTitle: 'Software Developer',
+      department: 'Engineering',
+      birthday: '19-03',
+      memberSince: '18-02-19',
+      description: 'I love making music and programming.',
+    },
+    {
+      fullName: 'Mathias Nielsen',
+      jobTitle: 'Software Developer',
+      department: 'Engineering',
+      birthday: '19-03',
+      memberSince: '18-02-19',
+      description: 'I love making music and programming.',
+    },
+  ];
+
+  // TODO: Replace this with roles & responsibilities from the DB
+  roles: IRole[] = [
+    {
+      title: 'Software engineer',
+      description:
+        'A Software Developer serves as a member of the software development team. They aid in the innovation and creation of company software and programs.',
+      responsibilities: [
+        { text: 'Design and develop software, test-automation suites, and infrastructure.' },
+        { text: 'Review other peers’ code.' },
+      ],
+    },
+    {
+      title: 'Software engineer',
+      description:
+        'A Software Developer serves as a member of the software development team. They aid in the innovation and creation of company software and programs.',
+      responsibilities: [
+        { text: 'Design and develop software, test-automation suites, and infrastructure.' },
+        { text: 'Review other peers’ code.' },
+      ],
+    },
+  ];
+
   render() {
     const pathname = window.location.pathname.split('/');
     const sectionName = pathname[2];
-
-    const sections = [
-      { name: 'Team', pathname: 'team' },
-      { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
-      { name: 'Achievements', pathname: 'achievements' },
-    ];
-
-    // TODO: Replace this with categories from the DB
-    const categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
-
-    // TODO: Dynamic content/data for users/members
-    const members: IMember[] = [
-      {
-        fullName: 'Mathias Nielsen',
-        jobTitle: 'Software Developer',
-        department: 'Engineering',
-        birthday: '19-03',
-        memberSince: '18-02-19',
-        description: 'I love making music and programming.',
-      },
-      {
-        fullName: 'Mathias Nielsen',
-        jobTitle: 'Software Developer',
-        department: 'Engineering',
-        birthday: '19-03',
-        memberSince: '18-02-19',
-        description: 'I love making music and programming.',
-      },
-    ];
-
-    // TODO: Replace this with roles & responsibilities from the DB
-    const roles: IRole[] = [
-      {
-        title: 'Software engineer',
-        description:
-          'A Software Developer serves as a member of the software development team. They aid in the innovation and creation of company software and programs.',
-        responsibilities: [
-          { text: 'Design and develop software, test-automation suites, and infrastructure.' },
-          { text: 'Review other peers’ code.' },
-        ],
-      },
-      {
-        title: 'Software engineer',
-        description:
-          'A Software Developer serves as a member of the software development team. They aid in the innovation and creation of company software and programs.',
-        responsibilities: [
-          { text: 'Design and develop software, test-automation suites, and infrastructure.' },
-          { text: 'Review other peers’ code.' },
-        ],
-      },
-    ];
 
     return (
       <div className="app__container">
@@ -73,13 +73,13 @@ class CompanyAndTeam extends React.Component {
           <TopBar sectionName={'Company & Team'} />
 
           <div className="app__content">
-            <SectionBar sections={sections} activeSection={sectionName} />
+            <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={categories} />
+            <Categories categories={this.categories} />
 
             {sectionName === 'team' ? (
               <div className="team__members">
-                {members.map((member, i) => (
+                {this.members.map((member, i) => (
                   <Member
                     fullName={member.fullName}
                     jobTitle={member.jobTitle}
@@ -93,7 +93,9 @@ class CompanyAndTeam extends React.Component {
               </div>
             ) : null}
 
-            {sectionName === 'roles-and-responsibilities' ? <HorizontalAccordion roles={roles} section={sectionName} /> : null}
+            {sectionName === 'roles-and-responsibilities' ? (
+              <HorizontalAccordion roles={this.roles} section={sectionName} />
+            ) : null}
           </div>
         </div>
       </div>

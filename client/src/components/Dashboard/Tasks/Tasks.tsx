@@ -19,25 +19,25 @@ interface TasksProps {
 }
 
 class Tasks extends React.Component<TasksProps> {
+  setActionType = (num: number): string => {
+    switch (num) {
+      case 1:
+        return SET_TASK_ONE_AS_COMPLETED;
+      case 2:
+        return SET_TASK_TWO_AS_COMPLETED;
+      case 3:
+        return SET_TASK_THREE_AS_COMPLETED;
+      case 4:
+        return SET_TASK_FOUR_AS_COMPLETED;
+      case 5:
+        return SET_TASK_FIVE_AS_COMPLETED;
+      default:
+        return '';
+    }
+  };
+
   render() {
     const { tasks } = this.props;
-
-    const setActionType = (num: number): string => {
-      switch (num) {
-        case 1:
-          return SET_TASK_ONE_AS_COMPLETED;
-        case 2:
-          return SET_TASK_TWO_AS_COMPLETED;
-        case 3:
-          return SET_TASK_THREE_AS_COMPLETED;
-        case 4:
-          return SET_TASK_FOUR_AS_COMPLETED;
-        case 5:
-          return SET_TASK_FIVE_AS_COMPLETED;
-        default:
-          return '';
-      }
-    };
 
     return (
       <div id="dashboard__tasks">
@@ -52,7 +52,7 @@ class Tasks extends React.Component<TasksProps> {
                     taskNum={task.num}
                     isCompleted={task.isCompleted}
                     assignedTo={task.assignedTo}
-                    actionType={setActionType(task.num)}
+                    actionType={this.setActionType(task.num)}
                     key={i}
                   />
                 );

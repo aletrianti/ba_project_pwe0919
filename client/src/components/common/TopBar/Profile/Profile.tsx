@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import './Profile.scss';
 
+import Actions from '../../Actions/Actions';
+
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Switch from '@material-ui/core/Switch';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -35,33 +36,37 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     };
   }
 
-  render() {
-    const { firstName, lastName, jobTitle, department, birthday, memberSince, description, profilePicture } = this.props;
-
-    const CustomSwitch = withStyles({
-      switchBase: {
-        color: '#A3A3A3',
-        '&$checked': {
-          color: '#F9AB55',
-          '& + $track': {
-            opacity: 1,
-            backgroundColor: '#FBCD99',
-            borderColor: '#FBCD99',
-          },
+  CustomSwitch = withStyles({
+    switchBase: {
+      color: '#A3A3A3',
+      '&$checked': {
+        color: '#F9AB55',
+        '& + $track': {
+          opacity: 1,
+          backgroundColor: '#FBCD99',
+          borderColor: '#FBCD99',
         },
       },
-      track: {
-        border: '1px solid #C4C4C4',
-        opacity: 1,
-        backgroundColor: '#C4C4C4',
-      },
-      checked: {},
-    })(Switch);
+    },
+    track: {
+      border: '1px solid #C4C4C4',
+      opacity: 1,
+      backgroundColor: '#C4C4C4',
+    },
+    checked: {},
+  })(Switch);
 
-    const setAvailability = () => {
-      this.setState({ isChecked: !this.state.isChecked });
-      updateCurrentUserAvailability(!this.state.isChecked);
-    };
+  setAvailability = () => {
+    this.setState({ isChecked: !this.state.isChecked });
+    updateCurrentUserAvailability(!this.state.isChecked);
+  };
+
+  openEditProfileModal = (e: MouseEvent): void => {};
+
+  openDeleteProfileModal = (e: MouseEvent): void => {};
+
+  render() {
+    const { firstName, lastName, jobTitle, department, birthday, memberSince, description, profilePicture } = this.props;
 
     return (
       <div className="profile__container">
@@ -80,14 +85,19 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                 <h5 id="profile__full-name">
                   {firstName} {lastName}
                 </h5>
-                <div id="profile__actions">
-                  <MoreVertIcon />
-                </div>
+
+                <Actions
+                  actions={[
+                    { name: 'Edit', function: this.openEditProfileModal },
+                    { name: 'Delete', function: this.openDeleteProfileModal },
+                  ]}
+                  type={'profile'}
+                />
               </div>
               <div id="profile__availability">
                 <span>Buddy availability:</span>
                 <div className="profile__switch">
-                  <CustomSwitch checked={this.state.isChecked} onChange={() => setAvailability()} />
+                  <this.CustomSwitch checked={this.state.isChecked} onChange={() => this.setAvailability()} />
                 </div>
               </div>
             </div>

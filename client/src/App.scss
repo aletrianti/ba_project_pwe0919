@@ -97,10 +97,11 @@ body {
     .app__container__topbar-and-content {
         display: flex;
         flex-direction: column;
+        width: calc(100vw - 300px);
 
         .app__content {
             margin: 10px 35px;
-            height: calc(100vh - 138px);
+            height: calc(100vh - 128px);
         }
     }
 }
@@ -109,8 +110,8 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 30px 0;
-    height: 100%;
+    margin: 30px 0 30px;
+    height: calc(100% - 60px);
 }
 
 #dashboard__first-half {
@@ -132,3 +133,27 @@ body {
     }
 }
 
+#documents__content,
+#admin-panel__users__content {
+    width: 100%;
+    height: 40em; 
+    max-width: calc(100vw - 20em);
+    max-height: 40em;
+    margin: 0 auto;
+    display: inline-block;
+}
+
+#documents__content {
+    padding: 0 20px;
+}
+
+#documents__table, 
+#users__table,
+#achievements__table {
+    position: relative;
+    width: 100%;
+}
+
+#documents__table {
+    max-height: 20em;
+}

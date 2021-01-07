@@ -23,14 +23,14 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
     };
   }
 
+  handleOnChange = (event: any): void => {
+    const { isValid, message } = this.props.onchange(event.target.value);
+
+    this.setState({ isFieldValid: isValid, errorMessage: message });
+  };
+
   render() {
-    const { name, isPassword, onchange, isInviteUsersField } = this.props;
-
-    const handleOnChange = (event: any): void => {
-      const { isValid, message } = onchange(event.target.value);
-
-      this.setState({ isFieldValid: isValid, errorMessage: message });
-    };
+    const { name, isPassword, isInviteUsersField } = this.props;
 
     return (
       <div className="input-field__container">
@@ -44,7 +44,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
             placeholder={name}
             alt={name}
             name={`Input[${name}]`}
-            onChange={handleOnChange}
+            onChange={this.handleOnChange}
             className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
           />
         ) : (
@@ -53,7 +53,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
             placeholder={name}
             alt={name}
             name={`Input[${name}]`}
-            onChange={handleOnChange}
+            onChange={this.handleOnChange}
             className={'input-field__invite-users'}
           />
         )}

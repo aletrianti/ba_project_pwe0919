@@ -47,86 +47,86 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): any => {
+    const formValues: string[] = ['signInEmail', 'signInPassword'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeEmail = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.EMAIL);
+    const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
+    const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storePassword = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.PASSWORD);
+    const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
+    const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  dispatchSignInAction = (): void => {
+    const state: AnyAction = store.getState();
+
+    const payload: ISignInData = {
+      email: state.signInEmail.email,
+      password: state.signInPassword.password,
+    };
+
+    const action: ISignInAction = { type: SIGN_IN, payload };
+
+    store.dispatch(action);
+  };
+
+  signInRequest = (history = this.props.history) => {
+    const state: AnyAction = store.getState();
+
+    const data: ILoginInput = {
+      email: state.signIn.email,
+      password: state.signIn.password,
+    };
+
+    axios
+      .post('/api/auth/login', data)
+      .then(res => {
+        storeTokenInLocalStorage(res);
+      })
+      .then(() => {
+        console.log('Logged in!');
+        history.push('/dashboard');
+      })
+      .catch(err => {
+        this.setState({ areCredentialsValid: false });
+        console.error(err);
+      });
+  };
+
+  signIn = async (event: FormEvent): Promise<any> => {
+    event.preventDefault();
+
+    await this.dispatchSignInAction();
+    await this.signInRequest();
+  };
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): any => {
-      const formValues: string[] = ['signInEmail', 'signInPassword'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeEmail = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.EMAIL);
-      const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
-      const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storePassword = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.PASSWORD);
-      const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
-      const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const dispatchSignInAction = (): void => {
-      const state: AnyAction = store.getState();
-
-      const payload: ISignInData = {
-        email: state.signInEmail.email,
-        password: state.signInPassword.password,
-      };
-
-      const action: ISignInAction = { type: SIGN_IN, payload };
-
-      store.dispatch(action);
-    };
-
-    const signInRequest = (history = this.props.history) => {
-      const state: AnyAction = store.getState();
-
-      const data: ILoginInput = {
-        email: state.signIn.email,
-        password: state.signIn.password,
-      };
-
-      axios
-        .post('/api/auth/login', data)
-        .then(res => {
-          storeTokenInLocalStorage(res);
-        })
-        .then(() => {
-          console.log('Logged in!');
-          history.push('/dashboard');
-        })
-        .catch(err => {
-          this.setState({ areCredentialsValid: false });
-          console.error(err);
-        });
-    };
-
-    const signIn = async (event: FormEvent): Promise<any> => {
-      event.preventDefault();
-
-      await dispatchSignInAction();
-      await signInRequest();
-    };
-
     return (
-      <form className="sign-in__form" onSubmit={signIn}>
-        <InputField name={'Email'} onchange={(e: any) => storeEmail(e)} />
-        <InputField name={'Password'} isPassword={true} onchange={(e: any) => storePassword(e)} />
+      <form className="sign-in__form" onSubmit={this.signIn}>
+        <InputField name={'Email'} onchange={(e: any) => this.storeEmail(e)} />
+        <InputField name={'Password'} isPassword={true} onchange={(e: any) => this.storePassword(e)} />
 
         {!this.state.areCredentialsValid ? <span className="error__message">{this.state.errorMessage}</span> : null}
 

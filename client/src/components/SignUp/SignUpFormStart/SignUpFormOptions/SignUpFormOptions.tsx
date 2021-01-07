@@ -19,24 +19,22 @@ class SignUpFormOptions extends React.Component<SignUpFormOptionsProps, SignUpFo
     };
   }
 
+  handleOnClick = (event: any): void => {
+    const { isValid, message } = this.props.onclick(event.target.value);
+
+    this.setState({ isFieldValid: isValid, errorMessage: message });
+  };
+
   render() {
-    const { onclick } = this.props;
-
-    const handleOnClick = (event: any): void => {
-      const { isValid, message } = onclick(event.target.value);
-
-      this.setState({ isFieldValid: isValid, errorMessage: message });
-    };
-
     return (
       <div id="sign-up__form__options">
         <label className="radio-btn__container">
-          <input type="radio" name="account" id="company-account" value="company" onClick={handleOnClick} />
+          <input type="radio" name="account" id="company-account" value="company" onClick={this.handleOnClick} />
           <span className="radio-btn"></span>
           Company account
         </label>
         <label className="radio-btn__container">
-          <input type="radio" name="account" id="employee-account" value="employee" onClick={handleOnClick} />
+          <input type="radio" name="account" id="employee-account" value="employee" onClick={this.handleOnClick} />
           <span className="radio-btn"></span>
           Employee account
         </label>

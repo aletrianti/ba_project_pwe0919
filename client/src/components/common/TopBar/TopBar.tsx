@@ -30,13 +30,13 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
     };
   }
 
+  toggleProfile = (): void => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
   render() {
     const { sectionName } = this.props;
     const { isOpen, currentUser } = this.state;
-
-    const toggleProfile = (): void => {
-      this.setState({ isOpen: !isOpen });
-    };
 
     return (
       <div id="topbar">
@@ -48,7 +48,7 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
           <div id="topbar__img">
             <AccountCircleIcon id="topbar__img__no-picture" fontSize={'large'} />
           </div>
-          <button id="topbar__name" onClick={() => toggleProfile()}>
+          <button id="topbar__name" onClick={() => this.toggleProfile()}>
             {currentUser.firstName} {currentUser.lastName}
           </button>
           {isOpen ? (
