@@ -35,7 +35,7 @@ class UsersTable extends React.Component {
 
   render() {
     return (
-      <div id="documents__table">
+      <div id="users__table">
         <Table data={this.data} columns={this.columns} />
       </div>
     );

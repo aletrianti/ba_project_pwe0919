@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './Achievements.scss';
 
 import AddButton from '../../common/AddButton/AddButton';

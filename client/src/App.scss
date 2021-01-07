@@ -146,3 +146,14 @@ body {
 #documents__content {
     padding: 0 20px;
 }
+
+#documents__table, 
+#users__table,
+#achievements__table {
+    position: relative;
+    width: 100%;
+}
+
+#documents__table {
+    max-height: 20em;
+}

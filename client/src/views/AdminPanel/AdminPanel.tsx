@@ -3,13 +3,15 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 
-import User from '../../components/AdminPanel/Users/Users';
+import Users from '../../components/AdminPanel/Users/Users';
+import Tasks from '../../components/AdminPanel/Tasks/Tasks';
 import Achievements from '../../components/AdminPanel/Achievements/Achievements';
+import Documents from '../../components/AdminPanel/Documents/Documents';
 
 class AdminPanel extends React.Component {
   sections = [
     { name: 'Users', pathname: 'users' },
-    { name: 'Progress', pathname: 'progress' },
+    { name: 'Tasks', pathname: 'tasks' },
     { name: 'Achievements', pathname: 'achievements' },
     { name: 'Documents', pathname: 'documents' },
   ];
@@ -26,10 +28,12 @@ class AdminPanel extends React.Component {
           <TopBar sectionName={'Admin Panel'} />
 
           <div className="app__content">
-            <SectionBar sections={this.sections} activeSection={sectionName} />
+            <SectionBar sections={this.sections} activeSection={sectionName} isAdminPanel={true} />
 
-            {sectionName === 'users' ? <User /> : null}
+            {sectionName === 'users' ? <Users /> : null}
+            {sectionName === 'tasks' ? <Tasks /> : null}
             {sectionName === 'achievements' ? <Achievements /> : null}
+            {sectionName === 'documents' ? <Documents /> : null}
           </div>
         </div>
       </div>

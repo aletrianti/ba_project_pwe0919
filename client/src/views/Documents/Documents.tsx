@@ -7,7 +7,7 @@ import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/Do
 import Actions from '../../components/common/Actions/Actions';
 
 class Documents extends React.Component {
-  sections = [{ name: 'Documents', pathname: 'documents' }];
+  sections = [{ name: 'Files', pathname: 'documents' }];
 
   // TODO: Replace this with categories from the DB
   categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];

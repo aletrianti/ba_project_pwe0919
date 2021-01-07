@@ -29,7 +29,7 @@ class AchievementsTable extends React.Component {
 
   render() {
     return (
-      <div id="documents__table">
+      <div id="achievements__table">
         <Table data={this.data} columns={this.columns} />
       </div>
     );

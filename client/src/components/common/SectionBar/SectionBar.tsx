@@ -9,11 +9,12 @@ interface SectionBarProps {
     pathname: string;
   }[];
   activeSection: string;
+  isAdminPanel?: boolean;
 }
 
 class SectionBar extends React.Component<RouteComponentProps & SectionBarProps> {
   render() {
-    const { sections, activeSection } = this.props;
+    const { sections, activeSection, isAdminPanel } = this.props;
 
     return (
       <div id="section-bar">
@@ -22,7 +23,7 @@ class SectionBar extends React.Component<RouteComponentProps & SectionBarProps> 
             className={activeSection === section.pathname ? 'section-bar__link section-bar__link--active' : 'section-bar__link'}
             key={i}
           >
-            {section.name === 'Tasks' || section.name === 'Buddy' ? (
+            {(!isAdminPanel && section.name === 'Tasks') || section.name === 'Buddy' ? (
               <span className="section__link">{section.name}</span>
             ) : (
               <Link to={section.pathname} className="section__link">
