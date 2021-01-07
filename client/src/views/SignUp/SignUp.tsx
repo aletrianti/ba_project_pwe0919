@@ -12,13 +12,20 @@ import FirstStepCompanyForm from '../../components/SignUp/SignUpFormCompany/Firs
 import SecondStepCompanyForm from '../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm';
 import ThirdStepCompanyForm from '../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm';
 import FinalStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm';
+import { connect } from 'react-redux';
 
-class SignUp extends React.Component {
+interface SignUpProps {
+  currentStep: number;
+  accountType: string;
+}
+
+class SignUp extends React.Component<SignUpProps> {
+  constructor(props: any) {
+    super(props);
+  }
+
   render() {
-    const pathname = window.location.pathname.split('/');
-    // ex. pathname = ["", "sign-up", "1", "company"]
-    const accountType = pathname[2];
-    const currentStep = Number(pathname[3]);
+    const { currentStep, accountType } = this.props;
 
     return (
       <div id="sign-up__container">
@@ -31,7 +38,7 @@ class SignUp extends React.Component {
             <div className="form__container">
               <h1 className="header--h1">Sign up</h1>
 
-              {!accountType ? (
+              {accountType === '' ? (
                 <SignUpFormStart />
               ) : (
                 [
@@ -66,4 +73,13 @@ class SignUp extends React.Component {
   }
 }
 
-export default SignUp;
+const mapStateToProps = (state: any) => {
+  const { currentStep, accountType } = state.signUpInfo;
+
+  return {
+    currentStep,
+    accountType,
+  };
+};
+
+export default connect(mapStateToProps)(SignUp);
