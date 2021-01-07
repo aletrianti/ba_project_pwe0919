@@ -291,7 +291,7 @@ export const storeInvitedEmployees = (state: IInvitedEmployees = { emails: [] },
     case STORE_INVITED_EMPLOYEES:
       return {
         ...state,
-        emails: [...state.emails, action.payload.emails],
+        emails: action.payload.emails,
       };
     default:
       return state;

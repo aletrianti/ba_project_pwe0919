@@ -34,7 +34,6 @@ import { storeTokenInLocalStorage } from '../../../../utils/localStorageActions'
 interface ThirdStepCompanyFormState {
   areAllFieldsValid: boolean;
   invitedUsers: string[];
-  usersEmails: string[];
 }
 
 class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdStepCompanyFormState> {
@@ -44,7 +43,6 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
     this.state = {
       areAllFieldsValid: false,
       invitedUsers: [],
-      usersEmails: [],
     };
   }
 
@@ -68,18 +66,25 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
     return { isValid, message };
   };
 
-  addInvitedEmployees = (event: FormEvent): void => {
-    event.preventDefault();
-
+  addInvitedEmployees = (): void => {
     const state = store.getState();
     const lastInvitedEmployee = state.signUpLastInvitedEmployee.email;
 
     this.setState({ invitedUsers: [...this.state.invitedUsers, lastInvitedEmployee] });
+  };
 
+  storeInvitedEmployees = (): void => {
     const payload: IInvitedEmployees = { emails: this.state.invitedUsers };
     const action: IStoreInvitedEmployeesAction = { type: STORE_INVITED_EMPLOYEES, payload };
 
     store.dispatch(action);
+  };
+
+  displayInvitedEmployees = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.addInvitedEmployees();
+    await this.storeInvitedEmployees();
   };
 
   inviteUsers = (companyId: string): void => {
@@ -147,7 +152,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
           <Button
             btnText={'Invite'}
             isInviteBtn={true}
-            inviteEmployee={this.addInvitedEmployees}
+            inviteEmployee={this.displayInvitedEmployees}
             isConfirmBtn={true}
             areAllFieldsValid={this.state.areAllFieldsValid}
           />

@@ -58,13 +58,13 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
         ) : isRegular ? (
           [
             isBackFormBtn ? (
-              <button
+              <span
                 className="btn--dark-blue"
                 onClick={(e: MouseEvent, history = this.props.history) => goToPreviousStep(e, history)}
                 key={btnText}
               >
                 {btnText}
-              </button>
+              </span>
             ) : (
               <button className="btn--dark-blue" key={btnText}>
                 {btnText}
