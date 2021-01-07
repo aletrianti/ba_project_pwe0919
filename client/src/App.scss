@@ -100,7 +100,7 @@ body {
 
         .app__content {
             margin: 10px 35px;
-            height: calc(100vh - 138px);
+            height: calc(100vh - 128px);
         }
     }
 }
@@ -109,8 +109,8 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin: 30px 0;
-    height: 100%;
+    margin: 30px 0 30px;
+    height: calc(100% - 60px);
 }
 
 #dashboard__first-half {
