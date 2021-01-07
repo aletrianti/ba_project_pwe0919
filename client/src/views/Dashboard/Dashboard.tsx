@@ -23,20 +23,20 @@ class Dashboard extends React.Component<{}, DashboardState> {
     };
   }
 
+  firstComponentSections = [{ name: 'Tasks', pathname: 'tasks' }];
+  secondComponentSections = [{ name: 'Buddy', pathname: 'buddy' }];
+
+  // TODO: Dynamic content/data for users/members
+  buddy: IMember = {
+    fullName: 'Mathias Nielsen',
+    jobTitle: 'Software Developer',
+    department: 'Engineering',
+    birthday: '19-03',
+    memberSince: '18-02-19',
+    description: 'I love making music and programming.',
+  };
+
   render() {
-    const firstComponentSections = [{ name: 'Tasks', pathname: 'tasks' }];
-    const secondComponentSections = [{ name: 'Buddy', pathname: 'buddy' }];
-
-    // TODO: Dynamic content/data for users/members
-    const buddy: IMember = {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    };
-
     return (
       <div className="app__container">
         <Menu activeSection={'dashboard'} />
@@ -49,21 +49,21 @@ class Dashboard extends React.Component<{}, DashboardState> {
 
             <div id="dashboard__content">
               <div id="dashboard__first-half">
-                <SectionBar sections={firstComponentSections} activeSection={'tasks'} />
+                <SectionBar sections={this.firstComponentSections} activeSection={'tasks'} />
 
                 <Tasks />
               </div>
 
               <div id="dashboard__second-half">
-                <SectionBar sections={secondComponentSections} activeSection={'buddy'} />
+                <SectionBar sections={this.secondComponentSections} activeSection={'buddy'} />
 
                 <Member
-                  fullName={buddy.fullName}
-                  jobTitle={buddy.jobTitle}
-                  department={buddy.department}
-                  birthday={buddy.birthday}
-                  memberSince={buddy.memberSince}
-                  description={buddy.description}
+                  fullName={this.buddy.fullName}
+                  jobTitle={this.buddy.jobTitle}
+                  department={this.buddy.department}
+                  birthday={this.buddy.birthday}
+                  memberSince={this.buddy.memberSince}
+                  description={this.buddy.description}
                 />
               </div>
             </div>

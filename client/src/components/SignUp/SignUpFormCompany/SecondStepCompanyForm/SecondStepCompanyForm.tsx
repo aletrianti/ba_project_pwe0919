@@ -51,107 +51,105 @@ class SecondStepCompanyForm extends React.Component<RouteComponentProps, SecondS
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): any => {
+    const formValues: string[] = ['signUpFirstName', 'signUpLastName', 'signUpEmail', 'signUpPassword', 'signUpRole'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeFirstName = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: IFirstName = { firstName: data, isValid: isValid, errorMessage: message };
+    const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeLastName = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: ILastName = { lastName: data, isValid: isValid, errorMessage: message };
+    const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeEmail = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.EMAIL);
+    const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
+    const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storePassword = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.PASSWORD);
+    const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
+    const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeRole = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: IRole = { role: data, isValid: isValid, errorMessage: message };
+    const action: IStoreRoleAction = { type: STORE_ROLE, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  signUpAdmin = (event: FormEvent, history = this.props.history): void => {
+    // dispatch action
+    const state = store.getState();
+    const payload: IAdminAccount = {
+      firstName: state.signUpFirstName.firstName,
+      lastName: state.signUpLastName.lastName,
+      email: state.signUpEmail.email,
+      password: state.signUpPassword.password,
+      role: state.signUpRole.role,
+    };
+    const action: IStoreAdminAccountAction = { type: STORE_ADMIN_ACCOUNT, payload };
+
+    store.dispatch(action);
+
+    return goToNextStep(event, history);
+  };
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): any => {
-      const formValues: string[] = ['signUpFirstName', 'signUpLastName', 'signUpEmail', 'signUpPassword', 'signUpRole'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeFirstName = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: IFirstName = { firstName: data, isValid: isValid, errorMessage: message };
-      const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeLastName = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: ILastName = { lastName: data, isValid: isValid, errorMessage: message };
-      const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeEmail = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.EMAIL);
-      const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
-      const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storePassword = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.PASSWORD);
-      const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
-      const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeRole = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: IRole = { role: data, isValid: isValid, errorMessage: message };
-      const action: IStoreRoleAction = { type: STORE_ROLE, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const signUpAdmin = (event: FormEvent, history = this.props.history): void => {
-      // dispatch action
-      const state = store.getState();
-      const payload: IAdminAccount = {
-        firstName: state.signUpFirstName.firstName,
-        lastName: state.signUpLastName.lastName,
-        email: state.signUpEmail.email,
-        password: state.signUpPassword.password,
-        role: state.signUpRole.role,
-      };
-      const action: IStoreAdminAccountAction = { type: STORE_ADMIN_ACCOUNT, payload };
-
-      store.dispatch(action);
-
-      // add validation
-
-      return goToNextStep(event, history);
-    };
-
     return (
-      <form className="sign-up__form" onSubmit={signUpAdmin}>
+      <form className="sign-up__form" onSubmit={this.signUpAdmin}>
         <div className="sign-up__form__subheaders">
           <h3 className="sign-up__form__subheader">A bit about you...</h3>
         </div>
 
         <div id="sign-up__form__name">
-          <InputField name={'First name*'} onchange={storeFirstName} />
-          <InputField name={'Last name*'} onchange={storeLastName} />
+          <InputField name={'First name*'} onchange={this.storeFirstName} />
+          <InputField name={'Last name*'} onchange={this.storeLastName} />
         </div>
-        <InputField name={'Email*'} onchange={storeEmail} />
-        <InputField name={'Password*'} onchange={storePassword} />
-        <InputField name={'Role*'} onchange={storeRole} />
+        <InputField name={'Email*'} onchange={this.storeEmail} />
+        <InputField name={'Password*'} onchange={this.storePassword} />
+        <InputField name={'Role*'} onchange={this.storeRole} />
 
         <span className="required-field__span">* required field</span>
 

@@ -50,56 +50,56 @@ class FirstStepCompanyForm extends React.Component<RouteComponentProps, FirstSte
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): any => {
+    const formValues: string[] = ['signUpCompanyName', 'signUpCompanySize'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeCompanyName = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: ICompanyName = { name: data, isValid: isValid, errorMessage: message };
+    const action: IStoreCompanyNameAction = { type: STORE_COMPANY_NAME, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeCompanySize = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: ICompanySize = { size: data, isValid: isValid, errorMessage: message };
+    const action: IStoreCompanySizeAction = { type: STORE_COMPANY_SIZE, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  saveCompany = (event: FormEvent, history = this.props.history): void => {
+    const state: any = store.getState();
+    const companyName: string = state.signUpCompanyName.name;
+    const companySize: string = state.signUpCompanySize.size;
+
+    const payload: ICompany = { name: companyName, size: companySize };
+    const action: IStoreCompanyAction = { type: STORE_COMPANY, payload };
+
+    store.dispatch(action);
+
+    return goToNextStep(event, history);
+  };
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): any => {
-      const formValues: string[] = ['signUpCompanyName', 'signUpCompanySize'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeCompanyName = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: ICompanyName = { name: data, isValid: isValid, errorMessage: message };
-      const action: IStoreCompanyNameAction = { type: STORE_COMPANY_NAME, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeCompanySize = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: ICompanySize = { size: data, isValid: isValid, errorMessage: message };
-      const action: IStoreCompanySizeAction = { type: STORE_COMPANY_SIZE, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const saveCompany = (event: FormEvent, history = this.props.history): void => {
-      const state: any = store.getState();
-      const companyName: string = state.signUpCompanyName.name;
-      const companySize: string = state.signUpCompanySize.size;
-
-      const payload: ICompany = { name: companyName, size: companySize };
-      const action: IStoreCompanyAction = { type: STORE_COMPANY, payload };
-
-      store.dispatch(action);
-
-      return goToNextStep(event, history);
-    };
-
     return (
-      <form className="sign-up__form" onSubmit={saveCompany}>
-        <InputField name={'Company name*'} onchange={storeCompanyName} />
-        <SelectField name={'Company size*'} options={this.state.companySizes} onchange={storeCompanySize} />
+      <form className="sign-up__form" onSubmit={this.saveCompany}>
+        <InputField name={'Company name*'} onchange={this.storeCompanyName} />
+        <SelectField name={'Company size*'} options={this.state.companySizes} onchange={this.storeCompanySize} />
 
         <span className="required-field__span">* required field</span>
 

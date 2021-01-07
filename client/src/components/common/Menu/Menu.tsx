@@ -12,7 +12,7 @@ import BuildIcon from '@material-ui/icons/Build';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 // localStorage
-import { removeAllItemsFromLocalStorage } from '../../../utils/localStorageActions';
+import { removeAllItemsFromLocalStorage, isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 interface MenuProps {
   activeSection: string;
@@ -44,18 +44,20 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
             <HelpIcon fontSize={'large'} />
             <span className="menu__link__text">FAQs</span>
           </Link>
-          <Link
-            to={'/admin-panel/users'}
-            className={activeSection === 'admin-panel' ? 'menu__link menu__link--active' : 'menu__link'}
-          >
-            <BuildIcon fontSize={'large'} />
-            <span className="menu__link__text">Admin panel</span>
-          </Link>
+          {isCurrentUserAnAdmin() ? (
+            <Link
+              to={'/admin-panel/users'}
+              className={activeSection === 'admin-panel' ? 'menu__link menu__link--active' : 'menu__link'}
+            >
+              <BuildIcon fontSize={'large'} />
+              <span className="menu__link__text">Admin panel</span>
+            </Link>
+          ) : null}
         </div>
 
         <button id="sign-out__btn" onClick={removeAllItemsFromLocalStorage}>
           <ExitToAppIcon fontSize={'large'} />
-          <Link to="/sign-in" className="sign-out__text">
+          <Link to={'/sign-in'} className="sign-out__text">
             Sign out
           </Link>
         </button>

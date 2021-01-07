@@ -1,4 +1,5 @@
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import * as React from 'react';
+import { BrowserRouter, Route, RouteProps, Switch, Redirect } from 'react-router-dom';
 import './App.scss';
 
 // import views
@@ -10,8 +11,21 @@ import Documents from './views/Documents/Documents';
 import FAQs from './views/FAQs/FAQs';
 import AdminPanel from './views/AdminPanel/AdminPanel';
 
-// TODO: Add private routes and display AdminPanel only to admins
+// localStorage
+import { getTokenFromLocalStorage } from './utils/localStorageActions';
+
 const App = () => {
+  interface PrivateRouteProps extends Omit<RouteProps, 'component'> {
+    component: React.ElementType;
+  }
+
+  const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={props => (getTokenFromLocalStorage() !== undefined ? <Component {...props} /> : <Redirect to="/sign-in" />)}
+    />
+  );
+
   return (
     <div className="App">
       <BrowserRouter>
@@ -24,15 +38,15 @@ const App = () => {
           <Route path="/sign-up" component={SignUp} />
           <Route path="/sign-up/:accountType/:currentStep" component={SignUp} />
 
-          <Route path="/dashboard" component={Dashboard} />
+          <PrivateRoute path="/dashboard" component={Dashboard} />
 
-          <Route path="/company-and-team/:section" component={CompanyAndTeam} />
+          <PrivateRoute path="/company-and-team/:section" component={CompanyAndTeam} />
 
-          <Route path="/documents" component={Documents} />
+          <PrivateRoute path="/documents" component={Documents} />
 
-          <Route path="/faqs" component={FAQs} />
+          <PrivateRoute path="/faqs" component={FAQs} />
 
-          <Route path="/admin-panel/:section" component={AdminPanel} />
+          <PrivateRoute path="/admin-panel/:section" component={AdminPanel} />
         </Switch>
       </BrowserRouter>
     </div>

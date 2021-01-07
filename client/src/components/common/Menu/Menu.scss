@@ -5,7 +5,8 @@
     flex-direction: column;
     justify-content: center;
     height: 100vh;
-    width: 20em;
+    width: 300px;
+    min-width: 300px;
     background: linear-gradient(162.32deg, $text 0%, rgba(2, 47, 64, 0) 101.04%), $primary;
 
     #menu__links {

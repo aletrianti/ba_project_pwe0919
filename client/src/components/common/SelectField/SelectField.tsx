@@ -11,15 +11,15 @@ interface SelectFieldProps {
 }
 
 class SelectField extends React.Component<SelectFieldProps> {
-  render() {
-    const { name, options, onchange } = this.props;
+  handleOnChange = (event: any): void => {
+    this.props.onchange(event.target.value);
+  };
 
-    const handleOnChange = (event: any): void => {
-      onchange(event.target.value);
-    };
+  render() {
+    const { name, options } = this.props;
 
     return (
-      <div className="select-field__container" onChange={handleOnChange}>
+      <div className="select-field__container" onChange={this.handleOnChange}>
         <label htmlFor={`Select[${name}]`}>{name}</label>
 
         <select name={`Select[${name}]`}>

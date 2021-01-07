@@ -3,6 +3,7 @@ import './Categories.scss';
 
 import Category from './Category/Category';
 import AddCategory from './AddCategory/AddCategory';
+import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 interface ICategories {
   name: string;
@@ -24,7 +25,7 @@ class Categories extends React.Component<CategoriesProps> {
       <>
         {!isInAchievements ? (
           <div className="categories__container">
-            <AddCategory />
+            {isCurrentUserAnAdmin() ? <AddCategory /> : null}
             {categories.map((category, i) => {
               return <Category name={category.name} isAll={category.name === 'All'} key={i} />;
             })}

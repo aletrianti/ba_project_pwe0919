@@ -29,32 +29,32 @@ class SignUpFormStart extends React.Component<RouteComponentProps, SignUpFormSta
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): void => {
+    const formValues: string[] = ['signUpAccountType'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeAccountType = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: IAccountType = { accountType: data, isValid: isValid, errorMessage: message };
+    const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): void => {
-      const formValues: string[] = ['signUpAccountType'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeAccountType = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: IAccountType = { accountType: data, isValid: isValid, errorMessage: message };
-      const action: ISetAccountTypeAction = { type: SET_ACCOUNT_TYPE, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
     return (
       <form id="sign-up__form__step1" onSubmit={(e: FormEvent, history = this.props.history) => goToNextStep(e, history)}>
         <h2>I want to create a...*</h2>
 
-        <SignUpFormOptions onclick={(e: any) => storeAccountType(e)} />
+        <SignUpFormOptions onclick={(e: any) => this.storeAccountType(e)} />
 
         <span>* required field</span>
 

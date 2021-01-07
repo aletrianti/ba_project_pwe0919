@@ -55,118 +55,118 @@ class SecondStepEmployeeForm extends React.Component<RouteComponentProps, Second
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): any => {
+    const formValues: string[] = ['signUpFirstName', 'signUpLastName', 'signUpEmail', 'signUpPassword'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeFirstName = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: IFirstName = { firstName: data, isValid: isValid, errorMessage: message };
+    const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeLastName = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: ILastName = { lastName: data, isValid: isValid, errorMessage: message };
+    const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storeEmail = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.EMAIL);
+    const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
+    const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  storePassword = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.PASSWORD);
+    const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
+    const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  dispatchSignUpAction = (): void => {
+    // dispatch action
+    const state = store.getState();
+
+    const payload: IEmployeeAccount = {
+      firstName: state.signUpFirstName.firstName,
+      lastName: state.signUpLastName.lastName,
+      email: state.signUpEmail.email,
+      password: state.signUpPassword.password,
+    };
+    const action: IStoreEmployeeAccountAction = { type: STORE_EMPLOYEE_ACCOUNT, payload };
+
+    store.dispatch(action);
+  };
+
+  signUpRequest = (event: FormEvent, history = this.props.history): void => {
+    const state = store.getState();
+
+    // add validation
+
+    // add http request
+    const data: INewEmployeeInput = {
+      companyCode: state.signUpCompanyCode.code,
+      email: state.signUpEmployeeInfo.email,
+      userData: {
+        firstName: state.signUpEmployeeInfo.firstName,
+        lastName: state.signUpEmployeeInfo.lastName,
+      },
+      password: state.signUpEmployeeInfo.password,
+    };
+
+    axios
+      .post('/api/auth/register-employee', data)
+      .then(res => {
+        storeTokenInLocalStorage(res);
+      })
+      .then(() => goToNextStep(event, history))
+      .catch(err => console.error(err));
+  };
+
+  signUp = async (event: FormEvent): Promise<any> => {
+    event.preventDefault();
+
+    await this.dispatchSignUpAction();
+    await this.signUpRequest(event);
+  };
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): any => {
-      const formValues: string[] = ['signUpFirstName', 'signUpLastName', 'signUpEmail', 'signUpPassword'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeFirstName = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: IFirstName = { firstName: data, isValid: isValid, errorMessage: message };
-      const action: IStoreFirstNameAction = { type: STORE_FIRST_NAME, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeLastName = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: ILastName = { lastName: data, isValid: isValid, errorMessage: message };
-      const action: IStoreLastNameAction = { type: STORE_LAST_NAME, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storeEmail = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.EMAIL);
-      const payload: IEmail = { email: data, isValid: isValid, errorMessage: message };
-      const action: IStoreEmailAction = { type: STORE_EMAIL, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const storePassword = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.PASSWORD);
-      const payload: IPassword = { password: data, isValid: isValid, errorMessage: message };
-      const action: IStorePasswordAction = { type: STORE_PASSWORD, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const dispatchSignUpAction = (): void => {
-      // dispatch action
-      const state = store.getState();
-
-      const payload: IEmployeeAccount = {
-        firstName: state.signUpFirstName.firstName,
-        lastName: state.signUpLastName.lastName,
-        email: state.signUpEmail.email,
-        password: state.signUpPassword.password,
-      };
-      const action: IStoreEmployeeAccountAction = { type: STORE_EMPLOYEE_ACCOUNT, payload };
-
-      store.dispatch(action);
-    };
-
-    const signUpRequest = (event: FormEvent, history = this.props.history): void => {
-      const state = store.getState();
-
-      // add validation
-
-      // add http request
-      const data: INewEmployeeInput = {
-        companyCode: state.signUpCompanyCode.code,
-        email: state.signUpEmployeeInfo.email,
-        userData: {
-          firstName: state.signUpEmployeeInfo.firstName,
-          lastName: state.signUpEmployeeInfo.lastName,
-        },
-        password: state.signUpEmployeeInfo.password,
-      };
-
-      axios
-        .post('/api/auth/register-employee', data)
-        .then(res => {
-          storeTokenInLocalStorage(res);
-        })
-        .then(() => goToNextStep(event, history))
-        .catch(err => console.error(err));
-    };
-
-    const signUp = async (event: FormEvent): Promise<any> => {
-      event.preventDefault();
-
-      await dispatchSignUpAction();
-      await signUpRequest(event);
-    };
-
     return (
-      <form className="sign-up__form" onSubmit={signUp}>
+      <form className="sign-up__form" onSubmit={this.signUp}>
         <div id="sign-up__form__name">
-          <InputField name={'First name*'} onchange={storeFirstName} />
-          <InputField name={'Last name*'} onchange={storeLastName} />
+          <InputField name={'First name*'} onchange={this.storeFirstName} />
+          <InputField name={'Last name*'} onchange={this.storeLastName} />
         </div>
-        <InputField name={'Email*'} onchange={storeEmail} />
-        <InputField name={'Password*'} onchange={storePassword} isPassword={true} />
+        <InputField name={'Email*'} onchange={this.storeEmail} />
+        <InputField name={'Password*'} onchange={this.storePassword} isPassword={true} />
 
         <span className="required-field__span">* required field</span>
 

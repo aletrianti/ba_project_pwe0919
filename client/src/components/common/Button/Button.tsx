@@ -74,7 +74,12 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
         ) : (
           [
             !isInviteBtn ? (
-              <button className="btn--orange-accent" key={btnText} disabled={isConfirmBtn ? !areAllFieldsValid : false}>
+              <button
+                type="submit"
+                className="btn--orange-accent"
+                key={btnText}
+                disabled={isConfirmBtn ? !areAllFieldsValid : false}
+              >
                 {btnText}
               </button>
             ) : (

@@ -31,32 +31,32 @@ class FirstStepEmployeeForm extends React.Component<RouteComponentProps, FirstSt
     };
   }
 
+  // Check that all fields are valid and enable confirm button
+  checkFields = (): any => {
+    const formValues: string[] = ['signUpCompanyCode'];
+    const areFieldsValid: ICheckFields = checkFormFields(formValues);
+
+    this.setState(areFieldsValid);
+  };
+
+  storeCompanyCode = (data: string): any => {
+    const { isValid, message } = validator(data, validatorTypes.REQUIRED);
+    const payload: ICompanyCode = { code: data, isValid: isValid, errorMessage: message };
+    const action: IStoreCompanyCodeAction = { type: STORE_COMPANY_CODE, payload };
+
+    store.dispatch(action);
+
+    this.checkFields();
+
+    return { isValid, message };
+  };
+
+  saveCode = (event: FormEvent, history = this.props.history): void => goToNextStep(event, history);
+
   render() {
-    // Check that all fields are valid and enable confirm button
-    const checkFields = (): any => {
-      const formValues: string[] = ['signUpCompanyCode'];
-      const areFieldsValid: ICheckFields = checkFormFields(formValues);
-
-      this.setState(areFieldsValid);
-    };
-
-    const storeCompanyCode = (data: string): any => {
-      const { isValid, message } = validator(data, validatorTypes.REQUIRED);
-      const payload: ICompanyCode = { code: data, isValid: isValid, errorMessage: message };
-      const action: IStoreCompanyCodeAction = { type: STORE_COMPANY_CODE, payload };
-
-      store.dispatch(action);
-
-      checkFields();
-
-      return { isValid, message };
-    };
-
-    const saveCode = (event: FormEvent, history = this.props.history): void => goToNextStep(event, history);
-
     return (
-      <form className="sign-up__form" onSubmit={saveCode}>
-        <InputField name={'Paste your code*'} onchange={storeCompanyCode} />
+      <form className="sign-up__form" onSubmit={this.saveCode}>
+        <InputField name={'Paste your code*'} onchange={this.storeCompanyCode} />
 
         <span className="required-field__span">* required field</span>
 

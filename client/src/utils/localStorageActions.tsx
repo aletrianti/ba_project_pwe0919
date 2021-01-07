@@ -7,6 +7,7 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   const role = res.data.userRole;
   const department = res.data.userDepartment;
 
+  const isAdmin = user.isAdmin === 0 ? false : true;
   const availability = user.availableToBuddy === 0 ? false : true;
 
   const currentUser: IProfile = {
@@ -18,11 +19,14 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
     memberSince: user.atCompanySince,
     description: user.description,
     profilePicture: user.profileImageUrl,
+    isAdmin: isAdmin,
     isAvailable: availability,
   };
 
   localStorage['user_token'] = res.data.token;
   localStorage['current_user'] = JSON.stringify(currentUser);
+
+  console.log('Stored token.');
 };
 
 export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
@@ -31,6 +35,7 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   const role = res.data.userRole;
   const department = res.data.userDepartment;
 
+  const isAdmin = user.isAdmin === 0 ? false : true;
   const availability = user.availableToBuddy === 0 ? false : true;
 
   const currentUser: IProfile = {
@@ -42,6 +47,7 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
     memberSince: user.atCompanySince,
     description: user.description,
     profilePicture: user.profileImageUrl,
+    isAdmin: isAdmin,
     isAvailable: availability,
   };
 
@@ -68,3 +74,5 @@ export const removeAllItemsFromLocalStorage = () => {
 export const getTokenFromLocalStorage = (): string => localStorage['user_token'];
 
 export const getUserInfoFromLocalStorage = (): IProfile => JSON.parse(localStorage['current_user']);
+
+export const isCurrentUserAnAdmin = (): boolean => getUserInfoFromLocalStorage().isAdmin;

@@ -20,19 +20,19 @@ class HorizontalAccordionItem extends React.Component<HorizontalAccordionItemPro
     };
   }
 
+  toggleInfo = (): void => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+
   render() {
     const { section, content } = this.props;
-
-    const toggleInfo = (): void => {
-      this.setState({ isOpen: !this.state.isOpen });
-    };
 
     return (
       <div className="accordion__item__container">
         {section === 'roles-and-responsibilities' ? (
-          <RoleItem content={content} isOpen={this.state.isOpen} toggle={toggleInfo} />
+          <RoleItem content={content} isOpen={this.state.isOpen} toggle={this.toggleInfo} />
         ) : null}
-        {section === 'faqs' ? <QuestionItem content={content} isOpen={this.state.isOpen} toggle={toggleInfo} /> : null}
+        {section === 'faqs' ? <QuestionItem content={content} isOpen={this.state.isOpen} toggle={this.toggleInfo} /> : null}
       </div>
     );
   }
