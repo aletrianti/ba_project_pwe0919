@@ -17,7 +17,8 @@
             background-color: lighten($primary-grey, 33%);
             font-size: $font-regular;
 
-            .item__category__actions {
+            .item__category__actions,
+            .item__category__name {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
@@ -27,6 +28,11 @@
                     align-items: center;
                     margin-left: 20px;
                     cursor: pointer;
+                }
+
+                .add-btn__container {
+                    padding: 5px 20px;
+                    margin-top: 0;
                 }
             }
         }

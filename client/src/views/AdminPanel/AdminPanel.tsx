@@ -7,6 +7,8 @@ import Users from '../../components/AdminPanel/Users/Users';
 import Tasks from '../../components/AdminPanel/Tasks/Tasks';
 import Achievements from '../../components/AdminPanel/Achievements/Achievements';
 import Documents from '../../components/AdminPanel/Documents/Documents';
+import CategoriesAndDepartments from '../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments';
+import FAQs from '../../components/AdminPanel/FAQs/FAQs';
 
 class AdminPanel extends React.Component {
   sections = [
@@ -14,6 +16,8 @@ class AdminPanel extends React.Component {
     { name: 'Tasks', pathname: 'tasks' },
     { name: 'Achievements', pathname: 'achievements' },
     { name: 'Documents', pathname: 'documents' },
+    { name: 'Categories & Departments', pathname: 'categories-and-departments' },
+    { name: 'FAQs', pathname: 'faqs' },
   ];
 
   render() {
@@ -34,6 +38,8 @@ class AdminPanel extends React.Component {
             {sectionName === 'tasks' ? <Tasks /> : null}
             {sectionName === 'achievements' ? <Achievements /> : null}
             {sectionName === 'documents' ? <Documents /> : null}
+            {sectionName === 'categories-and-departments' ? <CategoriesAndDepartments /> : null}
+            {sectionName === 'faqs' ? <FAQs /> : null}
           </div>
         </div>
       </div>

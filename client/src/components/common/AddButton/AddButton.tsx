@@ -2,6 +2,7 @@ import React, { MouseEvent } from 'react';
 import './AddButton.scss';
 
 import AddIcon from '@material-ui/icons/Add';
+import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 interface AddButtonProps {
   name: string;
@@ -15,9 +16,13 @@ class AddButton extends React.Component<AddButtonProps> {
 
   render() {
     return (
-      <button className="add-btn__container" onClick={this.props.function}>
-        <span>{this.props.name}</span> <AddIcon />
-      </button>
+      <>
+        {isCurrentUserAnAdmin() ? (
+          <button className="add-btn__container" onClick={this.props.function}>
+            <span>{this.props.name}</span> <AddIcon />
+          </button>
+        ) : null}
+      </>
     );
   }
 }

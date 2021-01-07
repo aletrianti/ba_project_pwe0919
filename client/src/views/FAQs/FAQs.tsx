@@ -46,7 +46,7 @@ class FAQs extends React.Component {
 
             <Categories categories={this.categories} />
 
-            {isCurrentUserAnAdmin() ? <AddButton name={'Add FAQ'} function={this.openAddFAQModal} /> : null}
+            <AddButton name={'Add FAQ'} function={this.openAddFAQModal} />
 
             {sectionName === 'faqs' ? <HorizontalAccordion questions={this.questions} section={sectionName} /> : null}
           </div>

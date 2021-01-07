@@ -5,6 +5,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { IDocumentsContent } from '../../../../store/interfaces/documents.interface';
 import DocumentsTable from '../../DocumentsTable/DocumentsTable';
 import Actions from '../../../common/Actions/Actions';
+import AddButton from '../../../common/AddButton/AddButton';
 
 interface DocumentsAccordionItemState {
   isOpen: boolean;
@@ -37,7 +38,10 @@ class DocumentsAccordionItem extends React.Component<DocumentsAccordionItemProps
     return (
       <div className="documents__accordion__item">
         <div className="item__category" id={`name__task__${this.props.itemId}`}>
-          <h3>{this.props.item.category}</h3>
+          <div className="item__category__name">
+            <h3>{this.props.item.category}</h3>
+            <AddButton name={'Add a file'} function={() => {}} />
+          </div>
           <div className="item__category__actions">
             <Actions
               actions={[
