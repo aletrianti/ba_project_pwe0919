@@ -9,7 +9,7 @@ import SignUpProgressCircles from '../../SignUpProgressCircles/SignUpProgressCir
 
 import { IOptions } from '../../../../store/interfaces/selectOptions.interfaces';
 
-import { goToNextStep } from '../../../../utils/ChangeFormStep';
+import { goToNextStep } from '../../../../utils/changeFormStep';
 
 // import store
 import store from '../../../../index';

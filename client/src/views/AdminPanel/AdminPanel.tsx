@@ -3,12 +3,8 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 
-import Users from '../../components/AdminPanel/Users/Users';
-import Tasks from '../../components/AdminPanel/Tasks/Tasks';
-import Achievements from '../../components/AdminPanel/Achievements/Achievements';
-import Documents from '../../components/AdminPanel/Documents/Documents';
-import CategoriesAndDepartments from '../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments';
-import FAQs from '../../components/AdminPanel/FAQs/FAQs';
+// Dynamic component
+import DynamicComponent from '../../components/common/DynamicComponent';
 
 class AdminPanel extends React.Component {
   sections = [
@@ -19,6 +15,16 @@ class AdminPanel extends React.Component {
     { name: 'Categories & Departments', pathname: 'categories-and-departments' },
     { name: 'FAQs', pathname: 'faqs' },
   ];
+
+  // Dynamic components (performance)
+  Users = DynamicComponent(() => import('../../components/AdminPanel/Users/Users'));
+  Tasks = DynamicComponent(() => import('../../components/AdminPanel/Tasks/Tasks'));
+  Achievements = DynamicComponent(() => import('../../components/AdminPanel/Achievements/Achievements'));
+  Documents = DynamicComponent(() => import('../../components/AdminPanel/Documents/Documents'));
+  CategoriesAndDepartments = DynamicComponent(
+    () => import('../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments')
+  );
+  FAQs = DynamicComponent(() => import('../../components/AdminPanel/FAQs/FAQs'));
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -34,12 +40,12 @@ class AdminPanel extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} isAdminPanel={true} />
 
-            {sectionName === 'users' ? <Users /> : null}
-            {sectionName === 'tasks' ? <Tasks /> : null}
-            {sectionName === 'achievements' ? <Achievements /> : null}
-            {sectionName === 'documents' ? <Documents /> : null}
-            {sectionName === 'categories-and-departments' ? <CategoriesAndDepartments /> : null}
-            {sectionName === 'faqs' ? <FAQs /> : null}
+            {sectionName === 'users' ? <this.Users /> : null}
+            {sectionName === 'tasks' ? <this.Tasks /> : null}
+            {sectionName === 'achievements' ? <this.Achievements /> : null}
+            {sectionName === 'documents' ? <this.Documents /> : null}
+            {sectionName === 'categories-and-departments' ? <this.CategoriesAndDepartments /> : null}
+            {sectionName === 'faqs' ? <this.FAQs /> : null}
           </div>
         </div>
       </div>

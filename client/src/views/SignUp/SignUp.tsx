@@ -4,14 +4,9 @@ import Button from '../../components/common/Button/Button';
 
 import SignUpFormStart from '../../components/SignUp/SignUpFormStart/SignUpFormStart';
 
-import FirstStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm';
-import SecondStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm';
-import FinalStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm';
+// Dynamic component
+import DynamicComponent from '../../components/common/DynamicComponent';
 
-import FirstStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm';
-import SecondStepCompanyForm from '../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm';
-import ThirdStepCompanyForm from '../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm';
-import FinalStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm';
 import { connect } from 'react-redux';
 
 interface SignUpProps {
@@ -23,6 +18,29 @@ class SignUp extends React.Component<SignUpProps> {
   constructor(props: any) {
     super(props);
   }
+
+  // Dynamic imports (performance)
+  FirstStepEmployeeForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm')
+  );
+  SecondStepEmployeeForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm')
+  );
+  FinalStepEmployeeForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm')
+  );
+  FirstStepCompanyForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm')
+  );
+  SecondStepCompanyForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm')
+  );
+  ThirdStepCompanyForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm')
+  );
+  FinalStepCompanyForm = DynamicComponent(
+    () => import('../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm')
+  );
 
   render() {
     const { currentStep, accountType } = this.props;
@@ -45,22 +63,22 @@ class SignUp extends React.Component<SignUpProps> {
                   accountType === 'employee'
                     ? [
                         currentStep === 1 ? (
-                          <FirstStepEmployeeForm key={currentStep} />
+                          <this.FirstStepEmployeeForm key={currentStep} />
                         ) : currentStep === 2 ? (
-                          <SecondStepEmployeeForm key={currentStep} />
+                          <this.SecondStepEmployeeForm key={currentStep} />
                         ) : (
-                          <FinalStepEmployeeForm key={currentStep} />
+                          <this.FinalStepEmployeeForm key={currentStep} />
                         ),
                       ]
                     : [
                         currentStep === 1 ? (
-                          <FirstStepCompanyForm key={currentStep} />
+                          <this.FirstStepCompanyForm key={currentStep} />
                         ) : currentStep === 2 ? (
-                          <SecondStepCompanyForm key={currentStep} />
+                          <this.SecondStepCompanyForm key={currentStep} />
                         ) : currentStep === 3 ? (
-                          <ThirdStepCompanyForm key={currentStep} />
+                          <this.ThirdStepCompanyForm key={currentStep} />
                         ) : (
-                          <FinalStepCompanyForm key={currentStep} />
+                          <this.FinalStepCompanyForm key={currentStep} />
                         ),
                       ],
                 ]
