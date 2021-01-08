@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import BackgroundSideBar from '../../components/common/BackgroundSideBar/BackgroundSideBar';
 import Button from '../../components/common/Button/Button';
 
 import SignUpFormStart from '../../components/SignUp/SignUpFormStart/SignUpFormStart';
-
-// Dynamic component
-import DynamicComponent from '../../components/common/DynamicComponent';
 
 import { connect } from 'react-redux';
 
@@ -20,25 +17,25 @@ class SignUp extends React.Component<SignUpProps> {
   }
 
   // Dynamic imports (performance)
-  FirstStepEmployeeForm = DynamicComponent(
+  FirstStepEmployeeForm = lazy(
     () => import('../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm')
   );
-  SecondStepEmployeeForm = DynamicComponent(
+  SecondStepEmployeeForm = lazy(
     () => import('../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm')
   );
-  FinalStepEmployeeForm = DynamicComponent(
+  FinalStepEmployeeForm = lazy(
     () => import('../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm')
   );
-  FirstStepCompanyForm = DynamicComponent(
+  FirstStepCompanyForm = lazy(
     () => import('../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm')
   );
-  SecondStepCompanyForm = DynamicComponent(
+  SecondStepCompanyForm = lazy(
     () => import('../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm')
   );
-  ThirdStepCompanyForm = DynamicComponent(
+  ThirdStepCompanyForm = lazy(
     () => import('../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm')
   );
-  FinalStepCompanyForm = DynamicComponent(
+  FinalStepCompanyForm = lazy(
     () => import('../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm')
   );
 
@@ -56,33 +53,35 @@ class SignUp extends React.Component<SignUpProps> {
             <div className="form__container">
               <h1 className="header--h1">Sign up</h1>
 
-              {accountType === '' ? (
-                <SignUpFormStart />
-              ) : (
-                [
-                  accountType === 'employee'
-                    ? [
-                        currentStep === 1 ? (
-                          <this.FirstStepEmployeeForm key={currentStep} />
-                        ) : currentStep === 2 ? (
-                          <this.SecondStepEmployeeForm key={currentStep} />
-                        ) : (
-                          <this.FinalStepEmployeeForm key={currentStep} />
-                        ),
-                      ]
-                    : [
-                        currentStep === 1 ? (
-                          <this.FirstStepCompanyForm key={currentStep} />
-                        ) : currentStep === 2 ? (
-                          <this.SecondStepCompanyForm key={currentStep} />
-                        ) : currentStep === 3 ? (
-                          <this.ThirdStepCompanyForm key={currentStep} />
-                        ) : (
-                          <this.FinalStepCompanyForm key={currentStep} />
-                        ),
-                      ],
-                ]
-              )}
+              <Suspense fallback={<span className="loading">Loading...</span>}>
+                {accountType === '' ? (
+                  <SignUpFormStart />
+                ) : (
+                  [
+                    accountType === 'employee'
+                      ? [
+                          currentStep === 1 ? (
+                            <this.FirstStepEmployeeForm key={currentStep} />
+                          ) : currentStep === 2 ? (
+                            <this.SecondStepEmployeeForm key={currentStep} />
+                          ) : (
+                            <this.FinalStepEmployeeForm key={currentStep} />
+                          ),
+                        ]
+                      : [
+                          currentStep === 1 ? (
+                            <this.FirstStepCompanyForm key={currentStep} />
+                          ) : currentStep === 2 ? (
+                            <this.SecondStepCompanyForm key={currentStep} />
+                          ) : currentStep === 3 ? (
+                            <this.ThirdStepCompanyForm key={currentStep} />
+                          ) : (
+                            <this.FinalStepCompanyForm key={currentStep} />
+                          ),
+                        ],
+                  ]
+                )}
+              </Suspense>
             </div>
           </div>
         </div>
