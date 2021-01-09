@@ -1,0 +1,49 @@
+@import '../../../variables';
+
+.title__container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin: 20px;
+
+    .title__header {
+        font-size: $font-big;
+        margin-right: 10px;
+    }
+
+    .title__info-icon {
+        display: flex;
+        align-items: center;
+
+        svg {
+            font-size: $font-big;
+            cursor: pointer;
+        }
+    }
+
+    .title__description {
+        position: absolute;
+        top: -30px;
+        left: 460px;
+        width: 25em;
+        padding: 20px;
+        font-size: $font-regular;
+        border: 1px solid $very-light-grey;
+        box-shadow: 1px 0px 2px 0.5px $very-light-grey;
+        border-radius: 25px;
+        background-color: $white;
+    }
+
+    #arrow {
+        position: absolute;
+        left: 452px;
+        top: 5px;
+        background-image: url(../../../static/dialog-arrow-left.png);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        width: .5em;
+        height: 1em;
+        z-index: -1;
+    }
+}
