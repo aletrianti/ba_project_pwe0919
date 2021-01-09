@@ -63,7 +63,7 @@ class Actions extends React.Component<ActionsProps, ActionsState> {
         ) : (
           [
             isCurrentUserAnAdmin() ? (
-              <div className="actions__btns__wrapper">
+              <div className="actions__btns__wrapper" key={'actions__btns__wrapper'}>
                 {this.props.actions.map((action, i) => {
                   return (
                     <button
