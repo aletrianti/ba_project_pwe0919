@@ -29,7 +29,7 @@
     .tasks__item__second-half {
         .tasks__item__input {
             font-size: $font-small;
-            outline: none;
+            
             border: 1px solid $primary-grey;
             border-radius: 8px;
             padding: 8px;
@@ -43,7 +43,7 @@
             background-color: $orange-accent;
             font-weight: $thick;
             cursor: pointer;
-            outline: none;
+            
         }
     }
 }

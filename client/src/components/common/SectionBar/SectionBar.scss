@@ -1,23 +1,66 @@
 @import '../../../variables';
 
 #section-bar {
-    #section-bar__main-bar {
-        border-bottom: 1px solid lighten($primary-grey, 20%);
+    position: relative;
+    
+    #section-bar__container {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
         width: 100%;
-    }
 
-    .section-bar__link {
-        margin: 0 20px;
-        display: inline-flex;
+        .scroll-menu-arrow {
+            padding-bottom: 10px;
 
-        .section__link {
-            display: inline-table;
-            font-size: $font-regular;
-            font-weight: $thick;
-            padding: 0 10px 10px;
+            .arrow-prev,
+            .arrow-next {
+                display: flex;
+                align-items: center;
+                margin: 0 10px;
+                padding: 8px;
+                cursor: pointer;
+                border: 1px solid lighten($primary-grey, 10%);
+                border-radius: 50px;
+
+                svg {
+                    font-size: $font-medium;
+                    color: darken($primary-grey, 20%);
+                }
+            }
+
+            .arrow-prev:hover,
+            .arrow-next:hover {
+                border: 1px solid $primary;
+                background-color: $primary;
+
+                svg {
+                    color: $white;
+                }
+            }
+        }
+
+        .section-bar__link {
+            margin: 0 20px;
+            display: inline-flex;
+
+            .section__link {
+                display: inline-table;
+                font-size: $font-regular;
+                font-weight: $thick;
+                padding: 0 10px 10px;
+            }
+        }
+        .section-bar__link--active {
+            border-bottom: 3px solid $orange-accent;
         }
     }
-    .section-bar__link--active {
-        border-bottom: 3px solid $orange-accent;
+
+    #section-bar__main-bar {
+        position: absolute;
+        bottom: 0;
+        border-bottom: 1px solid lighten($primary-grey, 20%);
+        width: 100%;
     }
 }

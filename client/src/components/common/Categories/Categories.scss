@@ -18,7 +18,7 @@
         font-weight: $thick;
         font-size: $font-regular;
         cursor: pointer;
-        outline: none;
+        
     }
     .category:hover {
         background-color: darken($very-light-grey, 5%);
@@ -42,6 +42,6 @@
     .category__add-btn {
         padding: 10px;
         cursor: pointer;
-        outline: none;
+        
     }
 }
