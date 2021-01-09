@@ -20,7 +20,7 @@ class Documents extends React.Component {
   render() {
     return (
       <div className="admin-panel__documents">
-        <Title title={'Assign document categories to specific roles'} description={this.modalDescription} />
+        <Title title={'Assign document categories to specific roles'} description={this.modalDescription} itemKey={0} />
 
         <div className="admin-panel__documents__content">
           <div className="admin-panel__documents__content__headers">

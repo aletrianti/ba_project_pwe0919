@@ -1,4 +1,5 @@
 import React from 'react';
+import './DocumentsItems.scss';
 
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 
