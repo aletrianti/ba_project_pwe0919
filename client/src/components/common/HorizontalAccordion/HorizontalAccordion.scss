@@ -48,13 +48,18 @@
             border-top-left-radius: 0;
             z-index: 1;
 
-            .info__description {
+            .info__description,
+            .info__responsibilities {
                 font-size: $font-regular;
             }
 
-            .info__responsibilities li {
-                margin-left: 20px;
-                list-style-type: circle;
+            .info__responsibilities {
+                margin-top: 20px;
+
+                li {
+                    margin-left: 20px;
+                    list-style-type: circle;
+                }
             }
         }
 
