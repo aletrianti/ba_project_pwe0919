@@ -30,13 +30,14 @@
         margin-left: 0;
     }
     .category__all {
-        background-color: $orange-accent;
+        background-color: $primary;
+        color: $white;
     }
     .category__all:hover {
-        background-color: darken($orange-accent, 5%);
+        background-color: darken($primary, 5%);
     }
     .category__all:focus {
-        background-color: darken($orange-accent, 7%);
+        background-color: darken($primary, 7%);
     }
 
     .category__add-btn {
