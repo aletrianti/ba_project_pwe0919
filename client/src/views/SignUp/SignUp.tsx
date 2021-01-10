@@ -1,17 +1,9 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import BackgroundSideBar from '../../components/common/BackgroundSideBar/BackgroundSideBar';
 import Button from '../../components/common/Button/Button';
 
 import SignUpFormStart from '../../components/SignUp/SignUpFormStart/SignUpFormStart';
 
-import FirstStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm';
-import SecondStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm';
-import FinalStepEmployeeForm from '../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm';
-
-import FirstStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm';
-import SecondStepCompanyForm from '../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm';
-import ThirdStepCompanyForm from '../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm';
-import FinalStepCompanyForm from '../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm';
 import { connect } from 'react-redux';
 
 interface SignUpProps {
@@ -23,6 +15,29 @@ class SignUp extends React.Component<SignUpProps> {
   constructor(props: any) {
     super(props);
   }
+
+  // Dynamic imports (performance)
+  FirstStepEmployeeForm = lazy(
+    () => import('../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm')
+  );
+  SecondStepEmployeeForm = lazy(
+    () => import('../../components/SignUp/SignUpFormEmployee/SecondStepEmployeeForm/SecondStepEmployeeForm')
+  );
+  FinalStepEmployeeForm = lazy(
+    () => import('../../components/SignUp/SignUpFormEmployee/FinalStepEmployeeForm/FinalStepEmployeeForm')
+  );
+  FirstStepCompanyForm = lazy(
+    () => import('../../components/SignUp/SignUpFormCompany/FirstStepCompanyForm/FirstStepCompanyForm')
+  );
+  SecondStepCompanyForm = lazy(
+    () => import('../../components/SignUp/SignUpFormCompany/SecondStepCompanyForm/SecondStepCompanyForm')
+  );
+  ThirdStepCompanyForm = lazy(
+    () => import('../../components/SignUp/SignUpFormCompany/ThirdStepCompanyForm/ThirdStepCompanyForm')
+  );
+  FinalStepCompanyForm = lazy(
+    () => import('../../components/SignUp/SignUpFormCompany/FinalStepCompanyForm/FinalStepCompanyForm')
+  );
 
   render() {
     const { currentStep, accountType } = this.props;
@@ -38,33 +53,35 @@ class SignUp extends React.Component<SignUpProps> {
             <div className="form__container">
               <h1 className="header--h1">Sign up</h1>
 
-              {accountType === '' ? (
-                <SignUpFormStart />
-              ) : (
-                [
-                  accountType === 'employee'
-                    ? [
-                        currentStep === 1 ? (
-                          <FirstStepEmployeeForm key={currentStep} />
-                        ) : currentStep === 2 ? (
-                          <SecondStepEmployeeForm key={currentStep} />
-                        ) : (
-                          <FinalStepEmployeeForm key={currentStep} />
-                        ),
-                      ]
-                    : [
-                        currentStep === 1 ? (
-                          <FirstStepCompanyForm key={currentStep} />
-                        ) : currentStep === 2 ? (
-                          <SecondStepCompanyForm key={currentStep} />
-                        ) : currentStep === 3 ? (
-                          <ThirdStepCompanyForm key={currentStep} />
-                        ) : (
-                          <FinalStepCompanyForm key={currentStep} />
-                        ),
-                      ],
-                ]
-              )}
+              <Suspense fallback={<span className="loading">Loading...</span>}>
+                {accountType === '' ? (
+                  <SignUpFormStart />
+                ) : (
+                  [
+                    accountType === 'employee'
+                      ? [
+                          currentStep === 1 ? (
+                            <this.FirstStepEmployeeForm key={currentStep} />
+                          ) : currentStep === 2 ? (
+                            <this.SecondStepEmployeeForm key={currentStep} />
+                          ) : (
+                            <this.FinalStepEmployeeForm key={currentStep} />
+                          ),
+                        ]
+                      : [
+                          currentStep === 1 ? (
+                            <this.FirstStepCompanyForm key={currentStep} />
+                          ) : currentStep === 2 ? (
+                            <this.SecondStepCompanyForm key={currentStep} />
+                          ) : currentStep === 3 ? (
+                            <this.ThirdStepCompanyForm key={currentStep} />
+                          ) : (
+                            <this.FinalStepCompanyForm key={currentStep} />
+                          ),
+                        ],
+                  ]
+                )}
+              </Suspense>
             </div>
           </div>
         </div>

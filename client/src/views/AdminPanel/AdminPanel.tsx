@@ -1,15 +1,7 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
-
-import Users from '../../components/AdminPanel/Users/Users';
-import Tasks from '../../components/AdminPanel/Tasks/Tasks';
-import Achievements from '../../components/AdminPanel/Achievements/Achievements';
-import Documents from '../../components/AdminPanel/Documents/Documents';
-import CategoriesAndDepartments from '../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments';
-import FAQs from '../../components/AdminPanel/FAQs/FAQs';
-import RolesAndResponsibilities from '../../components/AdminPanel/RolesAndResponsibilities/RolesAndResponsibilities';
 
 class AdminPanel extends React.Component {
   sections = [
@@ -21,6 +13,15 @@ class AdminPanel extends React.Component {
     { name: 'FAQs', pathname: 'faqs' },
     { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
   ];
+
+  // Dynamic components (performance)
+  Users = lazy(() => import('../../components/AdminPanel/Users/Users'));
+  Tasks = lazy(() => import('../../components/AdminPanel/Tasks/Tasks'));
+  Achievements = lazy(() => import('../../components/AdminPanel/Achievements/Achievements'));
+  Documents = lazy(() => import('../../components/AdminPanel/Documents/Documents'));
+  CategoriesAndDepartments = lazy(() => import('../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments'));
+  FAQs = lazy(() => import('../../components/AdminPanel/FAQs/FAQs'));
+  RolesAndResponsibilities = lazy(() => import('../../components/AdminPanel/RolesAndResponsibilities/RolesAndResponsibilities'));
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -36,13 +37,15 @@ class AdminPanel extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} isAdminPanel={true} />
 
-            {sectionName === 'users' ? <Users /> : null}
-            {sectionName === 'tasks' ? <Tasks /> : null}
-            {sectionName === 'achievements' ? <Achievements /> : null}
-            {sectionName === 'documents' ? <Documents /> : null}
-            {sectionName === 'categories-and-departments' ? <CategoriesAndDepartments /> : null}
-            {sectionName === 'faqs' ? <FAQs /> : null}
-            {sectionName === 'roles-and-responsibilities' ? <RolesAndResponsibilities /> : null}
+            <Suspense fallback={<span className="loading">Loading...</span>}>
+              {sectionName === 'users' ? <this.Users /> : null}
+              {sectionName === 'tasks' ? <this.Tasks /> : null}
+              {sectionName === 'achievements' ? <this.Achievements /> : null}
+              {sectionName === 'documents' ? <this.Documents /> : null}
+              {sectionName === 'categories-and-departments' ? <this.CategoriesAndDepartments /> : null}
+              {sectionName === 'faqs' ? <this.FAQs /> : null}
+              {sectionName === 'roles-and-responsibilities' ? <this.RolesAndResponsibilities /> : null}
+            </Suspense>
           </div>
         </div>
       </div>
