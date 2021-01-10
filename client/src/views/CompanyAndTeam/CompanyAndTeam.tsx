@@ -1,11 +1,8 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
-import Team from '../../components/CompanyAndTeam/Team/Team';
-import RolesAndResponsibilities from '../../components/CompanyAndTeam/RolesAndResponsibilities/RolesAndResponsibilities';
-import Achievements from '../../components/CompanyAndTeam/Achievements/Achievements';
 
 class CompanyAndTeam extends React.Component {
   sections = [
@@ -16,6 +13,13 @@ class CompanyAndTeam extends React.Component {
 
   // TODO: Replace this with categories from the DB
   categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+
+  // Dynamic components (performance)
+  Team = lazy(() => import('../../components/CompanyAndTeam/Team/Team'));
+  RolesAndResponsibilities = lazy(
+    () => import('../../components/CompanyAndTeam/RolesAndResponsibilities/RolesAndResponsibilities')
+  );
+  Achievements = lazy(() => import('../../components/CompanyAndTeam/Achievements/Achievements'));
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -33,17 +37,19 @@ class CompanyAndTeam extends React.Component {
 
             <Categories categories={this.categories} />
 
-            {sectionName === 'team' ? (
-              <Team />
-            ) : (
-              [
-                sectionName === 'roles-and-responsibilities' ? (
-                  <RolesAndResponsibilities sectionName={sectionName} key={sectionName} />
-                ) : (
-                  <Achievements key={sectionName} />
-                ),
-              ]
-            )}
+            <Suspense fallback={<span className="loading">Loading...</span>}>
+              {sectionName === 'team' ? (
+                <this.Team />
+              ) : (
+                [
+                  sectionName === 'roles-and-responsibilities' ? (
+                    <this.RolesAndResponsibilities sectionName={sectionName} key={sectionName} />
+                  ) : (
+                    <this.Achievements key={sectionName} />
+                  ),
+                ]
+              )}
+            </Suspense>
           </div>
         </div>
       </div>
