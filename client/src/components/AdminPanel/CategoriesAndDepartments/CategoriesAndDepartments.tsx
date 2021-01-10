@@ -2,10 +2,6 @@ import React from 'react';
 //import './CategoriesAndDepartments.scss';
 
 class CategoriesAndDepartments extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     return (
       <div className="admin-panel__categories-and-departments">

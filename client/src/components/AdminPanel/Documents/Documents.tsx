@@ -5,10 +5,6 @@ import Title from '../../common/Title/Title';
 import DocumentsItem from './DocumentsItem/DocumentsItems';
 
 class Documents extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
-
   modalDescription: string = `
     Allow new employees to only see certain categories, so that they can focus on learning about their role.
 

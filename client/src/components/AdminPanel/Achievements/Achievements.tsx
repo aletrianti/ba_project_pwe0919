@@ -1,22 +1,17 @@
 import React from 'react';
-import './Achievements.scss';
 
 import AddButton from '../../common/AddButton/AddButton';
 import AchievementsTable from './AchievementsTable/AchievementsTable';
 
 class Achievements extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
-
-  openAddUserModal = () => {};
+  openModal = () => {};
 
   render() {
     return (
       <div className="admin-panel__achievements">
-        <AddButton name={'Add achievement'} function={this.openAddUserModal} />
+        <AddButton name={'Add achievement'} function={this.openModal} />
 
-        <div id="admin-panel__achievements__content">
+        <div id="admin-panel__achievements__content" className="admin-panel__content">
           <AchievementsTable />
         </div>
       </div>

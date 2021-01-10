@@ -5,10 +5,6 @@ import Title from '../../common/Title/Title';
 import TasksItem from './TasksItem/TasksItem';
 
 class Tasks extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
-
   modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';
 
   // TODO!! Send dynamic data to TasksItem && custom tasks div
