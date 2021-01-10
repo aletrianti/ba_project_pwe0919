@@ -12,6 +12,19 @@ interface TableProps {
 }
 
 class Table extends React.Component<TableProps> {
+  truncateData = (data: string | string[]) => {
+    const limit: number = 25;
+
+    data = Array.isArray(data) ? data.toString() : data;
+
+    if (data.length > limit) {
+      data = data.substring(0, limit);
+      return `${data}...`;
+    } else {
+      return data;
+    }
+  };
+
   render() {
     const { data, columns } = this.props;
 
@@ -31,7 +44,7 @@ class Table extends React.Component<TableProps> {
               return (
                 <tr key={i}>
                   {columns.map((column, i) => {
-                    return <td key={i}>{column.columnData(item)}</td>;
+                    return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
                   })}
                 </tr>
               );

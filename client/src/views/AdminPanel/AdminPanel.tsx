@@ -9,6 +9,7 @@ import Achievements from '../../components/AdminPanel/Achievements/Achievements'
 import Documents from '../../components/AdminPanel/Documents/Documents';
 import CategoriesAndDepartments from '../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments';
 import FAQs from '../../components/AdminPanel/FAQs/FAQs';
+import RolesAndResponsibilities from '../../components/AdminPanel/RolesAndResponsibilities/RolesAndResponsibilities';
 
 class AdminPanel extends React.Component {
   sections = [
@@ -18,6 +19,7 @@ class AdminPanel extends React.Component {
     { name: 'Documents', pathname: 'documents' },
     { name: 'Categories & Departments', pathname: 'categories-and-departments' },
     { name: 'FAQs', pathname: 'faqs' },
+    { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
   ];
 
   render() {
@@ -40,6 +42,7 @@ class AdminPanel extends React.Component {
             {sectionName === 'documents' ? <Documents /> : null}
             {sectionName === 'categories-and-departments' ? <CategoriesAndDepartments /> : null}
             {sectionName === 'faqs' ? <FAQs /> : null}
+            {sectionName === 'roles-and-responsibilities' ? <RolesAndResponsibilities /> : null}
           </div>
         </div>
       </div>

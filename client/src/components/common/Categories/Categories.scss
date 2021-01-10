@@ -3,7 +3,7 @@
 .categories__container {
     display: flex;
     flex-direction: row;
-    margin: 20px;
+    margin: 30px 20px;
 
     .category {
         display: flex;
@@ -18,7 +18,7 @@
         font-weight: $thick;
         font-size: $font-regular;
         cursor: pointer;
-        outline: none;
+        
     }
     .category:hover {
         background-color: darken($very-light-grey, 5%);
@@ -30,18 +30,19 @@
         margin-left: 0;
     }
     .category__all {
-        background-color: $orange-accent;
+        background-color: $primary;
+        color: $white;
     }
     .category__all:hover {
-        background-color: darken($orange-accent, 5%);
+        background-color: darken($primary, 5%);
     }
     .category__all:focus {
-        background-color: darken($orange-accent, 7%);
+        background-color: darken($primary, 7%);
     }
 
     .category__add-btn {
         padding: 10px;
         cursor: pointer;
-        outline: none;
+        
     }
 }

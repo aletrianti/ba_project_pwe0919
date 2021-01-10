@@ -2,6 +2,9 @@ import React, { MouseEvent } from 'react';
 import './Actions.scss';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
 import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
 interface ActionsState {
@@ -60,15 +63,16 @@ class Actions extends React.Component<ActionsProps, ActionsState> {
         ) : (
           [
             isCurrentUserAnAdmin() ? (
-              <div className="actions__btns__wrapper">
+              <div className="actions__btns__wrapper" key={'actions__btns__wrapper'}>
                 {this.props.actions.map((action, i) => {
                   return (
                     <button
                       onClick={action.function}
                       key={i}
                       className={action.name === 'Edit' ? 'action__btn edit__btn' : 'action__btn delete__btn'}
+                      aria-label={action.name === 'Edit' ? 'Edit' : 'Delete'} // Needed for accessibility
                     >
-                      <span>{action.name}</span>
+                      {action.name === 'Edit' ? <EditIcon /> : <DeleteIcon />}
                     </button>
                   );
                 })}

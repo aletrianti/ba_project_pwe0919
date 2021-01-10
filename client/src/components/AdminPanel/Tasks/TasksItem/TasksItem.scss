@@ -1,0 +1,49 @@
+@import '../../../../variables';
+
+.tasks__item__container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .tasks__item__first-half,
+    .tasks__item__second-half {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+
+    .tasks__item__first-half {
+        padding-right: 55px;
+        justify-content: space-between;
+
+        .tasks__item__name {
+            font-weight: $thin;
+            font-size: $font-regular;
+        }
+
+        svg {
+            font-size: 35px;
+        }
+    }
+
+    .tasks__item__second-half {
+        .tasks__item__input {
+            font-size: $font-small;
+            
+            border: 1px solid $primary-grey;
+            border-radius: 8px;
+            padding: 8px;
+        }
+
+        .tasks__item__btn {
+            margin-left: 15px;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            padding: 8px 20px;
+            background-color: $orange-accent;
+            font-weight: $thick;
+            cursor: pointer;
+            
+        }
+    }
+}
