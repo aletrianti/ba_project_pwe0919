@@ -12,16 +12,25 @@
     }
 }
 
-.team__members {
-    display: flex;
-    flex-wrap: wrap;
-    
-    .member__section {
-        position: relative;
-        margin: 20px;
+.team__members__container {
+    position: relative;
+    max-height: 40em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 9000;
 
-        .member__card {
-            height: 20em;
+    .team__members {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        
+        .member__section {
+            position: relative;
+            margin: 20px;
+
+            .member__card {
+                height: 20em;
+            }
         }
     }
 }
@@ -32,6 +41,7 @@
     box-shadow: 0px 1px 4px 1px $very-light-grey;
     border-radius: 32px;
     height: 25em;
+    cursor: pointer;
 
     .member__card__photo__container {
         border-top-right-radius: 32px;
@@ -79,7 +89,7 @@
             color: $white;
             padding: 5px 15px;
             margin-top: 10px;
-            outline: none;
+            
             cursor: pointer;
 
             svg {
@@ -90,7 +100,8 @@
     }
 }
 
-.member__card:hover + .member__info {
+.member__card:hover + .member__info,
+.member__info:hover {
     display: block;
 }
 
@@ -100,15 +111,15 @@
     border-radius: 32px;
     background-color: $white;
     position: absolute;
-    top: -235px;
-    left: -10px;
+    top: -20px;
+    left: -40px;
     width: 17em;
     padding: 2em;
     z-index: 1000;
 
     .arrow {
         position: absolute;
-        right: 10em;
+        right: 8em;
         bottom: -8px;
         background-image: url(../../../static/dialog-arrow.png);
         background-position: center;

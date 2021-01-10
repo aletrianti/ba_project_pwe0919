@@ -22,7 +22,8 @@
             cursor: pointer;
 
             h3 {
-                margin-right: 15px;
+                margin-right: 10px;
+                font-size: $font-medium;
             }
         }
 
@@ -47,13 +48,18 @@
             border-top-left-radius: 0;
             z-index: 1;
 
-            .info__description {
-                margin-bottom: 20px;
+            .info__description,
+            .info__responsibilities {
+                font-size: $font-regular;
             }
 
-            .info__responsibilities li {
-                margin-left: 20px;
-                list-style-type: circle;
+            .info__responsibilities {
+                margin-top: 20px;
+
+                li {
+                    margin-left: 20px;
+                    list-style-type: circle;
+                }
             }
         }
 

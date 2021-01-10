@@ -11,6 +11,7 @@ class AdminPanel extends React.Component {
     { name: 'Documents', pathname: 'documents' },
     { name: 'Categories & Departments', pathname: 'categories-and-departments' },
     { name: 'FAQs', pathname: 'faqs' },
+    { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
   ];
 
   // Dynamic components (performance)
@@ -20,6 +21,7 @@ class AdminPanel extends React.Component {
   Documents = lazy(() => import('../../components/AdminPanel/Documents/Documents'));
   CategoriesAndDepartments = lazy(() => import('../../components/AdminPanel/CategoriesAndDepartments/CategoriesAndDepartments'));
   FAQs = lazy(() => import('../../components/AdminPanel/FAQs/FAQs'));
+  RolesAndResponsibilities = lazy(() => import('../../components/AdminPanel/RolesAndResponsibilities/RolesAndResponsibilities'));
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -42,6 +44,7 @@ class AdminPanel extends React.Component {
               {sectionName === 'documents' ? <this.Documents /> : null}
               {sectionName === 'categories-and-departments' ? <this.CategoriesAndDepartments /> : null}
               {sectionName === 'faqs' ? <this.FAQs /> : null}
+              {sectionName === 'roles-and-responsibilities' ? <this.RolesAndResponsibilities /> : null}
             </Suspense>
           </div>
         </div>

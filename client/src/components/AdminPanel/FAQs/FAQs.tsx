@@ -1,15 +1,19 @@
 import React from 'react';
-//import './FAQs.scss';
+
+import AddButton from '../../common/AddButton/AddButton';
+import FAQsTable from './FAQsTable/FAQsTable';
 
 class FAQs extends React.Component {
-  constructor(props: any) {
-    super(props);
-  }
+  openModal = () => {};
 
   render() {
     return (
-      <div className="admin-panel__faqs">
-        <div id="admin-panel__faqs__content">FAQs</div>
+      <div id="admin-panel__faqs">
+        <AddButton name={'Add role'} function={this.openModal} />
+
+        <div id="admin-panel__faqs__content" className="admin-panel__content">
+          <FAQsTable />
+        </div>
       </div>
     );
   }

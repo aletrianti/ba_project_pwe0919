@@ -1,0 +1,44 @@
+@import '../../../../variables';
+
+.documents__item__container {
+    display: flex;
+    align-items: center;
+
+    .documents__item__first-half,
+    .documents__item__second-half {
+        display: flex;
+        align-items: center;
+        width: 50%;
+    }
+
+    .documents__item__first-half {
+        padding-right: 55px;
+        justify-content: space-between;
+
+        .documents__item__name {
+            font-weight: $thin;
+            font-size: $font-regular;
+        }
+
+        svg {
+            font-size: 35px;
+        }
+    }
+
+    .documents__item__second-half {
+        .documents__item__btn {
+            border: 1px solid transparent;
+            border-radius: 50px;
+            padding: 10px 20px;
+            background-color: $orange-accent;
+            font-weight: $thick;
+            cursor: pointer;
+            
+        }
+
+        .documents__item__span {
+            margin-left: 20px;
+            font-size: $font-small;
+        }
+    }
+}

@@ -27,12 +27,12 @@
                 word-break: break-word;
             }
 
-            td:last-of-type {
+            th:last-of-type, td:last-of-type {
                 display: flex;
                 margin-left: auto;
                 justify-content: flex-end;
                 align-items: center;
-                width: auto;
+                width: 5rem;
             }
         }
 
