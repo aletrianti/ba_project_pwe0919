@@ -15,15 +15,15 @@ class Documents extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__documents">
+      <div id="admin-panel__documents">
         <Title title={'Assign document categories to specific roles'} description={this.modalDescription} itemKey={0} />
 
-        <div className="admin-panel__documents__content">
-          <div className="admin-panel__documents__content__headers">
+        <div id="admin-panel__documents__content">
+          <div id="admin-panel__documents__content__headers">
             <h3>Document categories</h3>
             <h3>Roles</h3>
           </div>
-          <div className="admin-panel__documents__content__items">
+          <div id="admin-panel__documents__content__items">
             <DocumentsItem categoryName={'Category'} categoryId={1} numCategoryRoles={1} />
           </div>
         </div>

@@ -8,7 +8,7 @@ class Users extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__users">
+      <div id="admin-panel__users">
         <AddButton name={'Add user'} function={this.openModal} />
 
         <div id="admin-panel__users__content" className="admin-panel__content">

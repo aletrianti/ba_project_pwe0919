@@ -8,7 +8,7 @@ class RolesAndResponsibilities extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__roles">
+      <div id="admin-panel__roles">
         <AddButton name={'Add role'} function={this.openModal} />
 
         <div id="admin-panel__roles__content" className="admin-panel__content">

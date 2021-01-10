@@ -8,7 +8,7 @@ class Achievements extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__achievements">
+      <div id="admin-panel__achievements">
         <AddButton name={'Add achievement'} function={this.openModal} />
 
         <div id="admin-panel__achievements__content" className="admin-panel__content">

@@ -1,12 +1,12 @@
 @import '../../../variables';
 
-.admin-panel__documents__content {
+#admin-panel__documents__content {
     display: flex;
     flex-direction: column;
     margin: 30px 20px;
     width: 40em;
 
-    .admin-panel__documents__content__headers {
+    #admin-panel__documents__content__headers {
         display: flex;
         align-items: center;
         
@@ -16,7 +16,7 @@
         }
     }
 
-    .admin-panel__documents__content__items {
+    #admin-panel__documents__content__items {
         margin-top: 20px;
     }
 }

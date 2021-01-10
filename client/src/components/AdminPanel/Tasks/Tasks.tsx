@@ -17,26 +17,26 @@ class Tasks extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__tasks">
+      <div id="admin-panel__tasks">
         <Title title={'Set deadlines for onboarding tasks'} description={this.modalDescription} itemKey={0} />
 
-        <div className="admin-panel__tasks__content">
-          <div className="admin-panel__tasks__content__headers">
+        <div id="admin-panel__tasks__content">
+          <div id="admin-panel__tasks__content__headers">
             <h3>Onboarding Tasks</h3>
             <h3>Deadline for completion</h3>
           </div>
-          <div className="admin-panel__tasks__content__items">
+          <div id="admin-panel__tasks__content__items">
             <TasksItem taskName={'Task'} deadline={'3 days'} setDeadline={this.setDeadline} saveDeadline={this.saveDeadline} />
 
-            <div className="admin-panel__tasks__content__custom">
-              <h4 className="admin-panel__tasks__content__custom__title">Create custom tasks</h4>
+            <div id="admin-panel__tasks__content__custom">
+              <h4 id="admin-panel__tasks__content__custom__title">Create custom tasks</h4>
 
-              <div className="admin-panel__tasks__content__custom__tasks">
+              <div id="admin-panel__tasks__content__custom__tasks">
                 <span className="admin-panel__tasks__content__custom__tasks__item">Custom task 1</span>
                 <span className="admin-panel__tasks__content__custom__tasks__item">Custom task 2</span>
               </div>
 
-              <button className="admin-panel__tasks__content__custom__btn" onClick={this.openModal}>
+              <button id="admin-panel__tasks__content__custom__btn" onClick={this.openModal}>
                 Add a task
               </button>
             </div>

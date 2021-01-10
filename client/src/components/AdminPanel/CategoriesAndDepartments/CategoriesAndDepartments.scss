@@ -1,0 +1,30 @@
+@import '../../../variables';
+
+#admin-panel__categories {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    .admin-panel__categories__sections {
+        width: 50%;
+    }
+
+    #admin-panel__categories__first-half {
+        margin-right: 10px;
+    }
+
+    #admin-panel__categories__second-half {
+        margin-left: 10px;
+    }
+}
+
+@media all and (max-width: 1080px) {
+    #admin-panel__categories {
+        flex-direction: column;
+
+        .admin-panel__categories__sections {
+            width: 100%;
+            margin: 0 !important;
+        }
+    }
+}

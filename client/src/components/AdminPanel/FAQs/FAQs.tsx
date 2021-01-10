@@ -8,7 +8,7 @@ class FAQs extends React.Component {
 
   render() {
     return (
-      <div className="admin-panel__faqs">
+      <div id="admin-panel__faqs">
         <AddButton name={'Add role'} function={this.openModal} />
 
         <div id="admin-panel__faqs__content" className="admin-panel__content">

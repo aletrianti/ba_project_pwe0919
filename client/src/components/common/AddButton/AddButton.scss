@@ -3,7 +3,7 @@
 .add-btn__container {
     display: flex;
     align-items: center;
-    background-color: $very-light-grey;
+    background-color: $orange-accent;
     border: 1px solid transparent;
     border-radius: 50px;
     padding: 10px 20px;
@@ -24,9 +24,9 @@
 }
 
 .add-btn__container:hover {
-    background-color: darken($very-light-grey, 5%);
+    background-color: darken($orange-accent, 5%);
 }
 
 .add-btn__container:focus {
-    background-color: darken($very-light-grey, 7%);
+    background-color: darken($orange-accent, 7%);
 }

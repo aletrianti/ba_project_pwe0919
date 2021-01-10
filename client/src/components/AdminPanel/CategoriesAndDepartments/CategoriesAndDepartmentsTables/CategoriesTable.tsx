@@ -3,11 +3,10 @@ import React from 'react';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-class FAQsTable extends React.Component {
+class CategoriesTable extends React.Component {
   data = [
     {
-      question: 'Who can I ask for help?',
-      answer: `In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.`,
+      category: 'General',
       actions: (
         <Actions
           actions={[
@@ -20,18 +19,17 @@ class FAQsTable extends React.Component {
   ];
 
   columns = [
-    { title: 'Question', columnData: (data: any) => data.question },
-    { title: 'Answer', columnData: (data: any) => data.answer },
+    { title: 'Category', columnData: (data: any) => data.category },
     { title: '', columnData: (data: any) => data.actions },
   ];
 
   render() {
     return (
-      <div id="faqs__table">
+      <div id="categories__table">
         <Table data={this.data} columns={this.columns} />
       </div>
     );
   }
 }
 
-export default FAQsTable;
+export default CategoriesTable;
