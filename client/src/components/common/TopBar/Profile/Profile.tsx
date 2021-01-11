@@ -86,13 +86,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                   {firstName} {lastName}
                 </h5>
 
-                <Actions
-                  actions={[
-                    { name: 'Edit', function: this.openEditProfileModal },
-                    { name: 'Delete', function: this.openDeleteProfileModal },
-                  ]}
-                  type={'profile'}
-                />
+                <Actions type={'profile'} />
               </div>
               <div id="profile__availability">
                 <span>Buddy availability:</span>
