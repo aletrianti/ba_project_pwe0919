@@ -5,8 +5,10 @@ import './InputField.scss';
 interface InputFieldProps {
   name: string;
   isPassword?: boolean;
+  isTextarea?: boolean;
   isInviteUsersField?: boolean;
   onchange: any;
+  value?: string;
 }
 
 interface InputFieldState {
@@ -30,7 +32,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
   };
 
   render() {
-    const { name, isPassword, isInviteUsersField } = this.props;
+    const { name, isPassword, isTextarea, isInviteUsersField, value } = this.props;
 
     return (
       <div className="input-field__container">
@@ -39,14 +41,29 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
         <p className="input-field__password-text">{isPassword ? 'Must be min. 8 characters' : null}</p>
 
         {!isInviteUsersField ? (
-          <input
-            type={isPassword ? 'password' : 'text'}
-            placeholder={name}
-            alt={name}
-            name={`Input[${name}]`}
-            onChange={this.handleOnChange}
-            className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
-          />
+          [
+            !isTextarea ? (
+              <input
+                type="textarea"
+                placeholder={name}
+                alt={name}
+                name={`Input[${name}]`}
+                onChange={this.handleOnChange}
+                className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
+                defaultValue={value || ''}
+              />
+            ) : (
+              <input
+                type={isPassword ? 'password' : 'text'}
+                placeholder={name}
+                alt={name}
+                name={`Input[${name}]`}
+                onChange={this.handleOnChange}
+                className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
+                defaultValue={value || ''}
+              />
+            ),
+          ]
         ) : (
           <input
             type="text"
@@ -55,6 +72,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
             name={`Input[${name}]`}
             onChange={this.handleOnChange}
             className={'input-field__invite-users'}
+            defaultValue={value || ''}
           />
         )}
 

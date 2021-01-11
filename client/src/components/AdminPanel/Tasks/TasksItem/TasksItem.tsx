@@ -42,7 +42,7 @@ class TasksItem extends React.Component<TasksItemProps, TasksItemState> {
           <input
             type="text"
             className="tasks__item__input"
-            defaultValue={this.state.deadline ? this.state.deadline : ''}
+            defaultValue={this.state.deadline || ''}
             onChange={this.setDeadline}
           />
           <button onClick={this.saveDeadline} className="tasks__item__btn">

@@ -24,6 +24,8 @@ import {
   storeTaskFourReducer,
   storeTaskFiveReducer,
 } from './tasks.reducers';
+import { storeUserEmailReducer } from './forms/user.reducers';
+import { toggleModalReducer } from './forms.reducers';
 
 // import redux method
 import { combineReducers } from '@reduxjs/toolkit';
@@ -53,12 +55,16 @@ const reducers: any = combineReducers({
   signUpAdminInfo: storeAdminAccount,
   signUpLastInvitedEmployee: storeInvitedEmployee,
   signUpLastInvitedEmployees: storeInvitedEmployees,
+  // Modals
+  formModal: toggleModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
   taskThree: storeTaskThreeReducer,
   taskFour: storeTaskFourReducer,
   taskFive: storeTaskFiveReducer,
+  // Users
+  userEmail: storeUserEmailReducer,
   // ...
 });
 
