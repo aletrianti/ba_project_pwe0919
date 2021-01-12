@@ -6,3 +6,7 @@ export interface ICompanyAchievement {
   createAt: string;
   updatedAt: string;
 }
+export interface INewCompanyAchievementInput {
+  name: string;
+  description: string;
+}
