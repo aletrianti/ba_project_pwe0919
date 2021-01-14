@@ -4,16 +4,26 @@ import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
 import { ITableUser } from '../../../../store/interfaces/tables.interfaces';
+import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
+import { IEditUserModal } from '../../../../store/interfaces/forms.interfaces';
+import { connect } from 'react-redux';
 
 interface UsersTableProps {
   users: ITableUser[];
+  toggleEditUserModal: (editUserModal: IEditUserModal) => any;
 }
 
 class UsersTable extends React.Component<UsersTableProps> {
+  editUser = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleEditUserModal({ id, isOpen: true });
+  };
+
   actions = (id: number) => (
     <Actions
       actions={[
-        { name: 'Edit', function: () => {} },
+        { name: 'Edit', function: (e: MouseEvent) => this.editUser(id, e) },
         { name: 'Delete', function: () => {} },
       ]}
     />
@@ -38,4 +48,10 @@ class UsersTable extends React.Component<UsersTableProps> {
   }
 }
 
-export default UsersTable;
+const mapDisparchToProps = (dispatch: any) => {
+  return {
+    toggleEditUserModal: (editUserModal: IEditUserModal) => dispatch(ToggleEditUserModalAction(editUserModal)),
+  };
+};
+
+export default connect(null, mapDisparchToProps)(UsersTable);

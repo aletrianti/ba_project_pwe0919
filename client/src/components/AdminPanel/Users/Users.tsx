@@ -3,11 +3,12 @@ import { connect } from 'react-redux';
 
 import { IAddUserModal } from '../../../store/interfaces/forms.interfaces';
 import { ITableUser } from '../../../store/interfaces/tables.interfaces';
-import { ToggleModalAction } from '../../../store/actions/forms/forms.actions';
+import { ToggleAddUserModalAction } from '../../../store/actions/forms/forms.actions';
 
 import AddButton from '../../common/AddButton/AddButton';
 import UsersTable from './UsersTable/UsersTable';
 import AddUsersForm from './UsersForms/AddUsersForm';
+import EditUsersForm from './UsersForms/EditUsersForm';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -43,6 +44,7 @@ class Users extends React.Component<UsersProps> {
         </div>
 
         <AddUsersForm />
+        <EditUsersForm />
       </div>
     );
   }
@@ -50,7 +52,7 @@ class Users extends React.Component<UsersProps> {
 
 const mapDisparchToProps = (dispatch: any) => {
   return {
-    toggleAddUserModal: (addUserModal: IAddUserModal) => dispatch(ToggleModalAction(addUserModal)),
+    toggleAddUserModal: (addUserModal: IAddUserModal) => dispatch(ToggleAddUserModalAction(addUserModal)),
   };
 };
 

@@ -1,8 +1,41 @@
 // import types + interfaces for payloads
-import { IStoreUserEmailAction, IUserEmail } from '../../../interfaces/forms/user.interfaces';
-import { STORE_USER_EMAIL } from './user.types';
+import {
+  IDeleteUser,
+  IDeleteUserAction,
+  IEditUser,
+  IEditUserAction,
+  IStoreUserBuddyAction,
+  IStoreUserDepartmentAction,
+  IStoreUserEmailAction,
+  IStoreUserRoleAction,
+  IUserBuddy,
+  IUserDepartment,
+  IUserEmail,
+  IUserRole,
+} from '../../../interfaces/forms/user.interfaces';
+import { DELETE_USER, EDIT_USER, STORE_USER_BUDDY, STORE_USER_DEPARTMENT, STORE_USER_EMAIL, STORE_USER_ROLE } from './user.types';
 
 // actions
 export const StoreEmailAction = (data: IUserEmail): IStoreUserEmailAction => {
   return { type: STORE_USER_EMAIL, payload: data };
+};
+
+export const StoreBuddyAction = (data: IUserBuddy): IStoreUserBuddyAction => {
+  return { type: STORE_USER_BUDDY, payload: data };
+};
+
+export const StoreDepartmentAction = (data: IUserDepartment): IStoreUserDepartmentAction => {
+  return { type: STORE_USER_DEPARTMENT, payload: data };
+};
+
+export const StoreRoleAction = (data: IUserRole): IStoreUserRoleAction => {
+  return { type: STORE_USER_ROLE, payload: data };
+};
+
+export const EditUserAction = (data: IEditUser): IEditUserAction => {
+  return { type: EDIT_USER, payload: data };
+};
+
+export const DeleteUserAction = (data: IDeleteUser): IDeleteUserAction => {
+  return { type: DELETE_USER, payload: data };
 };

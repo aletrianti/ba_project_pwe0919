@@ -24,7 +24,16 @@ import {
   storeTaskFourReducer,
   storeTaskFiveReducer,
 } from './tasks.reducers';
-import { storeUserEmailReducer } from './forms/user.reducers';
+import {
+  deleteUserReducer,
+  editUserReducer,
+  storeUserBuddyReducer,
+  storeUserDepartmentReducer,
+  storeUserEmailReducer,
+  storeUserRoleReducer,
+  toggleDeleteUserModalReducer,
+  toggleEditUserModalReducer,
+} from './forms/user.reducers';
 import { toggleAddUserModalReducer } from './forms/user.reducers';
 
 // import redux method
@@ -57,6 +66,8 @@ const reducers: any = combineReducers({
   signUpLastInvitedEmployees: storeInvitedEmployees,
   // Modals
   addUserModal: toggleAddUserModalReducer,
+  editUserModal: toggleEditUserModalReducer,
+  deleteUserModal: toggleDeleteUserModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
@@ -65,6 +76,11 @@ const reducers: any = combineReducers({
   taskFive: storeTaskFiveReducer,
   // Users
   userEmail: storeUserEmailReducer,
+  userBuddy: storeUserBuddyReducer,
+  userDepartment: storeUserDepartmentReducer,
+  userRole: storeUserRoleReducer,
+  editUser: editUserReducer,
+  deleteUser: deleteUserReducer,
   // ...
 });
 

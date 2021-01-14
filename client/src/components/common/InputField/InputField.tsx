@@ -51,6 +51,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
                 onChange={this.handleOnChange}
                 className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
                 defaultValue={value || ''}
+                key={name}
               />
             ) : (
               <input
@@ -61,6 +62,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
                 onChange={this.handleOnChange}
                 className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
                 defaultValue={value || ''}
+                key={name}
               />
             ),
           ]
@@ -73,6 +75,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
             onChange={this.handleOnChange}
             className={'input-field__invite-users'}
             defaultValue={value || ''}
+            key={name}
           />
         )}
 

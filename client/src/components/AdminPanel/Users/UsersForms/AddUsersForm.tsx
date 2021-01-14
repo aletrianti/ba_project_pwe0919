@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { INewEmployees } from '../../../../../../types/auth.types';
-import { ToggleModalAction } from '../../../../store/actions/forms/forms.actions';
+import { ToggleAddUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreEmailAction } from '../../../../store/actions/forms/user/user.actions';
 import { IAddUserModal, IField } from '../../../../store/interfaces/forms.interfaces';
 import { IUserEmail } from '../../../../store/interfaces/forms/user.interfaces';
@@ -14,6 +14,7 @@ import Form from '../../../common/Form/Form';
 
 interface AddUsersFormProps {
   userEmail: IUserEmail;
+  addUserModal: IAddUserModal;
   storeUserEmail: (userEmail: IUserEmail) => any;
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
 }
@@ -33,7 +34,8 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
     };
   }
 
-  closeModal = (e: MouseEvent) => {
+  // Actions
+  closeAddUserModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddUserModal({ isOpen: false });
@@ -47,6 +49,7 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
     this.setState({ areFieldsValid: areFieldsValid });
   };
 
+  // On change events
   storeEmail = (data: string): any => {
     const { isValid, message } = validator(data, validatorTypes.EMAIL);
 
@@ -57,6 +60,7 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
     return { isValid, message };
   };
 
+  // Form events
   inviteUser = (): void => {
     const data: INewEmployees = {
       newUsers: [this.props.userEmail.email],
@@ -73,17 +77,19 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
       .catch(err => console.error(err));
   };
 
-  fields: IField[] = [{ name: 'Email', type: 'text', onchange: this.storeEmail }];
+  // Fields
+  addUserModalFields: IField[] = [{ name: 'Email', type: 'text', onchange: this.storeEmail }];
 
   render() {
     return (
       <Form
-        fields={this.fields}
+        fields={this.addUserModalFields}
         header={'Add a user'}
         confirmBtnName={'Invite'}
         submitFunction={this.inviteUser}
-        closeFunction={this.closeModal}
+        closeFunction={this.closeAddUserModal}
         areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+        isModalOpen={this.props.addUserModal.isOpen}
       />
     );
   }
@@ -92,13 +98,14 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
 const mapStateToProps = (state: any) => {
   return {
     userEmail: state.userEmail,
+    addUserModal: state.addUserModal,
   };
 };
 
 const mapDisparchToProps = (dispatch: any) => {
   return {
     storeUserEmail: (userEmail: IUserEmail) => dispatch(StoreEmailAction(userEmail)),
-    toggleAddUserModal: (addUserModal: IAddUserModal) => dispatch(ToggleModalAction(addUserModal)),
+    toggleAddUserModal: (addUserModal: IAddUserModal) => dispatch(ToggleAddUserModalAction(addUserModal)),
   };
 };
 

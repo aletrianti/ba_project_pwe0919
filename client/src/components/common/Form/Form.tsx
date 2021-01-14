@@ -4,8 +4,7 @@ import './Form.scss';
 import { IField } from '../../../store/interfaces/forms.interfaces';
 import InputField from '../InputField/InputField';
 import Button from '../Button/Button';
-
-import { connect } from 'react-redux';
+import SelectField from '../SelectField/SelectField';
 
 interface FormProps {
   cancelBtnName?: string;
@@ -26,13 +25,15 @@ class Form extends React.Component<FormProps> {
           <h5 className="form__header">{this.props.header}</h5>
 
           {this.props.fields.map((field, i) => {
-            return field.type === 'text' ? (
-              <InputField name={field.name} onchange={field.onchange} value={field.value || ''} key={i} />
+            return field.type === 'select' ? (
+              <SelectField name={field.name} options={field.options} onchange={field.onchange} />
             ) : (
               [
                 field.type === 'textarea' ? (
                   <InputField name={field.name} onchange={field.onchange} isTextarea={true} value={field.value || ''} key={i} />
-                ) : null,
+                ) : (
+                  <InputField name={field.name} onchange={field.onchange} value={field.value || ''} key={i} />
+                ),
               ]
             );
           })}
@@ -54,8 +55,4 @@ class Form extends React.Component<FormProps> {
   }
 }
 
-const mapStateToProps = state => {
-  return { isModalOpen: state.addUserModal.isOpen };
-};
-
-export default connect(mapStateToProps)(Form);
+export default Form;
