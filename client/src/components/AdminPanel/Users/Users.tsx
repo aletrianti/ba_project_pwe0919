@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { IField, IModal } from '../../../store/interfaces/forms.interfaces';
 import { IUserEmail } from '../../../store/interfaces/forms/user.interfaces';
-import { ITableUser } from '../../../store/interfaces/tables/users.interfaces';
+import { ITableUser } from '../../../store/interfaces/tables.interfaces';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../utils/formValidation';
 import { ToggleModalAction } from '../../../store/actions/forms/forms.actions';

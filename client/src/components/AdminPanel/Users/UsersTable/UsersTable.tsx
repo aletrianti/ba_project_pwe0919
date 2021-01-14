@@ -3,7 +3,7 @@ import React from 'react';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-import { ITableUser } from '../../../../store/interfaces/tables/users.interfaces';
+import { ITableUser } from '../../../../store/interfaces/tables.interfaces';
 
 interface UsersTableProps {
   users: ITableUser[];
@@ -26,7 +26,7 @@ class UsersTable extends React.Component<UsersTableProps> {
     { title: 'Assigned to', columnData: (data: any) => data.assignedTo },
     { title: 'Department', columnData: (data: any) => data.department },
     { title: 'Role', columnData: (data: any) => data.role },
-    { title: '', columnData: (data: any) => this.actions },
+    { title: '', columnData: () => this.actions },
   ];
 
   render() {

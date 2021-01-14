@@ -3,30 +3,31 @@ import React from 'react';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-class DepartmentsTable extends React.Component {
-  data = [
-    {
-      department: 'Engineering',
-      actions: (
-        <Actions
-          actions={[
-            { name: 'Edit', function: () => {} },
-            { name: 'Delete', function: () => {} },
-          ]}
-        />
-      ),
-    },
-  ];
+import { ITableDepartment } from '../../../../store/interfaces/tables.interfaces';
+
+interface DepartmentsTableProps {
+  departments: ITableDepartment[];
+}
+
+class DepartmentsTable extends React.Component<DepartmentsTableProps> {
+  actions = (
+    <Actions
+      actions={[
+        { name: 'Edit', function: () => {} },
+        { name: 'Delete', function: () => {} },
+      ]}
+    />
+  );
 
   columns = [
-    { title: 'Department', columnData: (data: any) => data.department },
-    { title: '', columnData: (data: any) => data.actions },
+    { title: 'Department', columnData: (data: any) => data.title },
+    { title: '', columnData: () => this.actions },
   ];
 
   render() {
     return (
       <div id="departments__table">
-        <Table data={this.data} columns={this.columns} />
+        <Table data={this.props.departments} columns={this.columns} />
       </div>
     );
   }

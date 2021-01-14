@@ -1,10 +1,20 @@
 import React from 'react';
 
+import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
+
 import AddButton from '../../common/AddButton/AddButton';
 import AchievementsTable from './AchievementsTable/AchievementsTable';
 
 class Achievements extends React.Component {
   openModal = () => {};
+
+  achievements: ITableAchievement[] = [
+    {
+      title: 'Achievement 1',
+      description: 'This is an achievement',
+      date: '10-02-18',
+    },
+  ];
 
   render() {
     return (
@@ -12,7 +22,7 @@ class Achievements extends React.Component {
         <AddButton name={'Add achievement'} function={this.openModal} />
 
         <div id="admin-panel__achievements__content" className="admin-panel__content">
-          <AchievementsTable />
+          <AchievementsTable achievements={this.achievements} />
         </div>
       </div>
     );
