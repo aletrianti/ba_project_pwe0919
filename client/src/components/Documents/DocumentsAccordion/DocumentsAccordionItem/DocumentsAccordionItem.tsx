@@ -2,7 +2,7 @@ import React from 'react';
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import { IDocumentsContent } from '../../../../store/interfaces/documents.interface';
+import { ITableDocumentsContent } from '../../../../store/interfaces/tables.interfaces';
 import DocumentsTable from '../../DocumentsTable/DocumentsTable';
 import Actions from '../../../common/Actions/Actions';
 import AddButton from '../../../common/AddButton/AddButton';
@@ -13,7 +13,7 @@ interface DocumentsAccordionItemState {
 }
 
 interface DocumentsAccordionItemProps {
-  item: IDocumentsContent;
+  item: ITableDocumentsContent;
   itemId: number;
 }
 
@@ -39,7 +39,7 @@ class DocumentsAccordionItem extends React.Component<DocumentsAccordionItemProps
       <div className="documents__accordion__item">
         <div className="item__category" id={`name__task__${this.props.itemId}`}>
           <div className="item__category__name">
-            <h3>{this.props.item.category}</h3>
+            <h3>{this.props.item.category.title}</h3>
             <AddButton name={'Add a file'} function={() => {}} />
           </div>
           <div className="item__category__actions">

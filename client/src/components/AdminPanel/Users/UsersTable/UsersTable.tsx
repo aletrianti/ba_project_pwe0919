@@ -10,7 +10,7 @@ interface UsersTableProps {
 }
 
 class UsersTable extends React.Component<UsersTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -26,7 +26,7 @@ class UsersTable extends React.Component<UsersTableProps> {
     { title: 'Assigned to', columnData: (data: any) => data.assignedTo },
     { title: 'Department', columnData: (data: any) => data.department },
     { title: 'Role', columnData: (data: any) => data.role },
-    { title: '', columnData: () => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

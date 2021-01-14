@@ -10,7 +10,7 @@ interface AchievementsTableProps {
 }
 
 class AchievementsTable extends React.Component<AchievementsTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -23,7 +23,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
     { title: 'Title', columnData: (data: any) => data.title },
     { title: 'Description', columnData: (data: any) => data.description },
     { title: 'Date', columnData: (data: any) => data.date },
-    { title: '', columnData: () => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

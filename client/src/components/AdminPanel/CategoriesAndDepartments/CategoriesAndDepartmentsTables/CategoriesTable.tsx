@@ -10,7 +10,7 @@ interface CategoriesTableProps {
 }
 
 class CategoriesTable extends React.Component<CategoriesTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -21,7 +21,7 @@ class CategoriesTable extends React.Component<CategoriesTableProps> {
 
   columns = [
     { title: 'Category', columnData: (data: any) => data.title },
-    { title: '', columnData: () => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

@@ -10,6 +10,7 @@ class Achievements extends React.Component {
 
   achievements: ITableAchievement[] = [
     {
+      id: 1,
       title: 'Achievement 1',
       description: 'This is an achievement',
       date: '10-02-18',

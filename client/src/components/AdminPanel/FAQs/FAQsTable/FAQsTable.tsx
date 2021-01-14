@@ -10,7 +10,7 @@ interface FAQsTableProps {
 }
 
 class FAQsTable extends React.Component<FAQsTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -22,7 +22,7 @@ class FAQsTable extends React.Component<FAQsTableProps> {
   columns = [
     { title: 'Question', columnData: (data: any) => data.question },
     { title: 'Answer', columnData: (data: any) => data.answer },
-    { title: '', columnData: (data: any) => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

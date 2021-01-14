@@ -10,6 +10,7 @@ class FAQs extends React.Component {
 
   faqs: ITableFAQ[] = [
     {
+      id: 1,
       question: 'Who can I ask for help?',
       answer: `In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.`,
     },

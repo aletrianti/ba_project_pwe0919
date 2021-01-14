@@ -82,6 +82,7 @@ class Users extends React.Component<UsersProps, UsersState> {
   // TODO: Add dynamic user data for the table
   users: ITableUser[] = [
     {
+      id: 1,
       name: 'Bob Ross',
       email: 'bob.ross@gmail.com',
       isAvailableToBuddy: true,

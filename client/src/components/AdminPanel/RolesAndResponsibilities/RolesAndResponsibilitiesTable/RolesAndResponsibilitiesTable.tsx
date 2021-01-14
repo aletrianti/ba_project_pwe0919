@@ -10,7 +10,7 @@ interface RolesAndResponsibilitiesTableProps {
 }
 
 class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibilitiesTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -23,7 +23,7 @@ class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibili
     { title: 'Role', columnData: (data: any) => data.role },
     { title: 'Description', columnData: (data: any) => data.description },
     { title: 'Responsibilities', columnData: (data: any) => data.responsibilities },
-    { title: '', columnData: (data: any) => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

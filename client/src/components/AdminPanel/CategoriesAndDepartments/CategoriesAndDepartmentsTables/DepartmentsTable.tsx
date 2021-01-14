@@ -10,7 +10,7 @@ interface DepartmentsTableProps {
 }
 
 class DepartmentsTable extends React.Component<DepartmentsTableProps> {
-  actions = (
+  actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: () => {} },
@@ -21,7 +21,7 @@ class DepartmentsTable extends React.Component<DepartmentsTableProps> {
 
   columns = [
     { title: 'Department', columnData: (data: any) => data.title },
-    { title: '', columnData: () => this.actions },
+    { title: '', columnData: (data: any) => this.actions(data.id) },
   ];
 
   render() {

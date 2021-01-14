@@ -12,9 +12,9 @@ class CategoriesAndDepartments extends React.Component {
 
   openDepartmentsModal = () => {};
 
-  categories: ITableCategory[] = [{ title: 'General' }];
+  categories: ITableCategory[] = [{ id: 1, title: 'General' }];
 
-  departments: ITableDepartment[] = [{ title: 'Engineering' }];
+  departments: ITableDepartment[] = [{ id: 1, title: 'Engineering' }];
 
   render() {
     return (

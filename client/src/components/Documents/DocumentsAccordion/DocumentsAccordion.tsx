@@ -1,11 +1,11 @@
 import React from 'react';
-import { IDocumentsContent } from '../../../store/interfaces/documents.interface';
+import { ITableDocumentsContent } from '../../../store/interfaces/tables.interfaces';
 import './DocumentsAccordion.scss';
 
 import DocumentsAccordionItem from './DocumentsAccordionItem/DocumentsAccordionItem';
 
 interface DocumentsAccordionProps {
-  content: IDocumentsContent[];
+  content: ITableDocumentsContent[];
 }
 
 class DocumentsAccordion extends React.Component<DocumentsAccordionProps> {
