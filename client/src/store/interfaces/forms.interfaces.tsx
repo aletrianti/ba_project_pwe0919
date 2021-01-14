@@ -7,10 +7,10 @@ export interface IField {
   value?: string;
 }
 
-export interface IModal {
+export interface IAddUserModal {
   isOpen: boolean;
 }
 export interface IToggleModalAction {
   type: string;
-  payload: IModal;
+  payload: IAddUserModal;
 }

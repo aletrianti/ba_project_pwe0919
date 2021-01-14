@@ -25,7 +25,7 @@ import {
   storeTaskFiveReducer,
 } from './tasks.reducers';
 import { storeUserEmailReducer } from './forms/user.reducers';
-import { toggleModalReducer } from './forms.reducers';
+import { toggleAddUserModalReducer } from './forms/user.reducers';
 
 // import redux method
 import { combineReducers } from '@reduxjs/toolkit';
@@ -56,7 +56,7 @@ const reducers: any = combineReducers({
   signUpLastInvitedEmployee: storeInvitedEmployee,
   signUpLastInvitedEmployees: storeInvitedEmployees,
   // Modals
-  formModal: toggleModalReducer,
+  addUserModal: toggleAddUserModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,

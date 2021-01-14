@@ -1,11 +1,10 @@
 import React, { FormEvent, MouseEvent } from 'react';
 import './Form.scss';
 
-import { IField, IModal, IToggleModalAction } from '../../../store/interfaces/forms.interfaces';
+import { IField } from '../../../store/interfaces/forms.interfaces';
 import InputField from '../InputField/InputField';
 import Button from '../Button/Button';
-import { TOGGLE_MODAL } from '../../../store/actions/forms/forms.types';
-import store from '../../../index';
+
 import { connect } from 'react-redux';
 
 interface FormProps {
@@ -15,29 +14,15 @@ interface FormProps {
   header: string;
   isModalOpen: boolean;
   submitFunction: any;
+  closeFunction: any;
   areFieldsValid: boolean;
 }
 
 class Form extends React.Component<FormProps> {
-  submitData = (event: FormEvent) => {
-    event.preventDefault();
-
-    this.props.submitFunction();
-  };
-
-  closeModal = (e: MouseEvent) => {
-    e.preventDefault();
-
-    const payload: IModal = { isOpen: false };
-    const action: IToggleModalAction = { type: TOGGLE_MODAL, payload };
-
-    store.dispatch(action);
-  };
-
   render() {
     return (
       <div className="form__wrapper" style={{ display: this.props.isModalOpen ? 'flex' : 'none' }}>
-        <form onSubmit={this.submitData} className="form">
+        <form onSubmit={(e: FormEvent) => this.props.submitFunction(e)} className="form">
           <h5 className="form__header">{this.props.header}</h5>
 
           {this.props.fields.map((field, i) => {
@@ -53,7 +38,7 @@ class Form extends React.Component<FormProps> {
           })}
 
           <div className="form__btns">
-            <div onClick={(e: MouseEvent) => this.closeModal(e)}>
+            <div onClick={(e: MouseEvent) => this.props.closeFunction(e)}>
               <Button btnText={this.props.cancelBtnName || 'Cancel'} isRegular={true} isConfirmBtn={false} />
             </div>
             <Button
@@ -70,7 +55,7 @@ class Form extends React.Component<FormProps> {
 }
 
 const mapStateToProps = state => {
-  return { isModalOpen: state.formModal.isOpen };
+  return { isModalOpen: state.addUserModal.isOpen };
 };
 
 export default connect(mapStateToProps)(Form);

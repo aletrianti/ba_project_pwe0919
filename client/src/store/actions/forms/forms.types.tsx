@@ -1,1 +1,1 @@
-export const TOGGLE_MODAL: string = 'TOGGLE_MODAL';
+export const TOGGLE_ADD_USER_MODAL: string = 'TOGGLE_ADD_USER_MODAL';
