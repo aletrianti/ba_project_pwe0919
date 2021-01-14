@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { FormEvent, MouseEvent } from 'react';
 import './Form.scss';
 
 import { IField, IModal, IToggleModalAction } from '../../../store/interfaces/forms.interfaces';
@@ -14,10 +14,16 @@ interface FormProps {
   fields: IField[];
   header: string;
   isModalOpen: boolean;
+  submitFunction: any;
+  areFieldsValid: boolean;
 }
 
 class Form extends React.Component<FormProps> {
-  submitData = () => {};
+  submitData = (event: FormEvent) => {
+    event.preventDefault();
+
+    this.props.submitFunction();
+  };
 
   closeModal = (e: MouseEvent) => {
     e.preventDefault();
@@ -50,7 +56,12 @@ class Form extends React.Component<FormProps> {
             <div onClick={(e: MouseEvent) => this.closeModal(e)}>
               <Button btnText={this.props.cancelBtnName || 'Cancel'} isRegular={true} isConfirmBtn={false} />
             </div>
-            <Button btnText={this.props.confirmBtnName || 'Save'} isRegular={false} isConfirmBtn={true} />
+            <Button
+              btnText={this.props.confirmBtnName || 'Save'}
+              isRegular={false}
+              isConfirmBtn={true}
+              areAllFieldsValid={this.props.areFieldsValid}
+            />
           </div>
         </form>
       </div>

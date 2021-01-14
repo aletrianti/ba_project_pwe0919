@@ -3,25 +3,21 @@ import React from 'react';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-class UsersTable extends React.Component {
-  data = [
-    {
-      name: 'Bob Ross',
-      email: 'bob.ross@gmail.com',
-      isAvailableToBuddy: true,
-      assignedTo: '',
-      department: 'Design',
-      role: 'Painter',
-      actions: (
-        <Actions
-          actions={[
-            { name: 'Edit', function: () => {} },
-            { name: 'Delete', function: () => {} },
-          ]}
-        />
-      ),
-    },
-  ];
+import { ITableUser } from '../../../../store/interfaces/tables/users.interfaces';
+
+interface UsersTableProps {
+  users: ITableUser[];
+}
+
+class UsersTable extends React.Component<UsersTableProps> {
+  actions = (
+    <Actions
+      actions={[
+        { name: 'Edit', function: () => {} },
+        { name: 'Delete', function: () => {} },
+      ]}
+    />
+  );
 
   columns = [
     { title: 'First and last name', columnData: (data: any) => data.name },
@@ -30,13 +26,13 @@ class UsersTable extends React.Component {
     { title: 'Assigned to', columnData: (data: any) => data.assignedTo },
     { title: 'Department', columnData: (data: any) => data.department },
     { title: 'Role', columnData: (data: any) => data.role },
-    { title: '', columnData: (data: any) => data.actions },
+    { title: '', columnData: (data: any) => this.actions },
   ];
 
   render() {
     return (
       <div id="users__table">
-        <Table data={this.data} columns={this.columns} />
+        <Table data={this.props.users} columns={this.columns} actions={this.actions} />
       </div>
     );
   }

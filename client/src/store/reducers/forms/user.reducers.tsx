@@ -1,5 +1,5 @@
 // import actions
-import { STORE_USER_EMAIL } from '../../actions/forms/user/user.actions';
+import { STORE_USER_EMAIL } from '../../actions/forms/user/user.types';
 import { IStoreUserEmailAction, IUserEmail } from '../../interfaces/forms/user.interfaces';
 
 // create reducers
