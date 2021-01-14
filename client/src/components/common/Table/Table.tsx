@@ -9,7 +9,6 @@ interface Column {
 interface TableProps {
   data: any[];
   columns: Column[];
-  actions?: any;
 }
 
 class Table extends React.Component<TableProps> {
@@ -27,7 +26,7 @@ class Table extends React.Component<TableProps> {
   };
 
   render() {
-    const { data, columns, actions } = this.props;
+    const { data, columns } = this.props;
 
     return (
       <div className="table__container">

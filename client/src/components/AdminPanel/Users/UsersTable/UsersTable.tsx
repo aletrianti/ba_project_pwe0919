@@ -32,7 +32,7 @@ class UsersTable extends React.Component<UsersTableProps> {
   render() {
     return (
       <div id="users__table">
-        <Table data={this.props.users} columns={this.columns} actions={this.actions} />
+        <Table data={this.props.users} columns={this.columns} />
       </div>
     );
   }
