@@ -9,6 +9,7 @@ import AddButton from '../../common/AddButton/AddButton';
 import UsersTable from './UsersTable/UsersTable';
 import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
+import DeleteUsersForm from './UsersForms/DeleteUsersForm';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -45,6 +46,7 @@ class Users extends React.Component<UsersProps> {
 
         <AddUsersForm />
         <EditUsersForm />
+        <DeleteUsersForm />
       </div>
     );
   }

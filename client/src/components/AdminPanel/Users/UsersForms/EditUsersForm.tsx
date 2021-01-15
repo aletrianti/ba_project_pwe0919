@@ -13,9 +13,6 @@ import Form from '../../../common/Form/Form';
 
 interface EditUsersFormProps {
   editUserModal: IEditUserModal;
-  userBuddy: IUserBuddy;
-  userDepartment: IUserDepartment;
-  userRole: IUserRole;
   storeUserBuddy: (userBuddy: IUserBuddy) => any;
   storeUserDepartment: (userDepartment: IUserDepartment) => any;
   storeUserRole: (userRole: IUserRole) => any;
@@ -24,6 +21,7 @@ interface EditUsersFormProps {
 
 interface EditUsersFormState {
   areFieldsValid: ICheckFields;
+  userId: number;
 }
 
 class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormState> {
@@ -34,6 +32,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
       areFieldsValid: {
         areAllFieldsValid: false,
       },
+      userId: this.props.editUserModal.id,
     };
   }
 
@@ -83,7 +82,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
   // Form events
   editUser = (): void => {
-    // TODO: add axios call here
+    // TODO: add axios call here - use userId
   };
 
   // Fields
@@ -116,13 +115,10 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 const mapStateToProps = (state: any) => {
   return {
     editUserModal: state.editUserModal,
-    userBuddy: state.userBuddy,
-    userDepartment: state.userDepartment,
-    userRole: state.userRole,
   };
 };
 
-const mapDisparchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     storeUserBuddy: (userBuddy: IUserBuddy) => dispatch(StoreBuddyAction(userBuddy)),
     storeUserDepartment: (userDepartment: IUserDepartment) => dispatch(StoreDepartmentAction(userDepartment)),
@@ -131,4 +127,4 @@ const mapDisparchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDisparchToProps)(EditUsersForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditUsersForm);

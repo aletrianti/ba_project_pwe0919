@@ -4,13 +4,14 @@ import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
 import { ITableUser } from '../../../../store/interfaces/tables.interfaces';
-import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IEditUserModal } from '../../../../store/interfaces/forms.interfaces';
+import { ToggleDeleteUserModalAction, ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
+import { IDeleteUserModal, IEditUserModal } from '../../../../store/interfaces/forms.interfaces';
 import { connect } from 'react-redux';
 
 interface UsersTableProps {
   users: ITableUser[];
   toggleEditUserModal: (editUserModal: IEditUserModal) => any;
+  toggleDeleteUserModal: (deleteUserModal: IDeleteUserModal) => any;
 }
 
 class UsersTable extends React.Component<UsersTableProps> {
@@ -20,11 +21,17 @@ class UsersTable extends React.Component<UsersTableProps> {
     this.props.toggleEditUserModal({ id, isOpen: true });
   };
 
+  deleteUser = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleDeleteUserModal({ id, isOpen: true });
+  };
+
   actions = (id: number) => (
     <Actions
       actions={[
         { name: 'Edit', function: (e: MouseEvent) => this.editUser(id, e) },
-        { name: 'Delete', function: () => {} },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteUser(id, e) },
       ]}
     />
   );
@@ -51,6 +58,7 @@ class UsersTable extends React.Component<UsersTableProps> {
 const mapDisparchToProps = (dispatch: any) => {
   return {
     toggleEditUserModal: (editUserModal: IEditUserModal) => dispatch(ToggleEditUserModalAction(editUserModal)),
+    toggleDeleteUserModal: (deleteUserModal: IDeleteUserModal) => dispatch(ToggleDeleteUserModalAction(deleteUserModal)),
   };
 };
 
