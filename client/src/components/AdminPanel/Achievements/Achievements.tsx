@@ -6,7 +6,8 @@ import { IAddAchievementModal } from '../../../store/interfaces/forms/achievemen
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
 
 import AddButton from '../../common/AddButton/AddButton';
-import AddAchievementForm from './AchievementsForms/AddAchievementForm';
+import AchievementsForms from './AchievementsForms/AchievementsForms';
+import DeleteAchievementsForm from './AchievementsForms/DeleteAchievementsForm';
 import AchievementsTable from './AchievementsTable/AchievementsTable';
 
 interface AchievementsProps {
@@ -39,7 +40,8 @@ class Achievements extends React.Component<AchievementsProps> {
           <AchievementsTable achievements={this.achievements} />
         </div>
 
-        <AddAchievementForm />
+        <AchievementsForms />
+        <DeleteAchievementsForm />
       </div>
     );
   }

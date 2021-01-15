@@ -32,7 +32,7 @@ class Form extends React.Component<FormProps> {
                 field.type === 'textarea' ? (
                   <InputField name={field.name} onchange={field.onchange} isTextarea={true} value={field.value || ''} key={i} />
                 ) : (
-                  <InputField name={field.name} onchange={field.onchange} value={field.value || ''} key={i} />
+                  <InputField name={field.name} onchange={field.onchange} isTextarea={false} value={field.value || ''} key={i} />
                 ),
               ]
             );

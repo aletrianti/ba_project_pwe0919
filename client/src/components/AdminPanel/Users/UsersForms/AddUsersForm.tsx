@@ -39,6 +39,8 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
     e.preventDefault();
 
     this.props.toggleAddUserModal({ isOpen: false });
+
+    this.props.storeUserEmail({ email: '', isValid: false, errorMessage: '' });
   };
 
   // Check that all fields are valid and enable confirm button
@@ -73,6 +75,8 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
         console.log('Sent emails!');
 
         this.props.toggleAddUserModal({ isOpen: false });
+
+        this.props.storeUserEmail({ email: '', isValid: false, errorMessage: '' });
       })
       .catch(err => console.error(err));
   };
