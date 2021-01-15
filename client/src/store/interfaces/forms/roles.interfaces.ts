@@ -64,13 +64,13 @@ export interface IToggleAddRoleModalAction {
   payload: IAddRoleModal;
 }
 
-export interface IRoleModal {
+export interface IEditRoleModal {
   isOpen: boolean;
   id: number;
 }
 export interface IToggleEditRoleModalAction {
   type: string;
-  payload: IRoleModal;
+  payload: IEditRoleModal;
 }
 
 export interface IDeleteRoleModal {

@@ -6,7 +6,7 @@ interface InputFieldProps {
   name: string;
   isPassword?: boolean;
   isTextarea?: boolean;
-  isInviteUsersField?: boolean;
+  isShortField?: boolean;
   onchange: any;
   value?: string;
 }
@@ -32,7 +32,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
   };
 
   render() {
-    const { name, isPassword, isTextarea, isInviteUsersField, value } = this.props;
+    const { name, isPassword, isTextarea, isShortField, value } = this.props;
 
     return (
       <div className="input-field__container">
@@ -40,20 +40,9 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
 
         <p className="input-field__password-text">{isPassword ? 'Must be min. 8 characters' : null}</p>
 
-        {!isInviteUsersField ? (
+        {!isShortField ? (
           [
             !isTextarea ? (
-              <input
-                type="textarea"
-                placeholder={name}
-                alt={name}
-                name={`Input[${name}]`}
-                onChange={this.handleOnChange}
-                className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
-                defaultValue={value || ''}
-                key={name}
-              />
-            ) : (
               <input
                 type={isPassword ? 'password' : 'text'}
                 placeholder={name}
@@ -64,6 +53,15 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
                 defaultValue={value || ''}
                 key={name}
               />
+            ) : (
+              <textarea
+                placeholder={name}
+                name={`Input[${name}]`}
+                onChange={this.handleOnChange}
+                className={!this.state.isFieldValid ? 'input-field__invalid' : ''}
+                defaultValue={value || ''}
+                key={name}
+              ></textarea>
             ),
           ]
         ) : (
@@ -73,7 +71,7 @@ class InputField extends React.Component<InputFieldProps, InputFieldState> {
             alt={name}
             name={`Input[${name}]`}
             onChange={this.handleOnChange}
-            className={'input-field__invite-users'}
+            className={'input-field--short'}
             defaultValue={value || ''}
             key={name}
           />

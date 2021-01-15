@@ -8,4 +8,5 @@ export interface IField {
   onchange: any;
   value?: string;
   options?: IOptions;
+  isShortField?: boolean;
 }

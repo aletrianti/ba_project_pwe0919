@@ -1,6 +1,6 @@
-import { STORE_ROLE_TITLE, STORE_ROLE_DESCRIPTION, STORE_ROLE_RESPONSIBILITIES, EDIT_ROLE, DELETE_ROLE } from "../../actions/forms/roles/roles.types";
+import { STORE_ROLE_TITLE, STORE_ROLE_DESCRIPTION, STORE_ROLE_RESPONSIBILITIES, EDIT_ROLE, DELETE_ROLE, STORE_ROLE_RESPONSIBILITY } from "../../actions/forms/roles/roles.types";
 import { TOGGLE_ADD_ROLE_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_DELETE_ROLE_MODAL } from "../../actions/forms/forms.types";
-import { IRoleTitle, IStoreRoleTitleAction, IRoleDescription, IStoreRoleDescriptionAction, IRoleResponsibilities, IStoreRoleResponsibilitiesAction, IRole, IRoleAction, IAddRoleModal, IToggleAddRoleModalAction, IRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction, IRoleResponsibility, IStoreRoleResponsibilityAction, IDeleteRole, IDeleteRoleAction } from "../../interfaces/forms/roles.interfaces";
+import { IRoleTitle, IStoreRoleTitleAction, IRoleDescription, IStoreRoleDescriptionAction, IRoleResponsibilities, IStoreRoleResponsibilitiesAction, IRole, IRoleAction, IAddRoleModal, IToggleAddRoleModalAction, IEditRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction, IRoleResponsibility, IStoreRoleResponsibilityAction, IDeleteRole, IDeleteRoleAction } from "../../interfaces/forms/roles.interfaces";
 
 // create reducers
 export const storeRoleTitleReducer = (
@@ -40,7 +40,7 @@ export const storeRoleResponsibilityReducer = (
   action: IStoreRoleResponsibilityAction
 ) => {
   switch (action.type) {
-    case STORE_ROLE_DESCRIPTION:
+    case STORE_ROLE_RESPONSIBILITY:
       return {
         ...state,
         responsibility: action.payload.responsibility,
@@ -116,7 +116,7 @@ export const toggleAddRoleModalReducer = (state: IAddRoleModal = { isOpen: false
   }
 };
 export const toggleEditRoleModalReducer = (
-  state: IRoleModal = { id: 0, isOpen: false },
+  state: IEditRoleModal = { id: 0, isOpen: false },
   action: IToggleEditRoleModalAction
 ) => {
   switch (action.type) {

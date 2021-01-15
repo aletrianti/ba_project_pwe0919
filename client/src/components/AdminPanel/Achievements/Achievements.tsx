@@ -47,11 +47,11 @@ class Achievements extends React.Component<AchievementsProps> {
   }
 }
 
-const mapDisparchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) =>
       dispatch(ToggleAddAchievementModalAction(addAchievementModal)),
   };
 };
 
-export default connect(null, mapDisparchToProps)(Achievements);
+export default connect(null, mapDispatchToProps)(Achievements);

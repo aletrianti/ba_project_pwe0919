@@ -147,12 +147,12 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
         </div>
 
         <div className="sign-up__form__invite-users">
-          <InputField name={'Email'} onchange={this.storeInvitedEmployee} isInviteUsersField={true} />
+          <InputField name={'Email'} onchange={this.storeInvitedEmployee} isShortField={true} />
 
           <Button
             btnText={'Invite'}
             isInviteBtn={true}
-            inviteEmployee={this.displayInvitedEmployees}
+            shortFieldFunction={this.displayInvitedEmployees}
             isConfirmBtn={true}
             areAllFieldsValid={this.state.areAllFieldsValid}
           />

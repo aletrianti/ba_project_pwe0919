@@ -1,7 +1,7 @@
 // import types + interfaces for payloads
 import { IAddAchievementModal, IToggleAddAchievementModalAction, IAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from '../../interfaces/forms/achievements.interfaces';
 import { IAddFaqModal, IToggleAddFaqModalAction, IFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from '../../interfaces/forms/faqs.interfaces';
-import { IAddRoleModal, IToggleAddRoleModalAction, IRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction } from '../../interfaces/forms/roles.interfaces';
+import { IAddRoleModal, IToggleAddRoleModalAction, IEditRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction } from '../../interfaces/forms/roles.interfaces';
 import {
   IAddUserModal,
   IDeleteUserModal,
@@ -46,7 +46,7 @@ export const ToggleDeleteFaqModalAction = (data: IDeleteFaqModal): IToggleDelete
 export const ToggleAddRoleModalAction = (data: IAddRoleModal): IToggleAddRoleModalAction => {
   return { type: TOGGLE_ADD_ROLE_MODAL, payload: data };
 };
-export const ToggleEditRoleModalAction = (data: IRoleModal): IToggleEditRoleModalAction => {
+export const ToggleEditRoleModalAction = (data: IEditRoleModal): IToggleEditRoleModalAction => {
   return { type: TOGGLE_EDIT_ROLE_MODAL, payload: data };
 };
 export const ToggleDeleteRoleModalAction = (data: IDeleteRoleModal): IToggleDeleteRoleModalAction => {

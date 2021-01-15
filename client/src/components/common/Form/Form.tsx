@@ -15,6 +15,8 @@ interface FormProps {
   submitFunction: any;
   closeFunction: any;
   areFieldsValid: boolean;
+  shortFieldFunction?: any;
+  list?: string[];
 }
 
 class Form extends React.Component<FormProps> {
@@ -29,10 +31,36 @@ class Form extends React.Component<FormProps> {
               <SelectField name={field.name} options={field.options} onchange={field.onchange} />
             ) : (
               [
-                field.type === 'textarea' ? (
-                  <InputField name={field.name} onchange={field.onchange} isTextarea={true} value={field.value || ''} key={i} />
+                field.isShortField ? (
+                  <>
+                    <div className="form__short-field" key={i}>
+                      <InputField
+                        name={field.name}
+                        onchange={field.onchange}
+                        value={field.value || ''}
+                        isTextarea={field.type === 'textarea'}
+                        isShortField={true}
+                      />
+                      <Button
+                        btnText={'Add'}
+                        isInviteBtn={true}
+                        shortFieldFunction={this.props.shortFieldFunction}
+                        isConfirmBtn={true}
+                        areAllFieldsValid={true}
+                      />
+                    </div>
+                    <div className="form__short-field__list-container">
+                      <ul>{this.props.list ? this.props.list.map((item, i) => <li key={i}>{item}</li>) : null}</ul>
+                    </div>
+                  </>
                 ) : (
-                  <InputField name={field.name} onchange={field.onchange} isTextarea={false} value={field.value || ''} key={i} />
+                  <InputField
+                    name={field.name}
+                    onchange={field.onchange}
+                    value={field.value || ''}
+                    isTextarea={field.type === 'textarea'}
+                    key={i}
+                  />
                 ),
               ]
             );

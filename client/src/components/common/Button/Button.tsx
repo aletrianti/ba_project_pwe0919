@@ -14,7 +14,7 @@ interface ButtonProps {
   isSingleBtn?: boolean;
   isBackFormBtn?: boolean;
   isInviteBtn?: boolean;
-  inviteEmployee?: any;
+  shortFieldFunction?: any;
   isConfirmBtn: boolean;
   areAllFieldsValid?: boolean;
 }
@@ -30,7 +30,7 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
       isSingleBtn,
       isBackFormBtn,
       isInviteBtn,
-      inviteEmployee,
+      shortFieldFunction,
       areAllFieldsValid,
       isConfirmBtn,
       history,
@@ -85,7 +85,7 @@ class Button extends React.Component<ButtonProps & RouteComponentProps> {
             ) : (
               <button
                 className="btn--orange-accent btn__invite"
-                onClick={inviteEmployee}
+                onClick={shortFieldFunction}
                 key={btnText}
                 disabled={isConfirmBtn ? !areAllFieldsValid : false}
               >

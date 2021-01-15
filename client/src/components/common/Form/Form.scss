@@ -40,6 +40,36 @@
                 margin: 0;
             }
         }
+
+        .form__short-field {
+            display: flex;
+
+            .regular-button__container {
+                display: block;
+                margin-bottom: 20px;
+
+                button {
+                    margin-top: 2.8em;
+                    font-size: $font-regular;
+                }
+            }
+        }
+
+        .form__short-field__list-container {
+            height: 100px;
+            max-height: 100px;
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid $primary-grey;
+            margin: 5px 0 20px;
+            
+            overflow-y: scroll;
+
+            li {
+                margin: 0 20px;
+                list-style-type: circle;
+            }
+        }
     }
 }
 

@@ -1,11 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
+import { ToggleAddRoleModalAction } from '../../../store/actions/forms/forms.actions';
+import { IAddRoleModal } from '../../../store/interfaces/forms/roles.interfaces';
 import { ITableRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
 
 import AddButton from '../../common/AddButton/AddButton';
+import DeleteRolesAndResponsibilitiesForm from './RolesAndResponsibilitiesForms/DeleteRolesAndResponsibilitiesForm';
+import RolesAndResponsibilitiesForms from './RolesAndResponsibilitiesForms/RolesAndResponsibilitiesForms';
 import RolesAndResponsibilitiesTable from './RolesAndResponsibilitiesTable/RolesAndResponsibilitiesTable';
 
-class RolesAndResponsibilities extends React.Component {
-  openModal = () => {};
+interface RolesProps {
+  toggleAddRoleModal: (addRoleModal: IAddRoleModal) => any;
+}
+
+class RolesAndResponsibilities extends React.Component<RolesProps> {
+  openModal = (e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleAddRoleModal({ isOpen: true });
+  };
 
   rolesAndResponsibilities: ITableRolesAndResponsibilities[] = [
     {
@@ -24,9 +38,18 @@ class RolesAndResponsibilities extends React.Component {
         <div id="admin-panel__roles__content" className="admin-panel__content">
           <RolesAndResponsibilitiesTable rolesAndResponsibilities={this.rolesAndResponsibilities} />
         </div>
+
+        <RolesAndResponsibilitiesForms />
+        <DeleteRolesAndResponsibilitiesForm />
       </div>
     );
   }
 }
 
-export default RolesAndResponsibilities;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    toggleAddRoleModal: (addRoleModal: IAddRoleModal) => dispatch(ToggleAddRoleModalAction(addRoleModal)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(RolesAndResponsibilities);

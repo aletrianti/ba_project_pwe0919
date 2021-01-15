@@ -39,7 +39,7 @@ import {
 } from './forms/users.reducers';
 import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, achievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
 import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, faqReducer, deleteFaqReducer } from './forms/faqs.reducers';
-import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer } from './forms/roles.reducers';
+import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer, toggleAddRoleModalReducer, toggleDeleteRoleModalReducer, toggleEditRoleModalReducer } from './forms/roles.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -76,6 +76,9 @@ const reducers: any = combineReducers({
   addFaqModal: toggleAddFaqModalReducer,
   editFaqModal: toggleEditFaqModalReducer,
   deleteFaqModal: toggleDeleteFaqModalReducer,
+  addRoleModal: toggleAddRoleModalReducer,
+  editRoleModal: toggleEditRoleModalReducer,
+  deleteRoleModal: toggleDeleteRoleModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
