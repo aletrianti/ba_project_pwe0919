@@ -38,14 +38,14 @@ export interface IAchievementDateAction {
   payload: IAchievementDate;
 }
 
-export interface IEditAchievement {
+export interface IAchievement {
   title: IAchievementTitle;
   description: IAchievementDescription;
   date: IAchievementDate;
 }
-export interface IEditAchievementAction {
+export interface IAchievementAction {
   type: string;
-  payload: IEditAchievement;
+  payload: IAchievement;
 }
 
 export interface IDeleteAchievement {
@@ -65,13 +65,13 @@ export interface IToggleAddAchievementModalAction {
   payload: IAddAchievementModal;
 }
 
-export interface IEditAchievementModal {
+export interface IAchievementModal {
   isOpen: boolean;
   id: number;
 }
 export interface IToggleEditAchievementModalAction {
   type: string;
-  payload: IEditAchievementModal;
+  payload: IAchievementModal;
 }
 
 export interface IDeleteAchievementModal {

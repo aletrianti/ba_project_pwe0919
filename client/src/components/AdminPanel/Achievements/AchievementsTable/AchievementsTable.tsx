@@ -9,11 +9,11 @@ import {
   ToggleEditAchievementModalAction,
   ToggleDeleteAchievementModalAction,
 } from '../../../../store/actions/forms/forms.actions';
-import { IEditAchievementModal, IDeleteAchievementModal } from '../../../../store/interfaces/forms/achievements.interfaces';
+import { IAchievementModal, IDeleteAchievementModal } from '../../../../store/interfaces/forms/achievements.interfaces';
 
 interface AchievementsTableProps {
   achievements: ITableAchievement[];
-  toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) => any;
+  toggleEditAchievementModal: (editAchievementModal: IAchievementModal) => any;
   toggleDeleteAchievementModal: (deleteAchievementModal: IDeleteAchievementModal) => any;
 }
 
@@ -57,7 +57,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) =>
+    toggleEditAchievementModal: (editAchievementModal: IAchievementModal) =>
       dispatch(ToggleEditAchievementModalAction(editAchievementModal)),
     toggleDeleteAchievementModal: (deleteAchievementModal: IDeleteAchievementModal) =>
       dispatch(ToggleDeleteAchievementModalAction(deleteAchievementModal)),

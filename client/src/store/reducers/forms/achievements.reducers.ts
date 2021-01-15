@@ -1,6 +1,6 @@
 import { STORE_ACHIEVEMENT_TITLE, STORE_ACHIEVEMENT_DESCRIPTION, STORE_ACHIEVEMENT_DATE, EDIT_ACHIEVEMENT, DELETE_ACHIEVEMENT } from "../../actions/forms/achievements/achievements.types";
 import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL } from "../../actions/forms/forms.types";
-import { IAchievementTitle, IStoreAchievementTitleAction, IAchievementDescription, IStoreAchievementDescriptionAction, IAchievementDate, IStoreAchievementDateAction, IEditAchievement, IEditAchievementAction, IDeleteAchievement, IDeleteAchievementAction, IAddAchievementModal, IToggleAddAchievementModalAction, IEditAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from "../../interfaces/forms/achievements.interfaces";
+import { IAchievementTitle, IStoreAchievementTitleAction, IAchievementDescription, IStoreAchievementDescriptionAction, IAchievementDate, IStoreAchievementDateAction, IAchievement, IAchievementAction, IDeleteAchievement, IDeleteAchievementAction, IAddAchievementModal, IToggleAddAchievementModalAction, IAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from "../../interfaces/forms/achievements.interfaces";
 
 
 // create reducers
@@ -53,13 +53,13 @@ export const storeAchievementDateReducer = (
   }
 };
 
-export const editAchievementReducer = (
-  state: IEditAchievement = {
+export const achievementReducer = (
+  state: IAchievement = {
     title: { title: '', isValid: false, errorMessage: '' },
     description: { description: '', isValid: false, errorMessage: '' },
     date: { date: '', isValid: false, errorMessage: '' },
   },
-  action: IEditAchievementAction
+  action: IAchievementAction
 ) => {
   switch (action.type) {
     case EDIT_ACHIEVEMENT:
@@ -103,7 +103,7 @@ export const toggleAddAchievementModalReducer = (state: IAddAchievementModal = {
   }
 };
 export const toggleEditAchievementModalReducer = (
-  state: IEditAchievementModal = { id: 0, isOpen: false },
+  state: IAchievementModal = { id: 0, isOpen: false },
   action: IToggleEditAchievementModalAction
 ) => {
   switch (action.type) {

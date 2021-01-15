@@ -19,8 +19,8 @@ import {
 import {
   IDeleteUser,
   IDeleteUserAction,
-  IEditUser,
-  IEditUserAction,
+  IUser,
+  IUserAction,
   IStoreUserBuddyAction,
   IStoreUserDepartmentAction,
   IStoreUserEmailAction,
@@ -97,13 +97,13 @@ export const storeUserRoleReducer = (
   }
 };
 
-export const editUserReducer = (
-  state: IEditUser = {
+export const userReducer = (
+  state: IUser = {
     buddy: { buddy: 0, isValid: false, errorMessage: '' },
     department: { department: 0, isValid: false, errorMessage: '' },
     role: { role: 0, isValid: false, errorMessage: '' },
   },
-  action: IEditUserAction
+  action: IUserAction
 ) => {
   switch (action.type) {
     case EDIT_USER:

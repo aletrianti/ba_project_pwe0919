@@ -2,8 +2,8 @@
 import {
   IDeleteUser,
   IDeleteUserAction,
-  IEditUser,
-  IEditUserAction,
+  IUser,
+  IUserAction,
   IStoreUserBuddyAction,
   IStoreUserDepartmentAction,
   IStoreUserEmailAction,
@@ -39,7 +39,7 @@ export const StoreRoleAction = (data: IUserRole): IStoreUserRoleAction => {
   return { type: STORE_USER_ROLE, payload: data };
 };
 
-export const EditUserAction = (data: IEditUser): IEditUserAction => {
+export const EditUserAction = (data: IUser): IUserAction => {
   return { type: EDIT_USER, payload: data };
 };
 

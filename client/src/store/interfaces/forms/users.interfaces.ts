@@ -35,14 +35,14 @@ export interface IStoreUserRoleAction {
   type: string;
   payload: IUserRole;
 }
-export interface IEditUser {
+export interface IUser {
   buddy: IUserBuddy;
   department: IUserDepartment;
   role: IUserRole;
 }
-export interface IEditUserAction {
+export interface IUserAction {
   type: string;
-  payload: IEditUser;
+  payload: IUser;
 }
 
 export interface IDeleteUser {

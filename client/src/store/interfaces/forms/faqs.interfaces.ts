@@ -18,13 +18,13 @@ export interface IStoreFaqAnswerAction {
   payload: IFaqAnswer;
 }
 
-export interface IEditFaq {
+export interface IFaq {
   question: IFaqQuestion;
   answer: IFaqAnswer;
 }
-export interface IEditFaqAction {
+export interface IFaqAction {
   type: string;
-  payload: IEditFaq;
+  payload: IFaq;
 }
 
 export interface IDeleteFaq {
@@ -44,13 +44,13 @@ export interface IToggleAddFaqModalAction {
   payload: IAddFaqModal;
 }
 
-export interface IEditFaqModal {
+export interface IFaqModal {
   isOpen: boolean;
   id: number;
 }
 export interface IToggleEditFaqModalAction {
   type: string;
-  payload: IEditFaqModal;
+  payload: IFaqModal;
 }
 
 export interface IDeleteFaqModal {

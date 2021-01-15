@@ -1,3 +1,5 @@
+// import redux method
+import { combineReducers } from '@reduxjs/toolkit';
 // import all reducers
 import { authReducer, signInReducer, storeEmailReducer, storePasswordReducer } from './auth.reducers';
 import {
@@ -26,20 +28,18 @@ import {
 } from './tasks.reducers';
 import {
   deleteUserReducer,
-  editUserReducer,
+  userReducer,
   storeUserBuddyReducer,
   storeUserDepartmentReducer,
   storeUserEmailReducer,
   storeUserRoleReducer,
   toggleDeleteUserModalReducer,
   toggleEditUserModalReducer,
+  toggleAddUserModalReducer,
 } from './forms/users.reducers';
-import { toggleAddUserModalReducer } from './forms/users.reducers';
-
-// import redux method
-import { combineReducers } from '@reduxjs/toolkit';
-import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, editAchievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
-import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, editFaqReducer, deleteFaqReducer } from './forms/faqs.reducers';
+import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, achievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
+import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, faqReducer, deleteFaqReducer } from './forms/faqs.reducers';
+import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer } from './forms/roles.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -87,19 +87,26 @@ const reducers: any = combineReducers({
   userBuddy: storeUserBuddyReducer,
   userDepartment: storeUserDepartmentReducer,
   userRole: storeUserRoleReducer,
-  editUser: editUserReducer,
+  user: userReducer,
   deleteUser: deleteUserReducer,
   // Achievements
   achievementTitle: storeAchievementTitleReducer,
   achievementDescription: storeAchievementDescriptionReducer,
   achievementDate: storeAchievementDateReducer,
-  editAchievement: editAchievementReducer,
+  achievement: achievementReducer,
   deleteAchievement: deleteAchievementReducer,
   // FAQs
   faqQuestion: storeFaqQuestionReducer,
   faqAnswer: storeFaqAnswerReducer,
-  editFaq: editFaqReducer,
+  faq: faqReducer,
   deleteFaq: deleteFaqReducer,
+  // Roles
+  roleTitle: storeRoleTitleReducer,
+  roleDescription: storeRoleDescriptionReducer,
+  roleResponsibility: storeRoleResponsibilityReducer,
+  roleResponsibilities: storeRoleResponsibilitiesReducer,
+  role: roleReducer,
+  deleteRole: deleteRoleReducer,
   // ...
 });
 

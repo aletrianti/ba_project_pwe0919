@@ -13,7 +13,7 @@ import {
   IAchievementTitle,
   IAchievementDate,
   IAchievementDescription,
-  IEditAchievementModal,
+  IAchievementModal,
 } from '../../../../store/interfaces/forms/achievements.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
@@ -26,12 +26,12 @@ interface AchievementsFormsProps {
   achievementDescription: IAchievementDescription;
   achievementDate: IAchievementDate;
   addAchievementModal: IAddAchievementModal;
-  editAchievementModal: IEditAchievementModal;
+  editAchievementModal: IAchievementModal;
   storeAchievementTitle: (achievementTitle: IAchievementTitle) => any;
   storeAchievementDescription: (achievementDescription: IAchievementDescription) => any;
   storeAchievementDate: (achievementDate: IAchievementDate) => any;
   toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) => any;
-  toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) => any;
+  toggleEditAchievementModal: (editAchievementModal: IAchievementModal) => any;
 }
 
 interface AchievementsFormsState {
@@ -166,7 +166,7 @@ const mapDisparchToProps = (dispatch: any) => {
     storeAchievementDate: (achievementDate: IAchievementDate) => dispatch(StoreDateAction(achievementDate)),
     toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) =>
       dispatch(ToggleAddAchievementModalAction(addAchievementModal)),
-    toggleEditAchievementModal: (EditAchievementModal: IEditAchievementModal) =>
+    toggleEditAchievementModal: (EditAchievementModal: IAchievementModal) =>
       dispatch(ToggleEditAchievementModalAction(EditAchievementModal)),
   };
 };

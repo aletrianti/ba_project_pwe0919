@@ -5,7 +5,7 @@ import axios from 'axios';
 import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreBuddyAction, StoreDepartmentAction, StoreRoleAction } from '../../../../store/actions/forms/users/users.actions';
 import {
-  IEditUser,
+  IUser,
   IEditUserModal,
   IUserBuddy,
   IUserDepartment,
@@ -18,12 +18,12 @@ import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 
 interface EditUsersFormProps {
-  editUser: IEditUser;
+  user: IUser;
   editUserModal: IEditUserModal;
   storeUserBuddy: (userBuddy: IUserBuddy) => any;
   storeUserDepartment: (userDepartment: IUserDepartment) => any;
   storeUserRole: (userRole: IUserRole) => any;
-  toggleEditUserModal: (editUserModal: IEditUserModal) => any;
+  toggleEditUserModal: (userModal: IEditUserModal) => any;
 }
 
 interface EditUsersFormState {
@@ -89,13 +89,13 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
   // Form events
   editUser = (): void => {
-    // TODO: add axios call here - use this.state.userId and this.props.editUser
+    // TODO: add axios call here - use this.state.userId and this.props.user
     // the last one (it's an object containing these objects: buddy, department, role)
   };
 
   // Fields
   // TODO: Add dynamic data (options)
-  editUserModalFields: IField[] = [
+  userModalFields: IField[] = [
     { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: [] } },
     {
       name: 'Department',
@@ -109,7 +109,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
   render() {
     return (
       <Form
-        fields={this.editUserModalFields}
+        fields={this.userModalFields}
         header={'Edit a user'}
         submitFunction={this.editUser}
         closeFunction={this.closeEditUserModal}
@@ -122,7 +122,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
 const mapStateToProps = (state: any) => {
   return {
-    editUser: state.editUser,
+    user: state.user,
     editUserModal: state.editUserModal,
   };
 };
@@ -132,7 +132,7 @@ const mapDispatchToProps = (dispatch: any) => {
     storeUserBuddy: (userBuddy: IUserBuddy) => dispatch(StoreBuddyAction(userBuddy)),
     storeUserDepartment: (userDepartment: IUserDepartment) => dispatch(StoreDepartmentAction(userDepartment)),
     storeUserRole: (userRole: IUserRole) => dispatch(StoreRoleAction(userRole)),
-    toggleEditUserModal: (editUserModal: IEditUserModal) => dispatch(ToggleEditUserModalAction(editUserModal)),
+    toggleEditUserModal: (userModal: IEditUserModal) => dispatch(ToggleEditUserModalAction(userModal)),
   };
 };
 
