@@ -4,13 +4,13 @@ import axios from 'axios';
 
 import { INewEmployees } from '../../../../../../types/auth.types';
 import { ToggleAddUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { StoreEmailAction } from '../../../../store/actions/forms/user/user.actions';
-import { IAddUserModal, IField } from '../../../../store/interfaces/forms.interfaces';
-import { IUserEmail } from '../../../../store/interfaces/forms/user.interfaces';
+import { StoreEmailAction } from '../../../../store/actions/forms/users/users.actions';
+import { IAddUserModal, IUserEmail } from '../../../../store/interfaces/forms/users.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
+import { IField } from '../../../../store/interfaces/forms.interfaces';
 
 interface AddUsersFormProps {
   userEmail: IUserEmail;

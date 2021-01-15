@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { IAddUserModal } from '../../../store/interfaces/forms.interfaces';
+import { IAddUserModal } from '../../../store/interfaces/forms/users.interfaces';
 import { ITableUser } from '../../../store/interfaces/tables.interfaces';
 import { ToggleAddUserModalAction } from '../../../store/actions/forms/forms.actions';
 

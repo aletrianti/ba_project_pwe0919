@@ -4,9 +4,8 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { ToggleDeleteUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IDeleteUserModal } from '../../../../store/interfaces/forms.interfaces';
-import { DeleteUserAction } from '../../../../store/actions/forms/user/user.actions';
-import { IDeleteUser } from '../../../../store/interfaces/forms/user.interfaces';
+import { IDeleteUserModal, IDeleteUser } from '../../../../store/interfaces/forms/users.interfaces';
+import { DeleteUserAction } from '../../../../store/actions/forms/users/users.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
 

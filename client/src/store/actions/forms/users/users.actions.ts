@@ -12,8 +12,15 @@ import {
   IUserDepartment,
   IUserEmail,
   IUserRole,
-} from '../../../interfaces/forms/user.interfaces';
-import { DELETE_USER, EDIT_USER, STORE_USER_BUDDY, STORE_USER_DEPARTMENT, STORE_USER_EMAIL, STORE_USER_ROLE } from './user.types';
+} from '../../../interfaces/forms/users.interfaces';
+import {
+  DELETE_USER,
+  EDIT_USER,
+  STORE_USER_BUDDY,
+  STORE_USER_DEPARTMENT,
+  STORE_USER_EMAIL,
+  STORE_USER_ROLE,
+} from './users.types';
 
 // actions
 export const StoreEmailAction = (data: IUserEmail): IStoreUserEmailAction => {

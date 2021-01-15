@@ -8,6 +8,7 @@ import AchievementsTable from './AchievementsTable/AchievementsTable';
 class Achievements extends React.Component {
   openModal = () => {};
 
+  // TODO: Add dynamic achievement data for the table
   achievements: ITableAchievement[] = [
     {
       id: 1,

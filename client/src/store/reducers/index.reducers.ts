@@ -33,11 +33,12 @@ import {
   storeUserRoleReducer,
   toggleDeleteUserModalReducer,
   toggleEditUserModalReducer,
-} from './forms/user.reducers';
-import { toggleAddUserModalReducer } from './forms/user.reducers';
+} from './forms/users.reducers';
+import { toggleAddUserModalReducer } from './forms/users.reducers';
 
 // import redux method
 import { combineReducers } from '@reduxjs/toolkit';
+import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, editAchievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -68,6 +69,9 @@ const reducers: any = combineReducers({
   addUserModal: toggleAddUserModalReducer,
   editUserModal: toggleEditUserModalReducer,
   deleteUserModal: toggleDeleteUserModalReducer,
+  addAchievementModal: toggleAddAchievementModalReducer,
+  editAchievementModal: toggleEditAchievementModalReducer,
+  deleteAchievementModal: toggleDeleteAchievementModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
@@ -81,6 +85,12 @@ const reducers: any = combineReducers({
   userRole: storeUserRoleReducer,
   editUser: editUserReducer,
   deleteUser: deleteUserReducer,
+  // Achievements
+  achievementTitle: storeAchievementTitleReducer,
+  achievementDescription: storeAchievementDescriptionReducer,
+  achievementDate: storeAchievementDateReducer,
+  editAchievement: editAchievementReducer,
+  deleteAchievement: deleteAchievementReducer,
   // ...
 });
 

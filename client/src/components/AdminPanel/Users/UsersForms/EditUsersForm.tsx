@@ -3,15 +3,22 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { StoreBuddyAction, StoreDepartmentAction, StoreRoleAction } from '../../../../store/actions/forms/user/user.actions';
-import { IEditUserModal, IField } from '../../../../store/interfaces/forms.interfaces';
-import { IUserBuddy, IUserDepartment, IUserRole } from '../../../../store/interfaces/forms/user.interfaces';
+import { StoreBuddyAction, StoreDepartmentAction, StoreRoleAction } from '../../../../store/actions/forms/users/users.actions';
+import {
+  IEditUser,
+  IEditUserModal,
+  IUserBuddy,
+  IUserDepartment,
+  IUserRole,
+} from '../../../../store/interfaces/forms/users.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
+import { IField } from '../../../../store/interfaces/forms.interfaces';
 
 interface EditUsersFormProps {
+  editUser: IEditUser;
   editUserModal: IEditUserModal;
   storeUserBuddy: (userBuddy: IUserBuddy) => any;
   storeUserDepartment: (userDepartment: IUserDepartment) => any;
@@ -82,11 +89,12 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
   // Form events
   editUser = (): void => {
-    // TODO: add axios call here - use userId
+    // TODO: add axios call here - use this.state.userId and this.props.editUser
+    // the last one (it's an object containing these objects: buddy, department, role)
   };
 
   // Fields
-  // TODO: Add dynamic data
+  // TODO: Add dynamic data (options)
   editUserModalFields: IField[] = [
     { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: [] } },
     {
@@ -114,6 +122,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
 const mapStateToProps = (state: any) => {
   return {
+    editUser: state.editUser,
     editUserModal: state.editUserModal,
   };
 };

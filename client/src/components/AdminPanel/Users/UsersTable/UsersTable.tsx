@@ -5,7 +5,7 @@ import Actions from '../../../common/Actions/Actions';
 
 import { ITableUser } from '../../../../store/interfaces/tables.interfaces';
 import { ToggleDeleteUserModalAction, ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IDeleteUserModal, IEditUserModal } from '../../../../store/interfaces/forms.interfaces';
+import { IDeleteUserModal, IEditUserModal } from '../../../../store/interfaces/forms/users.interfaces';
 import { connect } from 'react-redux';
 
 interface UsersTableProps {

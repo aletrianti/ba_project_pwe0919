@@ -7,7 +7,7 @@ import {
   STORE_USER_DEPARTMENT,
   STORE_USER_EMAIL,
   STORE_USER_ROLE,
-} from '../../actions/forms/user/user.types';
+} from '../../actions/forms/users/users.types';
 import {
   IAddUserModal,
   IDeleteUserModal,
@@ -15,7 +15,7 @@ import {
   IToggleAddUserModalAction,
   IToggleDeleteUserModalAction,
   IToggleEditUserModalAction,
-} from '../../interfaces/forms.interfaces';
+} from '../../interfaces/forms/users.interfaces';
 import {
   IDeleteUser,
   IDeleteUserAction,
@@ -29,7 +29,7 @@ import {
   IUserDepartment,
   IUserEmail,
   IUserRole,
-} from '../../interfaces/forms/user.interfaces';
+} from '../../interfaces/forms/users.interfaces';
 
 // create reducers
 export const storeUserEmailReducer = (
