@@ -1,20 +1,37 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
 import { ITableFAQ } from '../../../../store/interfaces/tables.interfaces';
+import { ToggleEditFaqModalAction, ToggleDeleteFaqModalAction } from '../../../../store/actions/forms/forms.actions';
+import { IEditFaqModal, IDeleteFaqModal } from '../../../../store/interfaces/forms/faqs.interfaces';
 
 interface FAQsTableProps {
   faqs: ITableFAQ[];
+  toggleEditFaqModal: (editFaqModal: IEditFaqModal) => any;
+  toggleDeleteFaqModal: (deleteFaqModal: IDeleteFaqModal) => any;
 }
 
 class FAQsTable extends React.Component<FAQsTableProps> {
+  editFaq = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleEditFaqModal({ id, isOpen: true });
+  };
+
+  deleteFaq = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleDeleteFaqModal({ id, isOpen: true });
+  };
+
   actions = (id: number) => (
     <Actions
       actions={[
-        { name: 'Edit', function: () => {} },
-        { name: 'Delete', function: () => {} },
+        { name: 'Edit', function: (e: MouseEvent) => this.editFaq(id, e) },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteFaq(id, e) },
       ]}
     />
   );
@@ -34,4 +51,11 @@ class FAQsTable extends React.Component<FAQsTableProps> {
   }
 }
 
-export default FAQsTable;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    toggleEditFaqModal: (editFaqModal: IEditFaqModal) => dispatch(ToggleEditFaqModalAction(editFaqModal)),
+    toggleDeleteFaqModal: (deleteFaqModal: IDeleteFaqModal) => dispatch(ToggleDeleteFaqModalAction(deleteFaqModal)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(FAQsTable);

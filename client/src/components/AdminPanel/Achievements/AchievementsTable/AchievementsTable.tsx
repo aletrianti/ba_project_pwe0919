@@ -55,7 +55,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
   }
 }
 
-const mapDisparchToProps = (dispatch: any) => {
+const mapDispatchToProps = (dispatch: any) => {
   return {
     toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) =>
       dispatch(ToggleEditAchievementModalAction(editAchievementModal)),
@@ -64,4 +64,4 @@ const mapDisparchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(null, mapDisparchToProps)(AchievementsTable);
+export default connect(null, mapDispatchToProps)(AchievementsTable);

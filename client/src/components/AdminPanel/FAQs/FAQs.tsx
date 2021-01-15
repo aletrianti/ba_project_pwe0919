@@ -1,12 +1,25 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
+import { ToggleAddFaqModalAction } from '../../../store/actions/forms/forms.actions';
+import { IAddFaqModal } from '../../../store/interfaces/forms/faqs.interfaces';
 import { ITableFAQ } from '../../../store/interfaces/tables.interfaces';
 
 import AddButton from '../../common/AddButton/AddButton';
+import DeleteFAQsForm from './FAQsForms/DeleteFAQsForm';
+import FAQsForms from './FAQsForms/FAQsForms';
 import FAQsTable from './FAQsTable/FAQsTable';
 
-class FAQs extends React.Component {
-  openModal = () => {};
+interface FaqsProps {
+  toggleAddFaqModal: (addFaqModal: IAddFaqModal) => any;
+}
+
+class FAQs extends React.Component<FaqsProps> {
+  openModal = (e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleAddFaqModal({ isOpen: true });
+  };
 
   faqs: ITableFAQ[] = [
     {
@@ -24,9 +37,18 @@ class FAQs extends React.Component {
         <div id="admin-panel__faqs__content" className="admin-panel__content">
           <FAQsTable faqs={this.faqs} />
         </div>
+
+        <FAQsForms />
+        <DeleteFAQsForm />
       </div>
     );
   }
 }
 
-export default FAQs;
+const mapDisparchToProps = (dispatch: any) => {
+  return {
+    toggleAddFaqModal: (addFaqModal: IAddFaqModal) => dispatch(ToggleAddFaqModalAction(addFaqModal)),
+  };
+};
+
+export default connect(null, mapDisparchToProps)(FAQs);

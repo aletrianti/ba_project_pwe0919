@@ -39,6 +39,7 @@ import { toggleAddUserModalReducer } from './forms/users.reducers';
 // import redux method
 import { combineReducers } from '@reduxjs/toolkit';
 import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, editAchievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
+import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, editFaqReducer, deleteFaqReducer } from './forms/faqs.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -72,6 +73,9 @@ const reducers: any = combineReducers({
   addAchievementModal: toggleAddAchievementModalReducer,
   editAchievementModal: toggleEditAchievementModalReducer,
   deleteAchievementModal: toggleDeleteAchievementModalReducer,
+  addFaqModal: toggleAddFaqModalReducer,
+  editFaqModal: toggleEditFaqModalReducer,
+  deleteFaqModal: toggleDeleteFaqModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
@@ -91,6 +95,11 @@ const reducers: any = combineReducers({
   achievementDate: storeAchievementDateReducer,
   editAchievement: editAchievementReducer,
   deleteAchievement: deleteAchievementReducer,
+  // FAQs
+  faqQuestion: storeFaqQuestionReducer,
+  faqAnswer: storeFaqAnswerReducer,
+  editFaq: editFaqReducer,
+  deleteFaq: deleteFaqReducer,
   // ...
 });
 

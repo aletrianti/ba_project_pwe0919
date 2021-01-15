@@ -28,16 +28,6 @@ export interface IStoreAchievementDateAction {
   payload: IAchievementDate;
 }
 
-export interface IEditAchievement {
-  title: IAchievementTitle;
-  description: IAchievementDescription;
-  date: IAchievementDate;
-}
-export interface IEditAchievementAction {
-  type: string;
-  payload: IEditAchievement;
-}
-
 export interface IAchievementDate {
   date: string;
   isValid: boolean;
@@ -48,12 +38,22 @@ export interface IAchievementDateAction {
   payload: IAchievementDate;
 }
 
+export interface IEditAchievement {
+  title: IAchievementTitle;
+  description: IAchievementDescription;
+  date: IAchievementDate;
+}
+export interface IEditAchievementAction {
+  type: string;
+  payload: IEditAchievement;
+}
+
 export interface IDeleteAchievement {
   id: number;
 }
 export interface IDeleteAchievementAction {
   type: string;
-  payload: IDeleteAchievement; // id
+  payload: IDeleteAchievement;
 }
 
 // Modals
