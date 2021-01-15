@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
-import { StoreBuddyAction, StoreDepartmentAction, StoreRoleAction } from '../../../../store/actions/forms/users/users.actions';
+import {
+  StoreBuddyAction,
+  StoreDepartmentAction,
+  StoreRoleAction,
+  StoreUserAction,
+} from '../../../../store/actions/forms/users/users.actions';
 import {
   IUser,
   IEditUserModal,
@@ -19,10 +24,14 @@ import { IField } from '../../../../store/interfaces/forms.interfaces';
 
 interface EditUsersFormProps {
   user: IUser;
+  userBuddy: IUserBuddy;
+  userDepartment: IUserDepartment;
+  userRole: IUserRole;
   editUserModal: IEditUserModal;
   storeUserBuddy: (userBuddy: IUserBuddy) => any;
   storeUserDepartment: (userDepartment: IUserDepartment) => any;
   storeUserRole: (userRole: IUserRole) => any;
+  storeUser: (user: IUser) => any;
   toggleEditUserModal: (userModal: IEditUserModal) => any;
 }
 
@@ -88,9 +97,24 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
   };
 
   // Form events
-  editUser = (): void => {
+  saveUserToRedux = (): void => {
+    this.props.storeUser({
+      buddy: this.props.userBuddy,
+      department: this.props.userDepartment,
+      role: this.props.userRole,
+    });
+  };
+
+  saveUserToDB = (): void => {
     // TODO: add axios call here - use this.state.userId and this.props.user
-    // the last one (it's an object containing these objects: buddy, department, role)
+    // the last one is an object containing these objects: buddy, department, role
+  };
+
+  editUser = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveUserToRedux();
+    await this.saveUserToDB();
   };
 
   // Fields
@@ -123,6 +147,9 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 const mapStateToProps = (state: any) => {
   return {
     user: state.user,
+    userBuddy: state.userBuddy,
+    userDepartment: state.userDepartment,
+    userRole: state.userRole,
     editUserModal: state.editUserModal,
   };
 };
@@ -132,6 +159,7 @@ const mapDispatchToProps = (dispatch: any) => {
     storeUserBuddy: (userBuddy: IUserBuddy) => dispatch(StoreBuddyAction(userBuddy)),
     storeUserDepartment: (userDepartment: IUserDepartment) => dispatch(StoreDepartmentAction(userDepartment)),
     storeUserRole: (userRole: IUserRole) => dispatch(StoreRoleAction(userRole)),
+    storeUser: (user: IUser) => dispatch(StoreUserAction(user)),
     toggleEditUserModal: (userModal: IEditUserModal) => dispatch(ToggleEditUserModalAction(userModal)),
   };
 };

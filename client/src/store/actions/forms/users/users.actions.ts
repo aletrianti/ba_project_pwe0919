@@ -15,7 +15,7 @@ import {
 } from '../../../interfaces/forms/users.interfaces';
 import {
   DELETE_USER,
-  EDIT_USER,
+  USER,
   STORE_USER_BUDDY,
   STORE_USER_DEPARTMENT,
   STORE_USER_EMAIL,
@@ -39,8 +39,8 @@ export const StoreRoleAction = (data: IUserRole): IStoreUserRoleAction => {
   return { type: STORE_USER_ROLE, payload: data };
 };
 
-export const EditUserAction = (data: IUser): IUserAction => {
-  return { type: EDIT_USER, payload: data };
+export const StoreUserAction = (data: IUser): IUserAction => {
+  return { type: USER, payload: data };
 };
 
 export const DeleteUserAction = (data: IDeleteUser): IDeleteUserAction => {

@@ -8,6 +8,7 @@ import {
   StoreDescriptionAction,
   StoreResponsibilityAction,
   StoreResponsibilitiesAction,
+  StoreRoleAction,
 } from '../../../../store/actions/forms/roles/roles.actions';
 import { ToggleAddRoleModalAction, ToggleEditRoleModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
@@ -18,6 +19,7 @@ import {
   IAddRoleModal,
   IEditRoleModal,
   IRoleResponsibilities,
+  IRole,
 } from '../../../../store/interfaces/forms/roles.interfaces';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 import Form from '../../../common/Form/Form';
@@ -27,12 +29,14 @@ interface RolesAndResponsibilitiesFormsProps {
   roleDescription: IRoleDescription;
   roleResponsibility: IRoleResponsibility;
   roleResponsibilities: IRoleResponsibilities;
+  role: IRole;
   addRoleModal: IAddRoleModal;
   editRoleModal: IEditRoleModal;
   storeRoleTitle: (roleTitle: IRoleTitle) => any;
   storeRoleDescription: (roleDescription: IRoleDescription) => any;
   storeRoleResponsibility: (roleResponsibility: IRoleResponsibility) => any;
   storeRoleResponsibilities: (roleResponsibilities: IRoleResponsibilities) => any;
+  storeRole: (role: IRole) => any;
   toggleAddRoleModal: (addRoleModal: IAddRoleModal) => any;
   toggleEditRoleModal: (editRoleModal: IEditRoleModal) => any;
 }
@@ -125,11 +129,36 @@ class RolesAndResponsibilitiesForms extends React.Component<
   };
 
   // Form events
-  addRole = (): void => {
-    // TODO: axios request
+  saveRoleToRedux = (): void => {
+    this.props.storeRole({
+      title: this.props.roleTitle,
+      description: this.props.roleDescription,
+      responsibilities: this.props.roleResponsibilities,
+    });
   };
-  editRole = (): void => {
-    // TODO: axios request
+
+  saveRoleToDB = (): void => {
+    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  saveEditedRoleToDB = (): void => {
+    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  addRole = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveRoleToRedux();
+    await this.saveRoleToDB();
+  };
+
+  editRole = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveEditedRoleToDB();
+    await this.saveRoleToDB();
   };
 
   // Fields
@@ -180,6 +209,7 @@ const mapStateToProps = (state: any) => {
     roleDescription: state.roleDescription,
     roleResponsibility: state.roleResponsibility,
     roleResponsibilities: state.roleResponsibilities,
+    role: state.role,
     addRoleModal: state.addRoleModal,
     editRoleModal: state.editRoleModal,
   };
@@ -192,6 +222,7 @@ const mapDisparchToProps = (dispatch: any) => {
     storeRoleResponsibility: (roleResponsibility: IRoleResponsibility) => dispatch(StoreResponsibilityAction(roleResponsibility)),
     storeRoleResponsibilities: (roleResponsibilities: IRoleResponsibilities) =>
       dispatch(StoreResponsibilitiesAction(roleResponsibilities)),
+    storeRole: (role: IRole) => dispatch(StoreRoleAction(role)),
     toggleAddRoleModal: (addRoleModal: IAddRoleModal) => dispatch(ToggleAddRoleModalAction(addRoleModal)),
     toggleEditRoleModal: (editRoleModal: IEditRoleModal) => dispatch(ToggleEditRoleModalAction(editRoleModal)),
   };

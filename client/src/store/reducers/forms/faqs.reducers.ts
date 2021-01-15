@@ -1,4 +1,4 @@
-import { STORE_FAQ_QUESTION, STORE_FAQ_ANSWER, EDIT_FAQ, DELETE_FAQ } from "../../actions/forms/faqs/faqs.types";
+import { STORE_FAQ_QUESTION, STORE_FAQ_ANSWER, FAQ, DELETE_FAQ } from "../../actions/forms/faqs/faqs.types";
 import { TOGGLE_ADD_FAQ_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_DELETE_FAQ_MODAL } from "../../actions/forms/forms.types";
 import { IFaqQuestion, IStoreFaqQuestionAction, IFaqAnswer, IStoreFaqAnswerAction, IFaq, IFaqAction, IDeleteFaq, IDeleteFaqAction, IAddFaqModal, IToggleAddFaqModalAction, IFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from "../../interfaces/forms/faqs.interfaces";
 
@@ -44,7 +44,7 @@ export const faqReducer = (
   action: IFaqAction
 ) => {
   switch (action.type) {
-    case EDIT_FAQ:
+    case FAQ:
       return {
         ...state,
         question: action.payload.question,

@@ -2,7 +2,7 @@
 import { TOGGLE_ADD_USER_MODAL, TOGGLE_DELETE_USER_MODAL, TOGGLE_EDIT_USER_MODAL } from '../../actions/forms/forms.types';
 import {
   DELETE_USER,
-  EDIT_USER,
+  USER,
   STORE_USER_BUDDY,
   STORE_USER_DEPARTMENT,
   STORE_USER_EMAIL,
@@ -106,7 +106,7 @@ export const userReducer = (
   action: IUserAction
 ) => {
   switch (action.type) {
-    case EDIT_USER:
+    case USER:
       return {
         ...state,
         buddy: action.payload.buddy,

@@ -2,5 +2,5 @@ export const STORE_ROLE_TITLE: string = 'STORE_ROLE_TITLE';
 export const STORE_ROLE_DESCRIPTION: string = 'STORE_ROLE_DESCRIPTION';
 export const STORE_ROLE_RESPONSIBILITY: string = 'STORE_ROLE_RESPONSIBILITY';
 export const STORE_ROLE_RESPONSIBILITIES: string = 'STORE_ROLE_RESPONSIBILITIES';
-export const EDIT_ROLE: string = 'EDIT_ROLE';
+export const ROLE: string = 'ROLE';
 export const DELETE_ROLE: string = 'DELETE_ROLE';

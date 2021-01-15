@@ -1,4 +1,4 @@
-import { STORE_ACHIEVEMENT_TITLE, STORE_ACHIEVEMENT_DESCRIPTION, STORE_ACHIEVEMENT_DATE, EDIT_ACHIEVEMENT, DELETE_ACHIEVEMENT } from "../../actions/forms/achievements/achievements.types";
+import { STORE_ACHIEVEMENT_TITLE, STORE_ACHIEVEMENT_DESCRIPTION, STORE_ACHIEVEMENT_DATE, ACHIEVEMENT, DELETE_ACHIEVEMENT } from "../../actions/forms/achievements/achievements.types";
 import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL } from "../../actions/forms/forms.types";
 import { IAchievementTitle, IStoreAchievementTitleAction, IAchievementDescription, IStoreAchievementDescriptionAction, IAchievementDate, IStoreAchievementDateAction, IAchievement, IAchievementAction, IDeleteAchievement, IDeleteAchievementAction, IAddAchievementModal, IToggleAddAchievementModalAction, IAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from "../../interfaces/forms/achievements.interfaces";
 
@@ -62,7 +62,7 @@ export const achievementReducer = (
   action: IAchievementAction
 ) => {
   switch (action.type) {
-    case EDIT_ACHIEVEMENT:
+    case ACHIEVEMENT:
       return {
         ...state,
         title: action.payload.title,

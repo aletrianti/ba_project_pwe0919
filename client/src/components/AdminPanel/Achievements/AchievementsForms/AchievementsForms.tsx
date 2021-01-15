@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { ToggleAddAchievementModalAction, ToggleEditAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
+  StoreAchievementAction,
   StoreDateAction,
   StoreDescriptionAction,
   StoreTitleAction,
@@ -14,6 +15,7 @@ import {
   IAchievementDate,
   IAchievementDescription,
   IAchievementModal,
+  IAchievement,
 } from '../../../../store/interfaces/forms/achievements.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
@@ -25,11 +27,13 @@ interface AchievementsFormsProps {
   achievementTitle: IAchievementTitle;
   achievementDescription: IAchievementDescription;
   achievementDate: IAchievementDate;
+  achievement: IAchievement;
   addAchievementModal: IAddAchievementModal;
   editAchievementModal: IAchievementModal;
   storeAchievementTitle: (achievementTitle: IAchievementTitle) => any;
   storeAchievementDescription: (achievementDescription: IAchievementDescription) => any;
   storeAchievementDate: (achievementDate: IAchievementDate) => any;
+  storeAchievement: (achievement: IAchievement) => any;
   toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) => any;
   toggleEditAchievementModal: (editAchievementModal: IAchievementModal) => any;
 }
@@ -103,11 +107,36 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   // Form events
-  addAchievement = (): void => {
-    // TODO: axios request
+  saveAchievementToRedux = (): void => {
+    this.props.storeAchievement({
+      title: this.props.achievementTitle,
+      description: this.props.achievementDescription,
+      date: this.props.achievementDate,
+    });
   };
-  editAchievement = (): void => {
-    // TODO: axios request
+
+  saveAchievementToDB = (): void => {
+    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  saveEditedAchievementToDB = (): void => {
+    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  addAchievement = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveAchievementToRedux();
+    await this.saveAchievementToDB();
+  };
+
+  editAchievement = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveEditedAchievementToDB();
+    await this.saveAchievementToDB();
   };
 
   // Fields
@@ -153,6 +182,7 @@ const mapStateToProps = (state: any) => {
     achievementTitle: state.achievementTitle,
     achievementDescription: state.achievementDescription,
     achievementDate: state.achievementDate,
+    achievement: state.achievement,
     addAchievementModal: state.addAchievementModal,
     editAchievementModal: state.editAchievementModal,
   };
@@ -164,6 +194,7 @@ const mapDisparchToProps = (dispatch: any) => {
     storeAchievementDescription: (achievementDescription: IAchievementDescription) =>
       dispatch(StoreDescriptionAction(achievementDescription)),
     storeAchievementDate: (achievementDate: IAchievementDate) => dispatch(StoreDateAction(achievementDate)),
+    storeAchievement: (achievement: IAchievement) => dispatch(StoreAchievementAction(achievement)),
     toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) =>
       dispatch(ToggleAddAchievementModalAction(addAchievementModal)),
     toggleEditAchievementModal: (EditAchievementModal: IAchievementModal) =>

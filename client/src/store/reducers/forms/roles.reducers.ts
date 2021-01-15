@@ -1,4 +1,4 @@
-import { STORE_ROLE_TITLE, STORE_ROLE_DESCRIPTION, STORE_ROLE_RESPONSIBILITIES, EDIT_ROLE, DELETE_ROLE, STORE_ROLE_RESPONSIBILITY } from "../../actions/forms/roles/roles.types";
+import { STORE_ROLE_TITLE, STORE_ROLE_DESCRIPTION, STORE_ROLE_RESPONSIBILITIES, ROLE, DELETE_ROLE, STORE_ROLE_RESPONSIBILITY } from "../../actions/forms/roles/roles.types";
 import { TOGGLE_ADD_ROLE_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_DELETE_ROLE_MODAL } from "../../actions/forms/forms.types";
 import { IRoleTitle, IStoreRoleTitleAction, IRoleDescription, IStoreRoleDescriptionAction, IRoleResponsibilities, IStoreRoleResponsibilitiesAction, IRole, IRoleAction, IAddRoleModal, IToggleAddRoleModalAction, IEditRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction, IRoleResponsibility, IStoreRoleResponsibilityAction, IDeleteRole, IDeleteRoleAction } from "../../interfaces/forms/roles.interfaces";
 
@@ -75,7 +75,7 @@ export const roleReducer = (
   action: IRoleAction
 ) => {
   switch (action.type) {
-    case EDIT_ROLE:
+    case ROLE:
       return {
         ...state,
         title: action.payload.title,

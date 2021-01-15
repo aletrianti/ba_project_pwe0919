@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
 import { ToggleAddFaqModalAction, ToggleEditFaqModalAction } from '../../../../store/actions/forms/forms.actions';
-import { StoreAnswerAction, StoreQuestionAction } from '../../../../store/actions/forms/faqs/faqs.actions';
-import { IAddFaqModal, IFaqQuestion, IFaqAnswer, IFaqModal } from '../../../../store/interfaces/forms/faqs.interfaces';
+import { StoreAnswerAction, StoreFaqAction, StoreQuestionAction } from '../../../../store/actions/forms/faqs/faqs.actions';
+import { IAddFaqModal, IFaqQuestion, IFaqAnswer, IFaqModal, IFaq } from '../../../../store/interfaces/forms/faqs.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 
@@ -14,10 +14,12 @@ import { IField } from '../../../../store/interfaces/forms.interfaces';
 interface FaqsFormsProps {
   faqQuestion: IFaqQuestion;
   faqAnswer: IFaqAnswer;
+  faq: IFaq;
   addFaqModal: IAddFaqModal;
   editFaqModal: IFaqModal;
   storeFaqQuestion: (faqQuestion: IFaqQuestion) => any;
   storeFaqAnswer: (faqAnswer: IFaqAnswer) => any;
+  storeFaq: (faq: IFaq) => any;
   toggleAddFaqModal: (addFaqModal: IAddFaqModal) => any;
   toggleEditFaqModal: (editFaqModal: IFaqModal) => any;
 }
@@ -81,11 +83,35 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   };
 
   // Form events
-  addFaq = (): void => {
-    // TODO: axios request
+  saveFaqToRedux = (): void => {
+    this.props.storeFaq({
+      question: this.props.faqQuestion,
+      answer: this.props.faqAnswer,
+    });
   };
-  editFaq = (): void => {
-    // TODO: axios request
+
+  saveFaqToDB = (): void => {
+    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  saveEditedFaqToDB = (): void => {
+    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // the last one is an object containing these objects: title, description, responsibilities
+  };
+
+  addFaq = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveFaqToRedux();
+    await this.saveFaqToDB();
+  };
+
+  editFaq = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
+    await this.saveEditedFaqToDB();
+    await this.saveFaqToDB();
   };
 
   // Fields
@@ -129,6 +155,7 @@ const mapStateToProps = (state: any) => {
     faqQuestion: state.faqQuestion,
     faqAnswer: state.faqAnswer,
     faqDate: state.faqDate,
+    faq: state.faq,
     addFaqModal: state.addFaqModal,
     editFaqModal: state.editFaqModal,
   };
@@ -138,6 +165,7 @@ const mapDisparchToProps = (dispatch: any) => {
   return {
     storeFaqQuestion: (faqQuestion: IFaqQuestion) => dispatch(StoreQuestionAction(faqQuestion)),
     storeFaqAnswer: (faqAnswer: IFaqAnswer) => dispatch(StoreAnswerAction(faqAnswer)),
+    storeFaq: (faq: IFaq) => dispatch(StoreFaqAction(faq)),
     toggleAddFaqModal: (addFaqModal: IAddFaqModal) => dispatch(ToggleAddFaqModalAction(addFaqModal)),
     toggleEditFaqModal: (EditFaqModal: IFaqModal) => dispatch(ToggleEditFaqModalAction(EditFaqModal)),
   };
