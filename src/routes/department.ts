@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const deparments: IDepartment[] = await knex('role').where('companyId', companyId);
+    const deparments: IDepartment[] = await knex('department').where('companyId', companyId);
     Api.sendSuccess<IDepartment[]>(req, res, deparments);
   } catch (err) {
     Api.sendError(req, res, err);
@@ -27,16 +27,32 @@ router.post('/', async (req: Request, res: Response, next) => {
     const departmentExists: IDepartment = await knex('department').where('name', newDepartmentName).first();
     if (departmentExists) throw Error(`${departmentExists.name} already exists for company: ${companyId}`);
 
-    const newDepartment = await knex('role').insert({
+    const newDepartment = await knex('department').insert({
       name: newDepartmentName,
       companyId: companyId,
       createdAt: dateDB(),
       updatedAt: dateDB(),
     });
 
-    const department = await knex('role').where('ID', newDepartment).first();
+    const department = await knex('department').where('ID', newDepartment).first();
 
     Api.sendSuccess<IDepartment>(req, res, department);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/delete', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const ID = req.body;
+
+    await knex('department').where('ID', Number(ID)).del();
+
+    Api.sendSuccess<number>(req, res, ID);
   } catch (err) {
     Api.sendError(req, res, err);
   }
