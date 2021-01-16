@@ -44,6 +44,7 @@ router.use('/category', jwtMW, require('./src/routes/category'));
 router.use('/company-achievement', jwtMW, require('./src/routes/companyAchievement'));
 router.use('/company', jwtMW, require('./src/routes/company'));
 router.use('/role', jwtMW, require('./src/routes/role'));
+router.use('/responsibility', jwtMW, require('./src/routes/responsibility'));
 // Initialize routes
 app.use('/api', router);
 
