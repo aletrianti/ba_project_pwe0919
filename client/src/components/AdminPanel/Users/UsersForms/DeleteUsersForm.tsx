@@ -8,6 +8,7 @@ import { IDeleteUserModal, IDeleteUser } from '../../../../store/interfaces/form
 import { DeleteUserAction } from '../../../../store/actions/forms/users/users.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface DeleteUsersFormProps {
   deleteUserModal: IDeleteUserModal;
@@ -35,9 +36,19 @@ class DeleteUsersForm extends React.Component<DeleteUsersFormProps, DeleteUsersF
     this.props.toggleDeleteUserModal({ id: 0, isOpen: false });
   };
 
+  token = getTokenFromLocalStorage();
+
+  config = {
+    headers: { Authorization: `Bearer ${this.token}` },
+  };
   // Form events
-  deleteUser = (): void => {
+
+  deleteUser = async () => {
     // TODO: add axios call here - use userId
+
+    await axios.post('/api/auth/delete-employee', this.props.deleteUserModal, this.config).then(res => {
+      return;
+    });
   };
 
   render() {
