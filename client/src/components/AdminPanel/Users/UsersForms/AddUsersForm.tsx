@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -35,7 +35,7 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
   }
 
   // Actions
-  closeAddUserModal = (e: MouseEvent) => {
+  closeAddUserModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddUserModal({ isOpen: false });
@@ -63,7 +63,7 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
   };
 
   // Form events
-  inviteUser = (): void => {
+  inviteUser = (event: FormEvent): void => {
     const data: INewEmployees = {
       newUsers: [this.props.userEmail.email],
       companyId: '43', // TODO: Get current company id
@@ -74,9 +74,7 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
       .then(() => {
         console.log('Sent emails!');
 
-        this.props.toggleAddUserModal({ isOpen: false });
-
-        this.props.storeUserEmail({ email: '', isValid: false, errorMessage: '' });
+        this.closeAddUserModal(event);
       })
       .catch(err => console.error(err));
   };

@@ -36,8 +36,11 @@ class DeleteTasksForm extends React.Component<DeleteTasksFormProps, DeleteTasksF
   };
 
   // Form events
-  deleteTask = (): void => {
+  deleteTask = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use taskId
+    // this.props.toggleDeleteTaskModal({ id: 0, isOpen: false });
   };
 
   render() {

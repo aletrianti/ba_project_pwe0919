@@ -53,7 +53,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
   }
 
   // Actions
-  closeEditUserModal = (e: MouseEvent) => {
+  closeEditUserModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditUserModal({ id: 0, isOpen: false });
@@ -115,6 +115,8 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
 
     await this.saveUserToRedux();
     await this.saveUserToDB();
+
+    this.closeEditUserModal(event);
   };
 
   // Fields

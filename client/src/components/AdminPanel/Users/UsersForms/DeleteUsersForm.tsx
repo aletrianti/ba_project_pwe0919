@@ -36,8 +36,11 @@ class DeleteUsersForm extends React.Component<DeleteUsersFormProps, DeleteUsersF
   };
 
   // Form events
-  deleteUser = (): void => {
+  deleteUser = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use userId
+    // this.props.toggleDeleteUserModal({ id: 0, isOpen: false });
   };
 
   render() {

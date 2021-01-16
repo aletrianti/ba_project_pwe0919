@@ -36,8 +36,9 @@ class DeleteCategorysForm extends React.Component<DeleteCategorysFormProps, Dele
   };
 
   // Form events
-  deleteCategory = (): void => {
+  deleteCategory = (e: MouseEvent): void => {
     // TODO: add axios call here - use categoryId
+    // this.props.toggleDeleteCategoryModal({ id: 0, isOpen: false });
   };
 
   render() {

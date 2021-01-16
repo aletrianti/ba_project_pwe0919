@@ -62,7 +62,7 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
   }
 
   // Actions
-  closeAddTaskModal = (e: MouseEvent) => {
+  closeAddTaskModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddTaskModal({ isOpen: false });
@@ -72,7 +72,7 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
     this.props.storeTaskRole({ role: '', isValid: false, errorMessage: '' });
     this.props.storeTaskDeadline({ deadline: '', isValid: false, errorMessage: '' });
   };
-  closeEditTaskModal = (e: MouseEvent) => {
+  closeEditTaskModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditTaskModal({ id: 0, isOpen: false });
@@ -167,6 +167,8 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
     await this.saveTaskToRedux();
     await this.saveTaskToDB();
     await this.saveTaskToReduxAsTaskFive();
+
+    this.closeAddTaskModal(event);
   };
 
   editTask = async (event: FormEvent): Promise<void> => {
@@ -175,9 +177,12 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
     await this.saveEditedTaskToDB();
     await this.saveTaskToDB();
     await this.saveTaskToReduxAsTaskFive();
+
+    this.closeEditTaskModal(event);
   };
 
   // Fields
+  // TODO: Add dynamic data (options)
   addTaskModalFields: IField[] = [
     { name: 'Name', type: 'text', onchange: this.storeName },
     { name: 'Description', type: 'textarea', onchange: this.storeDescription },
@@ -185,6 +190,7 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
     { name: 'Deadline', type: 'text', onchange: this.storeDeadline },
   ];
   // TODO: Add dynamic value depending on selected item
+  // TODO: Add dynamic data (options)
   editTaskModalFields: IField[] = [
     { name: 'Name', type: 'text', onchange: this.storeName, value: '' },
     { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: '' },

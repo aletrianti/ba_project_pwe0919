@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 
@@ -36,14 +36,14 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   }
 
   // Actions
-  closeAddCategoryModal = (e: MouseEvent) => {
+  closeAddCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddCategoryModal({ isOpen: false });
 
     this.props.storeCategory({ category: '', isValid: false, errorMessage: '' });
   };
-  closeEditCategoryModal = (e: MouseEvent) => {
+  closeEditCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditCategoryModal({ id: 0, isOpen: false });
@@ -69,14 +69,16 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   };
 
   // Form events
-  saveCategoryToDB = (): void => {
+  saveCategoryToDB = (event: FormEvent): void => {
     // TODO: add axios call here - use this.state.roleId and this.props.role
     // the last one is an object containing these objects: title, description, responsibilities
+    // call this after the request succeeds: this.closeAddCategoryModal(event)
   };
 
-  saveEditedCategoryToDB = (): void => {
+  saveEditedCategoryToDB = (event: FormEvent): void => {
     // TODO: add axios call here - use this.state.roleId and this.props.role
     // the last one is an object containing these objects: title, description, responsibilities
+    // call this after the request succeeds: this.closeEditCategoryModal(event)
   };
 
   // Fields

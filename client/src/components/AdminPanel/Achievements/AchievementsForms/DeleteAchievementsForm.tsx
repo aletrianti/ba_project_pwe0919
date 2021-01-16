@@ -36,8 +36,11 @@ class DeleteAchievementsForm extends React.Component<DeleteAchievementsFormProps
   };
 
   // Form events
-  deleteAchievement = (): void => {
+  deleteAchievement = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use achievementId
+    // call this after the call succeeds: this.props.toggleDeleteAchievementModal({ id: 0, isOpen: false });
   };
 
   render() {

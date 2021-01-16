@@ -36,8 +36,11 @@ class DeleteDepartmentsForm extends React.Component<DeleteDepartmentsFormProps, 
   };
 
   // Form events
-  deleteDepartment = (): void => {
+  deleteDepartment = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use departmentId
+    // this.props.toggleDeleteDepartmentModal({ id: 0, isOpen: false });
   };
 
   render() {

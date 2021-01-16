@@ -62,7 +62,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
   }
 
   // Actions
-  closeAddRoleModal = (e: MouseEvent) => {
+  closeAddRoleModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddRoleModal({ isOpen: false });
@@ -71,7 +71,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
     this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
   };
-  closeEditRoleModal = (e: MouseEvent) => {
+  closeEditRoleModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditRoleModal({ id: 0, isOpen: false });
@@ -152,6 +152,8 @@ class RolesAndResponsibilitiesForms extends React.Component<
 
     await this.saveRoleToRedux();
     await this.saveRoleToDB();
+
+    this.closeAddRoleModal(event);
   };
 
   editRole = async (event: FormEvent): Promise<void> => {
@@ -159,6 +161,8 @@ class RolesAndResponsibilitiesForms extends React.Component<
 
     await this.saveEditedRoleToDB();
     await this.saveRoleToDB();
+
+    this.closeEditRoleModal(event);
   };
 
   // Fields

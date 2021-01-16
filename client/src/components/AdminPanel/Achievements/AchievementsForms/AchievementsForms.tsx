@@ -54,7 +54,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   }
 
   // Actions
-  closeAddAchievementModal = (e: MouseEvent) => {
+  closeAddAchievementModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddAchievementModal({ isOpen: false });
@@ -63,7 +63,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     this.props.storeAchievementDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeAchievementDate({ date: '', isValid: false, errorMessage: '' });
   };
-  closeEditAchievementModal = (e: MouseEvent) => {
+  closeEditAchievementModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditAchievementModal({ id: 0, isOpen: false });
@@ -130,6 +130,8 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
 
     await this.saveAchievementToRedux();
     await this.saveAchievementToDB();
+
+    this.closeAddAchievementModal(event);
   };
 
   editAchievement = async (event: FormEvent): Promise<void> => {
@@ -137,6 +139,8 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
 
     await this.saveEditedAchievementToDB();
     await this.saveAchievementToDB();
+
+    this.closeEditAchievementModal(event);
   };
 
   // Fields

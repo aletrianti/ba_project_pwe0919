@@ -39,8 +39,11 @@ class DeleteRolesAndResponsibilitiesForm extends React.Component<
   };
 
   // Form events
-  deleteRole = (): void => {
+  deleteRole = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use roleId
+    // this.props.toggleDeleteRoleModal({ id: 0, isOpen: false });
   };
 
   render() {

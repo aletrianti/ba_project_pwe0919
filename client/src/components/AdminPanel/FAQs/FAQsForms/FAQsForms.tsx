@@ -40,7 +40,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   }
 
   // Actions
-  closeAddFaqModal = (e: MouseEvent) => {
+  closeAddFaqModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleAddFaqModal({ isOpen: false });
@@ -48,7 +48,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
     this.props.storeFaqQuestion({ question: '', isValid: false, errorMessage: '' });
     this.props.storeFaqAnswer({ answer: '', isValid: false, errorMessage: '' });
   };
-  closeEditFaqModal = (e: MouseEvent) => {
+  closeEditFaqModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
     this.props.toggleEditFaqModal({ id: 0, isOpen: false });
@@ -105,6 +105,8 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
 
     await this.saveFaqToRedux();
     await this.saveFaqToDB();
+
+    this.closeAddFaqModal(event);
   };
 
   editFaq = async (event: FormEvent): Promise<void> => {
@@ -112,6 +114,8 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
 
     await this.saveEditedFaqToDB();
     await this.saveFaqToDB();
+
+    this.closeEditFaqModal(event);
   };
 
   // Fields

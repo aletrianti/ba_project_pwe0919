@@ -36,8 +36,11 @@ class DeleteFaqsForm extends React.Component<DeleteFaqsFormProps, DeleteFaqsForm
   };
 
   // Form events
-  deleteFaq = (): void => {
+  deleteFaq = (e: MouseEvent): void => {
+    e.preventDefault();
+
     // TODO: add axios call here - use faqId
+    // this.props.toggleDeleteFaqModal({ id: 0, isOpen: false });
   };
 
   render() {
