@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './Tasks.scss';
 
 import Title from '../../common/Title/Title';
@@ -8,7 +8,7 @@ import {
   setTaskTwoAsCompletedAction,
   setTaskThreeAsCompletedAction,
   setTaskFourAsCompletedAction,
-  setTaskFiveAsCompletedAction,
+  setCustomTaskAsCompletedAction,
 } from '../../../store/actions/tasks/tasks.actions';
 import { ITask } from '../../../store/interfaces/tasks.interfaces';
 
@@ -23,7 +23,7 @@ interface TaskProps {
   setTaskTwo: (taskTwo: ITask) => any;
   setTaskThree: (taskThree: ITask) => any;
   setTaskFour: (taskFour: ITask) => any;
-  setTaskFive: (taskFive: ITask) => any;
+  setTaskFive: (taskFive: ITask[]) => any;
 }
 
 class Tasks extends React.Component<TaskProps> {
@@ -145,7 +145,7 @@ const mapDispatchToProps = (dispatch: any) => {
     setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwoAsCompletedAction(taskTwo)),
     setTaskThree: (taskThree: ITask) => dispatch(setTaskThreeAsCompletedAction(taskThree)),
     setTaskFour: (taskFour: ITask) => dispatch(setTaskFourAsCompletedAction(taskFour)),
-    setTaskFive: (taskFive: ITask) => dispatch(setTaskFiveAsCompletedAction(taskFive)),
+    setTaskFive: (taskFive: ITask[]) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
   };
 };
 

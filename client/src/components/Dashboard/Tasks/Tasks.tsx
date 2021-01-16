@@ -3,7 +3,6 @@ import './Tasks.scss';
 
 import Task from './Task/Task';
 
-import store from '../../../index';
 import {
   SET_TASK_ONE_AS_COMPLETED,
   SET_TASK_TWO_AS_COMPLETED,
@@ -13,6 +12,7 @@ import {
 } from '../../../store/actions/tasks/tasks.types';
 import { ITask } from '../../../store/interfaces/tasks.interfaces';
 import { connect } from 'react-redux';
+import { getUserInfoFromLocalStorage } from '../../../utils/localStorageActions';
 
 interface TasksProps {
   tasks?: ITask[];
@@ -29,8 +29,6 @@ class Tasks extends React.Component<TasksProps> {
         return SET_TASK_THREE_AS_COMPLETED;
       case 4:
         return SET_TASK_FOUR_AS_COMPLETED;
-      case 5:
-        return SET_TASK_FIVE_AS_COMPLETED;
       default:
         return '';
     }
@@ -38,13 +36,14 @@ class Tasks extends React.Component<TasksProps> {
 
   render() {
     const { tasks } = this.props;
+    const currentUser = getUserInfoFromLocalStorage();
 
     return (
       <div id="dashboard__tasks">
         <div id="tasks__container">
           {tasks
             ? tasks.map((task, i) => {
-                return (
+                return task.num && task.num !== 5 ? (
                   <Task
                     name={task.name}
                     deadline={task.deadline}
@@ -55,6 +54,21 @@ class Tasks extends React.Component<TasksProps> {
                     actionType={this.setActionType(task.num)}
                     key={i}
                   />
+                ) : (
+                  [
+                    currentUser.jobTitle === task.role ? (
+                      <Task
+                        name={task.name}
+                        deadline={task.deadline}
+                        description={task.description}
+                        taskNum={task.num}
+                        isCompleted={task.isCompleted}
+                        assignedTo={task.assignedTo}
+                        actionType={this.setActionType(task.num)}
+                        key={i}
+                      />
+                    ) : null,
+                  ]
                 );
               })
             : null}
@@ -64,7 +78,7 @@ class Tasks extends React.Component<TasksProps> {
   }
 }
 
-const mapStateToProps = (state: any = store.getState()): any => {
+const mapStateToProps = (state: any): any => {
   const { taskOne, taskTwo, taskThree, taskFour, taskFive } = state;
 
   return { tasks: [taskOne, taskTwo, taskThree, taskFour, taskFive] };
