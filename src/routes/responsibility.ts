@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
+import { IResponsibility, IResponsibilityInput } from '../../types/responsibility.types';
 
 var router = Router();
 router.get('/', async (req: Request, res: Response, next) => {
