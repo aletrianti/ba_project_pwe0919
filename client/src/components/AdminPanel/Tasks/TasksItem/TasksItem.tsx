@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent, MouseEvent } from 'react';
 import './TasksItem.scss';
 
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
@@ -23,11 +23,13 @@ class TasksItem extends React.Component<TasksItemProps, TasksItemState> {
     };
   }
 
-  setDeadline = (): void => {
-    this.props.setDeadline();
+  setDeadline = (e: any): void => {
+    this.props.setDeadline(e);
   };
 
-  saveDeadline = (): void => {
+  saveDeadline = (e: MouseEvent): void => {
+    e.preventDefault();
+
     this.props.saveDeadline();
   };
 
@@ -45,7 +47,7 @@ class TasksItem extends React.Component<TasksItemProps, TasksItemState> {
             defaultValue={this.state.deadline || ''}
             onChange={this.setDeadline}
           />
-          <button onClick={this.saveDeadline} className="tasks__item__btn">
+          <button onClick={(e: MouseEvent) => this.saveDeadline(e)} className="tasks__item__btn">
             Save
           </button>
         </div>
