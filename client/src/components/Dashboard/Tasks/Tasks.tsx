@@ -10,12 +10,13 @@ import {
   SET_TASK_FOUR_AS_COMPLETED,
   SET_TASK_FIVE_AS_COMPLETED,
 } from '../../../store/actions/tasks/tasks.types';
-import { ITask } from '../../../store/interfaces/tasks.interfaces';
+import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 import { connect } from 'react-redux';
 import { getUserInfoFromLocalStorage } from '../../../utils/localStorageActions';
 
 interface TasksProps {
   tasks?: ITask[];
+  taskFive?: ICustomTasks;
 }
 
 class Tasks extends React.Component<TasksProps> {
@@ -29,13 +30,15 @@ class Tasks extends React.Component<TasksProps> {
         return SET_TASK_THREE_AS_COMPLETED;
       case 4:
         return SET_TASK_FOUR_AS_COMPLETED;
+      case 5:
+        return SET_TASK_FIVE_AS_COMPLETED;
       default:
         return '';
     }
   };
 
   render() {
-    const { tasks } = this.props;
+    const { tasks, taskFive } = this.props;
     const currentUser = getUserInfoFromLocalStorage();
 
     return (
@@ -43,7 +46,7 @@ class Tasks extends React.Component<TasksProps> {
         <div id="tasks__container">
           {tasks
             ? tasks.map((task, i) => {
-                return task.num && task.num !== 5 ? (
+                return (
                   <Task
                     name={task.name}
                     deadline={task.deadline}
@@ -54,24 +57,23 @@ class Tasks extends React.Component<TasksProps> {
                     actionType={this.setActionType(task.num)}
                     key={i}
                   />
-                ) : (
-                  [
-                    currentUser.jobTitle === task.role ? (
-                      <Task
-                        name={task.name}
-                        deadline={task.deadline}
-                        description={task.description}
-                        taskNum={task.num}
-                        isCompleted={task.isCompleted}
-                        assignedTo={task.assignedTo}
-                        actionType={this.setActionType(task.num)}
-                        key={i}
-                      />
-                    ) : null,
-                  ]
                 );
               })
             : null}
+          {taskFive?.customTasks.map((task, i) => {
+            return task && task.role === currentUser.jobTitle ? (
+              <Task
+                name={task.name}
+                deadline={task.deadline}
+                description={task.description}
+                taskNum={task.num}
+                isCompleted={task.isCompleted}
+                assignedTo={task.assignedTo}
+                actionType={this.setActionType(task.num)}
+                key={i}
+              />
+            ) : null;
+          })}
         </div>
       </div>
     );
@@ -81,7 +83,7 @@ class Tasks extends React.Component<TasksProps> {
 const mapStateToProps = (state: any): any => {
   const { taskOne, taskTwo, taskThree, taskFour, taskFive } = state;
 
-  return { tasks: [taskOne, taskTwo, taskThree, taskFour, taskFive] };
+  return { tasks: [taskOne, taskTwo, taskThree, taskFour], taskFive };
 };
 
 export default connect(mapStateToProps)(Tasks);

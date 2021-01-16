@@ -15,7 +15,11 @@ export interface ISetTaskAsCompletedAction {
   payload: ITask;
 }
 
+export interface ICustomTasks {
+  customTasks: ITask[];
+}
+
 export interface ISetCustomTaskAsCompletedAction {
   type: string;
-  payload: ITask[];
+  payload: ICustomTasks;
 }

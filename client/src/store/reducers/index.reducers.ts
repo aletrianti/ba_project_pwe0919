@@ -42,6 +42,7 @@ import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqMod
 import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer, toggleAddRoleModalReducer, toggleDeleteRoleModalReducer, toggleEditRoleModalReducer } from './forms/roles.reducers';
 import { toggleAddCategoryModalReducer, toggleEditCategoryModalReducer, toggleDeleteCategoryModalReducer, deleteCategoryReducer, categoryReducer } from './forms/categories.reducers';
 import { toggleAddDepartmentModalReducer, toggleEditDepartmentModalReducer, toggleDeleteDepartmentModalReducer, deleteDepartmentReducer, departmentReducer } from './forms/departments.reducers';
+import { toggleAddTaskModalReducer, toggleEditTaskModalReducer, toggleDeleteTaskModalReducer, storeTaskNameReducer, storeTaskDescriptionReducer, deleteTaskReducer, storeTaskRoleReducer, storeTaskDeadlineReducer, taskReducer } from './forms/tasks.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -87,43 +88,53 @@ const reducers: any = combineReducers({
   addDepartmentModal: toggleAddDepartmentModalReducer,
   editDepartmentModal: toggleEditDepartmentModalReducer,
   deleteDepartmentModal: toggleDeleteDepartmentModalReducer,
+  addTaskModal: toggleAddTaskModalReducer,
+  editTaskModal: toggleEditTaskModalReducer,
+  deleteTaskModal: toggleDeleteTaskModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
   taskThree: storeTaskThreeReducer,
   taskFour: storeTaskFourReducer,
   taskFive: storeTaskFiveReducer,
-  // Users
+  // Users (Admin Panel)
   userEmail: storeUserEmailReducer,
   userBuddy: storeUserBuddyReducer,
   userDepartment: storeUserDepartmentReducer,
   userRole: storeUserRoleReducer,
   editUser: userReducer,
   deleteUser: deleteUserReducer,
-  // Achievements
+  // Achievements (Admin Panel)
   achievementTitle: storeAchievementTitleReducer,
   achievementDescription: storeAchievementDescriptionReducer,
   achievementDate: storeAchievementDateReducer,
   achievement: achievementReducer,
   deleteAchievement: deleteAchievementReducer,
-  // FAQs
+  // FAQs (Admin Panel)
   faqQuestion: storeFaqQuestionReducer,
   faqAnswer: storeFaqAnswerReducer,
   faq: faqReducer,
   deleteFaq: deleteFaqReducer,
-  // Roles
+  // Roles (Admin Panel)
   roleTitle: storeRoleTitleReducer,
   roleDescription: storeRoleDescriptionReducer,
   roleResponsibility: storeRoleResponsibilityReducer,
   roleResponsibilities: storeRoleResponsibilitiesReducer,
   role: roleReducer,
   deleteRole: deleteRoleReducer,
-  // Categories
+  // Categories (Admin Panel)
   category: categoryReducer,
   deleteCategory: deleteCategoryReducer,
-  // Departments
+  // Departments (Admin Panel)
   department: departmentReducer,
   deleteDepartment: deleteDepartmentReducer,
+  // Tasks (Admin Panel)
+  taskName: storeTaskNameReducer,
+  taskDescription: storeTaskDescriptionReducer,
+  taskRole: storeTaskRoleReducer,
+  taskDeadline: storeTaskDeadlineReducer,
+  task: taskReducer,
+  deleteTask: deleteTaskReducer,
   // ...
 });
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import './Tasks.scss';
 
 import Title from '../../common/Title/Title';
@@ -10,27 +10,53 @@ import {
   setTaskFourAsCompletedAction,
   setCustomTaskAsCompletedAction,
 } from '../../../store/actions/tasks/tasks.actions';
-import { ITask } from '../../../store/interfaces/tasks.interfaces';
+import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 
 import { connect } from 'react-redux';
+import TasksForm from './TasksForms/TasksForm';
+import {
+  ToggleAddTaskModalAction,
+  ToggleDeleteTaskModalAction,
+  ToggleEditTaskModalAction,
+} from '../../../store/actions/forms/forms.actions';
+import { IAddTaskModal, IDeleteTaskModal, IEditTaskModal } from '../../../store/interfaces/forms/tasks.interfaces';
+import DeleteTasksForms from './TasksForms/DeleteTasksForms';
+import Actions from '../../common/Actions/Actions';
 
 interface TaskProps {
   taskOne: ITask;
   taskTwo: ITask;
   taskThree: ITask;
   taskFour: ITask;
+  taskFive: ICustomTasks;
   setTaskOne: (taskOne: ITask) => any;
   setTaskTwo: (taskTwo: ITask) => any;
   setTaskThree: (taskThree: ITask) => any;
   setTaskFour: (taskFour: ITask) => any;
-  setTaskFive: (taskFive: ITask[]) => any;
+  setTaskFive: (taskFive: ICustomTasks) => any;
+  toggleAddTaskModal: (addTaskModal: IAddTaskModal) => any;
+  toggleEditTaskModal: (editTaskModal: IEditTaskModal) => any;
+  toggleDeleteTaskModal: (deleteTaskModal: IDeleteTaskModal) => any;
 }
 
 class Tasks extends React.Component<TaskProps> {
-  modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';
+  openModal = (e: MouseEvent) => {
+    e.preventDefault();
 
-  // TODO!! Send dynamic data to custom tasks div
-  customTasks = [];
+    this.props.toggleAddTaskModal({ isOpen: true });
+  };
+
+  editCustomTask = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleEditTaskModal({ id, isOpen: true });
+  };
+
+  deleteCustomTask = (id: number, e: MouseEvent) => {
+    e.preventDefault();
+
+    this.props.toggleDeleteTaskModal({ id, isOpen: true });
+  };
 
   setDeadline = (task: ITask, specificTask: ITask, value: string, action: any): void => {
     const taskCopy = { ...task };
@@ -58,20 +84,10 @@ class Tasks extends React.Component<TaskProps> {
     // TODO: add axios call here
   };
 
-  saveDeadlineTaskOne = (task: ITask): void => {
-    this.saveDeadlineToDB(task);
-  };
-  saveDeadlineTaskTwo = (task: ITask): void => {
-    this.saveDeadlineToDB(task);
-  };
-  saveDeadlineTaskThree = (task: ITask): void => {
-    this.saveDeadlineToDB(task);
-  };
-  saveDeadlineTaskFour = (task: ITask): void => {
-    this.saveDeadlineToDB(task);
-  };
+  modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';
 
-  openModal = () => {};
+  // TODO!! Send dynamic data to custom tasks div
+  customTasks = [];
 
   render() {
     const { taskOne, taskTwo, taskThree, taskFour } = this.props;
@@ -90,41 +106,55 @@ class Tasks extends React.Component<TaskProps> {
               taskName={taskOne.name}
               deadline={taskOne.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskOne(taskOne, e)}
-              saveDeadline={this.saveDeadlineTaskOne(taskOne)}
+              saveDeadline={this.saveDeadlineToDB(taskOne)}
             />
             <TasksItem
               taskName={taskTwo.name}
               deadline={taskTwo.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskTwo(taskTwo, e)}
-              saveDeadline={this.saveDeadlineTaskTwo(taskTwo)}
+              saveDeadline={this.saveDeadlineToDB(taskTwo)}
             />
             <TasksItem
               taskName={taskThree.name}
               deadline={taskThree.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskThree(taskThree, e)}
-              saveDeadline={this.saveDeadlineTaskThree(taskThree)}
+              saveDeadline={this.saveDeadlineToDB(taskThree)}
             />
             <TasksItem
               taskName={taskFour.name}
               deadline={taskFour.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskFour(taskFour, e)}
-              saveDeadline={this.saveDeadlineTaskFour(taskFour)}
+              saveDeadline={this.saveDeadlineToDB(taskFour)}
             />
 
             <div id="admin-panel__tasks__content__custom">
               <h4 id="admin-panel__tasks__content__custom__title">Create custom tasks</h4>
 
               <div id="admin-panel__tasks__content__custom__tasks">
-                <span className="admin-panel__tasks__content__custom__tasks__item">Custom task 1</span>
-                <span className="admin-panel__tasks__content__custom__tasks__item">Custom task 2</span>
+                {this.props.taskFive.customTasks.map((task, i) => {
+                  return task ? (
+                    <div className="admin-panel__tasks__content__custom__tasks__item" key={i}>
+                      <span>{task.name}</span>
+                      <Actions
+                        actions={[
+                          { name: 'Edit', function: (e: MouseEvent) => this.editCustomTask(task.num, e) },
+                          { name: 'Delete', function: (e: MouseEvent) => this.deleteCustomTask(task.num, e) },
+                        ]}
+                      />
+                    </div>
+                  ) : null;
+                })}
               </div>
 
-              <button id="admin-panel__tasks__content__custom__btn" onClick={this.openModal}>
+              <button id="admin-panel__tasks__content__custom__btn" onClick={(e: MouseEvent) => this.openModal(e)}>
                 Add a task
               </button>
             </div>
           </div>
         </div>
+
+        <TasksForm />
+        <DeleteTasksForms />
       </div>
     );
   }
@@ -136,6 +166,7 @@ const mapStateToProps = (state: any) => {
     taskTwo: state.taskTwo,
     taskThree: state.taskThree,
     taskFour: state.taskFour,
+    taskFive: state.taskFive,
   };
 };
 
@@ -145,7 +176,10 @@ const mapDispatchToProps = (dispatch: any) => {
     setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwoAsCompletedAction(taskTwo)),
     setTaskThree: (taskThree: ITask) => dispatch(setTaskThreeAsCompletedAction(taskThree)),
     setTaskFour: (taskFour: ITask) => dispatch(setTaskFourAsCompletedAction(taskFour)),
-    setTaskFive: (taskFive: ITask[]) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
+    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
+    toggleAddTaskModal: (addTaskModal: IAddTaskModal) => dispatch(ToggleAddTaskModalAction(addTaskModal)),
+    toggleEditTaskModal: (editTaskModal: IEditTaskModal) => dispatch(ToggleEditTaskModalAction(editTaskModal)),
+    toggleDeleteTaskModal: (deleteTaskModal: IDeleteTaskModal) => dispatch(ToggleDeleteTaskModalAction(deleteTaskModal)),
   };
 };
 
