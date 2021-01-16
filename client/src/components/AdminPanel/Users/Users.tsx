@@ -12,7 +12,7 @@ import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
 import DeleteUsersForm from './UsersForms/DeleteUsersForm';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
-import { IUser } from '../../../../../types/auth.types';
+import { ICompanyEmployee } from '../../../../../types/company.types';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -38,18 +38,18 @@ class Users extends React.Component<UsersProps, UserState> {
   };
 
   // TODO: Add dynamic user data for the table
-  token = getTokenFromLocalStorage();
-
   config = {
-    headers: { Authorization: `Bearer ${this.token}` },
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
   };
 
   getCompanyUsers = async () => {
-    const users: IUser[] = await axios.get('/api/company/employees', this.config).then(res => {
+    const users: ICompanyEmployee[] = await axios.get('/api/company/employees', this.config).then(res => {
       return res.data;
     });
 
-    let employeesTable: ITableUser[] = users.map(employee => {
+    const employeesTable: ITableUser[] = users.map(employee => {
+      console.log(employee.title);
+
       const user: ITableUser = {
         id: employee.ID,
         name: `${employee.firstName} ${employee.lastName}`,
@@ -57,7 +57,7 @@ class Users extends React.Component<UsersProps, UserState> {
         isAvailableToBuddy: employee.availableToBuddy,
         assignedTo: '',
         department: '',
-        role: '',
+        role: employee?.title ? employee.title : '',
       };
       return user;
     });
