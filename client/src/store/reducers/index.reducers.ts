@@ -40,6 +40,8 @@ import {
 import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, achievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
 import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, faqReducer, deleteFaqReducer } from './forms/faqs.reducers';
 import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer, toggleAddRoleModalReducer, toggleDeleteRoleModalReducer, toggleEditRoleModalReducer } from './forms/roles.reducers';
+import { toggleAddCategoryModalReducer, toggleEditCategoryModalReducer, toggleDeleteCategoryModalReducer, deleteCategoryReducer, categoryReducer } from './forms/categories.reducers';
+import { toggleAddDepartmentModalReducer, toggleEditDepartmentModalReducer, toggleDeleteDepartmentModalReducer, deleteDepartmentReducer, departmentReducer } from './forms/departments.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -79,6 +81,12 @@ const reducers: any = combineReducers({
   addRoleModal: toggleAddRoleModalReducer,
   editRoleModal: toggleEditRoleModalReducer,
   deleteRoleModal: toggleDeleteRoleModalReducer,
+  addCategoryModal: toggleAddCategoryModalReducer,
+  editCategoryModal: toggleEditCategoryModalReducer,
+  deleteCategoryModal: toggleDeleteCategoryModalReducer,
+  addDepartmentModal: toggleAddDepartmentModalReducer,
+  editDepartmentModal: toggleEditDepartmentModalReducer,
+  deleteDepartmentModal: toggleDeleteDepartmentModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
@@ -90,7 +98,7 @@ const reducers: any = combineReducers({
   userBuddy: storeUserBuddyReducer,
   userDepartment: storeUserDepartmentReducer,
   userRole: storeUserRoleReducer,
-  user: userReducer,
+  editUser: userReducer,
   deleteUser: deleteUserReducer,
   // Achievements
   achievementTitle: storeAchievementTitleReducer,
@@ -110,6 +118,12 @@ const reducers: any = combineReducers({
   roleResponsibilities: storeRoleResponsibilitiesReducer,
   role: roleReducer,
   deleteRole: deleteRoleReducer,
+  // Categories
+  category: categoryReducer,
+  deleteCategory: deleteCategoryReducer,
+  // Departments
+  department: departmentReducer,
+  deleteDepartment: deleteDepartmentReducer,
   // ...
 });
 

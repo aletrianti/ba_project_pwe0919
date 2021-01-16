@@ -6,11 +6,11 @@ import Actions from '../../../common/Actions/Actions';
 
 import { ITableFAQ } from '../../../../store/interfaces/tables.interfaces';
 import { ToggleEditFaqModalAction, ToggleDeleteFaqModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IFaqModal, IDeleteFaqModal } from '../../../../store/interfaces/forms/faqs.interfaces';
+import { IEditFaqModal, IDeleteFaqModal } from '../../../../store/interfaces/forms/faqs.interfaces';
 
 interface FAQsTableProps {
   faqs: ITableFAQ[];
-  toggleEditFaqModal: (editFaqModal: IFaqModal) => any;
+  toggleEditFaqModal: (editFaqModal: IEditFaqModal) => any;
   toggleDeleteFaqModal: (deleteFaqModal: IDeleteFaqModal) => any;
 }
 
@@ -53,7 +53,7 @@ class FAQsTable extends React.Component<FAQsTableProps> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    toggleEditFaqModal: (editFaqModal: IFaqModal) => dispatch(ToggleEditFaqModalAction(editFaqModal)),
+    toggleEditFaqModal: (editFaqModal: IEditFaqModal) => dispatch(ToggleEditFaqModalAction(editFaqModal)),
     toggleDeleteFaqModal: (deleteFaqModal: IDeleteFaqModal) => dispatch(ToggleDeleteFaqModalAction(deleteFaqModal)),
   };
 };

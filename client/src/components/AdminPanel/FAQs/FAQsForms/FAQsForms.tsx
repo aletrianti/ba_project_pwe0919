@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { ToggleAddFaqModalAction, ToggleEditFaqModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreAnswerAction, StoreFaqAction, StoreQuestionAction } from '../../../../store/actions/forms/faqs/faqs.actions';
-import { IAddFaqModal, IFaqQuestion, IFaqAnswer, IFaqModal, IFaq } from '../../../../store/interfaces/forms/faqs.interfaces';
+import { IAddFaqModal, IFaqQuestion, IFaqAnswer, IEditFaqModal, IFaq } from '../../../../store/interfaces/forms/faqs.interfaces';
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../utils/formValidation';
 
@@ -16,12 +16,12 @@ interface FaqsFormsProps {
   faqAnswer: IFaqAnswer;
   faq: IFaq;
   addFaqModal: IAddFaqModal;
-  editFaqModal: IFaqModal;
+  editFaqModal: IEditFaqModal;
   storeFaqQuestion: (faqQuestion: IFaqQuestion) => any;
   storeFaqAnswer: (faqAnswer: IFaqAnswer) => any;
   storeFaq: (faq: IFaq) => any;
   toggleAddFaqModal: (addFaqModal: IAddFaqModal) => any;
-  toggleEditFaqModal: (editFaqModal: IFaqModal) => any;
+  toggleEditFaqModal: (editFaqModal: IEditFaqModal) => any;
 }
 
 interface FaqsFormsState {
@@ -167,7 +167,7 @@ const mapDisparchToProps = (dispatch: any) => {
     storeFaqAnswer: (faqAnswer: IFaqAnswer) => dispatch(StoreAnswerAction(faqAnswer)),
     storeFaq: (faq: IFaq) => dispatch(StoreFaqAction(faq)),
     toggleAddFaqModal: (addFaqModal: IAddFaqModal) => dispatch(ToggleAddFaqModalAction(addFaqModal)),
-    toggleEditFaqModal: (EditFaqModal: IFaqModal) => dispatch(ToggleEditFaqModalAction(EditFaqModal)),
+    toggleEditFaqModal: (EditFaqModal: IEditFaqModal) => dispatch(ToggleEditFaqModalAction(EditFaqModal)),
   };
 };
 

@@ -1,6 +1,8 @@
 // import types + interfaces for payloads
-import { IAddAchievementModal, IToggleAddAchievementModalAction, IAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from '../../interfaces/forms/achievements.interfaces';
-import { IAddFaqModal, IToggleAddFaqModalAction, IFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from '../../interfaces/forms/faqs.interfaces';
+import { IAddAchievementModal, IToggleAddAchievementModalAction, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction, IEditAchievementModal } from '../../interfaces/forms/achievements.interfaces';
+import { IAddCategoryModal, IToggleAddCategoryModalAction, IToggleEditCategoryModalAction, IDeleteCategoryModal, IToggleDeleteCategoryModalAction, IEditCategoryModal } from '../../interfaces/forms/categories.interfaces';
+import { IAddDepartmentModal, IToggleAddDepartmentModalAction, IToggleEditDepartmentModalAction, IDeleteDepartmentModal, IToggleDeleteDepartmentModalAction, IEditDepartmentModal } from '../../interfaces/forms/departments.interfaces';
+import { IAddFaqModal, IToggleAddFaqModalAction, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction, IEditFaqModal } from '../../interfaces/forms/faqs.interfaces';
 import { IAddRoleModal, IToggleAddRoleModalAction, IEditRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction } from '../../interfaces/forms/roles.interfaces';
 import {
   IAddUserModal,
@@ -10,7 +12,7 @@ import {
   IToggleDeleteUserModalAction,
   IToggleEditUserModalAction,
 } from '../../interfaces/forms/users.interfaces';
-import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_ADD_FAQ_MODAL, TOGGLE_ADD_ROLE_MODAL, TOGGLE_ADD_USER_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL, TOGGLE_DELETE_FAQ_MODAL, TOGGLE_DELETE_ROLE_MODAL, TOGGLE_DELETE_USER_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_EDIT_USER_MODAL } from './forms.types';
+import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_ADD_CATEGORY_MODAL, TOGGLE_ADD_DEPARTMENT_MODAL, TOGGLE_ADD_FAQ_MODAL, TOGGLE_ADD_ROLE_MODAL, TOGGLE_ADD_USER_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL, TOGGLE_DELETE_CATEGORY_MODAL, TOGGLE_DELETE_DEPARTMENT_MODAL, TOGGLE_DELETE_FAQ_MODAL, TOGGLE_DELETE_ROLE_MODAL, TOGGLE_DELETE_USER_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_EDIT_CATEGORY_MODAL, TOGGLE_EDIT_DEPARTMENT_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_EDIT_USER_MODAL } from './forms.types';
 
 // actions
 export const ToggleAddUserModalAction = (data: IAddUserModal): IToggleAddUserModalAction => {
@@ -26,7 +28,7 @@ export const ToggleDeleteUserModalAction = (data: IDeleteUserModal): IToggleDele
 export const ToggleAddAchievementModalAction = (data: IAddAchievementModal): IToggleAddAchievementModalAction => {
   return { type: TOGGLE_ADD_ACHIEVEMENT_MODAL, payload: data };
 };
-export const ToggleEditAchievementModalAction = (data: IAchievementModal): IToggleEditAchievementModalAction => {
+export const ToggleEditAchievementModalAction = (data: IEditAchievementModal): IToggleEditAchievementModalAction => {
   return { type: TOGGLE_EDIT_ACHIEVEMENT_MODAL, payload: data };
 };
 export const ToggleDeleteAchievementModalAction = (data: IDeleteAchievementModal): IToggleDeleteAchievementModalAction => {
@@ -36,7 +38,7 @@ export const ToggleDeleteAchievementModalAction = (data: IDeleteAchievementModal
 export const ToggleAddFaqModalAction = (data: IAddFaqModal): IToggleAddFaqModalAction => {
   return { type: TOGGLE_ADD_FAQ_MODAL, payload: data };
 };
-export const ToggleEditFaqModalAction = (data: IFaqModal): IToggleEditFaqModalAction => {
+export const ToggleEditFaqModalAction = (data: IEditFaqModal): IToggleEditFaqModalAction => {
   return { type: TOGGLE_EDIT_FAQ_MODAL, payload: data };
 };
 export const ToggleDeleteFaqModalAction = (data: IDeleteFaqModal): IToggleDeleteFaqModalAction => {
@@ -51,4 +53,24 @@ export const ToggleEditRoleModalAction = (data: IEditRoleModal): IToggleEditRole
 };
 export const ToggleDeleteRoleModalAction = (data: IDeleteRoleModal): IToggleDeleteRoleModalAction => {
   return { type: TOGGLE_DELETE_ROLE_MODAL, payload: data };
+};
+
+export const ToggleAddCategoryModalAction = (data: IAddCategoryModal): IToggleAddCategoryModalAction => {
+  return { type: TOGGLE_ADD_CATEGORY_MODAL, payload: data };
+};
+export const ToggleEditCategoryModalAction = (data: IEditCategoryModal): IToggleEditCategoryModalAction => {
+  return { type: TOGGLE_EDIT_CATEGORY_MODAL, payload: data };
+};
+export const ToggleDeleteCategoryModalAction = (data: IDeleteCategoryModal): IToggleDeleteCategoryModalAction => {
+  return { type: TOGGLE_DELETE_CATEGORY_MODAL, payload: data };
+};
+
+export const ToggleAddDepartmentModalAction = (data: IAddDepartmentModal): IToggleAddDepartmentModalAction => {
+  return { type: TOGGLE_ADD_DEPARTMENT_MODAL, payload: data };
+};
+export const ToggleEditDepartmentModalAction = (data: IEditDepartmentModal): IToggleEditDepartmentModalAction => {
+  return { type: TOGGLE_EDIT_DEPARTMENT_MODAL, payload: data };
+};
+export const ToggleDeleteDepartmentModalAction = (data: IDeleteDepartmentModal): IToggleDeleteDepartmentModalAction => {
+  return { type: TOGGLE_DELETE_DEPARTMENT_MODAL, payload: data };
 };

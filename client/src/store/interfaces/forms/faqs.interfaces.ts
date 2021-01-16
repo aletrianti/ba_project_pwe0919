@@ -44,13 +44,13 @@ export interface IToggleAddFaqModalAction {
   payload: IAddFaqModal;
 }
 
-export interface IFaqModal {
+export interface IEditFaqModal {
   isOpen: boolean;
   id: number;
 }
 export interface IToggleEditFaqModalAction {
   type: string;
-  payload: IFaqModal;
+  payload: IEditFaqModal;
 }
 
 export interface IDeleteFaqModal {

@@ -65,13 +65,13 @@ export interface IToggleAddAchievementModalAction {
   payload: IAddAchievementModal;
 }
 
-export interface IAchievementModal {
+export interface IEditAchievementModal {
   isOpen: boolean;
   id: number;
 }
 export interface IToggleEditAchievementModalAction {
   type: string;
-  payload: IAchievementModal;
+  payload: IEditAchievementModal;
 }
 
 export interface IDeleteAchievementModal {

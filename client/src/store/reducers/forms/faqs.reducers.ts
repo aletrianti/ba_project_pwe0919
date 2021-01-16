@@ -1,6 +1,6 @@
 import { STORE_FAQ_QUESTION, STORE_FAQ_ANSWER, FAQ, DELETE_FAQ } from "../../actions/forms/faqs/faqs.types";
 import { TOGGLE_ADD_FAQ_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_DELETE_FAQ_MODAL } from "../../actions/forms/forms.types";
-import { IFaqQuestion, IStoreFaqQuestionAction, IFaqAnswer, IStoreFaqAnswerAction, IFaq, IFaqAction, IDeleteFaq, IDeleteFaqAction, IAddFaqModal, IToggleAddFaqModalAction, IFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from "../../interfaces/forms/faqs.interfaces";
+import { IFaqQuestion, IStoreFaqQuestionAction, IFaqAnswer, IStoreFaqAnswerAction, IFaq, IFaqAction, IDeleteFaq, IDeleteFaqAction, IAddFaqModal, IToggleAddFaqModalAction, IEditFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from "../../interfaces/forms/faqs.interfaces";
 
 // create reducers
 export const storeFaqQuestionReducer = (
@@ -84,7 +84,7 @@ export const toggleAddFaqModalReducer = (state: IAddFaqModal = { isOpen: false }
   }
 };
 export const toggleEditFaqModalReducer = (
-  state: IFaqModal = { id: 0, isOpen: false },
+  state: IEditFaqModal = { id: 0, isOpen: false },
   action: IToggleEditFaqModalAction
 ) => {
   switch (action.type) {

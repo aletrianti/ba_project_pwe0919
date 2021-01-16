@@ -1,6 +1,6 @@
 import { STORE_ACHIEVEMENT_TITLE, STORE_ACHIEVEMENT_DESCRIPTION, STORE_ACHIEVEMENT_DATE, ACHIEVEMENT, DELETE_ACHIEVEMENT } from "../../actions/forms/achievements/achievements.types";
 import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL } from "../../actions/forms/forms.types";
-import { IAchievementTitle, IStoreAchievementTitleAction, IAchievementDescription, IStoreAchievementDescriptionAction, IAchievementDate, IStoreAchievementDateAction, IAchievement, IAchievementAction, IDeleteAchievement, IDeleteAchievementAction, IAddAchievementModal, IToggleAddAchievementModalAction, IAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from "../../interfaces/forms/achievements.interfaces";
+import { IAchievementTitle, IStoreAchievementTitleAction, IAchievementDescription, IStoreAchievementDescriptionAction, IAchievementDate, IStoreAchievementDateAction, IAchievement, IAchievementAction, IDeleteAchievement, IDeleteAchievementAction, IAddAchievementModal, IToggleAddAchievementModalAction, IEditAchievementModal, IToggleEditAchievementModalAction, IDeleteAchievementModal, IToggleDeleteAchievementModalAction } from "../../interfaces/forms/achievements.interfaces";
 
 
 // create reducers
@@ -103,7 +103,7 @@ export const toggleAddAchievementModalReducer = (state: IAddAchievementModal = {
   }
 };
 export const toggleEditAchievementModalReducer = (
-  state: IAchievementModal = { id: 0, isOpen: false },
+  state: IEditAchievementModal = { id: 0, isOpen: false },
   action: IToggleEditAchievementModalAction
 ) => {
   switch (action.type) {
