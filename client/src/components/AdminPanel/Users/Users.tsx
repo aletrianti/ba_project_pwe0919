@@ -52,7 +52,7 @@ class Users extends React.Component<UsersProps, UserState> {
         name: `${employee.firstName} ${employee.lastName}`,
         email: employee.email,
         isAvailableToBuddy: employee.availableToBuddy,
-        assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName}  ${employee.buddyLastName}` : '',
+        assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName || ''}  ${employee.buddyLastName || ''}` : '',
         department: employee?.departmentId ? employee.departmentName : '',
         role: employee?.title ? employee.title : '',
       };
