@@ -3,6 +3,7 @@ import { IAddAchievementModal, IToggleAddAchievementModalAction, IToggleEditAchi
 import { IAddCategoryModal, IToggleAddCategoryModalAction, IToggleEditCategoryModalAction, IDeleteCategoryModal, IToggleDeleteCategoryModalAction, IEditCategoryModal } from '../../interfaces/forms/categories.interfaces';
 import { IAddDepartmentModal, IToggleAddDepartmentModalAction, IToggleEditDepartmentModalAction, IDeleteDepartmentModal, IToggleDeleteDepartmentModalAction, IEditDepartmentModal } from '../../interfaces/forms/departments.interfaces';
 import { IAddFaqModal, IToggleAddFaqModalAction, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction, IEditFaqModal } from '../../interfaces/forms/faqs.interfaces';
+import { IEditProfileModal, IToggleEditProfileModalAction } from '../../interfaces/forms/profile.interfaces';
 import { IAddRoleModal, IToggleAddRoleModalAction, IEditRoleModal, IToggleEditRoleModalAction, IDeleteRoleModal, IToggleDeleteRoleModalAction } from '../../interfaces/forms/roles.interfaces';
 import { IAddTaskModal, IToggleAddTaskModalAction, IEditTaskModal, IToggleEditTaskModalAction, IDeleteTaskModal, IToggleDeleteTaskModalAction } from '../../interfaces/forms/tasks.interfaces';
 import {
@@ -13,7 +14,7 @@ import {
   IToggleDeleteUserModalAction,
   IToggleEditUserModalAction,
 } from '../../interfaces/forms/users.interfaces';
-import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_ADD_CATEGORY_MODAL, TOGGLE_ADD_DEPARTMENT_MODAL, TOGGLE_ADD_FAQ_MODAL, TOGGLE_ADD_ROLE_MODAL, TOGGLE_ADD_TASK_MODAL, TOGGLE_ADD_USER_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL, TOGGLE_DELETE_CATEGORY_MODAL, TOGGLE_DELETE_DEPARTMENT_MODAL, TOGGLE_DELETE_FAQ_MODAL, TOGGLE_DELETE_ROLE_MODAL, TOGGLE_DELETE_TASK_MODAL, TOGGLE_DELETE_USER_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_EDIT_CATEGORY_MODAL, TOGGLE_EDIT_DEPARTMENT_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_EDIT_TASK_MODAL, TOGGLE_EDIT_USER_MODAL } from './forms.types';
+import { TOGGLE_ADD_ACHIEVEMENT_MODAL, TOGGLE_ADD_CATEGORY_MODAL, TOGGLE_ADD_DEPARTMENT_MODAL, TOGGLE_ADD_FAQ_MODAL, TOGGLE_ADD_ROLE_MODAL, TOGGLE_ADD_TASK_MODAL, TOGGLE_ADD_USER_MODAL, TOGGLE_DELETE_ACHIEVEMENT_MODAL, TOGGLE_DELETE_CATEGORY_MODAL, TOGGLE_DELETE_DEPARTMENT_MODAL, TOGGLE_DELETE_FAQ_MODAL, TOGGLE_DELETE_ROLE_MODAL, TOGGLE_DELETE_TASK_MODAL, TOGGLE_DELETE_USER_MODAL, TOGGLE_EDIT_ACHIEVEMENT_MODAL, TOGGLE_EDIT_CATEGORY_MODAL, TOGGLE_EDIT_DEPARTMENT_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_EDIT_PROFILE_MODAL, TOGGLE_EDIT_ROLE_MODAL, TOGGLE_EDIT_TASK_MODAL, TOGGLE_EDIT_USER_MODAL } from './forms.types';
 
 // actions
 export const ToggleAddUserModalAction = (data: IAddUserModal): IToggleAddUserModalAction => {
@@ -84,4 +85,8 @@ export const ToggleEditTaskModalAction = (data: IEditTaskModal): IToggleEditTask
 };
 export const ToggleDeleteTaskModalAction = (data: IDeleteTaskModal): IToggleDeleteTaskModalAction => {
   return { type: TOGGLE_DELETE_TASK_MODAL, payload: data };
+};
+
+export const ToggleEditProfileModalAction = (data: IEditProfileModal): IToggleEditProfileModalAction => {
+  return { type: TOGGLE_EDIT_PROFILE_MODAL, payload: data };
 };

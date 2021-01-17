@@ -32,7 +32,7 @@ class FAQs extends React.Component<FaqsProps> {
   render() {
     return (
       <div id="admin-panel__faqs">
-        <AddButton name={'Add role'} function={this.openModal} />
+        <AddButton name={'Add FAQ'} function={this.openModal} />
 
         <div id="admin-panel__faqs__content" className="admin-panel__content">
           <FAQsTable faqs={this.faqs} />

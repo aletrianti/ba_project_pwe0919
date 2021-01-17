@@ -12,6 +12,8 @@ export const departmentReducer = (
       return {
         ...state,
         department: action.payload.department,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;

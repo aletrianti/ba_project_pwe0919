@@ -12,6 +12,8 @@ export const categoryReducer = (
       return {
         ...state,
         category: action.payload.category,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
       };
     default:
       return state;

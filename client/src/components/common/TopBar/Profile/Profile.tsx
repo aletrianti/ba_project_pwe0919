@@ -63,8 +63,6 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
 
   openEditProfileModal = (e: MouseEvent): void => {};
 
-  openDeleteProfileModal = (e: MouseEvent): void => {};
-
   render() {
     const { firstName, lastName, jobTitle, department, birthday, memberSince, description, profilePicture } = this.props;
 
