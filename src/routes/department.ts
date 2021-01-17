@@ -10,8 +10,9 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const deparments: IDepartment[] = await knex('department').where('companyId', companyId);
-    Api.sendSuccess<IDepartment[]>(req, res, deparments);
+    const departments: IDepartment[] = await knex('department').where('companyId', companyId);
+
+    Api.sendSuccess<IDepartment[]>(req, res, departments);
   } catch (err) {
     Api.sendError(req, res, err);
   }

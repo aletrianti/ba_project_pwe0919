@@ -44,8 +44,6 @@ class DeleteUsersForm extends React.Component<DeleteUsersFormProps, DeleteUsersF
   // Form events
 
   deleteUser = async () => {
-    // TODO: add axios call here - use userId
-
     await axios.post('/api/auth/delete-employee', this.props.deleteUserModal, this.config).then(res => {
       return;
     });
