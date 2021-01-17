@@ -30,7 +30,7 @@ const VALID_RESULT = (): IValidatorResult => {
 const isNotUndefined = (data: any): boolean => (data ? true : false);
 
 // Specific validators
-const validateEmail = (email: string): IValidatorResult => {
+const validateEmail = (email: any): IValidatorResult => {
   if (isNotUndefined(email)) {
     const regex = /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}/g;
 
@@ -39,7 +39,7 @@ const validateEmail = (email: string): IValidatorResult => {
     return INVALID_RESULT(messages.REQUIRED_FIELD);
   }
 };
-const validatePassword = (password: string): IValidatorResult => {
+const validatePassword = (password: any): IValidatorResult => {
   if (isNotUndefined(password)) {
     return password.length >= 8 ? VALID_RESULT() : INVALID_RESULT(messages.PASSWORD_TOO_SHORT);
   } else {
@@ -48,7 +48,7 @@ const validatePassword = (password: string): IValidatorResult => {
 };
 
 // Validator
-export const validator = (field: string, type: string): IValidatorResult => {
+export const validator = (field: string | number, type: string): IValidatorResult => {
   // modify with switch statements
   switch (type) {
     case validatorTypes.EMAIL:

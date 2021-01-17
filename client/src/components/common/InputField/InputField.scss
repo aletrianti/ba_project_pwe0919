@@ -19,7 +19,7 @@
         font-style: italic;
     }
 
-    input {
+    input, textarea {
         padding: 15px;
         border-radius: 10px;
         border: 2px solid $primary-grey;
@@ -27,13 +27,24 @@
         
         transition: all 0.1s ease;
     }
-    input:focus {
+    textarea {
+        height: 10em;
+        max-height: 10em;
+        resize: none;
+    }
+    input:focus,
+    textarea:focus {
         border: 2px solid $primary;
     }
-    input.input-field__invite-users {
+    input.input-field--short {
         margin-right: 20px;
     }
-    input.input-field__invalid {
+    input.input-field__invalid,
+    textarea.input-field__invalid {
         border: 2px solid $error;
     }
+}
+
+.form input.input-field--short {
+    width: 90%;
 }

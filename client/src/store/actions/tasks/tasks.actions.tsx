@@ -6,7 +6,12 @@ import {
   SET_TASK_FOUR_AS_COMPLETED,
   SET_TASK_FIVE_AS_COMPLETED,
 } from './tasks.types';
-import { ITask, ISetTaskAsCompletedAction } from '../../interfaces/tasks.interfaces';
+import {
+  ITask,
+  ISetTaskAsCompletedAction,
+  ISetCustomTaskAsCompletedAction,
+  ICustomTasks,
+} from '../../interfaces/tasks.interfaces';
 
 // actions
 export const setTaskOneAsCompletedAction = (data: ITask): ISetTaskAsCompletedAction => {
@@ -25,6 +30,6 @@ export const setTaskFourAsCompletedAction = (data: ITask): ISetTaskAsCompletedAc
   return { type: SET_TASK_FOUR_AS_COMPLETED, payload: data };
 };
 
-export const setTaskFiveAsCompletedAction = (data: ITask): ISetTaskAsCompletedAction => {
+export const setCustomTaskAsCompletedAction = (data: ICustomTasks): ISetCustomTaskAsCompletedAction => {
   return { type: SET_TASK_FIVE_AS_COMPLETED, payload: data };
 };

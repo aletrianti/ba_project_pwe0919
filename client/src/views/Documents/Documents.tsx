@@ -10,39 +10,29 @@ class Documents extends React.Component {
   sections = [{ name: 'Files', pathname: 'documents' }];
 
   // TODO: Replace this with categories from the DB
-  categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+  categories = [
+    { id: 1, title: 'All' },
+    { id: 2, title: 'Engineering' },
+    { id: 3, title: 'Design' },
+  ];
 
   // TODO: Replace this with documents' data from the DB
   data = [
     {
+      id: 1,
       filename: 'PDF',
       created: '10-03-19',
-      actions: (
-        <Actions
-          actions={[
-            { name: 'Edit', function: () => {} },
-            { name: 'Delete', function: () => {} },
-          ]}
-        />
-      ),
     },
     {
+      id: 2,
       filename: 'PNG',
       created: '09-06-20',
-      actions: (
-        <Actions
-          actions={[
-            { name: 'Edit', function: () => {} },
-            { name: 'Delete', function: () => {} },
-          ]}
-        />
-      ),
     },
   ];
 
   content = [
     {
-      category: 'All',
+      category: this.categories[2],
       data: this.data,
     },
   ];

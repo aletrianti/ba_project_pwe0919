@@ -103,6 +103,10 @@ body {
         .app__content {
             margin: 10px 35px;
             height: calc(100vh - 128px);
+
+            .select-field__container {
+                width: 100% !important;
+            }
         }
     }
 }

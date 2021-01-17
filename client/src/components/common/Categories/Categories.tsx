@@ -3,12 +3,10 @@ import './Categories.scss';
 
 import Category from './Category/Category';
 
-interface ICategories {
-  name: string;
-}
+import { ITableCategory } from '../../../store/interfaces/tables.interfaces';
 
 interface CategoriesProps {
-  categories: ICategories[];
+  categories: ITableCategory[];
 }
 
 class Categories extends React.Component<CategoriesProps> {
@@ -24,7 +22,7 @@ class Categories extends React.Component<CategoriesProps> {
         {!isInAchievements ? (
           <div className="categories__container">
             {categories.map((category, i) => {
-              return <Category name={category.name} isAll={category.name === 'All'} key={i} />;
+              return <Category id={category.id} name={category.title} isAll={category.title === 'All'} key={i} />;
             })}
           </div>
         ) : null}

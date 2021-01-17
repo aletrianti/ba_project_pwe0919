@@ -2,7 +2,7 @@
 
 export interface IOption {
   label: string;
-  value: string;
+  value: any;
 }
 
 export interface IOptions {

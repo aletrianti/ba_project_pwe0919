@@ -2,12 +2,11 @@ import React from 'react';
 import './DocumentsTable.scss';
 
 import Table from '../../common/Table/Table';
-import Actions from '../../common/Actions/Actions';
 
-import { IDocumentsData } from '../../../store/interfaces/documents.interface';
+import { ITableDocuments } from '../../../store/interfaces/tables.interfaces';
 
 interface DocumentsTableProps {
-  data: IDocumentsData[];
+  data: ITableDocuments[];
 }
 
 class DocumentsTable extends React.Component<DocumentsTableProps> {

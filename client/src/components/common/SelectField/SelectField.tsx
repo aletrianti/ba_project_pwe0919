@@ -6,7 +6,7 @@ import { IOptions } from '../../../store/interfaces/selectOptions.interfaces';
 // declare interfaces for props
 interface SelectFieldProps {
   name: string;
-  options: IOptions;
+  options?: IOptions;
   onchange: any;
 }
 
@@ -17,13 +17,16 @@ class SelectField extends React.Component<SelectFieldProps> {
 
   render() {
     const { name, options } = this.props;
+    let opts;
+
+    if (options) opts = options;
 
     return (
       <div className="select-field__container" onChange={this.handleOnChange}>
         <label htmlFor={`Select[${name}]`}>{name}</label>
 
         <select name={`Select[${name}]`}>
-          {options.list.map((option, i) => (
+          {opts.list.map((option, i) => (
             <option value={option.value} key={i}>
               {option.label}
             </option>

@@ -12,7 +12,11 @@ class CompanyAndTeam extends React.Component {
   ];
 
   // TODO: Replace this with categories from the DB
-  categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+  categories = [
+    { id: 1, title: 'All' },
+    { id: 2, title: 'Engineering' },
+    { id: 3, title: 'Design' },
+  ];
 
   // Dynamic components (performance)
   Team = lazy(() => import('../../components/CompanyAndTeam/Team/Team'));

@@ -5,7 +5,7 @@ import {
   SET_TASK_FOUR_AS_COMPLETED,
   SET_TASK_FIVE_AS_COMPLETED,
 } from '../actions/tasks/tasks.types';
-import { ITask, ISetTaskAsCompletedAction } from '../interfaces/tasks.interfaces';
+import { ITask, ISetTaskAsCompletedAction, ISetCustomTaskAsCompletedAction, ICustomTasks } from '../interfaces/tasks.interfaces';
 
 // create reducers
 // no dispatching is needed to store Tasks themselves, as the only property that changes it "isCompleted"
@@ -123,26 +123,14 @@ export const storeTaskFourReducer = (
 };
 
 export const storeTaskFiveReducer = (
-  state: ITask = {
-    num: 5,
-    name: 'Complete your first assignment ',
-    deadline: '(within 5 days)',
-    description: 'A task.',
-    isCompleted: false,
-    assignedTo: '',
-  },
-  action: ISetTaskAsCompletedAction
+  state: ICustomTasks = { customTasks: [] },
+  action: ISetCustomTaskAsCompletedAction
 ) => {
   switch (action.type) {
     case SET_TASK_FIVE_AS_COMPLETED:
       return {
         ...state,
-        num: action.payload.num,
-        name: action.payload.name,
-        deadline: action.payload.deadline,
-        description: action.payload.description,
-        isCompleted: action.payload.isCompleted,
-        assignedTo: action.payload.assignedTo,
+        customTasks: action.payload.customTasks
       };
     default:
       return state;

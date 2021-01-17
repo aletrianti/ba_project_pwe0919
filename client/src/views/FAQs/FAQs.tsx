@@ -12,7 +12,11 @@ class FAQs extends React.Component {
   sections = [{ name: 'FAQs', pathname: 'faqs' }];
 
   // TODO: Replace this with categories from the DB
-  categories = [{ name: 'All' }, { name: 'Engineering' }, { name: 'Design' }];
+  categories = [
+    { id: 1, title: 'All' },
+    { id: 2, title: 'Engineering' },
+    { id: 3, title: 'Design' },
+  ];
 
   // TODO: Replace this with roles & responsibilities from the DB
   questions: IQuestion[] = [
