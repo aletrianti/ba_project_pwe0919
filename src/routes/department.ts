@@ -25,7 +25,9 @@ router.post('/', async (req: Request, res: Response, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
     const newDepartmentName: INewDepartmentInput = req.body;
 
-    const departmentExists: IDepartment = await knex('department').where('name', newDepartmentName).first();
+    const departmentExists: IDepartment = await knex('department')
+      .where({ companyId: companyId, name: newDepartmentName })
+      .first();
     if (departmentExists) throw Error(`${departmentExists.name} already exists for company: ${companyId}`);
 
     const newDepartment = await knex('department').insert({
