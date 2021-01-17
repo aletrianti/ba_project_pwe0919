@@ -13,3 +13,8 @@ export interface IRole {
 export interface INewRoleInput {
   title: string;
 }
+
+export interface IRoleTable {
+  label: string;
+  value: number;
+}

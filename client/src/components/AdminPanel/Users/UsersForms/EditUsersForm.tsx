@@ -134,14 +134,28 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
     });
   };
 
+  getRoles = async () => {
+    return await axios.get('/api/role/table', this.config).then(res => {
+      return res.data;
+    });
+  };
+
+  getBuddies = async () => {
+    return await axios.get('/api/company/buddy-table', this.config).then(res => {
+      return res.data;
+    });
+  };
+
   // Fields
   userModalFields: IField[] = [];
 
   async componentDidMount() {
     const departments = await this.getDepartments();
+    const roles = await this.getRoles();
+    const buddies = await this.getBuddies();
 
     this.userModalFields.push(
-      { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: [] } },
+      { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: buddies } },
       {
         name: 'Department',
         type: 'select',
@@ -150,7 +164,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
           list: departments,
         },
       },
-      { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] } }
+      { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: roles } }
     );
   }
 

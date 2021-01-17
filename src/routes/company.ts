@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { ITableUser } from '../../client/src/store/interfaces/tables.interfaces';
 import { IUser } from '../../types/auth.types';
-import { ICompanyEmployee, IEmployeeTable } from '../../types/company.types';
+import { IBuddyTable, ICompanyEmployee, IEmployeeTable } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
 import knex from '../knex';
@@ -37,6 +37,22 @@ router.get('/employees', async (req: Request, res: Response, next) => {
       .andWhere('user1.active', true);
 
     Api.sendSuccess<IEmployeeTable[]>(req, res, employees);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.get('/buddy-table', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const buddies: IBuddyTable[] = await knex('user').select('ID as value', 'firstName as label').where('companyId', companyId);
+
+    console.log(buddies);
+
+    Api.sendSuccess<IBuddyTable[]>(req, res, buddies);
   } catch (err) {
     Api.sendError(req, res, err);
   }

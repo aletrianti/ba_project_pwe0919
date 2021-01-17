@@ -50,3 +50,8 @@ export interface IEmployeeTable {
   buddyEmail: string;
   departmentName: string;
 }
+
+export interface IBuddyTable {
+  label: string;
+  value: number;
+}
