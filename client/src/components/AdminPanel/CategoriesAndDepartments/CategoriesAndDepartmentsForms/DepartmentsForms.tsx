@@ -109,7 +109,7 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
           header={'Edit a department'}
           submitFunction={this.saveEditedDepartmentToDB}
           closeFunction={this.closeEditDepartmentModal}
-          areFieldsValid={true} //{this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
           isModalOpen={this.props.editDepartmentModal.isOpen}
         />
       </>
