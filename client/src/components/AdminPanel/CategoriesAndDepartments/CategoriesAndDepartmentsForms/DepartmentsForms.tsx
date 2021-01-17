@@ -14,6 +14,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface CategoriesFormsProps {
   department: IDepartment;
@@ -72,11 +73,16 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
     return { isValid, message };
   };
 
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
   // Form events
   saveDepartmentToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
-    // call this after the request succeeds: this.closeAddDepartmentModal(event)
+    const data = {
+      name: this.props.department.department,
+    };
+    axios.post('/api/department', data, this.config).then(() => this.closeAddDepartmentModal(event));
   };
 
   saveEditedDepartmentToDB = (event: FormEvent): void => {

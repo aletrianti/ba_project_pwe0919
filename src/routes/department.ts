@@ -10,8 +10,9 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const deparments: IDepartment[] = await knex('department').where('companyId', companyId);
-    Api.sendSuccess<IDepartment[]>(req, res, deparments);
+    const departments: IDepartment[] = await knex('department').where('companyId', companyId);
+
+    Api.sendSuccess<IDepartment[]>(req, res, departments);
   } catch (err) {
     Api.sendError(req, res, err);
   }
@@ -23,12 +24,15 @@ router.post('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
     const newDepartmentName: INewDepartmentInput = req.body;
+    console.log(newDepartmentName.name);
 
-    const departmentExists: IDepartment = await knex('department').where('name', newDepartmentName).first();
+    const departmentExists: IDepartment = await knex('department')
+      .where({ companyId: companyId, name: newDepartmentName.name })
+      .first();
     if (departmentExists) throw Error(`${departmentExists.name} already exists for company: ${companyId}`);
 
     const newDepartment = await knex('department').insert({
-      name: newDepartmentName,
+      name: newDepartmentName.name,
       companyId: companyId,
       createdAt: dateDB(),
       updatedAt: dateDB(),
