@@ -129,37 +129,35 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
   };
 
   getDepartments = async () => {
-    const departments: IDepartmentTable[] = await axios.get('/api/department/table', this.config).then(res => {
+    return await axios.get('/api/department/table', this.config).then(res => {
       return res.data;
     });
-
-    this.setState({ companyDepartments: departments });
-    console.log(this.state.companyDepartments);
   };
 
   // Fields
-  // TODO: Add dynamic data (options)
-  userModalFields: IField[] = [
-    { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: [] } },
-    {
-      name: 'Department',
-      type: 'select',
-      onchange: this.storeDepartment,
-      options: {
-        list: this?.state.companyDepartments ? this.state.companyDepartments : [],
-      },
-    },
-    { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] } },
-  ];
+  userModalFields: IField[] = [];
 
-  componentDidMount() {
-    this.getDepartments();
+  async componentDidMount() {
+    const departments = await this.getDepartments();
+
+    this.userModalFields.push(
+      { name: 'Assigned to (buddy)', type: 'select', onchange: this.storeBuddy, options: { list: [] } },
+      {
+        name: 'Department',
+        type: 'select',
+        onchange: this.storeDepartment,
+        options: {
+          list: departments,
+        },
+      },
+      { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] } }
+    );
   }
 
   render() {
     return (
       <Form
-        fields={this.userModalFields}
+        fields={this.userModalFields || []}
         header={'Edit a user'}
         submitFunction={this.editUser}
         closeFunction={this.closeEditUserModal}
