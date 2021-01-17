@@ -14,6 +14,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface CategoriesFormsProps {
   department: IDepartment;
@@ -72,16 +73,19 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
     return { isValid, message };
   };
 
-  // Form events
-  saveDepartmentToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
   };
 
-  saveEditedDepartmentToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
+  // Form events
+  saveDepartmentToDB = (): void => {
+    const data = {
+      name: this.props.department.department,
+    };
+    axios.post('/api/department', data, this.config);
   };
+
+  saveEditedDepartmentToDB = (): void => {};
 
   // Fields
   addDepartmentModalFields: IField[] = [{ name: 'Department', type: 'text', onchange: this.storeDepartment }];
@@ -105,7 +109,7 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
           header={'Edit a department'}
           submitFunction={this.saveEditedDepartmentToDB}
           closeFunction={this.closeEditDepartmentModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true} //{this.state.areFieldsValid.areAllFieldsValid}
           isModalOpen={this.props.editDepartmentModal.isOpen}
         />
       </>

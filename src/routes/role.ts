@@ -66,8 +66,6 @@ router.get('/table', async (req: Request, res: Response, next) => {
 
     const roles: IRoleTable[] = await knex('role').select('ID as value', 'title as label').where('companyId', companyId);
 
-    console.log(roles);
-
     Api.sendSuccess<IRoleTable[]>(req, res, roles);
   } catch (err) {
     Api.sendError(req, res, err);
