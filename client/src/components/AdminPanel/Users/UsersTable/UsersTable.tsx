@@ -39,7 +39,7 @@ class UsersTable extends React.Component<UsersTableProps> {
   columns = [
     { title: 'First and last name', columnData: (data: any) => data.name },
     { title: 'Email', columnData: (data: any) => data.email },
-    { title: 'Buddy availability', columnData: (data: any) => data.isAvailableToBuddy },
+    { title: 'Buddy availability', columnData: (data: any) => (data.isAvailableToBuddy === 0 ? 'No' : 'Yes') },
     { title: 'Assigned to', columnData: (data: any) => data.assignedTo },
     { title: 'Department', columnData: (data: any) => data.department },
     { title: 'Role', columnData: (data: any) => data.role },

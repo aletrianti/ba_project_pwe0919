@@ -12,7 +12,7 @@ import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
 import DeleteUsersForm from './UsersForms/DeleteUsersForm';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
-import { ICompanyEmployee, IEmployeeTable } from '../../../../../types/company.types';
+import { IEmployeeTable } from '../../../../../types/company.types';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -37,7 +37,6 @@ class Users extends React.Component<UsersProps, UserState> {
     this.props.toggleAddUserModal({ isOpen: true });
   };
 
-  // TODO: Add dynamic user data for the table
   config = {
     headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
   };
@@ -52,7 +51,7 @@ class Users extends React.Component<UsersProps, UserState> {
         id: employee.ID,
         name: `${employee.firstName} ${employee.lastName}`,
         email: employee.email,
-        isAvailableToBuddy: employee?.availableToBuddy ? true : false,
+        isAvailableToBuddy: employee.availableToBuddy,
         assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName}  ${employee.buddyLastName}` : '',
         department: employee?.departmentId ? employee.departmentName : '',
         role: employee?.title ? employee.title : '',
