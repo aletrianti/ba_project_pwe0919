@@ -36,8 +36,6 @@ router.get('/employees', async (req: Request, res: Response, next) => {
       .where('user1.companyId', companyId)
       .andWhere('user1.active', true);
 
-    console.log(employees);
-
     Api.sendSuccess<IEmployeeTable[]>(req, res, employees);
   } catch (err) {
     Api.sendError(req, res, err);

@@ -21,6 +21,8 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { IDepartmentTable } from '../../../../../../types/department.types';
 
 interface EditUsersFormProps {
   user: IUser;
@@ -40,7 +42,11 @@ interface EditUsersFormState {
   userId: number;
 }
 
-class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormState> {
+interface CompanyDepartmentsState extends EditUsersFormState {
+  companyDepartments: IDepartmentTable[];
+}
+
+class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmentsState> {
   constructor(props: any) {
     super(props);
 
@@ -49,6 +55,7 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
         areAllFieldsValid: false,
       },
       userId: this.props.editUserModal.id,
+      companyDepartments: [],
     };
   }
 
@@ -117,6 +124,19 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
     await this.saveUserToDB();
   };
 
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
+  getDepartments = async () => {
+    const departments: IDepartmentTable[] = await axios.get('/api/department/table', this.config).then(res => {
+      return res.data;
+    });
+
+    this.setState({ companyDepartments: departments });
+    console.log(this.state.companyDepartments);
+  };
+
   // Fields
   // TODO: Add dynamic data (options)
   userModalFields: IField[] = [
@@ -125,10 +145,16 @@ class EditUsersForm extends React.Component<EditUsersFormProps, EditUsersFormSta
       name: 'Department',
       type: 'select',
       onchange: this.storeDepartment,
-      options: { list: [{ label: 'Engineering', value: 1 }] },
+      options: {
+        list: this?.state.companyDepartments ? this.state.companyDepartments : [],
+      },
     },
     { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] } },
   ];
+
+  componentDidMount() {
+    this.getDepartments();
+  }
 
   render() {
     return (
