@@ -1,4 +1,4 @@
-interface IResponsibility {
+export interface IResponsibility {
   ID: number;
   description: string;
   companyId: number;
@@ -7,7 +7,7 @@ interface IResponsibility {
   updatedAt: string;
 }
 
-interface IResponsibilityInput {
+export interface IResponsibilityInput {
   description: string;
   roleId: number;
 }
