@@ -34,3 +34,19 @@ export interface ICompanyEmployee {
   customTaskName: string;
   customTaskDescription: string;
 }
+
+export interface IEmployeeTable {
+  ID: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  roleId: number;
+  assignedBuddy: number;
+  availableToBuddy: boolean;
+  departmentId: number;
+  title: string;
+  buddyFirstName: string;
+  buddyLastName: string;
+  buddyEmail: string;
+  departmentName: string;
+}

@@ -12,7 +12,7 @@ import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
 import DeleteUsersForm from './UsersForms/DeleteUsersForm';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
-import { ICompanyEmployee } from '../../../../../types/company.types';
+import { ICompanyEmployee, IEmployeeTable } from '../../../../../types/company.types';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -43,20 +43,18 @@ class Users extends React.Component<UsersProps, UserState> {
   };
 
   getCompanyUsers = async () => {
-    const users: ICompanyEmployee[] = await axios.get('/api/company/employees', this.config).then(res => {
+    const users: IEmployeeTable[] = await axios.get('/api/company/employees', this.config).then(res => {
       return res.data;
     });
 
     const employeesTable: ITableUser[] = users.map(employee => {
-      console.log(employee.title);
-
       const user: ITableUser = {
         id: employee.ID,
         name: `${employee.firstName} ${employee.lastName}`,
         email: employee.email,
-        isAvailableToBuddy: employee.availableToBuddy,
-        assignedTo: '',
-        department: '',
+        isAvailableToBuddy: employee?.availableToBuddy ? true : false,
+        assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName}  ${employee.buddyLastName}` : '',
+        department: employee?.departmentId ? employee.departmentName : '',
         role: employee?.title ? employee.title : '',
       };
       return user;
