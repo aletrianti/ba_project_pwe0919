@@ -6,32 +6,39 @@ import Actions from '../../../common/Actions/Actions';
 
 import { ITableRolesAndResponsibilities } from '../../../../store/interfaces/tables.interfaces';
 import { ToggleEditRoleModalAction, ToggleDeleteRoleModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IEditRoleModal, IDeleteRoleModal } from '../../../../store/interfaces/forms/roles.interfaces';
+import { IEditRoleModal, IDeleteRoleModal, IRole } from '../../../../store/interfaces/forms/roles.interfaces';
+import { StoreRoleAction } from '../../../../store/actions/forms/roles/roles.actions';
 
 interface RolesAndResponsibilitiesTableProps {
   rolesAndResponsibilities: ITableRolesAndResponsibilities[];
+  storeRole: (faq: IRole) => any;
   toggleEditRoleModal: (editRoleModal: IEditRoleModal) => any;
   toggleDeleteRoleModal: (deleteRoleModal: IDeleteRoleModal) => any;
 }
 
 class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibilitiesTableProps> {
-  editRole = (id: number, e: MouseEvent) => {
+  editRole = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleEditRoleModal({ id, isOpen: true });
+    this.props.storeRole({
+      title: { title: data.role, isValid: false, errorMessage: '' },
+      description: { description: data.description, isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: data.responsibilities },
+    });
+    this.props.toggleEditRoleModal({ id: data.id, isOpen: true });
   };
 
-  deleteRole = (id: number, e: MouseEvent) => {
+  deleteRole = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleDeleteRoleModal({ id, isOpen: true });
+    this.props.toggleDeleteRoleModal({ id: data.id, isOpen: true });
   };
 
-  actions = (id: number) => (
+  actions = (data: any) => (
     <Actions
       actions={[
-        { name: 'Edit', function: (e: MouseEvent) => this.editRole(id, e) },
-        { name: 'Delete', function: (e: MouseEvent) => this.deleteRole(id, e) },
+        { name: 'Edit', function: (e: MouseEvent) => this.editRole(data, e) },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteRole(data, e) },
       ]}
     />
   );
@@ -40,7 +47,7 @@ class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibili
     { title: 'Role', columnData: (data: any) => data.role },
     { title: 'Description', columnData: (data: any) => data.description },
     { title: 'Responsibilities', columnData: (data: any) => data.responsibilities },
-    { title: '', columnData: (data: any) => this.actions(data.id) },
+    { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
   render() {
@@ -54,6 +61,7 @@ class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibili
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    storeRole: (role: IRole) => dispatch(StoreRoleAction(role)),
     toggleEditRoleModal: (editRoleModal: IEditRoleModal) => dispatch(ToggleEditRoleModalAction(editRoleModal)),
     toggleDeleteRoleModal: (deleteRoleModal: IDeleteRoleModal) => dispatch(ToggleDeleteRoleModalAction(deleteRoleModal)),
   };

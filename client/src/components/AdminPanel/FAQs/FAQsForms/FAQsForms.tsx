@@ -95,13 +95,13 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   };
 
   saveFaqToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
+    // TODO: add axios call here - use this.props.faq
+    // the last one is an object containing these objects: question, answer
   };
 
   saveEditedFaqToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
+    // TODO: add axios call here - use this.props.editFaqModal.id and this.props.faq
+    // the last one is an object containing these objects: question, answer
   };
 
   addFaq = async (event: FormEvent): Promise<void> => {

@@ -57,7 +57,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
       areFieldsValid: {
         areAllFieldsValid: false,
       },
-      responsibilities: [],
+      responsibilities: this.props.role.responsibilities.responsibilities || [],
     };
   }
 
@@ -70,10 +70,17 @@ class RolesAndResponsibilitiesForms extends React.Component<
     this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibilities({ responsibilities: [] });
   };
   closeEditRoleModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeRole({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: [] },
+    });
+    this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
     this.props.toggleEditRoleModal({ id: 0, isOpen: false });
   };
 
@@ -138,7 +145,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
   };
 
   saveRoleToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // TODO: add axios call here - use this.props.role
     // the last one is an object containing these objects: title, description, responsibilities
   };
 
@@ -165,24 +172,29 @@ class RolesAndResponsibilitiesForms extends React.Component<
     this.closeEditRoleModal(event);
   };
 
-  // Fields
-  addRoleModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription },
-    { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true },
-  ];
-  // TODO: Add dynamic value depending on selected item
-  editRoleModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle, value: '' },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: '' },
-    { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true, value: '' },
-  ];
-
   render() {
+    // Fields
+    const addRoleModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription },
+      { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true },
+    ];
+    // TODO: Add dynamic value depending on selected item
+    const editRoleModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle, value: this.props.role.title.title },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: this.props.role.description.description },
+      {
+        name: 'Responsibility',
+        type: 'text',
+        onchange: this.storeResponsibility,
+        isShortField: true,
+      },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addRoleModalFields}
+          fields={addRoleModalFields}
           header={'Add a role'}
           submitFunction={this.addRole}
           closeFunction={this.closeAddRoleModal}
@@ -193,7 +205,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
         />
 
         <Form
-          fields={this.editRoleModalFields}
+          fields={editRoleModalFields}
           header={'Edit a role'}
           submitFunction={this.editRole}
           closeFunction={this.closeEditRoleModal}
