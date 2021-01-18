@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 
 import { ToggleAddFaqModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddFaqModal } from '../../../store/interfaces/forms/faqs.interfaces';
 import { ITableFAQ } from '../../../store/interfaces/tables.interfaces';
+import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
 import DeleteFAQsForm from './FAQsForms/DeleteFAQsForm';
@@ -14,20 +16,38 @@ interface FaqsProps {
   toggleAddFaqModal: (addFaqModal: IAddFaqModal) => any;
 }
 
-class FAQs extends React.Component<FaqsProps> {
+interface FaqState {
+  faqs: any[];
+}
+
+class FAQs extends React.Component<FaqsProps, FaqState> {
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddFaqModal({ isOpen: true });
+    this.state = {
+      faqs: [],
+    };
   };
 
-  faqs: ITableFAQ[] = [
-    {
-      id: 1,
-      question: 'Who can I ask for help?',
-      answer: `In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.`,
-    },
-  ];
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
+  getFaqs = async () => {
+    return await axios.get('/api/faq', this.config).then(res => {
+      return res.data;
+    });
+  };
+
+  faqsModalFields: ITableFAQ[] = [];
+  async componentDidMount() {
+    console.log(this.faqsModalFields);
+    this.faqsModalFields = await this.getFaqs();
+    console.log(this.faqsModalFields);
+  }
+
+  faqs: ITableFAQ[] = this.faqsModalFields;
 
   render() {
     return (
@@ -35,7 +55,7 @@ class FAQs extends React.Component<FaqsProps> {
         <AddButton name={'Add FAQ'} function={this.openModal} />
 
         <div id="admin-panel__faqs__content" className="admin-panel__content">
-          <FAQsTable faqs={this.faqs} />
+          <FAQsTable faqs={this.faqsModalFields} />
         </div>
 
         <FAQsForms />
