@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const faqs: IFaq[] = await knex('faq').select('ID as id', 'question', 'answer').where('companyId', companyId);
+    const faqs: IFaq[] = await knex('faq').where('companyId', companyId);
     Api.sendSuccess<IFaq[]>(req, res, faqs);
   } catch (err) {
     Api.sendError(req, res, err);
