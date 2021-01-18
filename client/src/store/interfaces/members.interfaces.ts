@@ -10,6 +10,11 @@ export interface IMember {
   profilePicture?: any; // ?
 }
 
+export interface IMemberCompany extends IMember {
+  firstName: string;
+  lastName: string;
+}
+
 export interface IProfile {
   firstName: string;
   lastName: string;
