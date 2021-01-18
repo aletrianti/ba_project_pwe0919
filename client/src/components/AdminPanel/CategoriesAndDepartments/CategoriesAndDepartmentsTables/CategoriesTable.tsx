@@ -27,7 +27,6 @@ class CategoriesTable extends React.Component<CategoriesTableProps> {
   deleteCategory = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.storeCategory({ category: '', isValid: true, errorMessage: '' });
     this.props.toggleDeleteCategoryModal({ id: data.id, isOpen: true });
   };
 

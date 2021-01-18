@@ -121,12 +121,12 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   saveAchievementToDB = (): void => {
-    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
+    // TODO: add axios call here - use this.props.achievement
     // the last one is an object containing these objects: title, description, responsibilities
   };
 
   saveEditedAchievementToDB = (): void => {
-    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
+    // TODO: add axios call here - use this.editAchievementModal.id and this.props.achievement
     // the last one is an object containing these objects: title, description, responsibilities
   };
 

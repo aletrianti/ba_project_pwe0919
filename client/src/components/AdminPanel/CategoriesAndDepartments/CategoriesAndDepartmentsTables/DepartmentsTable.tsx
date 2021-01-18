@@ -34,7 +34,6 @@ class DepartmentsTable extends React.Component<DepartmentsTableProps> {
   deleteDepartment = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.storeDepartment({ department: '', isValid: true, errorMessage: '' });
     this.props.toggleDeleteDepartmentModal({ id: data.id, isOpen: true });
   };
 
