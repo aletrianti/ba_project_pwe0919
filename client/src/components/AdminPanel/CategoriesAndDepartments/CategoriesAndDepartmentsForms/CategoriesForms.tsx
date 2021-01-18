@@ -10,6 +10,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface CategoriesFormsProps {
   category: ICategory;
@@ -68,9 +69,17 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
     return { isValid, message };
   };
 
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
   // Form events
-  saveCategoryToDB = (event: FormEvent): void => {
+  saveCategoryToDB = async (event: FormEvent): Promise<void> => {
     // TODO: add axios call here - use this.props.category
+    const data = {
+      name: this.props.category.category,
+    };
+    await axios.post('/api/category', data, this.config);
   };
 
   saveEditedCategoryToDB = (event: FormEvent): void => {

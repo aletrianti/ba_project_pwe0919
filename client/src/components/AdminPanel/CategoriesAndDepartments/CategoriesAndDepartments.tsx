@@ -25,6 +25,7 @@ interface CategoriesAndDepartmentsProps {
 
 interface DepartmentsState {
   companyDepartments: ITableDepartment[];
+  companyCategories: ITableCategory[];
 }
 
 class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsProps, DepartmentsState> {
@@ -33,6 +34,7 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
 
     this.state = {
       companyDepartments: [],
+      companyCategories: [],
     };
   }
   openCategoriesModal = (e: MouseEvent) => {
@@ -67,8 +69,17 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
     this.setState({ companyDepartments: departmentsTable });
   };
 
+  getCategories = async () => {
+    const categories: ITableCategory[] = await axios.get('/api/category', this.config).then(res => {
+      return res.data;
+    });
+
+    this.setState({ companyCategories: categories });
+  };
+
   async componentDidMount() {
     await this.getDepartments();
+    await this.getCategories();
   }
 
   categories: ITableCategory[] = [{ id: 1, title: 'General' }];
@@ -80,7 +91,7 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
           <AddButton name={'Add category'} function={this.openCategoriesModal} />
 
           <div id="admin-panel__categories__content" className="admin-panel__content">
-            <CategoriesTable categories={this.categories} />
+            <CategoriesTable categories={this.state.companyCategories} />
           </div>
         </div>
         <div id="admin-panel__categories__second-half" className="admin-panel__categories__sections">
