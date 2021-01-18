@@ -64,8 +64,6 @@ class FAQs extends React.Component<{}, FaqState> {
 
             <Categories categories={this.categories} />
 
-            <AddButton name={'Add FAQ'} function={this.openAddFAQModal} />
-
             {sectionName === 'faqs' ? <HorizontalAccordion questions={this.state.faqs} section={sectionName} /> : null}
           </div>
         </div>
