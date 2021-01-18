@@ -125,7 +125,6 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   saveAchievementToDB = async (): Promise<void> => {
-    // TODO: add axios call here - use this.props.achievement
     const data = {
       name: this.props.achievement.title.title,
       description: this.props.achievement.description.description,
@@ -136,9 +135,17 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     });
   };
 
-  saveEditedAchievementToDB = (): void => {
-    // TODO: add axios call here - use this.editAchievementModal.id and this.props.achievement
-    // the last one is an object containing these objects: title, description, responsibilities
+  saveEditedAchievementToDB = async (): Promise<void> => {
+    const data = {
+      ID: this.props.editAchievementModal.id,
+      name: this.props.achievement.title.title, //BUG - gets all props
+      description: this.props.achievement.description.description, //BUG - gets all props
+      date: this.props.achievement.date.date, //BUG - gets all props
+    };
+
+    await axios.post('/api/company-achievement/update', data, this.config).then(() => {
+      return;
+    });
   };
 
   addAchievement = async (event: FormEvent): Promise<void> => {
@@ -154,7 +161,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     event.preventDefault();
 
     await this.saveEditedAchievementToDB();
-    await this.saveAchievementToDB();
+    // await this.saveAchievementToDB();
 
     this.closeEditAchievementModal(event);
   };

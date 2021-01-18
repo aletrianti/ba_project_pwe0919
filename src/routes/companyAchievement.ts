@@ -52,6 +52,7 @@ router.post('/update', async (req: Request, res: Response, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
 
     const body: Partial<ICompanyAchievement> = req.body;
+
     const { ID, ...reqbody } = body;
 
     const updatedCompanyAcievement = await knex('companyachievement')
