@@ -3,20 +3,42 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
+import axios from 'axios';
+import { getTokenFromLocalStorage } from '../../utils/localStorageActions';
 
-class CompanyAndTeam extends React.Component {
+interface CompanyState {
+  departments: any[];
+}
+
+class CompanyAndTeam extends React.Component<{}, CompanyState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      departments: [],
+    };
+  }
   sections = [
     { name: 'Team', pathname: 'team' },
     { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
     { name: 'Achievements', pathname: 'achievements' },
   ];
 
-  // TODO: Replace this with categories from the DB
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
+  getDepartments = async () => {
+    return await axios.get('/api/department/company-view', this.config).then(res => {
+      return res.data;
+    });
+  };
+
+  async componentDidMount() {
+    const departments: any[] = await this.getDepartments();
+    departments.unshift({ id: 0, title: 'All' });
+    this.setState({ departments: departments });
+  }
 
   // Dynamic components (performance)
   Team = lazy(() => import('../../components/CompanyAndTeam/Team/Team'));
@@ -39,7 +61,7 @@ class CompanyAndTeam extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={this.categories} />
+            <Categories categories={this.state.departments} />
 
             <Suspense fallback={<span className="loading">Loading...</span>}>
               {sectionName === 'team' ? (

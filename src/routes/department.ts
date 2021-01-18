@@ -80,4 +80,18 @@ router.get('/table', async (req: Request, res: Response, next) => {
   }
 });
 
+router.get('/company-view', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const departments: IDepartment[] = await knex('department').select('ID as id', 'name as title').where('companyId', companyId);
+
+    Api.sendSuccess<IDepartment[]>(req, res, departments);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
 module.exports = router;
