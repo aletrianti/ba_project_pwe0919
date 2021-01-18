@@ -9,32 +9,43 @@ import {
   ToggleEditAchievementModalAction,
   ToggleDeleteAchievementModalAction,
 } from '../../../../store/actions/forms/forms.actions';
-import { IEditAchievementModal, IDeleteAchievementModal } from '../../../../store/interfaces/forms/achievements.interfaces';
+import {
+  IEditAchievementModal,
+  IDeleteAchievementModal,
+  IAchievement,
+} from '../../../../store/interfaces/forms/achievements.interfaces';
+import { StoreAchievementAction } from '../../../../store/actions/forms/achievements/achievements.actions';
 
 interface AchievementsTableProps {
   achievements: ITableAchievement[];
+  storeAchievement: (achievement: IAchievement) => any;
   toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) => any;
   toggleDeleteAchievementModal: (deleteAchievementModal: IDeleteAchievementModal) => any;
 }
 
 class AchievementsTable extends React.Component<AchievementsTableProps> {
-  editAchievement = (id: number, e: MouseEvent) => {
+  editAchievement = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleEditAchievementModal({ id, isOpen: true });
+    this.props.storeAchievement({
+      title: { title: data.title, isValid: true, errorMessage: '' },
+      description: { description: data.description, isValid: true, errorMessage: '' },
+      date: { date: data.date, isValid: true, errorMessage: '' },
+    });
+    this.props.toggleEditAchievementModal({ id: data.id, isOpen: true });
   };
 
-  deleteAchievement = (id: number, e: MouseEvent) => {
+  deleteAchievement = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleDeleteAchievementModal({ id, isOpen: true });
+    this.props.toggleDeleteAchievementModal({ id: data.id, isOpen: true });
   };
 
-  actions = (id: number) => (
+  actions = (data: any) => (
     <Actions
       actions={[
-        { name: 'Edit', function: (e: MouseEvent) => this.editAchievement(id, e) },
-        { name: 'Delete', function: (e: MouseEvent) => this.deleteAchievement(id, e) },
+        { name: 'Edit', function: (e: MouseEvent) => this.editAchievement(data, e) },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteAchievement(data, e) },
       ]}
     />
   );
@@ -43,7 +54,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
     { title: 'Title', columnData: (data: any) => data.title },
     { title: 'Description', columnData: (data: any) => data.description },
     { title: 'Date', columnData: (data: any) => data.date },
-    { title: '', columnData: (data: any) => this.actions(data.id) },
+    { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
   render() {
@@ -57,6 +68,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    storeAchievement: (achievement: IAchievement) => dispatch(StoreAchievementAction(achievement)),
     toggleEditAchievementModal: (editAchievementModal: IEditAchievementModal) =>
       dispatch(ToggleEditAchievementModalAction(editAchievementModal)),
     toggleDeleteAchievementModal: (deleteAchievementModal: IDeleteAchievementModal) =>
