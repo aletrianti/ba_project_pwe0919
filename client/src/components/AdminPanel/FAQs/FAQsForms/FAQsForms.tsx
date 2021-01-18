@@ -51,6 +51,10 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   closeEditFaqModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeFaq({
+      question: { question: '', isValid: false, errorMessage: '' },
+      answer: { answer: '', isValid: false, errorMessage: '' },
+    });
     this.props.toggleEditFaqModal({ id: 0, isOpen: false });
   };
 
@@ -118,22 +122,22 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
     this.closeEditFaqModal(event);
   };
 
-  // Fields
-  addFaqModalFields: IField[] = [
-    { name: 'Question', type: 'text', onchange: this.storeQuestion },
-    { name: 'Answer', type: 'text', onchange: this.storeAnswer },
-  ];
-  // TODO: Add dynamic value depending on selected item
-  editFaqModalFields: IField[] = [
-    { name: 'Question', type: 'text', onchange: this.storeQuestion, value: '' },
-    { name: 'Answer', type: 'text', onchange: this.storeAnswer, value: '' },
-  ];
-
   render() {
+    // Fields
+    const addFaqModalFields: IField[] = [
+      { name: 'Question', type: 'text', onchange: this.storeQuestion },
+      { name: 'Answer', type: 'text', onchange: this.storeAnswer },
+    ];
+    // TODO: Add dynamic value depending on selected item
+    const editFaqModalFields: IField[] = [
+      { name: 'Question', type: 'text', onchange: this.storeQuestion, value: this.props.faq.question.question },
+      { name: 'Answer', type: 'text', onchange: this.storeAnswer, value: this.props.faq.answer.answer },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addFaqModalFields}
+          fields={addFaqModalFields}
           header={'Add a faq'}
           submitFunction={this.addFaq}
           closeFunction={this.closeAddFaqModal}
@@ -142,7 +146,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
         />
 
         <Form
-          fields={this.editFaqModalFields}
+          fields={editFaqModalFields}
           header={'Edit a faq'}
           submitFunction={this.editFaq}
           closeFunction={this.closeEditFaqModal}
