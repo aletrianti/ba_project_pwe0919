@@ -22,6 +22,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface AchievementsFormsProps {
   achievementTitle: IAchievementTitle;
@@ -52,6 +53,9 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       },
     };
   }
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
 
   // Actions
   closeAddAchievementModal = (e: MouseEvent | FormEvent) => {
@@ -120,9 +124,16 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     });
   };
 
-  saveAchievementToDB = (): void => {
+  saveAchievementToDB = async (): Promise<void> => {
     // TODO: add axios call here - use this.props.achievement
-    // the last one is an object containing these objects: title, description, responsibilities
+    const data = {
+      name: this.props.achievement.title.title,
+      description: this.props.achievement.description.description,
+      date: this.props.achievement.date.date,
+    };
+    await axios.post('/api/company-achievement', data, this.config).then(() => {
+      return;
+    });
   };
 
   saveEditedAchievementToDB = (): void => {
@@ -156,6 +167,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       { name: 'Date', type: 'text', onchange: this.storeDate },
     ];
     // TODO: Add dynamic value depending on selected item
+
     const editAchievementModalFields: IField[] = [
       { name: 'Title', type: 'text', onchange: this.storeTitle, value: this.props.achievement.title.title },
       {

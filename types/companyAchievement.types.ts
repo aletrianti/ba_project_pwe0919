@@ -5,8 +5,10 @@ export interface ICompanyAchievement {
   companyId: number;
   createAt: string;
   updatedAt: string;
+  date: string;
 }
 export interface INewCompanyAchievementInput {
   name: string;
   description: string;
+  date: string;
 }

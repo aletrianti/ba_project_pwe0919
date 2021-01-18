@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import { ITableAchievement } from '../../client/src/store/interfaces/tables.interfaces';
 import { ICompanyAchievement, INewCompanyAchievementInput } from '../../types/companyAchievement.types';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
@@ -10,8 +11,10 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const companyAchievements: ICompanyAchievement[] = await knex('companyachievement').where('companyId', companyId);
-    Api.sendSuccess<ICompanyAchievement[]>(req, res, companyAchievements);
+    const companyAchievements: ITableAchievement[] = await knex('companyachievement')
+      .select('ID as id', 'name as title', 'description', 'date')
+      .where('companyId', companyId);
+    Api.sendSuccess<ITableAchievement[]>(req, res, companyAchievements);
   } catch (err) {
     Api.sendError(req, res, err);
   }
@@ -31,6 +34,7 @@ router.post('/', async (req: Request, res: Response, next) => {
       companyId: companyId,
       createdAt: dateDB(),
       updatedAt: dateDB(),
+      date: body.date,
     });
 
     const companyachievement = await knex('companyachievement').where('ID', newCompanyAcievement).first();
