@@ -73,8 +73,6 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
 
   categories: ITableCategory[] = [{ id: 1, title: 'General' }];
 
-  departments: ITableDepartment[] = [{ id: 1, title: 'Engineering' }];
-
   render() {
     return (
       <div id="admin-panel__categories">

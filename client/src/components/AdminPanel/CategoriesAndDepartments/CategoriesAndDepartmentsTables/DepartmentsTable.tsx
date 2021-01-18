@@ -9,39 +9,47 @@ import {
   ToggleEditDepartmentModalAction,
   ToggleDeleteDepartmentModalAction,
 } from '../../../../store/actions/forms/forms.actions';
-import { IEditDepartmentModal, IDeleteDepartmentModal } from '../../../../store/interfaces/forms/departments.interfaces';
+import {
+  IEditDepartmentModal,
+  IDeleteDepartmentModal,
+  IDepartment,
+} from '../../../../store/interfaces/forms/departments.interfaces';
+import { StoreDepartmentAction } from '../../../../store/actions/forms/departments/departments.actions';
 
 interface DepartmentsTableProps {
   departments: ITableDepartment[];
+  storeDepartment: (department: IDepartment) => any;
   toggleEditDepartmentModal: (editDepartmentModal: IEditDepartmentModal) => any;
   toggleDeleteDepartmentModal: (deleteDepartmentModal: IDeleteDepartmentModal) => any;
 }
 
 class DepartmentsTable extends React.Component<DepartmentsTableProps> {
-  editDepartment = (id: number, e: MouseEvent) => {
+  editDepartment = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleEditDepartmentModal({ id, isOpen: true });
+    this.props.storeDepartment({ department: data.title, isValid: true, errorMessage: '' });
+    this.props.toggleEditDepartmentModal({ id: data.id, isOpen: true });
   };
 
-  deleteDepartment = (id: number, e: MouseEvent) => {
+  deleteDepartment = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleDeleteDepartmentModal({ id, isOpen: true });
+    this.props.storeDepartment({ department: '', isValid: true, errorMessage: '' });
+    this.props.toggleDeleteDepartmentModal({ id: data.id, isOpen: true });
   };
 
-  actions = (id: number) => (
+  actions = (data: any) => (
     <Actions
       actions={[
-        { name: 'Edit', function: (e: MouseEvent) => this.editDepartment(id, e) },
-        { name: 'Delete', function: (e: MouseEvent) => this.deleteDepartment(id, e) },
+        { name: 'Edit', function: (e: MouseEvent) => this.editDepartment(data, e) },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteDepartment(data, e) },
       ]}
     />
   );
 
   columns = [
     { title: 'Department', columnData: (data: any) => data.title },
-    { title: '', columnData: (data: any) => this.actions(data.id) },
+    { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
   render() {
@@ -55,6 +63,7 @@ class DepartmentsTable extends React.Component<DepartmentsTableProps> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    storeDepartment: (department: IDepartment) => dispatch(StoreDepartmentAction(department)),
     toggleEditDepartmentModal: (editDepartmentModal: IEditDepartmentModal) =>
       dispatch(ToggleEditDepartmentModalAction(editDepartmentModal)),
     toggleDeleteDepartmentModal: (deleteDepartmentModal: IDeleteDepartmentModal) =>

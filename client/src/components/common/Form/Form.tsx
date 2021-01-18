@@ -37,7 +37,7 @@ class Form extends React.Component<FormProps> {
                       <InputField
                         name={field.name}
                         onchange={field.onchange}
-                        value={field.value || ''}
+                        value={field.value}
                         isTextarea={field.type === 'textarea'}
                         isShortField={true}
                       />
@@ -57,7 +57,7 @@ class Form extends React.Component<FormProps> {
                   <InputField
                     name={field.name}
                     onchange={field.onchange}
-                    value={field.value || ''}
+                    value={field.value}
                     isTextarea={field.type === 'textarea'}
                     key={i}
                   />
