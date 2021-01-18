@@ -17,17 +17,22 @@ interface FaqsProps {
 }
 
 interface FaqState {
-  faqs: any[];
+  faqs: ITableFAQ[];
 }
 
 class FAQs extends React.Component<FaqsProps, FaqState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      faqs: [],
+    };
+  }
+
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddFaqModal({ isOpen: true });
-    this.state = {
-      faqs: [],
-    };
   };
 
   config = {
@@ -40,14 +45,11 @@ class FAQs extends React.Component<FaqsProps, FaqState> {
     });
   };
 
-  faqsModalFields: ITableFAQ[] = [];
   async componentDidMount() {
-    console.log(this.faqsModalFields);
-    this.faqsModalFields = await this.getFaqs();
-    console.log(this.faqsModalFields);
-  }
+    const faqs = await this.getFaqs();
 
-  faqs: ITableFAQ[] = this.faqsModalFields;
+    this.setState({ faqs: faqs });
+  }
 
   render() {
     return (
@@ -55,7 +57,7 @@ class FAQs extends React.Component<FaqsProps, FaqState> {
         <AddButton name={'Add FAQ'} function={this.openModal} />
 
         <div id="admin-panel__faqs__content" className="admin-panel__content">
-          <FAQsTable faqs={this.faqsModalFields} />
+          <FAQsTable faqs={this.state.faqs} />
         </div>
 
         <FAQsForms />
