@@ -39,13 +39,13 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   closeAddCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
-    this.props.toggleAddCategoryModal({ isOpen: false });
-
     this.props.storeCategory({ category: '', isValid: false, errorMessage: '' });
+    this.props.toggleAddCategoryModal({ isOpen: false });
   };
   closeEditCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeCategory({ category: '', isValid: false, errorMessage: '' });
     this.props.toggleEditCategoryModal({ id: 0, isOpen: false });
   };
 
@@ -70,27 +70,27 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
 
   // Form events
   saveCategoryToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
-    // call this after the request succeeds: this.closeAddCategoryModal(event)
+    // TODO: add axios call here - use this.props.category
   };
 
   saveEditedCategoryToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
+    // TODO: add axios call here - use this.editCategoryModal.id and this.props.category
+    // the last one is an object containing these objects: category, isValid, errorMessage
     // call this after the request succeeds: this.closeEditCategoryModal(event)
   };
 
-  // Fields
-  addCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory }];
-  // TODO: Add dynamic value depending on selected item
-  editCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory, value: '' }];
-
   render() {
+    // Fields
+    const addCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory }];
+    // TODO: Add dynamic value depending on selected item
+    const editCategoryModalFields: IField[] = [
+      { name: 'Category', type: 'text', onchange: this.storeCategory, value: this.props.category.category },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addCategoryModalFields}
+          fields={addCategoryModalFields}
           header={'Add a category'}
           submitFunction={this.saveCategoryToDB}
           closeFunction={this.closeAddCategoryModal}
@@ -99,7 +99,7 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
         />
 
         <Form
-          fields={this.editCategoryModalFields}
+          fields={editCategoryModalFields}
           header={'Edit a category'}
           submitFunction={this.saveEditedCategoryToDB}
           closeFunction={this.closeEditCategoryModal}
