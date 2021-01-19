@@ -29,7 +29,7 @@ export interface IStoreRoleResponsibilityAction {
 }
 
 export interface IRoleResponsibilities {
-  responsibilities: string[];
+  responsibilities: any[];
 }
 export interface IStoreRoleResponsibilitiesAction {
   type: string;

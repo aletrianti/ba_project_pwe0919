@@ -43,7 +43,7 @@ interface RolesAndResponsibilitiesFormsProps {
 
 interface RolesAndResponsibilitiesFormsState {
   areFieldsValid: ICheckFields;
-  responsibilities: string[];
+  responsibilities: any[];
 }
 
 class RolesAndResponsibilitiesForms extends React.Component<
@@ -53,11 +53,14 @@ class RolesAndResponsibilitiesForms extends React.Component<
   constructor(props: any) {
     super(props);
 
+    const responsibilitiesArray = this.props.role.responsibilities.responsibilities;
+    const responsibilities = responsibilitiesArray.map(item => item.description);
+
     this.state = {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
-      responsibilities: this.props.role.responsibilities.responsibilities || [],
+      responsibilities: responsibilities || [],
     };
   }
 
@@ -173,6 +176,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
   };
 
   render() {
+    console.log(this.state.responsibilities);
     // Fields
     const addRoleModalFields: IField[] = [
       { name: 'Title', type: 'text', onchange: this.storeTitle },

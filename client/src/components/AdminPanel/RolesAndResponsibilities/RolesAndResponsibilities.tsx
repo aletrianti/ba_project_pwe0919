@@ -44,7 +44,6 @@ class RolesAndResponsibilities extends React.Component<RolesProps, RolesAndRespo
 
   async componentDidMount() {
     await this.getRoles();
-    console.log(this.state.rolesAndResponsibilities);
   }
 
   render() {
