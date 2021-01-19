@@ -184,7 +184,6 @@ class RolesAndResponsibilitiesForms extends React.Component<
   };
 
   render() {
-    console.log(this.state.responsibilities);
     // Fields
     const addRoleModalFields: IField[] = [
       { name: 'Title', type: 'text', onchange: this.storeTitle },
@@ -221,7 +220,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
           header={'Edit a role'}
           submitFunction={this.editRole}
           closeFunction={this.closeEditRoleModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editRoleModal.isOpen}
           shortFieldFunction={this.displayResponsibilities}
           list={this.state.responsibilities}
