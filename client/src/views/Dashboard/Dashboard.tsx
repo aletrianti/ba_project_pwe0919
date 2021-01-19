@@ -9,12 +9,20 @@ import { IMember, IProfile } from '../../store/interfaces/members.interfaces';
 
 // localStorage
 import { getUserInfoFromLocalStorage } from '../../utils/localStorageActions';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
 
 interface DashboardState {
   currentUser: IProfile;
 }
 
-class Dashboard extends React.Component<{}, DashboardState> {
+interface DashboardProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class Dashboard extends React.Component<DashboardProps, DashboardState> {
   constructor(props: any) {
     super(props);
 
@@ -69,9 +77,17 @@ class Dashboard extends React.Component<{}, DashboardState> {
             </div>
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default Dashboard;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(Dashboard);

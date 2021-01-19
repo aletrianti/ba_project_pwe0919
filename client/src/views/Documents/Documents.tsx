@@ -5,8 +5,15 @@ import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/DocumentsAccordion';
 import Actions from '../../components/common/Actions/Actions';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
 
-class Documents extends React.Component {
+interface DocumentsProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class Documents extends React.Component<DocumentsProps> {
   sections = [{ name: 'Files', pathname: 'documents' }];
 
   // TODO: Replace this with categories from the DB
@@ -58,9 +65,17 @@ class Documents extends React.Component {
             </div>
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default Documents;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(Documents);

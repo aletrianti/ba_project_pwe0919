@@ -1,7 +1,7 @@
 // import types + interfaces for payloads
 
-import { IProfile, IProfileFirstName, IStoreProfileFirstNameAction, IProfileLastName, IStoreProfileLastNameAction, IProfileEmail, IStoreProfileEmailAction, IProfilePassword, IStoreProfilePasswordAction, IProfileAtCompanySince, IStoreProfileAtCompanySinceAction, IProfileContactLink, IStoreProfileContactLinkAction, IProfileDescription, IStoreProfileAction, IStoreProfileDescriptionAction } from "../../../interfaces/forms/profile.interfaces";
-import { PROFILE, STORE_PROFILE_AT_COMPANY_SINCE, STORE_PROFILE_CONTACT_LINK, STORE_PROFILE_DESCRIPTION, STORE_PROFILE_EMAIL, STORE_PROFILE_FIRST_NAME, STORE_PROFILE_LAST_NAME, STORE_PROFILE_PASSWORD } from "./profile.types";
+import { IProfile, IProfileFirstName, IStoreProfileFirstNameAction, IProfileLastName, IStoreProfileLastNameAction, IProfileEmail, IStoreProfileEmailAction, IProfilePassword, IStoreProfilePasswordAction, IProfileAtCompanySince, IStoreProfileAtCompanySinceAction, IProfileContactLink, IStoreProfileContactLinkAction, IProfileDescription, IStoreProfileAction, IStoreProfileDescriptionAction, IProfileBirthday, IStoreProfileBirthdayAction } from "../../../interfaces/forms/profile.interfaces";
+import { PROFILE, STORE_PROFILE_AT_COMPANY_SINCE, STORE_PROFILE_BIRTHDAY, STORE_PROFILE_CONTACT_LINK, STORE_PROFILE_DESCRIPTION, STORE_PROFILE_EMAIL, STORE_PROFILE_FIRST_NAME, STORE_PROFILE_LAST_NAME, STORE_PROFILE_PASSWORD } from "./profile.types";
 
 // actions
 export const StoreFirstNameAction = (data: IProfileFirstName): IStoreProfileFirstNameAction => {
@@ -18,6 +18,10 @@ export const StoreEmailAction = (data: IProfileEmail): IStoreProfileEmailAction 
 
 export const StorePasswordAction = (data: IProfilePassword): IStoreProfilePasswordAction => {
   return { type: STORE_PROFILE_PASSWORD, payload: data };
+};
+
+export const StoreBirthdayAction = (data: IProfileBirthday): IStoreProfileBirthdayAction => {
+  return { type: STORE_PROFILE_BIRTHDAY, payload: data };
 };
 
 export const StoreAtCompanySinceAction = (data: IProfileAtCompanySince): IStoreProfileAtCompanySinceAction => {

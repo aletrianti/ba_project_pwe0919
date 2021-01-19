@@ -3,16 +3,23 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
-import AddButton from '../../components/common/AddButton/AddButton';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
 import { IQuestion } from '../../store/interfaces/questions.interfaces';
-import { getTokenFromLocalStorage, isCurrentUserAnAdmin } from '../../utils/localStorageActions';
+import { getTokenFromLocalStorage } from '../../utils/localStorageActions';
 import axios from 'axios';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
 
 interface FaqState {
   faqs: IQuestion[];
 }
-class FAQs extends React.Component<{}, FaqState> {
+
+interface FaqProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class FAQs extends React.Component<FaqProps, FaqState> {
   constructor(props: any) {
     super(props);
 
@@ -67,9 +74,17 @@ class FAQs extends React.Component<{}, FaqState> {
             {sectionName === 'faqs' ? <HorizontalAccordion questions={this.state.faqs} section={sectionName} /> : null}
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default FAQs;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(FAQs);

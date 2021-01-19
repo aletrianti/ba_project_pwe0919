@@ -43,7 +43,7 @@ import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibi
 import { toggleAddCategoryModalReducer, toggleEditCategoryModalReducer, toggleDeleteCategoryModalReducer, deleteCategoryReducer, categoryReducer } from './forms/categories.reducers';
 import { toggleAddDepartmentModalReducer, toggleEditDepartmentModalReducer, toggleDeleteDepartmentModalReducer, deleteDepartmentReducer, departmentReducer } from './forms/departments.reducers';
 import { toggleAddTaskModalReducer, toggleEditTaskModalReducer, toggleDeleteTaskModalReducer, storeTaskNameReducer, storeTaskDescriptionReducer, deleteTaskReducer, storeTaskRoleReducer, storeTaskDeadlineReducer, taskReducer } from './forms/tasks.reducers';
-import { storeProfileAtCompanySinceReducer, storeProfileContactLinkReducer, storeProfileDescriptionReducer, storeProfileEmailReducer, storeProfileFirstNameReducer, storeProfilePasswordReducer } from './forms/profile.reducers';
+import { storeProfileAtCompanySinceReducer, storeProfileContactLinkReducer, storeProfileDescriptionReducer, storeProfileEmailReducer, storeProfileFirstNameReducer, storeProfilePasswordReducer, storeProfileReducer, toggleEditProfileModalReducer } from './forms/profile.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -92,7 +92,7 @@ const reducers: any = combineReducers({
   addTaskModal: toggleAddTaskModalReducer,
   editTaskModal: toggleEditTaskModalReducer,
   deleteTaskModal: toggleDeleteTaskModalReducer,
-  editProfileModal: toggleDeleteRoleModalReducer,
+  editProfileModal: toggleEditProfileModalReducer,
   // Tasks
   taskOne: storeTaskOneReducer,
   taskTwo: storeTaskTwoReducer,
@@ -146,7 +146,7 @@ const reducers: any = combineReducers({
   profileAtCompanySince: storeProfileAtCompanySinceReducer,
   profileDescription: storeProfileDescriptionReducer,
   profileContactLink: storeProfileContactLinkReducer,
-  profile: storeRoleTitleReducer,
+  profile: storeProfileReducer,
   // ...
 });
 

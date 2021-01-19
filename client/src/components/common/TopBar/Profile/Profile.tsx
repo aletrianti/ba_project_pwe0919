@@ -10,6 +10,10 @@ import { withStyles } from '@material-ui/core/styles';
 
 // localStorage
 import { updateCurrentUserAvailability } from '../../../../utils/localStorageActions';
+import { connect } from 'react-redux';
+import { ToggleEditProfileModalAction } from '../../../../store/actions/forms/forms.actions';
+import { IEditProfileModal } from '../../../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from './ProfileForm/ProfileForm';
 
 interface ProfileProps {
   firstName: string;
@@ -21,6 +25,7 @@ interface ProfileProps {
   description?: string;
   profilePicture?: any; // ?
   isAvailable: boolean;
+  toggleEditProfileModal: (editProfileModal: IEditProfileModal) => any;
 }
 
 interface ProfileState {
@@ -61,7 +66,11 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
     updateCurrentUserAvailability(!this.state.isChecked);
   };
 
-  openEditProfileModal = (e: MouseEvent): void => {};
+  openEditProfileModal = (e: MouseEvent): void => {
+    e.preventDefault();
+
+    this.props.toggleEditProfileModal({ id: 0, isOpen: true });
+  };
 
   render() {
     const { firstName, lastName, jobTitle, department, birthday, memberSince, description, profilePicture } = this.props;
@@ -84,7 +93,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
                   {firstName} {lastName}
                 </h5>
 
-                <Actions type={'profile'} />
+                <Actions
+                  type={'profile'}
+                  actions={[{ name: 'Edit', function: (e: MouseEvent) => this.openEditProfileModal(e) }]}
+                />
               </div>
               <div id="profile__availability">
                 <span>Buddy availability:</span>
@@ -129,4 +141,10 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
   }
 }
 
-export default Profile;
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    toggleEditProfileModal: (editProfileModal: IEditProfileModal) => dispatch(ToggleEditProfileModalAction(editProfileModal)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Profile);

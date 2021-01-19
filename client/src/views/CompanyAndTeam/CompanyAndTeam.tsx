@@ -5,12 +5,19 @@ import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import axios from 'axios';
 import { getTokenFromLocalStorage } from '../../utils/localStorageActions';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
 
 interface CompanyState {
   departments: any[];
 }
 
-class CompanyAndTeam extends React.Component<{}, CompanyState> {
+interface CompanyAndTeamProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class CompanyAndTeam extends React.Component<CompanyAndTeamProps, CompanyState> {
   constructor(props: any) {
     super(props);
 
@@ -78,9 +85,17 @@ class CompanyAndTeam extends React.Component<{}, CompanyState> {
             </Suspense>
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default CompanyAndTeam;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(CompanyAndTeam);
