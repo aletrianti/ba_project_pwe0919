@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-import { ITableRolesAndResponsibilities } from '../../../../store/interfaces/tables.interfaces';
+import { IRolesAndResponsibilities, ITableRolesAndResponsibilities } from '../../../../store/interfaces/tables.interfaces';
 import { ToggleEditRoleModalAction, ToggleDeleteRoleModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IEditRoleModal, IDeleteRoleModal, IRole } from '../../../../store/interfaces/forms/roles.interfaces';
 import { StoreRoleAction } from '../../../../store/actions/forms/roles/roles.actions';
 
 interface RolesAndResponsibilitiesTableProps {
-  rolesAndResponsibilities: ITableRolesAndResponsibilities[];
+  rolesAndResponsibilities: IRolesAndResponsibilities[];
   storeRole: (faq: IRole) => any;
   toggleEditRoleModal: (editRoleModal: IEditRoleModal) => any;
   toggleDeleteRoleModal: (deleteRoleModal: IDeleteRoleModal) => any;
@@ -45,8 +45,8 @@ class RolesAndResponsibilitiesTable extends React.Component<RolesAndResponsibili
 
   columns = [
     { title: 'Role', columnData: (data: any) => data.role },
-    { title: 'Description', columnData: (data: any) => data.description },
-    { title: 'Responsibilities', columnData: (data: any) => data.responsibilities },
+    { title: 'Description', columnData: (data: any) => (data?.description ? data.description : '') },
+    { title: 'Responsibilities', columnData: (data: any) => data.responsibilities }, // BUG --> I added to the responsibilities the id, so we can edit them from here.
     { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
