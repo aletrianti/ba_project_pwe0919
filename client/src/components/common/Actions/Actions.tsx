@@ -6,10 +6,6 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
 
-interface ActionsState {
-  isOpen: boolean;
-}
-
 interface IAction {
   name: string;
   function: any;
@@ -20,27 +16,20 @@ interface ActionsProps {
   type?: string;
 }
 
-class Actions extends React.Component<ActionsProps, ActionsState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-    };
-  }
-
-  toggleActions = (): void => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
-
+class Actions extends React.Component<ActionsProps> {
   render() {
     return (
       <>
         {this.props.type === 'profile' ? (
           <div className="actions__container">
-            <div className="actions__icon" onClick={() => this.toggleActions()}>
-              <EditIcon />
-            </div>
+            {this.props.actions &&
+              this.props.actions.map((action, i) => {
+                return (
+                  <div className="actions__icon" onClick={action.function} key={i}>
+                    <EditIcon />
+                  </div>
+                );
+              })}
           </div>
         ) : (
           [
