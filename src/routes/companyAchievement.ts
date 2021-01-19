@@ -34,7 +34,7 @@ router.post('/', async (req: Request, res: Response, next) => {
       companyId: companyId,
       createdAt: dateDB(),
       updatedAt: dateDB(),
-      date: body.date,
+      date: dateDB(body.date),
     });
 
     const companyachievement = await knex('companyachievement').where('ID', newCompanyAcievement).first();

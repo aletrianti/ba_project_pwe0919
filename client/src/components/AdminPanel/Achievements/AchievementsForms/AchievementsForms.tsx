@@ -1,6 +1,7 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import moment from 'moment';
 
 import { ToggleAddAchievementModalAction, ToggleEditAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
@@ -128,7 +129,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     const data = {
       name: this.props.achievement.title.title,
       description: this.props.achievement.description.description,
-      date: this.props.achievement.date.date,
+      date: moment(this.props.achievement.date.date, 'DD-MM-YYYY').format(),
     };
     await axios.post('/api/company-achievement', data, this.config).then(() => {
       return;
@@ -140,7 +141,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       ID: this.props.editAchievementModal.id,
       name: this.props.achievement.title.title, //BUG - gets all props
       description: this.props.achievement.description.description, //BUG - gets all props
-      date: this.props.achievement.date.date, //BUG - gets all props
+      date: moment(this.props.achievement.date.date, 'DD-MM-YYYY').format(), //BUG - gets all props
     };
 
     await axios.post('/api/company-achievement/update', data, this.config).then(() => {
@@ -183,7 +184,12 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
         onchange: this.storeDescription,
         value: this.props.achievement.description.description,
       },
-      { name: 'Date', type: 'text', onchange: this.storeDate, value: this.props.achievement.date.date },
+      {
+        name: 'Date',
+        type: 'text',
+        onchange: this.storeDate,
+        value: this.props.achievement.date.date ? moment(this.props.achievement.date.date).format('DD-MM-YYYY') : '',
+      },
     ];
 
     return (

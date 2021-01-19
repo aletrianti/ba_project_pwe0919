@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
@@ -53,7 +54,7 @@ class AchievementsTable extends React.Component<AchievementsTableProps> {
   columns = [
     { title: 'Title', columnData: (data: any) => data.title },
     { title: 'Description', columnData: (data: any) => data.description },
-    { title: 'Date', columnData: (data: any) => data.date },
+    { title: 'Date', columnData: (data: any) => moment(data.date).format('MMMM YYYY') },
     { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
