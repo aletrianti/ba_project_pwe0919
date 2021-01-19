@@ -50,8 +50,6 @@ router.get('/buddy-table', async (req: Request, res: Response, next) => {
 
     const buddies: IBuddyTable[] = await knex('user').select('ID as value', 'firstName as label').where('companyId', companyId);
 
-    console.log(buddies);
-
     Api.sendSuccess<IBuddyTable[]>(req, res, buddies);
   } catch (err) {
     Api.sendError(req, res, err);

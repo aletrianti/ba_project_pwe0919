@@ -27,9 +27,6 @@ router.post('/', async (req: Request, res: Response, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
 
     const body: INewCompanyAchievementInput = req.body;
-    console.log(body.date);
-
-    console.log(dateDB(body.date));
 
     const newCompanyAcievement = await knex('companyachievement').insert({
       name: body.name,

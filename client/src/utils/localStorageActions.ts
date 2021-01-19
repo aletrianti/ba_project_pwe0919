@@ -26,11 +26,10 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage['user_token'] = res.data.token;
   localStorage['current_user'] = JSON.stringify(currentUser);
 
-  console.log('Stored token.');
+  // console.log('Stored token.');
 };
 
 export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
-  console.log(res);
   const user = res.data.user;
   const role = res.data.userRole;
   const department = res.data.userDepartment;

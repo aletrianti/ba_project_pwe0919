@@ -24,7 +24,6 @@ router.post('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
     const newDepartmentName: INewDepartmentInput = req.body;
-    console.log(newDepartmentName.name);
 
     const departmentExists: IDepartment = await knex('department')
       .where({ companyId: companyId, name: newDepartmentName.name })
@@ -71,8 +70,6 @@ router.get('/table', async (req: Request, res: Response, next) => {
     const departments: IDepartmentTable[] = await knex('department')
       .select('ID as value', 'name as label')
       .where('companyId', companyId);
-
-    console.log(departments);
 
     Api.sendSuccess<IDepartmentTable[]>(req, res, departments);
   } catch (err) {
