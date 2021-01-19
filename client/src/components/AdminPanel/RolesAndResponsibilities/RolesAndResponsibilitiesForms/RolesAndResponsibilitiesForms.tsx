@@ -70,6 +70,11 @@ class RolesAndResponsibilitiesForms extends React.Component<
 
     this.props.toggleAddRoleModal({ isOpen: false });
 
+    this.props.storeRole({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: [] },
+    });
     this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
@@ -83,7 +88,10 @@ class RolesAndResponsibilitiesForms extends React.Component<
       description: { description: '', isValid: false, errorMessage: '' },
       responsibilities: { responsibilities: [] },
     });
+    this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibilities({ responsibilities: [] });
     this.props.toggleEditRoleModal({ id: 0, isOpen: false });
   };
 
