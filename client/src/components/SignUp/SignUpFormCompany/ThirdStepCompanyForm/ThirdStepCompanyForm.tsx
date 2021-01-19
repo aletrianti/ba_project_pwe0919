@@ -132,7 +132,6 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       .then(res => {
         storeTokenInLocalStorage(res);
         this.inviteUsers(res.data.user.companyId);
-        console.log(res);
       })
       .then(() => goToNextStep(event, history))
       .catch(err => console.error(err));

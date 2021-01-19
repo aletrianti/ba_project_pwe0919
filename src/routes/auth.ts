@@ -191,7 +191,6 @@ router.post('/login', async (req: Request, res: Response, next) => {
     const { email, password }: ILoginInput = req.body;
 
     const user: IUser = await knex('user').where('email', email).first();
-    console.log(user.password);
 
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) throw new Error(`Invalid password for email ${email}`);

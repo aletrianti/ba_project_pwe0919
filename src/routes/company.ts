@@ -50,9 +50,38 @@ router.get('/buddy-table', async (req: Request, res: Response, next) => {
 
     const buddies: IBuddyTable[] = await knex('user').select('ID as value', 'firstName as label').where('companyId', companyId);
 
-    console.log(buddies);
-
     Api.sendSuccess<IBuddyTable[]>(req, res, buddies);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.get('/', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const employees: any[] = await knex('user as user1')
+      .select(
+        'user1.ID',
+        'user1.firstName',
+        'user1.lastName',
+        'user1.roleId',
+        'user1.assignedBuddy',
+        'user1.availableToBuddy',
+        'user1.birthday',
+        'user1.atCompanySince as memberSince',
+        'user1.departmentId',
+        'role.title as jobTitle',
+        'department.name as department'
+      )
+      .leftJoin('role', 'user1.roleId', 'role.ID')
+      .leftJoin('department', 'user1.departmentId', 'department.ID')
+      .where('user1.companyId', companyId)
+      .andWhere('user1.active', true);
+
+    Api.sendSuccess<any[]>(req, res, employees);
   } catch (err) {
     Api.sendError(req, res, err);
   }

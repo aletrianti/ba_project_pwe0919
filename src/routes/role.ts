@@ -21,9 +21,6 @@ router.get('/', async (req: Request, res: Response, next) => {
 router.post('/', async (req: Request, res: Response, next) => {
   try {
     const { userId, companyId } = getUserIds(req);
-    console.log(req);
-    console.log(userId);
-    console.log(companyId);
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
     const newRoleTitle: INewRoleInput = req.body;
@@ -67,6 +64,25 @@ router.get('/table', async (req: Request, res: Response, next) => {
     const roles: IRoleTable[] = await knex('role').select('ID as value', 'title as label').where('companyId', companyId);
 
     Api.sendSuccess<IRoleTable[]>(req, res, roles);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.get('/responsibilities', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const roles: any[] = await knex('role').select('ID as id', 'title as role', 'description').where('companyId', companyId);
+
+    for (let index = 0; index < roles.length; index++) {
+      const responsibilities: any[] = await knex('responsibility').select('ID', 'description').where('roleId', roles[index].id);
+      roles[index].responsibilities = responsibilities;
+    }
+
+    Api.sendSuccess<any[]>(req, res, roles);
   } catch (err) {
     Api.sendError(req, res, err);
   }

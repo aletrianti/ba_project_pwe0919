@@ -6,30 +6,44 @@ import Categories from '../../components/common/Categories/Categories';
 import AddButton from '../../components/common/AddButton/AddButton';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
 import { IQuestion } from '../../store/interfaces/questions.interfaces';
-import { isCurrentUserAnAdmin } from '../../utils/localStorageActions';
+import { getTokenFromLocalStorage, isCurrentUserAnAdmin } from '../../utils/localStorageActions';
+import axios from 'axios';
 
-class FAQs extends React.Component {
+interface FaqState {
+  faqs: IQuestion[];
+}
+class FAQs extends React.Component<{}, FaqState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      faqs: [],
+    };
+  }
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
+  getFaqs = async () => {
+    return await axios.get('/api/faq', this.config).then(res => {
+      return res.data;
+    });
+  };
+
+  async componentDidMount() {
+    const faqs = await this.getFaqs();
+
+    this.setState({ faqs: faqs });
+  }
+
   sections = [{ name: 'FAQs', pathname: 'faqs' }];
 
   // TODO: Replace this with categories from the DB
+
   categories = [
     { id: 1, title: 'All' },
     { id: 2, title: 'Engineering' },
     { id: 3, title: 'Design' },
-  ];
-
-  // TODO: Replace this with roles & responsibilities from the DB
-  questions: IQuestion[] = [
-    {
-      question: 'Who can I ask for help?',
-      answer:
-        'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
-    },
-    {
-      question: 'Who can I ask for help?',
-      answer:
-        'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
-    },
   ];
 
   openAddFAQModal = (): void => {};
@@ -50,9 +64,7 @@ class FAQs extends React.Component {
 
             <Categories categories={this.categories} />
 
-            <AddButton name={'Add FAQ'} function={this.openAddFAQModal} />
-
-            {sectionName === 'faqs' ? <HorizontalAccordion questions={this.questions} section={sectionName} /> : null}
+            {sectionName === 'faqs' ? <HorizontalAccordion questions={this.state.faqs} section={sectionName} /> : null}
           </div>
         </div>
       </div>

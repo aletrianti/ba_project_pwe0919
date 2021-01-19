@@ -46,6 +46,7 @@ router.use('/company', jwtMW, require('./src/routes/company'));
 router.use('/role', jwtMW, require('./src/routes/role'));
 router.use('/responsibility', jwtMW, require('./src/routes/responsibility'));
 router.use('/department', jwtMW, require('./src/routes/department'));
+router.use('/faq', jwtMW, require('./src/routes/faq'));
 // Initialize routes
 app.use('/api', router);
 

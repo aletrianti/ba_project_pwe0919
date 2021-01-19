@@ -44,6 +44,18 @@ export interface ITableRolesAndResponsibilities {
   responsibilities: string[];
 }
 
+export interface IRolesAndResponsibilities {
+  id: number;
+  role: string;
+  description: string;
+  responsibilities: IResponsibilityRole[];
+}
+
+export interface IResponsibilityRole {
+  id: number;
+  description: string;
+}
+
 export interface ITableDocuments {
   id: number;
   filename: string;
