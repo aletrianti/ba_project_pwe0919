@@ -10,6 +10,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface FaqsFormsProps {
   faqQuestion: IFaqQuestion;
@@ -94,9 +95,18 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
     });
   };
 
-  saveFaqToDB = (): void => {
-    // TODO: add axios call here - use this.props.faq
-    // the last one is an object containing these objects: question, answer
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
+
+  saveFaqToDB = async (): Promise<void> => {
+    const data = {
+      question: this.props.faq.question.question,
+      answer: this.props.faq.answer.answer,
+    };
+    await axios.post('/api/faq', data, this.config).then(() => {
+      return;
+    });
   };
 
   saveEditedFaqToDB = (): void => {
@@ -105,7 +115,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   };
 
   addFaq = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
+    // event.preventDefault();
 
     await this.saveFaqToRedux();
     await this.saveFaqToDB();
@@ -114,7 +124,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   };
 
   editFaq = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
+    // event.preventDefault();
 
     await this.saveEditedFaqToDB();
     await this.saveFaqToDB();

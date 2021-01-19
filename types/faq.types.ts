@@ -7,3 +7,8 @@ export interface IFaq {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface IFAQInput {
+  question: string
+  answer: string
+}
