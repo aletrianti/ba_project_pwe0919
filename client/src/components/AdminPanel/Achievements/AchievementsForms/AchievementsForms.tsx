@@ -208,7 +208,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
           header={'Edit a achievement'}
           submitFunction={this.editAchievement}
           closeFunction={this.closeEditAchievementModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editAchievementModal.isOpen}
         />
       </>

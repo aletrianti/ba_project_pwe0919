@@ -43,7 +43,7 @@ interface RolesAndResponsibilitiesFormsProps {
 
 interface RolesAndResponsibilitiesFormsState {
   areFieldsValid: ICheckFields;
-  responsibilities: string[];
+  responsibilities: any[];
 }
 
 class RolesAndResponsibilitiesForms extends React.Component<
@@ -53,11 +53,14 @@ class RolesAndResponsibilitiesForms extends React.Component<
   constructor(props: any) {
     super(props);
 
+    const responsibilitiesArray = this.props.role.responsibilities.responsibilities;
+    const responsibilities = responsibilitiesArray.map(item => item.description);
+
     this.state = {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
-      responsibilities: this.props.role.responsibilities.responsibilities || [],
+      responsibilities: responsibilities || [],
     };
   }
 
@@ -67,6 +70,11 @@ class RolesAndResponsibilitiesForms extends React.Component<
 
     this.props.toggleAddRoleModal({ isOpen: false });
 
+    this.props.storeRole({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: [] },
+    });
     this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
@@ -80,7 +88,10 @@ class RolesAndResponsibilitiesForms extends React.Component<
       description: { description: '', isValid: false, errorMessage: '' },
       responsibilities: { responsibilities: [] },
     });
+    this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibilities({ responsibilities: [] });
     this.props.toggleEditRoleModal({ id: 0, isOpen: false });
   };
 
@@ -209,7 +220,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
           header={'Edit a role'}
           submitFunction={this.editRole}
           closeFunction={this.closeEditRoleModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editRoleModal.isOpen}
           shortFieldFunction={this.displayResponsibilities}
           list={this.state.responsibilities}

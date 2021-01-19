@@ -150,7 +150,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
           header={'Edit a faq'}
           submitFunction={this.editFaq}
           closeFunction={this.closeEditFaqModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editFaqModal.isOpen}
         />
       </>

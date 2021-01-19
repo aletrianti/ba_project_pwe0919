@@ -115,7 +115,7 @@ class DepartmentsForms extends React.Component<DepartmentsFormsProps, Department
           header={'Edit a department'}
           submitFunction={this.saveEditedDepartmentToDB}
           closeFunction={this.closeEditDepartmentModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editDepartmentModal.isOpen}
         />
       </>

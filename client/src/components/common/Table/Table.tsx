@@ -12,10 +12,14 @@ interface TableProps {
 }
 
 class Table extends React.Component<TableProps> {
-  truncateData = (data: string | string[]) => {
+  truncateData = (data: any | any[]) => {
     const limit: number = 25;
 
-    data = Array.isArray(data) ? data.toString() : data;
+    data = Array.isArray(data)
+      ? [
+          data.map(item => item.description + ', '), // Modify if it happens with more than just roles
+        ]
+      : data;
 
     if (data.length > limit) {
       data = data.substring(0, limit);
@@ -27,6 +31,7 @@ class Table extends React.Component<TableProps> {
 
   render() {
     const { data, columns } = this.props;
+
     return (
       <div className="table__container">
         <table>
@@ -43,7 +48,6 @@ class Table extends React.Component<TableProps> {
               return (
                 <tr key={i}>
                   {columns.map((column, i) => {
-                    console.log(item);
                     return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
                   })}
                 </tr>
