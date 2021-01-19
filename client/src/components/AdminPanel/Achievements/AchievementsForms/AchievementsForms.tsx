@@ -64,6 +64,11 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
 
     this.props.toggleAddAchievementModal({ isOpen: false });
 
+    this.props.storeAchievement({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      date: { date: '', isValid: false, errorMessage: '' },
+    });
     this.props.storeAchievementTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeAchievementDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeAchievementDate({ date: '', isValid: false, errorMessage: '' });
@@ -76,6 +81,9 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       description: { description: '', isValid: false, errorMessage: '' },
       date: { date: '', isValid: false, errorMessage: '' },
     });
+    this.props.storeAchievementTitle({ title: '', isValid: false, errorMessage: '' });
+    this.props.storeAchievementDescription({ description: '', isValid: false, errorMessage: '' });
+    this.props.storeAchievementDate({ date: '', isValid: false, errorMessage: '' });
     this.props.toggleEditAchievementModal({ id: 0, isOpen: false });
   };
 
@@ -139,9 +147,13 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   saveEditedAchievementToDB = async (): Promise<void> => {
     const data = {
       ID: this.props.editAchievementModal.id,
-      name: this.props.achievement.title.title, //BUG - gets all props
-      description: this.props.achievement.description.description, //BUG - gets all props
-      date: moment(this.props.achievement.date.date, 'DD-MM-YYYY').format(), //BUG - gets all props
+      name: this.props.achievementTitle.title ? this.props.achievementTitle.title : this.props.achievement.title.title,
+      description: this.props.achievementDescription.description
+        ? this.props.achievementDescription.description
+        : this.props.achievement.description.description,
+      date: this.props.achievementDate.date
+        ? moment(this.props.achievementDate.date, 'DD-MM-YYYY').format()
+        : this.props.achievement.date.date,
     };
 
     await axios.post('/api/company-achievement/update', data, this.config).then(() => {
