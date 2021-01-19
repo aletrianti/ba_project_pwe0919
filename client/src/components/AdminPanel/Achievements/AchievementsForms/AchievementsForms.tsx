@@ -162,8 +162,6 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   addAchievement = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveAchievementToRedux();
     await this.saveAchievementToDB();
 
@@ -171,8 +169,6 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   editAchievement = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveEditedAchievementToDB();
     // await this.saveAchievementToDB();
 
