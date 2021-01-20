@@ -5,6 +5,7 @@ export interface ICategory {
   createdBy: number;
   createAt: string;
   updatedAt: string;
+  deleted: boolean;
 }
 
 export interface INewCategoryInput {

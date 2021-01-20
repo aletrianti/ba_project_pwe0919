@@ -10,7 +10,7 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const departments: IDepartment[] = await knex('department').where('companyId', companyId);
+    const departments: IDepartment[] = await knex('department').where({ companyId: companyId, deleted: false });
 
     Api.sendSuccess<IDepartment[]>(req, res, departments);
   } catch (err) {
@@ -51,7 +51,7 @@ router.post('/delete', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    await knex('department').where('ID', Number(req.body.id)).del();
+    await knex('department').where('ID', Number(req.body.id)).update('deleted', true);
 
     Api.sendSuccess<string>(req, res, `CompanyAchievement ${req.body.id} deleted`);
   } catch (err) {
@@ -67,7 +67,7 @@ router.get('/table', async (req: Request, res: Response, next) => {
 
     const departments: IDepartmentTable[] = await knex('department')
       .select('ID as value', 'name as label')
-      .where('companyId', companyId);
+      .where({ companyId: companyId, deleted: false });
 
     Api.sendSuccess<IDepartmentTable[]>(req, res, departments);
   } catch (err) {
@@ -81,7 +81,9 @@ router.get('/company-view', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const departments: IDepartment[] = await knex('department').select('ID as id', 'name as title').where('companyId', companyId);
+    const departments: IDepartment[] = await knex('department')
+      .select('ID as id', 'name as title')
+      .where({ companyId: companyId, deleted: false });
 
     Api.sendSuccess<IDepartment[]>(req, res, departments);
   } catch (err) {
