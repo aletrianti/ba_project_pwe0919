@@ -11,7 +11,7 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const roles: IRole[] = await knex('role').where('companyId', companyId);
+    const roles: IRole[] = await knex('role').where({ companyId: companyId, deleted: false });
     Api.sendSuccess<IRole[]>(req, res, roles);
   } catch (err) {
     Api.sendError(req, res, err);
@@ -61,7 +61,9 @@ router.get('/table', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const roles: IRoleTable[] = await knex('role').select('ID as value', 'title as label').where('companyId', companyId);
+    const roles: IRoleTable[] = await knex('role')
+      .select('ID as value', 'title as label')
+      .where({ companyId: companyId, deleted: false });
 
     Api.sendSuccess<IRoleTable[]>(req, res, roles);
   } catch (err) {
@@ -75,7 +77,9 @@ router.get('/responsibilities', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const roles: any[] = await knex('role').select('ID as id', 'title as role', 'description').where('companyId', companyId);
+    const roles: any[] = await knex('role')
+      .select('ID as id', 'title as role', 'description')
+      .where({ companyId: companyId, deleted: false });
 
     for (let index = 0; index < roles.length; index++) {
       const responsibilities: any[] = await knex('responsibility').select('ID', 'description').where('roleId', roles[index].id);
@@ -83,6 +87,20 @@ router.get('/responsibilities', async (req: Request, res: Response, next) => {
     }
 
     Api.sendSuccess<any[]>(req, res, roles);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/delete', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    await knex('role').where('ID', Number(req.body.id)).update('deleted', true);
+
+    Api.sendSuccess<string>(req, res, `Role ${req.body.id} deleted`);
   } catch (err) {
     Api.sendError(req, res, err);
   }

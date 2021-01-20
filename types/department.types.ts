@@ -4,6 +4,7 @@ export interface IDepartment {
   companyID: number;
   createdAt: string;
   updatedAt: string;
+  deleted: boolean;
 }
 
 export interface INewDepartmentInput {

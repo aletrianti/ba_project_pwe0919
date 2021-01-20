@@ -11,7 +11,9 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const categories: ITableCategory[] = await knex('category').select('ID as id', 'name as title').where('companyId', companyId);
+    const categories: ITableCategory[] = await knex('category')
+      .select('ID as id', 'name as title')
+      .where({ companyId: companyId, deleted: false });
     Api.sendSuccess<ITableCategory[]>(req, res, categories);
   } catch (err) {
     Api.sendError(req, res, err);
@@ -71,7 +73,7 @@ router.post('/delete', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    await knex('category').where('ID', Number(req.body.id)).del();
+    await knex('category').where('ID', Number(req.body.id)).update('deleted', true);
 
     Api.sendSuccess<string>(req, res, `Category ${req.body.id} deleted`);
   } catch (err) {
