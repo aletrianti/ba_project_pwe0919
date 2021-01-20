@@ -9,3 +9,10 @@ export interface IRole {
   description: string;
   responsibilities: IResponsibility[];
 }
+
+export interface IRolesAndResponsibilitiesCompany {
+  id: number;
+  role: string;
+  description: string;
+  responsibilities: IResponsibility[];
+}

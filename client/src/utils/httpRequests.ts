@@ -93,6 +93,10 @@ export const getRolesTableInfo = async (): Promise<any> => {
   return await axios.get('/api/role/table', httpRequestsConfig).then(res => res.data);
 };
 export const getRolesResponsibilities = async (): Promise<any> => {
+  return await axios.get('/api/role/responsibilities/admin', httpRequestsConfig).then(res => res.data);
+};
+
+export const getRolesResponsibilitiesCompany = async (): Promise<any> => {
   return await axios.get('/api/role/responsibilities', httpRequestsConfig).then(res => res.data);
 };
 

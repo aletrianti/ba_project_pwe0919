@@ -3,11 +3,11 @@ import './HorizontalAccordion.scss';
 
 import HorizontalAccordionItem from './HorizontalAccordionItem/HorizontalAccordionItem';
 
-import { IRole } from '../../../store/interfaces/roles.interfaces';
+import { IRole, IRolesAndResponsibilitiesCompany } from '../../../store/interfaces/roles.interfaces';
 import { IQuestion } from '../../../store/interfaces/questions.interfaces';
 
 interface HorizontalAccordionProps {
-  roles?: IRole[];
+  roles?: IRolesAndResponsibilitiesCompany[];
   questions?: IQuestion[];
   section: string;
 }
@@ -24,7 +24,7 @@ class HorizontalAccordion extends React.Component<HorizontalAccordionProps> {
                 <HorizontalAccordionItem
                   section={section}
                   content={{
-                    title: role.title,
+                    title: role.role,
                     description: role.description,
                     responsibilities: role.responsibilities,
                   }}
