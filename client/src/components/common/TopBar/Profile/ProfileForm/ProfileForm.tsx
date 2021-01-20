@@ -217,7 +217,7 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
               <InputField name={'First name'} onchange={this.storeFirstName} value={firstName.firstName || ''} />
               <InputField name={'Last name'} onchange={this.storeLastName} value={lastName.lastName || ''} />
               <InputField name={'Email'} onchange={this.storeEmail} value={email.email} />
-              <InputField name={'Password'} onchange={this.storePassword} value={''} />
+              <InputField name={'Change Password'} onchange={this.storePassword} value={''} />
               <InputField name={'Birthday'} onchange={this.storeBirthday} value={birthday.birthday || ''} />
             </div>
             <div className="form__fields__containers">
