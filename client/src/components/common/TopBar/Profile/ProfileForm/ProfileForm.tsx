@@ -31,7 +31,8 @@ import Button from '../../../Button/Button';
 import InputField from '../../../InputField/InputField';
 import { ICheckFields, checkFormFields } from '../../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../../utils/formValidation';
-
+import { getCurrentUser } from '../../../../../utils/httpRequests';
+import { ICurrentUser } from '../../../../../../../types/auth.types';
 interface ProfileFormProps {
   profile: IProfile;
   profileFirstName: IProfileFirstName;
@@ -57,6 +58,7 @@ interface ProfileFormProps {
 
 interface ProfileFormState {
   areFieldsValid: ICheckFields;
+  currentUser: any;
 }
 
 class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
@@ -67,6 +69,7 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
+      currentUser: {},
     };
   }
 
@@ -204,6 +207,11 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
     this.closeEditProfileModal(event);
   };
 
+  async componentDidMount() {
+    const currentUser = await getCurrentUser();
+    this.setState({ currentUser: currentUser });
+  }
+
   render() {
     const { firstName, lastName, email, birthday, atCompanySince, description, contactLink } = this.props.profile;
 
@@ -214,25 +222,34 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
 
           <div className="form__fields__container">
             <div className="form__fields__containers">
-              <InputField name={'First name'} onchange={this.storeFirstName} value={firstName.firstName || ''} />
+              <InputField
+                name={'First name'}
+                onchange={this.storeFirstName}
+                value={this.state?.currentUser?.user?.firstName || ''}
+              />
+              {/* <InputField name={'First name'} onchange={this.storeFirstName} value={firstName.firstName || ''} /> */}
               <InputField name={'Last name'} onchange={this.storeLastName} value={lastName.lastName || ''} />
-              <InputField name={'Email'} onchange={this.storeEmail} value={email.email} />
+              <InputField name={'Email'} onchange={this.storeEmail} value={this.state?.currentUser?.user?.email} />
               <InputField name={'Change Password'} onchange={this.storePassword} value={''} />
-              <InputField name={'Birthday'} onchange={this.storeBirthday} value={birthday.birthday || ''} />
+              <InputField name={'Birthday'} onchange={this.storeBirthday} value={this.state?.currentUser?.user?.birthday || ''} />
             </div>
             <div className="form__fields__containers">
               <InputField
-                name={`At ${'Company'} since`}
+                name={`At ${this.state?.currentUser?.companyName || 'Company'} since`}
                 onchange={this.storeAtCompanySince}
-                value={atCompanySince.atCompanySince || ''}
+                value={this.state?.currentUser?.user?.atCompanySince || ''}
               />
               <InputField
                 name={'Description'}
                 onchange={this.storeDescription}
-                value={description.description || ''}
+                value={this.state?.currentUser?.user?.description || ''}
                 isTextarea={true}
               />
-              <InputField name={'Contact link'} onchange={this.storeContactLink} value={contactLink.contactLink || ''} />
+              <InputField
+                name={'Contact link'}
+                onchange={this.storeContactLink}
+                value={this.state?.currentUser?.user?.contactLink || ''}
+              />
             </div>
           </div>
 

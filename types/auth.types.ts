@@ -76,3 +76,7 @@ export interface ILoginInput {
   email: string;
   password: string;
 }
+ export interface ICurrentUser { 
+   user: IUser
+   companyName: string
+ }

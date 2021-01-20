@@ -118,3 +118,8 @@ export const submitAssignedTask = async (data: any): Promise<any> => {
 export const gettAssignedTasks = async (): Promise<any> => {
   return await axios.get('/api/assignedtask', httpRequestsConfig);
 };
+
+//Auth
+export const getCurrentUser = async (): Promise<any> => {
+  return await axios.get('/api/auth/current-user', httpRequestsConfig).then(res => res.data);
+};

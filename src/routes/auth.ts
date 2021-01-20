@@ -1,6 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdatedUser, IUser } from '../../types/auth.types';
+import {
+  ICurrentUser,
+  ILoginInput,
+  INewCompanyInput,
+  INewEmployees,
+  ISignUpUser,
+  IUpdatedUser,
+  IUser,
+} from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
@@ -259,8 +267,14 @@ router.get('/current-user', jwtMW, async (req, res, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
 
     const user: IUser = await knex('user').where('ID', userId).first();
+    const company: ICompany = await knex('company').where('ID', companyId).first();
 
-    Api.sendSuccess<IUser>(req, res, user);
+    const currentUser = {
+      user,
+      companyName: company.name,
+    };
+
+    Api.sendSuccess<ICurrentUser>(req, res, currentUser);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
