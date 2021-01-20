@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ToggleAddRoleModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddRoleModal } from '../../../store/interfaces/forms/roles.interfaces';
 import { IRolesAndResponsibilities, ITableRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
+import { getRolesResponsibilities } from '../../../utils/httpRequests';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
@@ -27,19 +28,17 @@ class RolesAndResponsibilities extends React.Component<RolesProps, RolesAndRespo
       rolesAndResponsibilities: [],
     };
   }
+
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddRoleModal({ isOpen: true });
   };
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
 
   getRoles = async () => {
-    const roles = await axios.get('/api/role/responsibilities', this.config);
+    const roles = await getRolesResponsibilities();
 
-    this.setState({ rolesAndResponsibilities: roles.data });
+    this.setState({ rolesAndResponsibilities: roles });
   };
 
   async componentDidMount() {

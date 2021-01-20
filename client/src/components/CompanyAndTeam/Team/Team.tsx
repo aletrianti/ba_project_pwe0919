@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React from 'react';
 
-import { IMember, IMemberCompany } from '../../../store/interfaces/members.interfaces';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
+import { IMemberCompany } from '../../../store/interfaces/members.interfaces';
+import { getCompanyEmployees } from '../../../utils/httpRequests';
 
 import Member from '../../common/Member/Member';
 interface companyState {
@@ -18,14 +18,8 @@ class Team extends React.Component<{}, companyState> {
     };
   }
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getEmployees = async () => {
-    return await axios.get('/api/company', this.config).then(res => {
-      return res.data;
-    });
+    return await getCompanyEmployees();
   };
 
   async componentDidMount() {

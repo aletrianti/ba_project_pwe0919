@@ -72,6 +72,10 @@ export const removeAllItemsFromLocalStorage = () => {
 
 export const getTokenFromLocalStorage = (): string => localStorage['user_token'];
 
+export const httpRequestsConfig = {
+  headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+};
+
 export const getUserInfoFromLocalStorage = (): IProfile => JSON.parse(localStorage['current_user']);
 
 export const isCurrentUserAnAdmin = (): boolean => getUserInfoFromLocalStorage().isAdmin;

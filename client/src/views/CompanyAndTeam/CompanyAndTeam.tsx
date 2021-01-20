@@ -8,6 +8,7 @@ import { getTokenFromLocalStorage } from '../../utils/localStorageActions';
 import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
+import { getCompanyDepartments } from '../../utils/httpRequests';
 
 interface CompanyState {
   departments: any[];
@@ -31,14 +32,8 @@ class CompanyAndTeam extends React.Component<CompanyAndTeamProps, CompanyState> 
     { name: 'Achievements', pathname: 'achievements' },
   ];
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getDepartments = async () => {
-    return await axios.get('/api/department/company-view', this.config).then(res => {
-      return res.data;
-    });
+    return await getCompanyDepartments();
   };
 
   async componentDidMount() {

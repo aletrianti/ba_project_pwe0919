@@ -11,6 +11,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { postCategory, updateCategory } from '../../../../utils/httpRequests';
 
 interface CategoriesFormsProps {
   category: ICategory;
@@ -69,23 +70,23 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
     return { isValid, message };
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   // Form events
   saveCategoryToDB = async (event: FormEvent): Promise<void> => {
     // TODO: add axios call here - use this.props.category
     const data = {
       name: this.props.category.category,
     };
-    await axios.post('/api/category', data, this.config);
+    await postCategory(data);
   };
 
-  saveEditedCategoryToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.editCategoryModal.id and this.props.category
-    // the last one is an object containing these objects: category, isValid, errorMessage
-    // call this after the request succeeds: this.closeEditCategoryModal(event)
+  saveEditedCategoryToDB = async (event: FormEvent): Promise<void> => {
+    const data = {
+      ID: this.props.editCategoryModal.id,
+      body: {
+        name: this.props.category.category,
+      },
+    };
+    await updateCategory(data).then(() => this.closeEditCategoryModal(event));
   };
 
   render() {

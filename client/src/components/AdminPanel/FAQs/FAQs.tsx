@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ToggleAddFaqModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddFaqModal } from '../../../store/interfaces/forms/faqs.interfaces';
 import { ITableFAQ } from '../../../store/interfaces/tables.interfaces';
+import { getFAQs } from '../../../utils/httpRequests';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
@@ -35,18 +36,8 @@ class FAQs extends React.Component<FaqsProps, FaqState> {
     this.props.toggleAddFaqModal({ isOpen: true });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
-  getFaqs = async () => {
-    return await axios.get('/api/faq', this.config).then(res => {
-      return res.data;
-    });
-  };
-
   async componentDidMount() {
-    const faqs = await this.getFaqs();
+    const faqs = await getFAQs();
 
     this.setState({ faqs: faqs });
   }

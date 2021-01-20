@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { ITableCategory } from '../../client/src/store/interfaces/tables.interfaces';
-import { ICategory, INewCategoryInput } from '../../types/category.types';
+import { ICategory, ICategoryUpdate, INewCategoryInput } from '../../types/category.types';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
 
@@ -54,10 +54,9 @@ router.post('/update', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const body: Partial<ICategory> = req.body;
-    const { ID, ...reqbody } = body;
+    const { ID, body }: ICategoryUpdate = req.body;
 
-    const updatedCategory = await knex('category').where('ID', Number(ID)).update(reqbody);
+    const updatedCategory = await knex('category').where('ID', Number(ID)).update(body);
 
     const category: ICategory = await knex('category').where('ID', updatedCategory).first();
 

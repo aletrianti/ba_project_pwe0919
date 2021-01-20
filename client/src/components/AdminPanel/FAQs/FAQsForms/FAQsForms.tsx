@@ -12,6 +12,7 @@ import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { runInThisContext } from 'vm';
+import { postFAQ, updateFAQ } from '../../../../utils/httpRequests';
 
 interface FaqsFormsProps {
   faqQuestion: IFaqQuestion;
@@ -104,18 +105,12 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
     });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   saveFaqToDB = async (): Promise<void> => {
     const data = {
       question: this.props.faq.question.question,
       answer: this.props.faq.answer.answer,
     };
-    await axios.post('/api/faq', data, this.config).then(() => {
-      return;
-    });
+    await postFAQ(data);
   };
 
   saveEditedFaqToDB = async (): Promise<void> => {
@@ -127,9 +122,7 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
       },
     };
 
-    await axios.post('/api/faq/update', data, this.config).then(() => {
-      return;
-    });
+    await updateFAQ(data);
   };
 
   addFaq = async (event: FormEvent): Promise<void> => {

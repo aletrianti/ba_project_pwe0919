@@ -24,7 +24,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { setCustomTaskAsCompletedAction } from '../../../../store/actions/tasks/tasks.actions';
+import { setCustomTask } from '../../../../store/actions/tasks/tasks.actions';
 import { ICustomTasks, ITask as IITask } from '../../../../store/interfaces/tasks.interfaces';
 
 interface TasksFormsProps {
@@ -245,7 +245,7 @@ const mapDisparchToProps = (dispatch: any) => {
     storeTask: (task: ITask) => dispatch(StoreTaskAction(task)),
     toggleAddTaskModal: (addTaskModal: IAddTaskModal) => dispatch(ToggleAddTaskModalAction(addTaskModal)),
     toggleEditTaskModal: (EditTaskModal: IEditTaskModal) => dispatch(ToggleEditTaskModalAction(EditTaskModal)),
-    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
+    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTask(taskFive)),
   };
 };
 

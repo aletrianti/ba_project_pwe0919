@@ -23,6 +23,7 @@ import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { IDepartmentTable } from '../../../../../../types/department.types';
+import { getDepartmentsTableInfo, getRolesTableInfo, getBuddiesTableInfo } from '../../../../utils/httpRequests';
 
 interface EditUsersFormProps {
   user: IUser;
@@ -126,26 +127,16 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
     this.closeEditUserModal(event);
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getDepartments = async () => {
-    return await axios.get('/api/department/table', this.config).then(res => {
-      return res.data;
-    });
+    return await getDepartmentsTableInfo();
   };
 
   getRoles = async () => {
-    return await axios.get('/api/role/table', this.config).then(res => {
-      return res.data;
-    });
+    return await getRolesTableInfo();
   };
 
   getBuddies = async () => {
-    return await axios.get('/api/company/buddy-table', this.config).then(res => {
-      return res.data;
-    });
+    return await getBuddiesTableInfo();
   };
 
   // Fields

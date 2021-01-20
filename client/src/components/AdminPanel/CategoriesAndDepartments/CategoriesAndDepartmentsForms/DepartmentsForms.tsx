@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleAddDepartmentModalAction, ToggleEditDepartmentModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreDepartmentAction } from '../../../../store/actions/forms/departments/departments.actions';
@@ -14,7 +13,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { postDepartment, updateDepartment } from '../../../../utils/httpRequests';
 
 interface DepartmentsFormsProps {
   department: IDepartment;
@@ -73,16 +72,13 @@ class DepartmentsForms extends React.Component<DepartmentsFormsProps, Department
     return { isValid, message };
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   // Form events
-  saveDepartmentToDB = (event: FormEvent): void => {
+  saveDepartmentToDB = async (event: FormEvent) => {
     const data = {
       name: this.props.department.department,
     };
-    axios.post('/api/department', data, this.config).then(() => this.closeAddDepartmentModal(event));
+
+    await postDepartment(data).then(() => this.closeAddDepartmentModal(event));
   };
 
   saveEditedDepartmentToDB = async (event: FormEvent): Promise<void> => {
@@ -92,12 +88,9 @@ class DepartmentsForms extends React.Component<DepartmentsFormsProps, Department
         name: this.props.department.department,
       },
     };
-    await axios.post('/api/department/update', data, this.config).then(() => {
+    await updateDepartment(data).then(() => {
       this.closeEditDepartmentModal(event);
     });
-
-    // the last one is an object containing these objects: department, isValid, errorMessage
-    // call this after the request succeeds: this.closeEditDepartmentModal(event)
   };
 
   render() {

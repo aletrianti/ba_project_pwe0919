@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { ToggleAddAchievementModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddAchievementModal } from '../../../store/interfaces/forms/achievements.interfaces';
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
+import { getAchievements } from '../../../utils/httpRequests';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
@@ -44,18 +45,8 @@ class Achievements extends React.Component<AchievementsProps, AchievevementsStat
     },
   ];
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
-  getAchievements = async () => {
-    return await axios.get('/api/company-achievement', this.config).then(res => {
-      return res.data;
-    });
-  };
-
   async componentDidMount() {
-    const achievements = await this.getAchievements();
+    const achievements = await getAchievements();
 
     const achievementsSorted = achievements.sort(function (a, b) {
       // @ts-ignore

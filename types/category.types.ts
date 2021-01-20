@@ -11,3 +11,10 @@ export interface ICategory {
 export interface INewCategoryInput {
   name: string;
 }
+
+export interface ICategoryUpdate {
+  ID: number;
+  body: {
+    name: string;
+  };
+}
