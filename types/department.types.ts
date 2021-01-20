@@ -11,6 +11,13 @@ export interface INewDepartmentInput {
   name: string;
 }
 
+export interface IDepartmentUpdate {
+  ID: number;
+  body: {
+    name: string;
+  };
+}
+
 export interface IDepartmentTable {
   value: number;
   label: string;

@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { IDepartment, IDepartmentTable, INewDepartmentInput } from '../../types/department.types';
+import { IDepartment, IDepartmentTable, IDepartmentUpdate, INewDepartmentInput } from '../../types/department.types';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
 
@@ -40,6 +40,27 @@ router.post('/', async (req: Request, res: Response, next) => {
     const department = await knex('department').where('ID', newDepartment).first();
 
     Api.sendSuccess<IDepartment>(req, res, department);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/update', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const { ID, body }: IDepartmentUpdate = req.body;
+
+    const updatedFaq: IDepartmentUpdate = await knex('department')
+      .where({
+        companyID: companyId,
+        ID: ID,
+      })
+      .update(body);
+
+    Api.sendSuccess<IDepartmentUpdate>(req, res, updatedFaq);
   } catch (err) {
     Api.sendError(req, res, err);
   }

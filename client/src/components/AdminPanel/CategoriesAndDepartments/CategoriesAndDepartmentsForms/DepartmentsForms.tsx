@@ -85,8 +85,17 @@ class DepartmentsForms extends React.Component<DepartmentsFormsProps, Department
     axios.post('/api/department', data, this.config).then(() => this.closeAddDepartmentModal(event));
   };
 
-  saveEditedDepartmentToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.editDepartmentModal.id and this.props.department
+  saveEditedDepartmentToDB = async (event: FormEvent): Promise<void> => {
+    const data = {
+      ID: this.props.editDepartmentModal.id,
+      body: {
+        name: this.props.department.department,
+      },
+    };
+    await axios.post('/api/department/update', data, this.config).then(() => {
+      this.closeEditDepartmentModal(event);
+    });
+
     // the last one is an object containing these objects: department, isValid, errorMessage
     // call this after the request succeeds: this.closeEditDepartmentModal(event)
   };
