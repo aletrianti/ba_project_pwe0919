@@ -8,6 +8,7 @@ import { IDeleteDepartmentModal, IDeleteDepartment } from '../../../../store/int
 import { DeleteDepartmentAction } from '../../../../store/actions/forms/departments/departments.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface DeleteDepartmentsFormProps {
   deleteDepartmentModal: IDeleteDepartmentModal;
@@ -34,13 +35,16 @@ class DeleteDepartmentsForm extends React.Component<DeleteDepartmentsFormProps, 
 
     this.props.toggleDeleteDepartmentModal({ id: 0, isOpen: false });
   };
-
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
   // Form events
-  deleteDepartment = (e: MouseEvent): void => {
-    e.preventDefault();
+  deleteDepartment = async (e: MouseEvent): Promise<void> => {
+    // e.preventDefault();
 
-    // TODO: add axios call here - use departmentId
-    // this.props.toggleDeleteDepartmentModal({ id: 0, isOpen: false });
+    await axios.post('/api/department/delete', this.props.deleteDepartmentModal, this.config).then(() => {
+      return;
+    });
   };
 
   render() {
