@@ -57,7 +57,12 @@ class Achievements extends React.Component<AchievementsProps, AchievevementsStat
   async componentDidMount() {
     const achievements = await this.getAchievements();
 
-    this.setState({ achievements: achievements });
+    const achievementsSorted = achievements.sort(function (a, b) {
+      // @ts-ignore
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    this.setState({ achievements: achievementsSorted });
   }
 
   render() {
