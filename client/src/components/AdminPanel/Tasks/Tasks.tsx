@@ -101,25 +101,25 @@ class Tasks extends React.Component<TaskProps> {
               taskName={taskOne.name}
               deadline={taskOne.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskOne(taskOne, e)}
-              saveDeadline={this.saveDeadlineToDB(taskOne)}
+              saveDeadline={() => this.saveDeadlineToDB(taskOne)}
             />
             <TasksItem
               taskName={taskTwo.name}
               deadline={taskTwo.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskTwo(taskTwo, e)}
-              saveDeadline={this.saveDeadlineToDB(taskTwo)}
+              saveDeadline={() => this.saveDeadlineToDB(taskTwo)}
             />
             <TasksItem
               taskName={taskThree.name}
               deadline={taskThree.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskThree(taskThree, e)}
-              saveDeadline={this.saveDeadlineToDB(taskThree)}
+              saveDeadline={() => this.saveDeadlineToDB(taskThree)}
             />
             <TasksItem
               taskName={taskFour.name}
               deadline={taskFour.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskFour(taskFour, e)}
-              saveDeadline={this.saveDeadlineToDB(taskFour)}
+              saveDeadline={() => this.saveDeadlineToDB(taskFour)}
             />
 
             <div id="admin-panel__tasks__content__custom">
