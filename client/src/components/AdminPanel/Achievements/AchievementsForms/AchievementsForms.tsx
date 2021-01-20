@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import moment from 'moment';
 
 import { ToggleAddAchievementModalAction, ToggleEditAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
@@ -23,7 +22,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { postAchievement, updateAchievement } from '../../../../utils/httpRequests';
 
 interface AchievementsFormsProps {
   achievementTitle: IAchievementTitle;
@@ -54,9 +53,6 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       },
     };
   }
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
 
   // Actions
   closeAddAchievementModal = (e: MouseEvent | FormEvent) => {
@@ -139,9 +135,8 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
       description: this.props.achievement.description.description,
       date: moment(this.props.achievement.date.date, 'DD-MM-YYYY').format(),
     };
-    await axios.post('/api/company-achievement', data, this.config).then(() => {
-      return;
-    });
+
+    await postAchievement(data);
   };
 
   saveEditedAchievementToDB = async (): Promise<void> => {
@@ -156,9 +151,7 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
         : this.props.achievement.date.date,
     };
 
-    await axios.post('/api/company-achievement/update', data, this.config).then(() => {
-      return;
-    });
+    await updateAchievement(data);
   };
 
   addAchievement = async (event: FormEvent): Promise<void> => {

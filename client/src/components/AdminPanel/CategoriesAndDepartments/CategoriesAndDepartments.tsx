@@ -14,9 +14,8 @@ import { connect } from 'react-redux';
 import { ToggleAddCategoryModalAction, ToggleAddDepartmentModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddCategoryModal } from '../../../store/interfaces/forms/categories.interfaces';
 import { IAddDepartmentModal } from '../../../store/interfaces/forms/departments.interfaces';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 import { IDepartment } from '../../../../../types/department.types';
-import axios from 'axios';
+import { getCategories, getDepartments } from '../../../utils/httpRequests';
 
 interface CategoriesAndDepartmentsProps {
   toggleAddCategoryModal: (addCategoryModal: IAddCategoryModal) => any;
@@ -49,14 +48,8 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
     this.props.toggleAddDepartmentModal({ isOpen: true });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getDepartments = async () => {
-    const departments: IDepartment[] = await axios.get('/api/department', this.config).then(res => {
-      return res.data;
-    });
+    const departments: IDepartment[] = await getDepartments();
 
     const departmentsTable: ITableDepartment[] = departments.map(department => {
       const departmentTable = {
@@ -70,9 +63,7 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
   };
 
   getCategories = async () => {
-    const categories: ITableCategory[] = await axios.get('/api/category', this.config).then(res => {
-      return res.data;
-    });
+    const categories: ITableCategory[] = await getCategories();
 
     this.setState({ companyCategories: categories });
   };

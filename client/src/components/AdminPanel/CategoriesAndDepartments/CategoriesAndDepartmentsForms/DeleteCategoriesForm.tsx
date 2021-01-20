@@ -9,6 +9,7 @@ import { DeleteCategoryAction } from '../../../../store/actions/forms/categories
 
 import DeleteForm from '../../../common/Form/DeleteForm';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { deleteCategory } from '../../../../utils/httpRequests';
 
 interface DeleteCategorysFormProps {
   deleteCategoryModal: IDeleteCategoryModal;
@@ -36,14 +37,9 @@ class DeleteCategorysForm extends React.Component<DeleteCategorysFormProps, Dele
     this.props.toggleDeleteCategoryModal({ id: 0, isOpen: false });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
   // Form events
   deleteCategory = async (e: MouseEvent): Promise<void> => {
-    await axios.post('/api/category/delete', this.props.deleteCategoryModal, this.config).then(() => {
-      return;
-    });
+    await deleteCategory(this.props.deleteCategoryModal);
   };
 
   render() {

@@ -17,6 +17,7 @@ import Box from '@material-ui/core/Box';
 import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 import axios from 'axios';
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
+import { getAchievements } from '../../../utils/httpRequests';
 
 const styles = {
   paper: {
@@ -55,18 +56,8 @@ class Achievements extends React.Component<AchievementsProps, AchievevementsStat
     { title: 'First office', description: 'Finally settling down!', date: 'August 2018' },
   ];
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
-  getAchievements = async () => {
-    return await axios.get('/api/company-achievement', this.config).then(res => {
-      return res.data;
-    });
-  };
-
   async componentDidMount() {
-    const achievements: ITableAchievement[] = await this.getAchievements();
+    const achievements: ITableAchievement[] = await getAchievements();
 
     const achievementsSorted = achievements.sort(function (a, b) {
       // @ts-ignore

@@ -4,13 +4,7 @@ import axios from 'axios';
 
 import Title from '../../common/Title/Title';
 import TasksItem from './TasksItem/TasksItem';
-import {
-  setTaskOneAsCompletedAction,
-  setTaskTwoAsCompletedAction,
-  setTaskThreeAsCompletedAction,
-  setTaskFourAsCompletedAction,
-  setCustomTaskAsCompletedAction,
-} from '../../../store/actions/tasks/tasks.actions';
+import { setTaskOne, setTaskTwo, setTaskThree, setTaskFour, setCustomTask } from '../../../store/actions/tasks/tasks.actions';
 import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 
 import { connect } from 'react-redux';
@@ -23,8 +17,6 @@ import {
 import { IAddTaskModal, IDeleteTaskModal, IEditTaskModal } from '../../../store/interfaces/forms/tasks.interfaces';
 import DeleteTasksForms from './TasksForms/DeleteTasksForms';
 import Actions from '../../common/Actions/Actions';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
-import { ICompanyTask } from '../../../../../types/companyTask.types';
 
 interface TaskProps {
   taskOne: ITask;
@@ -42,40 +34,11 @@ interface TaskProps {
   toggleDeleteTaskModal: (deleteTaskModal: IDeleteTaskModal) => any;
 }
 
-interface TaskDeadlineState {
-  taskOneDeadline: string;
-  taskTwoDeadline: string;
-  taskThreeDeadline: string;
-  taskFourDeadline: string;
-}
-
-class Tasks extends React.Component<TaskProps, TaskDeadlineState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      taskOneDeadline: '',
-      taskTwoDeadline: '',
-      taskThreeDeadline: '',
-      taskFourDeadline: '',
-    };
-  }
+class Tasks extends React.Component<TaskProps> {
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddTaskModal({ isOpen: true });
-  };
-
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
-  getDeadlines = async () => {
-    const tasks: ICompanyTask[] = await axios.get('/api/companytask', this.config).then(res => {
-      return res.data;
-    });
-
-    return tasks;
   };
 
   editCustomTask = (id: number, e: MouseEvent) => {
@@ -115,26 +78,6 @@ class Tasks extends React.Component<TaskProps, TaskDeadlineState> {
   saveDeadlineToDB = (task): void => {
     // TODO: add axios call here
   };
-  async componentDidMount() {
-    const tasks = await this.getDeadlines();
-
-    tasks.forEach(task => {
-      switch (task.taskID) {
-        case 1:
-          this.setState({ taskOneDeadline: task.deadline });
-          break;
-        case 2:
-          this.setState({ taskTwoDeadline: task.deadline });
-          break;
-        case 3:
-          this.setState({ taskThreeDeadline: task.deadline });
-          break;
-        case 4:
-          this.setState({ taskFourDeadline: task.deadline });
-          break;
-      }
-    });
-  }
 
   modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';
 
@@ -156,25 +99,25 @@ class Tasks extends React.Component<TaskProps, TaskDeadlineState> {
           <div id="admin-panel__tasks__content__items">
             <TasksItem
               taskName={taskOne.name}
-              deadline={this.state.taskOneDeadline ? this.state.taskOneDeadline : taskOne.deadline}
+              deadline={taskOne.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskOne(taskOne, e)}
               saveDeadline={this.saveDeadlineToDB(taskOne)}
             />
             <TasksItem
               taskName={taskTwo.name}
-              deadline={this.state.taskTwoDeadline ? this.state.taskTwoDeadline : taskTwo.deadline}
+              deadline={taskTwo.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskTwo(taskTwo, e)}
               saveDeadline={this.saveDeadlineToDB(taskTwo)}
             />
             <TasksItem
               taskName={taskThree.name}
-              deadline={this.state.taskThreeDeadline ? this.state.taskThreeDeadline : taskThree.deadline}
+              deadline={taskThree.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskThree(taskThree, e)}
               saveDeadline={this.saveDeadlineToDB(taskThree)}
             />
             <TasksItem
               taskName={taskFour.name}
-              deadline={this.state.taskFourDeadline ? this.state.taskFourDeadline : taskFour.deadline}
+              deadline={taskFour.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskFour(taskFour, e)}
               saveDeadline={this.saveDeadlineToDB(taskFour)}
             />
@@ -224,11 +167,11 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setTaskOne: (taskOne: ITask) => dispatch(setTaskOneAsCompletedAction(taskOne)),
-    setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwoAsCompletedAction(taskTwo)),
-    setTaskThree: (taskThree: ITask) => dispatch(setTaskThreeAsCompletedAction(taskThree)),
-    setTaskFour: (taskFour: ITask) => dispatch(setTaskFourAsCompletedAction(taskFour)),
-    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
+    setTaskOne: (taskOne: ITask) => dispatch(setTaskOne(taskOne)),
+    setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwo(taskTwo)),
+    setTaskThree: (taskThree: ITask) => dispatch(setTaskThree(taskThree)),
+    setTaskFour: (taskFour: ITask) => dispatch(setTaskFour(taskFour)),
+    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTask(taskFive)),
     toggleAddTaskModal: (addTaskModal: IAddTaskModal) => dispatch(ToggleAddTaskModalAction(addTaskModal)),
     toggleEditTaskModal: (editTaskModal: IEditTaskModal) => dispatch(ToggleEditTaskModalAction(editTaskModal)),
     toggleDeleteTaskModal: (deleteTaskModal: IDeleteTaskModal) => dispatch(ToggleDeleteTaskModalAction(deleteTaskModal)),

@@ -9,6 +9,7 @@ import { DeleteFaqAction } from '../../../../store/actions/forms/faqs/faqs.actio
 
 import DeleteForm from '../../../common/Form/DeleteForm';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { deleteFAQ } from '../../../../utils/httpRequests';
 
 interface DeleteFaqsFormProps {
   deleteFaqModal: IDeleteFaqModal;
@@ -36,16 +37,11 @@ class DeleteFaqsForm extends React.Component<DeleteFaqsFormProps, DeleteFaqsForm
     this.props.toggleDeleteFaqModal({ id: 0, isOpen: false });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
   // Form events
   deleteFaq = async (e: MouseEvent): Promise<void> => {
     // e.preventDefault();
 
-    await axios.post('/api/faq/delete', this.props.deleteFaqModal, this.config).then(() => {
-      return;
-    });
+    await deleteFAQ(this.props.deleteFaqModal);
   };
 
   render() {

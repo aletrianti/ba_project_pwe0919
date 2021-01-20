@@ -5,7 +5,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import store from '../../../..';
-import { ISetTaskAsCompletedAction, ITask } from '../../../../store/interfaces/tasks.interfaces';
+import { ISetTask, ITask } from '../../../../store/interfaces/tasks.interfaces';
 
 interface TaskProps {
   name: string;
@@ -51,7 +51,7 @@ class Task extends React.Component<TaskProps, TaskState> {
       assignedTo: this.props.assignedTo,
     };
 
-    const action: ISetTaskAsCompletedAction = { type: this.props.actionType, payload };
+    const action: ISetTask = { type: this.props.actionType, payload };
 
     store.dispatch(action);
   };

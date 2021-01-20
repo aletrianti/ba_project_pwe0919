@@ -10,6 +10,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
+import { getFAQs } from '../../utils/httpRequests';
 
 interface FaqState {
   faqs: IQuestion[];
@@ -27,14 +28,9 @@ class FAQs extends React.Component<FaqProps, FaqState> {
       faqs: [],
     };
   }
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
 
   getFaqs = async () => {
-    return await axios.get('/api/faq', this.config).then(res => {
-      return res.data;
-    });
+    return await getFAQs();
   };
 
   async componentDidMount() {

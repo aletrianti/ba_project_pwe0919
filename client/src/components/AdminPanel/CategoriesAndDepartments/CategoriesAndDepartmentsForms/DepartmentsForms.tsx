@@ -15,6 +15,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { postDepartment } from '../../../../utils/httpRequests';
 
 interface DepartmentsFormsProps {
   department: IDepartment;
@@ -73,19 +74,16 @@ class DepartmentsForms extends React.Component<DepartmentsFormsProps, Department
     return { isValid, message };
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   // Form events
-  saveDepartmentToDB = (event: FormEvent): void => {
+  saveDepartmentToDB = async (event: FormEvent) => {
     const data = {
       name: this.props.department.department,
     };
-    axios.post('/api/department', data, this.config).then(() => this.closeAddDepartmentModal(event));
+
+    await postDepartment(data).then(() => this.closeAddDepartmentModal(event));
   };
 
-  saveEditedDepartmentToDB = (event: FormEvent): void => {
+  saveEditedDepartmentToDB = (event: FormEvent) => {
     // TODO: add axios call here - use this.editDepartmentModal.id and this.props.department
     // the last one is an object containing these objects: department, isValid, errorMessage
     // call this after the request succeeds: this.closeEditDepartmentModal(event)

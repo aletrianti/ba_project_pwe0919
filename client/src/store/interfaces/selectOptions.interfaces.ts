@@ -6,5 +6,5 @@ export interface IOption {
 }
 
 export interface IOptions {
-  list: IOption[];
+  list: IOption[] | void;
 }
