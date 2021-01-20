@@ -65,7 +65,7 @@ class Task extends React.Component<TaskProps, TaskState> {
         <div className="task__info">
           <div id={`name__task__${taskNum}`} className={!this.state.isOpen ? 'task__name' : 'task__name task__name--open'}>
             <h3>
-              {name} <span>{deadline}</span>
+              {name} <span>{`(${deadline})`}</span>
             </h3>
             <div className="task__info__actions">
               {!isCompleted ? (
