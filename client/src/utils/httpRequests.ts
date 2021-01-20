@@ -109,3 +109,12 @@ export const getCompanyEmployees = async (): Promise<any> => {
 export const deleteEmployee = async (data: any): Promise<any> => {
   return await axios.post('/api/auth/delete-employee', data, httpRequestsConfig);
 };
+
+// Dashboard
+export const submitAssignedTask = async (data: any): Promise<any> => {
+  return await axios.post('/api/assignedtask', data, httpRequestsConfig);
+};
+
+export const gettAssignedTasks = async (): Promise<any> => {
+  return await axios.get('/api/assignedtask', httpRequestsConfig);
+};

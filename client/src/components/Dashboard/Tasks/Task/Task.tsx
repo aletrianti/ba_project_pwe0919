@@ -6,6 +6,8 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import store from '../../../..';
 import { ISetTask, ITask } from '../../../../store/interfaces/tasks.interfaces';
+import { submitAssignedTask } from '../../../../utils/httpRequests';
+import { IAssignedTaskInput } from '../../../../../../types/assignedTask.types';
 
 interface TaskProps {
   name: string;
@@ -41,7 +43,7 @@ class Task extends React.Component<TaskProps, TaskState> {
     });
   };
 
-  confirmTask = (): void => {
+  confirmTask = async (): Promise<void> => {
     const payload: ITask = {
       num: this.props.taskNum,
       name: this.props.name,
@@ -50,6 +52,13 @@ class Task extends React.Component<TaskProps, TaskState> {
       isCompleted: true,
       assignedTo: this.props.assignedTo,
     };
+
+    const data: IAssignedTaskInput = {
+      taskId: payload.num,
+      completed: payload.isCompleted,
+    };
+
+    await submitAssignedTask(data);
 
     const action: ISetTask = { type: this.props.actionType, payload };
 
