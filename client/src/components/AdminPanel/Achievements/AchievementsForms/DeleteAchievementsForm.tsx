@@ -8,6 +8,7 @@ import { IDeleteAchievementModal, IDeleteAchievement } from '../../../../store/i
 import { DeleteAchievementAction } from '../../../../store/actions/forms/achievements/achievements.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 
 interface DeleteAchievementsFormProps {
   deleteAchievementModal: IDeleteAchievementModal;
@@ -34,13 +35,18 @@ class DeleteAchievementsForm extends React.Component<DeleteAchievementsFormProps
 
     this.props.toggleDeleteAchievementModal({ id: 0, isOpen: false });
   };
-
+  config = {
+    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  };
   // Form events
-  deleteAchievement = (e: MouseEvent): void => {
-    e.preventDefault();
-
+  deleteAchievement = async (e: MouseEvent): Promise<void> => {
+    // e.preventDefault();
     // TODO: add axios call here - use achievementId
     // call this after the call succeeds: this.props.toggleDeleteAchievementModal({ id: 0, isOpen: false });
+
+    await axios.post('/api/company-achievement/delete', this.props.deleteAchievementModal, this.config).then(() => {
+      return;
+    });
   };
 
   render() {

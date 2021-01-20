@@ -73,13 +73,11 @@ router.post('/delete', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const ID = req.body;
-
     await knex('companyachievement')
-      .where({ ID: Number(ID), companyId: Number(companyId) })
+      .where({ ID: Number(req.body.id), companyId: Number(companyId) })
       .del();
 
-    Api.sendSuccess<number>(req, res, ID);
+    Api.sendSuccess<string>(req, res, `CompanyAchievement ${req.body.id} deleted`);
   } catch (err) {
     Api.sendError(req, res, err);
   }

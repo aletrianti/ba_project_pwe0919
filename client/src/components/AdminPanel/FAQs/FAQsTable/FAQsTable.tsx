@@ -24,13 +24,14 @@ class FAQsTable extends React.Component<FAQsTableProps> {
       question: { question: data.question, isValid: true, errorMessage: '' },
       answer: { answer: data.answer, isValid: true, errorMessage: '' },
     });
-    this.props.toggleEditFaqModal({ id: data.id, isOpen: true });
+
+    this.props.toggleEditFaqModal({ id: data.ID, isOpen: true });
   };
 
   deleteFaq = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleDeleteFaqModal({ id: data.id, isOpen: true });
+    this.props.toggleDeleteFaqModal({ id: data.ID, isOpen: true });
   };
 
   actions = (data: any) => (

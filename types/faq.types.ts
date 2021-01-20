@@ -9,6 +9,13 @@ export interface IFaq {
 }
 
 export interface IFAQInput {
-  question: string
-  answer: string
+  question: string;
+  answer: string;
+}
+export interface IFAQUpdate {
+  ID: number;
+  body: {
+    question: string;
+    answer: string;
+  };
 }

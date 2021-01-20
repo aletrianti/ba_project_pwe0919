@@ -11,6 +11,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { runInThisContext } from 'vm';
 
 interface FaqsFormsProps {
   faqQuestion: IFaqQuestion;
@@ -46,6 +47,11 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
 
     this.props.toggleAddFaqModal({ isOpen: false });
 
+    this.props.storeFaq({
+      question: { question: '', isValid: false, errorMessage: '' },
+      answer: { answer: '', isValid: false, errorMessage: '' },
+    });
+
     this.props.storeFaqQuestion({ question: '', isValid: false, errorMessage: '' });
     this.props.storeFaqAnswer({ answer: '', isValid: false, errorMessage: '' });
   };
@@ -57,6 +63,9 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
       answer: { answer: '', isValid: false, errorMessage: '' },
     });
     this.props.toggleEditFaqModal({ id: 0, isOpen: false });
+
+    this.props.storeFaqQuestion({ question: '', isValid: false, errorMessage: '' });
+    this.props.storeFaqAnswer({ answer: '', isValid: false, errorMessage: '' });
   };
 
   // Check that all fields are valid and enable confirm button
@@ -109,14 +118,21 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
     });
   };
 
-  saveEditedFaqToDB = (): void => {
-    // TODO: add axios call here - use this.props.editFaqModal.id and this.props.faq
-    // the last one is an object containing these objects: question, answer
+  saveEditedFaqToDB = async (): Promise<void> => {
+    const data = {
+      ID: this.props.editFaqModal.id,
+      body: {
+        question: this.props.faqQuestion.question ? this.props.faqQuestion.question : this.props.faq.question.question,
+        answer: this.props.faqAnswer.answer ? this.props.faqAnswer.answer : this.props.faq.answer.answer,
+      },
+    };
+
+    await axios.post('/api/faq/update', data, this.config).then(() => {
+      return;
+    });
   };
 
   addFaq = async (event: FormEvent): Promise<void> => {
-    // event.preventDefault();
-
     await this.saveFaqToRedux();
     await this.saveFaqToDB();
 
@@ -124,10 +140,8 @@ class FaqsForms extends React.Component<FaqsFormsProps, FaqsFormsState> {
   };
 
   editFaq = async (event: FormEvent): Promise<void> => {
-    // event.preventDefault();
-
     await this.saveEditedFaqToDB();
-    await this.saveFaqToDB();
+    // await this.saveFaqToDB();
 
     this.closeEditFaqModal(event);
   };
