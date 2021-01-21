@@ -48,7 +48,9 @@ router.get('/buddy-table', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const buddies: IBuddyTable[] = await knex('user').select('ID as value', 'firstName as label').where('companyId', companyId);
+    const buddies: IBuddyTable[] = await knex('user')
+      .select('ID as value', 'firstName as label')
+      .where({ companyId: companyId, availableToBuddy: true });
 
     Api.sendSuccess<IBuddyTable[]>(req, res, buddies);
   } catch (err) {
