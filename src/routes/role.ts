@@ -18,6 +18,19 @@ router.get('/', async (req: Request, res: Response, next) => {
   }
 });
 
+router.get('/specific/:roleId', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const role: IRole = await knex('role').where('ID', req.params.roleId).first();
+    Api.sendSuccess<IRole>(req, res, role);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
 router.post('/', async (req: Request, res: Response, next) => {
   try {
     const { userId, companyId } = getUserIds(req);

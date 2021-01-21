@@ -18,6 +18,20 @@ router.get('/', async (req: Request, res: Response, next) => {
   }
 });
 
+router.get('/specific/:departmentId', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const department: IDepartment = await knex('department').where('ID', req.params.departmentId).first();
+
+    Api.sendSuccess<IDepartment>(req, res, department);
+  } catch (err) {
+    Api.sendError(req, res, err);
+  }
+});
+
 router.post('/', async (req: Request, res: Response, next) => {
   try {
     const { userId, companyId } = getUserIds(req);
