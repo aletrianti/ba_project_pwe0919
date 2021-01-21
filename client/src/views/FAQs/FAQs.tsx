@@ -49,14 +49,6 @@ class FAQs extends React.Component<FaqProps, FaqState> {
 
   sections = [{ name: 'FAQs', pathname: 'faqs' }];
 
-  // TODO: Replace this with categories from the DB
-
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
-
   openAddFAQModal = (): void => {};
 
   render() {
