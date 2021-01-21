@@ -2,7 +2,7 @@
 
 #admin-panel__documents {
     height: calc(100% - 41px);
-    overflow-y: scroll;
+    overflow-y: auto;
 
     #admin-panel__documents__content {
         display: flex;

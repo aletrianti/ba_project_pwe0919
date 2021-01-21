@@ -14,8 +14,9 @@
 
 .team__members__container {
     position: relative;
-    max-height: 40em;
-    overflow-y: scroll;
+    max-height: calc(100% - 80px);
+    height: calc(100% - 80px);
+    overflow-y: auto;
     overflow-x: hidden;
     z-index: 9000;
 

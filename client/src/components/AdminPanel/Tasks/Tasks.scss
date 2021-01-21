@@ -2,7 +2,7 @@
 
 #admin-panel__tasks {
     height: calc(100% - 41px);
-    overflow-y: scroll;
+    overflow-y: auto;
 
     #admin-panel__tasks__content {
         display: flex;
