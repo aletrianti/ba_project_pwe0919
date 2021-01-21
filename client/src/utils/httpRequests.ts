@@ -3,12 +3,7 @@
 import axios from 'axios';
 import store from '../index';
 import { ICompanyTask } from '../../../types/companyTask.types';
-import {
-  SET_TASK_FOUR,
-  SET_TASK_ONE,
-  SET_TASK_THREE,
-  SET_TASK_TWO,
-} from '../store/actions/tasks/tasks.types';
+import { SET_TASK_FOUR, SET_TASK_ONE, SET_TASK_THREE, SET_TASK_TWO } from '../store/actions/tasks/tasks.types';
 import { httpRequestsConfig } from './localStorageActions';
 
 // Company Tasks
@@ -121,9 +116,13 @@ export const deleteEmployee = async (data: any): Promise<any> => {
   return await axios.post('/api/auth/delete-employee', data, httpRequestsConfig);
 };
 
+export const postEmployee = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/invite-employees', data, httpRequestsConfig).then(res => res.data);
+};
+
 // Dashboard
 export const submitAssignedTask = async (data: any): Promise<any> => {
-  return await axios.post('/api/assignedtask', data, httpRequestsConfig);
+  return await axios.post('/api/assignedtask', data, httpRequestsConfig).then(res => res.data);
 };
 
 export const gettAssignedTasks = async (): Promise<any> => {

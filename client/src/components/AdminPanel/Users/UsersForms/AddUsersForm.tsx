@@ -11,6 +11,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { postEmployee } from '../../../../utils/httpRequests';
 
 interface AddUsersFormProps {
   userEmail: IUserEmail;
@@ -63,20 +64,12 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
   };
 
   // Form events
-  inviteUser = (event: FormEvent): void => {
+  inviteUser = async (event: FormEvent): Promise<void> => {
     const data: INewEmployees = {
       newUsers: [this.props.userEmail.email],
-      companyId: '43', // TODO: Get current company id
+      companyId: '52', // TODO: Get current company id
     };
-
-    axios
-      .post('/api/auth/invite-employees', data)
-      .then(() => {
-        console.log('Sent emails!');
-
-        this.closeAddUserModal(event);
-      })
-      .catch(err => console.error(err));
+    await postEmployee(data);
   };
 
   // Fields
