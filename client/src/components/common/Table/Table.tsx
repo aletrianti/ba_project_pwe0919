@@ -15,17 +15,19 @@ class Table extends React.Component<TableProps> {
   truncateData = (data: any | any[]) => {
     const limit: number = 25;
 
-    data = Array.isArray(data)
+    if (!data) return '';
+
+    let dataToTruncate = Array.isArray(data)
       ? [
           data.map(item => item.description + ', '), // Modify if it happens with more than just roles
         ]
       : data;
 
-    if (data.length > limit) {
-      data = data.substring(0, limit);
-      return `${data}...`;
+    if (dataToTruncate.length > limit) {
+      dataToTruncate = dataToTruncate.substring(0, limit);
+      return `${dataToTruncate}...`;
     } else {
-      return data;
+      return dataToTruncate;
     }
   };
 

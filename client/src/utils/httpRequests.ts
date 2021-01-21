@@ -4,26 +4,29 @@ import axios from 'axios';
 import store from '../index';
 import { ICompanyTask } from '../../../types/companyTask.types';
 import {
-  SET_TASK_FOUR_AS_COMPLETED,
-  SET_TASK_ONE_AS_COMPLETED,
-  SET_TASK_THREE_AS_COMPLETED,
-  SET_TASK_TWO_AS_COMPLETED,
+  SET_TASK_FOUR,
+  SET_TASK_ONE,
+  SET_TASK_THREE,
+  SET_TASK_TWO,
 } from '../store/actions/tasks/tasks.types';
 import { httpRequestsConfig } from './localStorageActions';
 
 // Company Tasks
-export const storeTasksDeadlines = async () => {
-  const tasks: ICompanyTask[] = await axios.get('/api/companytask', httpRequestsConfig).then(res => res.data);
+export const getTasks = async () => {
+  return await axios.get('/api/companytask', httpRequestsConfig).then(res => res.data);
+};
+export const storeTasks = async (): Promise<void> => {
+  const tasks: ICompanyTask[] = await getTasks();
 
   tasks.forEach(task => {
     if (task.taskID === 1)
-      store.dispatch({ type: SET_TASK_ONE_AS_COMPLETED, payload: { ...store.getState().taskOne, deadline: task.deadline } });
+      store.dispatch({ type: SET_TASK_ONE, payload: { ...store.getState().taskOne, deadline: task.deadline } });
     if (task.taskID === 2)
-      store.dispatch({ type: SET_TASK_TWO_AS_COMPLETED, payload: { ...store.getState().taskTwo, deadline: task.deadline } });
+      store.dispatch({ type: SET_TASK_TWO, payload: { ...store.getState().taskTwo, deadline: task.deadline } });
     if (task.taskID === 3)
-      store.dispatch({ type: SET_TASK_THREE_AS_COMPLETED, payload: { ...store.getState().taskThree, deadline: task.deadline } });
+      store.dispatch({ type: SET_TASK_THREE, payload: { ...store.getState().taskThree, deadline: task.deadline } });
     if (task.taskID === 4)
-      store.dispatch({ type: SET_TASK_FOUR_AS_COMPLETED, payload: { ...store.getState().taskFour, deadline: task.deadline } });
+      store.dispatch({ type: SET_TASK_FOUR, payload: { ...store.getState().taskFour, deadline: task.deadline } });
   });
 };
 export const postCompanyTask = async (data: any): Promise<any> => {

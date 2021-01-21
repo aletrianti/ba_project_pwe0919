@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
-import { storeTasksDeadlines } from '../../utils/httpRequests';
+import { storeTasks } from '../../utils/httpRequests';
 
 interface DashboardState {
   currentUser: IProfile;
@@ -33,7 +33,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
   }
 
   componentDidMount() {
-    storeTasksDeadlines();
+    storeTasks();
   }
 
   firstComponentSections = [{ name: 'Tasks', pathname: 'tasks' }];

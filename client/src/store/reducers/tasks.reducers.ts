@@ -1,9 +1,9 @@
 import {
-  SET_TASK_ONE_AS_COMPLETED,
-  SET_TASK_TWO_AS_COMPLETED,
-  SET_TASK_THREE_AS_COMPLETED,
-  SET_TASK_FOUR_AS_COMPLETED,
-  SET_TASK_FIVE_AS_COMPLETED,
+  SET_TASK_ONE,
+  SET_TASK_TWO,
+  SET_TASK_THREE,
+  SET_TASK_FOUR,
+  SET_TASK_FIVE,
 } from '../actions/tasks/tasks.types';
 import { ITask, ISetTask, ISetCustomTask, ICustomTasks } from '../interfaces/tasks.interfaces';
 
@@ -23,7 +23,7 @@ export const storeTaskOneReducer = (
   action: ISetTask
 ) => {
   switch (action.type) {
-    case SET_TASK_ONE_AS_COMPLETED:
+    case SET_TASK_ONE:
       return {
         ...state,
         num: action.payload.num,
@@ -51,7 +51,7 @@ export const storeTaskTwoReducer = (
   action: ISetTask
 ) => {
   switch (action.type) {
-    case SET_TASK_TWO_AS_COMPLETED:
+    case SET_TASK_TWO:
       return {
         ...state,
         num: action.payload.num,
@@ -79,7 +79,7 @@ export const storeTaskThreeReducer = (
   action: ISetTask
 ) => {
   switch (action.type) {
-    case SET_TASK_THREE_AS_COMPLETED:
+    case SET_TASK_THREE:
       return {
         ...state,
         num: action.payload.num,
@@ -107,7 +107,7 @@ export const storeTaskFourReducer = (
   action: ISetTask
 ) => {
   switch (action.type) {
-    case SET_TASK_FOUR_AS_COMPLETED:
+    case SET_TASK_FOUR:
       return {
         ...state,
         num: action.payload.num,
@@ -124,7 +124,7 @@ export const storeTaskFourReducer = (
 
 export const storeTaskFiveReducer = (state: ICustomTasks = { customTasks: [] }, action: ISetCustomTask) => {
   switch (action.type) {
-    case SET_TASK_FIVE_AS_COMPLETED:
+    case SET_TASK_FIVE:
       return {
         ...state,
         customTasks: action.payload.customTasks,

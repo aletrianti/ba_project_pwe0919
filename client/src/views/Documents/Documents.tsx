@@ -16,6 +16,7 @@ interface DocumentsProps {
 }
 interface DocumentsState {
   categories: ITableCategory[];
+  content: any[];
 }
 class Documents extends React.Component<DocumentsProps, DocumentsState> {
   constructor(props: any) {
@@ -23,24 +24,13 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
 
     this.state = {
       categories: [],
+      content: [],
     };
   }
-  sections = [{ name: 'Files', pathname: 'documents' }];
 
   getCategories = async () => {
     return await getCategories();
   };
-
-  async componentDidMount() {
-    const categories = await this.getCategories();
-
-    this.setState({ categories: categories });
-  }
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
 
   // TODO: Replace this with documents' data from the DB
   data = [
@@ -56,12 +46,21 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
     },
   ];
 
-  content = [
-    {
-      category: this.categories[2],
-      data: this.data,
-    },
-  ];
+  async componentDidMount() {
+    const categories = await this.getCategories();
+
+    this.setState({ categories: categories });
+
+    categories.map(category => {
+      this.setState(state => {
+        return {
+          content: [...state.content, { category: category, data: this.data }],
+        };
+      });
+    });
+  }
+
+  sections = [{ name: 'Files', pathname: 'documents' }];
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -80,7 +79,7 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
             <Categories categories={this.state.categories} />
 
             <div id="documents__content">
-              <DocumentsAccordion content={this.content} />
+              <DocumentsAccordion content={this.state.content} />
             </div>
           </div>
         </div>

@@ -41,6 +41,7 @@
             top: 0;
             left: 17.8em;
             padding: 30px;
+            width: 37em;
             max-width: 37em;
             background-color: lighten($primary-grey, 33%);
             border: 1px solid lighten($primary-grey, 30%);
@@ -50,7 +51,7 @@
 
             .info__description,
             .info__responsibilities {
-                font-size: $font-regular;
+                font-size: $font-medium;
             }
 
             .info__responsibilities {

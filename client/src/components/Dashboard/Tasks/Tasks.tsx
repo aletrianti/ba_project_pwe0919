@@ -4,11 +4,11 @@ import './Tasks.scss';
 import Task from './Task/Task';
 
 import {
-  SET_TASK_ONE_AS_COMPLETED,
-  SET_TASK_TWO_AS_COMPLETED,
-  SET_TASK_THREE_AS_COMPLETED,
-  SET_TASK_FOUR_AS_COMPLETED,
-  SET_TASK_FIVE_AS_COMPLETED,
+  SET_TASK_ONE,
+  SET_TASK_TWO,
+  SET_TASK_THREE,
+  SET_TASK_FOUR,
+  SET_TASK_FIVE,
 } from '../../../store/actions/tasks/tasks.types';
 import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 import { connect } from 'react-redux';
@@ -23,15 +23,15 @@ class Tasks extends React.Component<TasksProps> {
   setActionType = (num: number): string => {
     switch (num) {
       case 1:
-        return SET_TASK_ONE_AS_COMPLETED;
+        return SET_TASK_ONE;
       case 2:
-        return SET_TASK_TWO_AS_COMPLETED;
+        return SET_TASK_TWO;
       case 3:
-        return SET_TASK_THREE_AS_COMPLETED;
+        return SET_TASK_THREE;
       case 4:
-        return SET_TASK_FOUR_AS_COMPLETED;
+        return SET_TASK_FOUR;
       case 5:
-        return SET_TASK_FIVE_AS_COMPLETED;
+        return SET_TASK_FIVE;
       default:
         return '';
     }

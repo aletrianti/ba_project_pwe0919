@@ -5,7 +5,7 @@ import SectionBar from '../../components/common/SectionBar/SectionBar';
 import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
-import { storeTasksDeadlines } from '../../utils/httpRequests';
+import { storeTasks } from '../../utils/httpRequests';
 
 interface AdminPanelProps {
   editProfileModal: IEditProfileModal;
@@ -32,7 +32,7 @@ class AdminPanel extends React.Component<AdminPanelProps> {
   RolesAndResponsibilities = lazy(() => import('../../components/AdminPanel/RolesAndResponsibilities/RolesAndResponsibilities'));
 
   componentDidMount() {
-    storeTasksDeadlines();
+    storeTasks();
   }
 
   render() {
