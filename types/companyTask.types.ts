@@ -5,3 +5,8 @@ export interface ICompanyTask {
   deadline: string;
   updatedAt?: string;
 }
+
+export interface ICompanyTaskInput {
+  taskId: number;
+  deadline: string;
+}

@@ -17,6 +17,7 @@ import {
 import { IAddTaskModal, IDeleteTaskModal, IEditTaskModal } from '../../../store/interfaces/forms/tasks.interfaces';
 import DeleteTasksForms from './TasksForms/DeleteTasksForms';
 import Actions from '../../common/Actions/Actions';
+import { postCompanyTask } from '../../../utils/httpRequests';
 
 interface TaskProps {
   taskOne: ITask;
@@ -75,8 +76,13 @@ class Tasks extends React.Component<TaskProps> {
     this.setDeadline(task, this.props.taskFour, e.target.value, this.props.setTaskFour);
   };
 
-  saveDeadlineToDB = (task): void => {
-    // TODO: add axios call here
+  saveDeadlineToDB = async (task): Promise<void> => {
+    const data = {
+      taskId: task.num,
+      deadline: task.deadline,
+    };
+
+    await postCompanyTask(data);
   };
 
   modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';

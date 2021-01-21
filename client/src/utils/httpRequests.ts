@@ -11,6 +11,7 @@ import {
 } from '../store/actions/tasks/tasks.types';
 import { httpRequestsConfig } from './localStorageActions';
 
+// Company Tasks
 export const storeTasksDeadlines = async () => {
   const tasks: ICompanyTask[] = await axios.get('/api/companytask', httpRequestsConfig).then(res => res.data);
 
@@ -20,10 +21,13 @@ export const storeTasksDeadlines = async () => {
     if (task.taskID === 2)
       store.dispatch({ type: SET_TASK_TWO_AS_COMPLETED, payload: { ...store.getState().taskTwo, deadline: task.deadline } });
     if (task.taskID === 3)
-      store.dispatch({ type: SET_TASK_THREE_AS_COMPLETED, payload: { ...store.getState().taskTwo, deadline: task.deadline } });
+      store.dispatch({ type: SET_TASK_THREE_AS_COMPLETED, payload: { ...store.getState().taskThree, deadline: task.deadline } });
     if (task.taskID === 4)
       store.dispatch({ type: SET_TASK_FOUR_AS_COMPLETED, payload: { ...store.getState().taskFour, deadline: task.deadline } });
   });
+};
+export const postCompanyTask = async (data: any): Promise<any> => {
+  return await axios.post('/api/companytask', data, httpRequestsConfig);
 };
 
 // Achievements
