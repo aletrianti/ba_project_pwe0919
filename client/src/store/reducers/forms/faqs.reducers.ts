@@ -1,6 +1,6 @@
-import { STORE_FAQ_QUESTION, STORE_FAQ_ANSWER, FAQ, DELETE_FAQ } from "../../actions/forms/faqs/faqs.types";
+import { STORE_FAQ_QUESTION, STORE_FAQ_ANSWER, FAQ, DELETE_FAQ, STORE_FAQ_CATEGORY } from "../../actions/forms/faqs/faqs.types";
 import { TOGGLE_ADD_FAQ_MODAL, TOGGLE_EDIT_FAQ_MODAL, TOGGLE_DELETE_FAQ_MODAL } from "../../actions/forms/forms.types";
-import { IFaqQuestion, IStoreFaqQuestionAction, IFaqAnswer, IStoreFaqAnswerAction, IFaq, IFaqAction, IDeleteFaq, IDeleteFaqAction, IAddFaqModal, IToggleAddFaqModalAction, IEditFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction } from "../../interfaces/forms/faqs.interfaces";
+import { IFaqQuestion, IStoreFaqQuestionAction, IFaqAnswer, IStoreFaqAnswerAction, IFaq, IFaqAction, IDeleteFaq, IDeleteFaqAction, IAddFaqModal, IToggleAddFaqModalAction, IEditFaqModal, IToggleEditFaqModalAction, IDeleteFaqModal, IToggleDeleteFaqModalAction, IFaqCategory, IStoreFaqCategoryAction } from "../../interfaces/forms/faqs.interfaces";
 
 // create reducers
 export const storeFaqQuestionReducer = (
@@ -35,11 +35,28 @@ export const storeFaqAnswerReducer = (
       return state;
   }
 };
+export const storeFaqCategoryReducer = (
+  state: IFaqCategory = { category: 0, isValid: false, errorMessage: '' },
+  action: IStoreFaqCategoryAction
+) => {
+  switch (action.type) {
+    case STORE_FAQ_CATEGORY:
+      return {
+        ...state,
+        category: action.payload.category,
+        isValid: action.payload.isValid,
+        errorMessage: action.payload.errorMessage,
+      };
+    default:
+      return state;
+  }
+};
 
 export const faqReducer = (
   state: IFaq = {
     question: { question: '', isValid: false, errorMessage: '' },
     answer: { answer: '', isValid: false, errorMessage: '' }, 
+    category: { category: 0, isValid: false, errorMessage: '' }, 
   },
   action: IFaqAction
 ) => {
@@ -49,6 +66,7 @@ export const faqReducer = (
         ...state,
         question: action.payload.question,
         answer: action.payload.answer,
+        category: action.payload.category,
       };
     default:
       return state;

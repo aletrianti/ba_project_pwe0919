@@ -6,7 +6,7 @@ export interface IField {
   name: string;
   type: string; // ex. "input" or "textarea"
   onchange: any;
-  value?: string;
+  value?: any;
   options?: IOptions;
   isShortField?: boolean;
 }

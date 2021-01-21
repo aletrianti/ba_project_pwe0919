@@ -23,6 +23,7 @@ class FAQsTable extends React.Component<FAQsTableProps> {
     this.props.storeFaq({
       question: { question: data.question, isValid: true, errorMessage: '' },
       answer: { answer: data.answer, isValid: true, errorMessage: '' },
+      category: { category: data.category, isValid: false, errorMessage: '' },
     });
 
     this.props.toggleEditFaqModal({ id: data.ID, isOpen: true });

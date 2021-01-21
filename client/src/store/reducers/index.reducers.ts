@@ -38,7 +38,7 @@ import {
   toggleAddUserModalReducer,
 } from './forms/users.reducers';
 import { toggleAddAchievementModalReducer, toggleEditAchievementModalReducer, toggleDeleteAchievementModalReducer, storeAchievementTitleReducer, storeAchievementDescriptionReducer, storeAchievementDateReducer, achievementReducer, deleteAchievementReducer } from './forms/achievements.reducers';
-import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, faqReducer, deleteFaqReducer } from './forms/faqs.reducers';
+import { toggleAddFaqModalReducer, toggleEditFaqModalReducer, toggleDeleteFaqModalReducer, storeFaqQuestionReducer, storeFaqAnswerReducer, faqReducer, deleteFaqReducer, storeFaqCategoryReducer } from './forms/faqs.reducers';
 import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibilityReducer, storeRoleResponsibilitiesReducer, roleReducer, deleteRoleReducer, toggleAddRoleModalReducer, toggleDeleteRoleModalReducer, toggleEditRoleModalReducer } from './forms/roles.reducers';
 import { toggleAddCategoryModalReducer, toggleEditCategoryModalReducer, toggleDeleteCategoryModalReducer, deleteCategoryReducer, categoryReducer } from './forms/categories.reducers';
 import { toggleAddDepartmentModalReducer, toggleEditDepartmentModalReducer, toggleDeleteDepartmentModalReducer, deleteDepartmentReducer, departmentReducer } from './forms/departments.reducers';
@@ -115,6 +115,7 @@ const reducers: any = combineReducers({
   // FAQs (Admin Panel)
   faqQuestion: storeFaqQuestionReducer,
   faqAnswer: storeFaqAnswerReducer,
+  faqCategory: storeFaqCategoryReducer,
   faq: faqReducer,
   deleteFaq: deleteFaqReducer,
   // Roles (Admin Panel)
