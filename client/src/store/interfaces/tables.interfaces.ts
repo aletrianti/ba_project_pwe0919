@@ -29,12 +29,7 @@ export interface ITableFAQ {
   id: number;
   question: string;
   answer: string;
-}
-
-export interface ITableFAQ {
-  id: number;
-  question: string;
-  answer: string;
+  category: number;
 }
 
 export interface ITableRolesAndResponsibilities {

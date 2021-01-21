@@ -103,6 +103,7 @@ body {
         .app__content {
             margin: 10px 35px;
             height: calc(100vh - 128px);
+            overflow: hidden;
 
             .select-field__container {
                 width: 100% !important;
@@ -138,6 +139,15 @@ body {
     }
 }
 
+#admin-panel__users,
+#admin-panel__achievements,
+#admin-panel__categories,
+#admin-panel__faqs,
+#admin-panel__roles {
+    height: calc(100% - 41px);
+    overflow-y: auto;
+}
+
 #documents__content,
 .admin-panel__content {
     width: 100%;
@@ -150,6 +160,8 @@ body {
 
 #documents__content {
     padding: 0 20px;
+    height: calc(100% - 80px);
+    overflow-y: auto;
 }
 
 #documents__table, 
@@ -170,6 +182,8 @@ body {
 #company-and-team__achievements__container {
     width: 80%;
     margin: 30px auto;
+    height: calc(100% - 37px);
+    overflow-y: auto;
 }
 
 @media all and (max-width: 1180px) {

@@ -2,7 +2,8 @@
 
 .accordion__container {
     margin: 20px;
-    padding-top: 20px;
+    height: calc(100% - 80px);
+    overflow-y: auto;
 
     .accordion__item__container {
         position: relative;

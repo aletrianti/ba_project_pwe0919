@@ -18,9 +18,20 @@ export interface IStoreFaqAnswerAction {
   payload: IFaqAnswer;
 }
 
+export interface IFaqCategory {
+  category: number;
+  isValid: boolean;
+  errorMessage: string;
+}
+export interface IStoreFaqCategoryAction {
+  type: string;
+  payload: IFaqCategory;
+}
+
 export interface IFaq {
   question: IFaqQuestion;
   answer: IFaqAnswer;
+  category: IFaqCategory;
 }
 export interface IFaqAction {
   type: string;

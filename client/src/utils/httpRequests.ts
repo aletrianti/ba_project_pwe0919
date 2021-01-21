@@ -5,6 +5,7 @@ import store from '../index';
 import { ICompanyTask } from '../../../types/companyTask.types';
 import { SET_TASK_FOUR, SET_TASK_ONE, SET_TASK_THREE, SET_TASK_TWO } from '../store/actions/tasks/tasks.types';
 import { httpRequestsConfig } from './localStorageActions';
+import { IAssignedTask } from '../../../types/assignedTask.types';
 
 // Company Tasks
 export const getTasks = async () => {
@@ -121,12 +122,25 @@ export const postEmployee = async (data: any): Promise<any> => {
 };
 
 // Dashboard
+export const getAssignedTasks = async (): Promise<any> => {
+  return await axios.get('/api/assignedtask', httpRequestsConfig).then(res => res.data);
+};
 export const submitAssignedTask = async (data: any): Promise<any> => {
   return await axios.post('/api/assignedtask', data, httpRequestsConfig).then(res => res.data);
 };
+export const storeAssignedTasks = async (): Promise<void> => {
+  const tasks: IAssignedTask[] = await getAssignedTasks();
 
-export const gettAssignedTasks = async (): Promise<any> => {
-  return await axios.get('/api/assignedtask', httpRequestsConfig);
+  tasks.forEach(task => {
+    if (task.taskId === 1)
+      store.dispatch({ type: SET_TASK_ONE, payload: { ...store.getState().taskOne, isCompleted: task.completed } });
+    if (task.taskId === 2)
+      store.dispatch({ type: SET_TASK_TWO, payload: { ...store.getState().taskTwo, isCompleted: task.completed } });
+    if (task.taskId === 3)
+      store.dispatch({ type: SET_TASK_THREE, payload: { ...store.getState().taskThree, isCompleted: task.completed } });
+    if (task.taskId === 4)
+      store.dispatch({ type: SET_TASK_FOUR, payload: { ...store.getState().taskFour, isCompleted: task.completed } });
+  });
 };
 
 //Auth
