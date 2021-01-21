@@ -10,10 +10,12 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
-import { getFAQs } from '../../utils/httpRequests';
+import { getCategories, getFAQs } from '../../utils/httpRequests';
+import { ITableCategory } from '../../store/interfaces/tables.interfaces';
 
 interface FaqState {
   faqs: IQuestion[];
+  categories: ITableCategory[];
 }
 
 interface FaqProps {
@@ -26,6 +28,7 @@ class FAQs extends React.Component<FaqProps, FaqState> {
 
     this.state = {
       faqs: [],
+      categories: [],
     };
   }
 
@@ -33,10 +36,15 @@ class FAQs extends React.Component<FaqProps, FaqState> {
     return await getFAQs();
   };
 
+  getCategories = async () => {
+    return await getCategories();
+  };
   async componentDidMount() {
     const faqs = await this.getFaqs();
+    const categories = await this.getCategories();
 
     this.setState({ faqs: faqs });
+    this.setState({ categories: categories });
   }
 
   sections = [{ name: 'FAQs', pathname: 'faqs' }];
@@ -65,7 +73,7 @@ class FAQs extends React.Component<FaqProps, FaqState> {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={this.categories} />
+            <Categories categories={this.state.categories} />
 
             {sectionName === 'faqs' ? <HorizontalAccordion questions={this.state.faqs} section={sectionName} /> : null}
           </div>
