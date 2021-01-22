@@ -197,24 +197,31 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
   };
 
   saveProfileToDB = async (): Promise<void> => {
-    const data = {
-      firstName: this.props.profileFirstName.firstName || '',
-      lastName: this.props.profileLastName.lastName || '',
-      email: this.props.profileEmail.email || '',
-      password: this.props.profilePassword.password || '',
-      birthday: this.props.profileBirthday.birthday || '',
-      atCompanySince: this.props.profileAtCompanySince.atCompanySince || '',
-      description: this.props.profileDescription.description || '',
-      contactLink: this.props.profileContactLink.contactLink || '',
-    };
+    let data = {};
+    // @ts-ignore
+    this.props.profileDescription.description && (data.description = this.props.profileDescription.description);
+    // @ts-ignore
+    this.props.profileFirstName.firstName && (data.firstName = this.props.profileFirstName.firstName);
+    // @ts-ignore
+    this.props.profileLastName.lastName && (data.lastName = this.props.profileLastName.lastName);
+    // @ts-ignore
+    this.props.profilePassword.password && (data.password = this.props.profilePassword.password);
+    // @ts-ignore
+    this.props.profileEmail.email && (data.email = this.props.profileEmail.email);
+    // @ts-ignore
+    this.props.profileBirthday.birthday && (data.birthday = this.props.profileBirthday.birthday);
+    // @ts-ignore
+    this.props.profileContactLink.contactLink && (data.contactLink = this.props.profileContactLink.contactLink);
+    // @ts-ignore
+    this.props.profileAtCompanySince.atCompanySince && (data.atCompanySince = this.props.profileAtCompanySince.atCompanySince);
 
     await updateCurrentUserAvailability(data);
   };
 
   editProfile = async (event: FormEvent): Promise<void> => {
+    await this.saveProfileToRedux();
     event.preventDefault();
 
-    await this.saveProfileToRedux();
     await this.saveProfileToDB();
 
     this.closeEditProfileModal(event);

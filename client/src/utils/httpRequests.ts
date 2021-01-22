@@ -192,6 +192,13 @@ export const postEmployeeAdminPanel = async (data: any): Promise<any> => {
     .catch(err => console.error(err));
 };
 
+export const getBuddyCurrentUser = async (): Promise<any> => {
+  return await axios
+    .get('/api/auth/user-buddy', httpRequestsConfig)
+    .then(res => res.data)
+    .catch(err => console.error(err));
+};
+
 // Dashboard
 export const getAssignedTasks = async (): Promise<any> => {
   return await axios

@@ -364,4 +364,35 @@ router.post('/invite-employee-admin', async (req: Request, res: Response, next) 
   }
 });
 
+router.get('/user-buddy', jwtMW, async (req, res, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const user: IUser = await knex('user').where('ID', userId).first();
+
+    if (user.assignedBuddy) {
+      const buddy: IUser = await knex('user').where('ID', Number(user.assignedBuddy)).first();
+      const role: IRole = await knex('role').where('ID', buddy.roleId).first();
+      const department: IDepartment = await knex('department').where('ID', buddy.departmentId).first();
+
+      const data = {
+        buddy,
+        role,
+        department,
+      };
+
+      Api.sendSuccess<any>(req, res, data);
+    } else {
+      const buddy = {};
+
+      Api.sendSuccess<any>(req, res, buddy);
+    }
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
 module.exports = router;

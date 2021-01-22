@@ -13,10 +13,12 @@ import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
-import { storeAssignedTasks, storeTasks } from '../../utils/httpRequests';
+import { getBuddyCurrentUser, storeAssignedTasks, storeTasks } from '../../utils/httpRequests';
+import { IUser } from '../../../../types/auth.types';
 
 interface DashboardState {
   currentUser: IProfile;
+  buddy: any;
 }
 
 interface DashboardProps {
@@ -29,10 +31,14 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
 
     this.state = {
       currentUser: getUserInfoFromLocalStorage,
+      buddy: {},
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const buddy = await getBuddyCurrentUser();
+    this.setState({ buddy: buddy });
+
     storeAssignedTasks();
     storeTasks();
   }
@@ -74,14 +80,14 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
               <div id="dashboard__second-half">
                 <SectionBar sections={this.secondComponentSections} activeSection={'buddy'} />
 
-                {this.doesUserHaveBuddy ? (
+                {this.state?.buddy?.buddy?.ID ? (
                   <Member
-                    fullName={this.buddy.fullName}
-                    jobTitle={this.buddy.jobTitle}
-                    department={this.buddy.department}
-                    birthday={this.buddy.birthday}
-                    memberSince={this.buddy.memberSince}
-                    description={this.buddy.description}
+                    fullName={`${this.state.buddy.buddy.firstName} ${this.state.buddy.buddy.lastName}`}
+                    jobTitle={this.state.buddy?.role?.title}
+                    department={this.state.buddy?.department?.name}
+                    birthday={this.state.buddy.birthday}
+                    memberSince={this.state.buddy.buddy.atCompanySince}
+                    description={this.state.buddy.buddy.description}
                   />
                 ) : (
                   <div id="no-buddy__div">No buddy for now!</div>
