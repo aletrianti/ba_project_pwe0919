@@ -43,7 +43,7 @@ import { storeRoleTitleReducer, storeRoleDescriptionReducer, storeRoleResponsibi
 import { toggleAddCategoryModalReducer, toggleEditCategoryModalReducer, toggleDeleteCategoryModalReducer, deleteCategoryReducer, categoryReducer } from './forms/categories.reducers';
 import { toggleAddDepartmentModalReducer, toggleEditDepartmentModalReducer, toggleDeleteDepartmentModalReducer, deleteDepartmentReducer, departmentReducer } from './forms/departments.reducers';
 import { toggleAddTaskModalReducer, toggleEditTaskModalReducer, toggleDeleteTaskModalReducer, storeTaskNameReducer, storeTaskDescriptionReducer, deleteTaskReducer, storeTaskRoleReducer, storeTaskDeadlineReducer, taskReducer } from './forms/tasks.reducers';
-import { storeProfileAtCompanySinceReducer, storeProfileContactLinkReducer, storeProfileDescriptionReducer, storeProfileEmailReducer, storeProfileFirstNameReducer, storeProfilePasswordReducer, storeProfileReducer, toggleEditProfileModalReducer } from './forms/profile.reducers';
+import { storeProfileAtCompanySinceReducer, storeProfileBirthdayReducer, storeProfileContactLinkReducer, storeProfileDescriptionReducer, storeProfileEmailReducer, storeProfileFirstNameReducer, storeProfileLastNameReducer, storeProfilePasswordReducer, storeProfileReducer, toggleEditProfileModalReducer } from './forms/profile.reducers';
 
 // combine reducers
 // set to 'any' as it can't be set to 'void'
@@ -140,10 +140,10 @@ const reducers: any = combineReducers({
   deleteTask: deleteTaskReducer,
   // Profile
   profileFirstName: storeProfileFirstNameReducer,
-  profileLastName: storeProfileFirstNameReducer,
+  profileLastName: storeProfileLastNameReducer,
   profileEmail: storeProfileEmailReducer,
   profilePassword: storeProfilePasswordReducer,
-  profileBirthday: storeProfileFirstNameReducer,
+  profileBirthday: storeProfileBirthdayReducer,
   profileAtCompanySince: storeProfileAtCompanySinceReducer,
   profileDescription: storeProfileDescriptionReducer,
   profileContactLink: storeProfileContactLinkReducer,
