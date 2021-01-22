@@ -29,6 +29,7 @@ import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 // localStorage
 import { storeTokenInLocalStorage } from '../../../utils/localStorageActions';
+import { logIn } from '../../../utils/httpRequests';
 
 interface SignInFormState {
   areAllFieldsValid: boolean;
@@ -100,11 +101,7 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       password: state.signIn.password,
     };
 
-    axios
-      .post('/api/auth/login', data)
-      .then(res => {
-        storeTokenInLocalStorage(res);
-      })
+    logIn(data)
       .then(() => {
         console.log('Logged in!');
         history.push('/dashboard');

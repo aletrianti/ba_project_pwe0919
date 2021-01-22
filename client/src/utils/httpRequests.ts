@@ -225,3 +225,9 @@ export const registerEmployee = async (data: any, nextStepFunction: any): Promis
                     .then(() => nextStepFunction)
                     .catch(err => console.error(err));
 };
+
+// Login
+export const logIn = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/login', data)
+                    .then(res => storeTokenInLocalStorage(res));
+};
