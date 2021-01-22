@@ -1,6 +1,5 @@
 import React, { MouseEvent } from 'react';
 import './Tasks.scss';
-import axios from 'axios';
 
 import Title from '../../common/Title/Title';
 import TasksItem from './TasksItem/TasksItem';

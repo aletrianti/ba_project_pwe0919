@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './Actions.scss';
 
 import DeleteIcon from '@material-ui/icons/Delete';

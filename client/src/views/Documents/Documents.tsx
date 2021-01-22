@@ -4,7 +4,6 @@ import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/DocumentsAccordion';
-import Actions from '../../components/common/Actions/Actions';
 import { connect } from 'react-redux';
 import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
 import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
@@ -53,7 +52,7 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
 
     if (categories)
       categories.map(category => {
-        this.setState(state => {
+        return this.setState(state => {
           return {
             content: [...state.content, { category: category, data: this.data }],
           };

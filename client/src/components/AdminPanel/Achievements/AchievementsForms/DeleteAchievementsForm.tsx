@@ -1,14 +1,12 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteAchievementModal, IDeleteAchievement } from '../../../../store/interfaces/forms/achievements.interfaces';
 import { DeleteAchievementAction } from '../../../../store/actions/forms/achievements/achievements.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { deleteAchievement } from '../../../../utils/httpRequests';
 
 interface DeleteAchievementsFormProps {
@@ -38,7 +36,7 @@ class DeleteAchievementsForm extends React.Component<DeleteAchievementsFormProps
   };
 
   // Form events
-  deleteAchievement = async (e: MouseEvent): Promise<void> => {
+  deleteAchievement = async (): Promise<void> => {
     await deleteAchievement(this.props.deleteAchievementModal);
   };
 

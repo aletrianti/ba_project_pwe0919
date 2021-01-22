@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-import axios from 'axios';
 import './SignInForm.scss';
 import { AnyAction } from '@reduxjs/toolkit';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -28,7 +27,6 @@ import { validator, validatorTypes } from '../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 // localStorage
-import { storeTokenInLocalStorage } from '../../../utils/localStorageActions';
 import { logIn } from '../../../utils/httpRequests';
 
 interface SignInFormState {

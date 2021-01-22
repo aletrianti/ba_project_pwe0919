@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-import axios from 'axios';
 import './ThirdStepCompanyForm.scss';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 

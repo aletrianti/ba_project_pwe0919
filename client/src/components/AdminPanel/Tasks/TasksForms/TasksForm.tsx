@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleAddTaskModalAction, ToggleEditTaskModalAction } from '../../../../store/actions/forms/forms.actions';
 import {

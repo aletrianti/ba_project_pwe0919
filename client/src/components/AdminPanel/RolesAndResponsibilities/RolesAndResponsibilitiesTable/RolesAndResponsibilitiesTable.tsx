@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Table from '../../../common/Table/Table';
 import Actions from '../../../common/Actions/Actions';
 
-import { IRolesAndResponsibilities, ITableRolesAndResponsibilities } from '../../../../store/interfaces/tables.interfaces';
+import { IRolesAndResponsibilities } from '../../../../store/interfaces/tables.interfaces';
 import { ToggleEditRoleModalAction, ToggleDeleteRoleModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
   IEditRoleModal,

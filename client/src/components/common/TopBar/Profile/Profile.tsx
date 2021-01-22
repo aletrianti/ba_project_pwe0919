@@ -81,7 +81,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
           <div id="profile__card">
             <div id="profile__card__photo__container">
               {profilePicture ? (
-                <img src={profilePicture} className="profile__card__photo__img" />
+                <img src={profilePicture} className="profile__card__photo__img" alt="current user" />
               ) : (
                 <div className="profile__card__photo__img img--no-picture"></div>
               )}

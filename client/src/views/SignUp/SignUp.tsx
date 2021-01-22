@@ -12,10 +12,6 @@ interface SignUpProps {
 }
 
 class SignUp extends React.Component<SignUpProps> {
-  constructor(props: any) {
-    super(props);
-  }
-
   // Dynamic imports (performance)
   FirstStepEmployeeForm = lazy(
     () => import('../../components/SignUp/SignUpFormEmployee/FirstStepEmployeeForm/FirstStepEmployeeForm')

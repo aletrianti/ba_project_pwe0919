@@ -4,7 +4,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { ITableDocumentsContent } from '../../../../store/interfaces/tables.interfaces';
 import DocumentsTable from '../../DocumentsTable/DocumentsTable';
-import Actions from '../../../common/Actions/Actions';
 import AddButton from '../../../common/AddButton/AddButton';
 
 interface DocumentsAccordionItemState {

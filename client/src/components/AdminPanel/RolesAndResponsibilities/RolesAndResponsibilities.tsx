@@ -1,12 +1,10 @@
-import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 
 import { ToggleAddRoleModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddRoleModal } from '../../../store/interfaces/forms/roles.interfaces';
-import { IRolesAndResponsibilities, ITableRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
+import { IRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
 import { getRolesResponsibilities } from '../../../utils/httpRequests';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
 import DeleteRolesAndResponsibilitiesForm from './RolesAndResponsibilitiesForms/DeleteRolesAndResponsibilitiesForm';

@@ -1,14 +1,12 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteUserModal, IDeleteUser } from '../../../../store/interfaces/forms/users.interfaces';
 import { DeleteUserAction } from '../../../../store/actions/forms/users/users.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { deleteEmployee } from '../../../../utils/httpRequests';
 
 interface DeleteUsersFormProps {

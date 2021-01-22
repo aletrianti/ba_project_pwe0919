@@ -6,7 +6,6 @@ import { ICompanyTask } from '../../../types/companyTask.types';
 import { SET_TASK_FOUR, SET_TASK_ONE, SET_TASK_THREE, SET_TASK_TWO } from '../store/actions/tasks/tasks.types';
 import { httpRequestsConfig, storeTokenInLocalStorage, updateCurrentUserInLocalStorage } from './localStorageActions';
 import { IAssignedTask } from '../../../types/assignedTask.types';
-import { goToNextStep } from './changeFormStep';
 
 // Company Tasks
 export const getTasks = async () => {

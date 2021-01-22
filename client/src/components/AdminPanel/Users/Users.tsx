@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { IAddUserModal } from '../../../store/interfaces/forms/users.interfaces';
 import { ITableUser } from '../../../store/interfaces/tables.interfaces';
@@ -11,7 +10,6 @@ import UsersTable from './UsersTable/UsersTable';
 import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
 import DeleteUsersForm from './UsersForms/DeleteUsersForm';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 import { IEmployeeTable } from '../../../../../types/company.types';
 import { getEmployees } from '../../../utils/httpRequests';
 

@@ -1,5 +1,5 @@
 // localStorage
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { IProfile } from '../store/interfaces/members.interfaces';
 
 export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {

@@ -3,7 +3,6 @@ import React from 'react';
 import { IRole } from '../../../../store/interfaces/roles.interfaces';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import Axios from 'axios';
 
 interface RoleItemProps {
   content: IRole;

@@ -1,14 +1,12 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteCategoryModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteCategoryModal, IDeleteCategory } from '../../../../store/interfaces/forms/categories.interfaces';
 import { DeleteCategoryAction } from '../../../../store/actions/forms/categories/categories.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { deleteCategory } from '../../../../utils/httpRequests';
 
 interface DeleteCategorysFormProps {
@@ -38,7 +36,7 @@ class DeleteCategorysForm extends React.Component<DeleteCategorysFormProps, Dele
   };
 
   // Form events
-  deleteCategory = async (e: MouseEvent): Promise<void> => {
+  deleteCategory = async (): Promise<void> => {
     await deleteCategory(this.props.deleteCategoryModal);
   };
 

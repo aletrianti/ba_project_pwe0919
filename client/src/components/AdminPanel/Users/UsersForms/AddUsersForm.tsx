@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { INewEmployees } from '../../../../../../types/auth.types';
 import { ToggleAddUserModalAction } from '../../../../store/actions/forms/forms.actions';

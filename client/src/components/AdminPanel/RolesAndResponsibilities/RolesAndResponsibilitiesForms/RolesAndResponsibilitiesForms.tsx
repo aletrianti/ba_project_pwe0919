@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import {

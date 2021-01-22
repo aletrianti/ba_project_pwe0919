@@ -31,8 +31,7 @@ import Button from '../../../Button/Button';
 import InputField from '../../../InputField/InputField';
 import { ICheckFields, checkFormFields } from '../../../../../utils/checkFormFields';
 import { validator, validatorTypes } from '../../../../../utils/formValidation';
-import { ICurrentUser } from '../../../../../../../types/auth.types';
-import { getUserInfoFromLocalStorage } from '../../../../../utils/localStorageActions';
+
 interface ProfileFormProps {
   profile: IProfile;
   profileFirstName: IProfileFirstName;

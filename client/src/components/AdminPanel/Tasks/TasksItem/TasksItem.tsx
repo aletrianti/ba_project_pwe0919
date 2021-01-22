@@ -1,4 +1,4 @@
-import React, { ChangeEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import './TasksItem.scss';
 
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';

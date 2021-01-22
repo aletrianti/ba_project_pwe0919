@@ -3,7 +3,7 @@ import './HorizontalAccordion.scss';
 
 import HorizontalAccordionItem from './HorizontalAccordionItem/HorizontalAccordionItem';
 
-import { IRole, IRolesAndResponsibilitiesCompany } from '../../../store/interfaces/roles.interfaces';
+import { IRolesAndResponsibilitiesCompany } from '../../../store/interfaces/roles.interfaces';
 import { IQuestion } from '../../../store/interfaces/questions.interfaces';
 
 interface HorizontalAccordionProps {

@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React from 'react';
 import { connect } from 'react-redux';
 
@@ -6,7 +5,6 @@ import { ToggleAddAchievementModalAction } from '../../../store/actions/forms/fo
 import { IAddAchievementModal } from '../../../store/interfaces/forms/achievements.interfaces';
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
 import { getAchievements } from '../../../utils/httpRequests';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 
 import AddButton from '../../common/AddButton/AddButton';
 import AchievementsForms from './AchievementsForms/AchievementsForms';

@@ -14,8 +14,6 @@ import StarIcon from '@material-ui/icons/Star';
 import HelpIcon from '@material-ui/icons/Help';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
-import axios from 'axios';
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
 import { getAchievements } from '../../../utils/httpRequests';
 
@@ -74,7 +72,7 @@ class Achievements extends React.Component<AchievementsProps, AchievevementsStat
       <div id="company-and-team__achievements__container">
         <Timeline align="alternate">
           {this.state.achievements.map((achievement, i) => {
-            return i % 2 == 0 ? (
+            return i % 2 === 0 ? (
               <TimelineItem key={i} className={this.props.classes.timelineItem}>
                 <TimelineOppositeContent>
                   <Typography className={this.props.classes.date}>{moment(achievement.date).format('MMMM YYYY')}</Typography>

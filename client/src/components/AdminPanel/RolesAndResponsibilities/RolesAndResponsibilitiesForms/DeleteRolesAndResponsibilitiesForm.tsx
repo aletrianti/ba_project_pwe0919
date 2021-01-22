@@ -1,7 +1,6 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteRoleModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteRoleModal, IDeleteRole } from '../../../../store/interfaces/forms/roles.interfaces';

@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleAddCategoryModalAction, ToggleEditCategoryModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreCategoryAction } from '../../../../store/actions/forms/categories/categories.actions';
@@ -10,7 +9,6 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { postCategory, updateCategory } from '../../../../utils/httpRequests';
 
 interface CategoriesFormsProps {
@@ -71,7 +69,7 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   };
 
   // Form events
-  saveCategoryToDB = async (event: FormEvent): Promise<void> => {
+  saveCategoryToDB = async (): Promise<void> => {
     // TODO: add axios call here - use this.props.category
     const data = {
       name: this.props.category.category,

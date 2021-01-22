@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
@@ -21,7 +20,6 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { IDepartmentTable } from '../../../../../../types/department.types';
 import { getDepartmentsTableInfo, getRolesTableInfo, getBuddiesTableInfo } from '../../../../utils/httpRequests';
 
