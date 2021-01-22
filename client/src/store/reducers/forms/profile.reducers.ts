@@ -138,7 +138,7 @@ export const storeProfileReducer = (
   state: IProfile = {
     firstName: { firstName: currentUser ? currentUser.firstName : '', isValid: true, errorMessage: '' },
     lastName: { lastName: currentUser ? currentUser.lastName : '', isValid: true, errorMessage: '' },
-    email: { email: '', isValid: true, errorMessage: '' },
+    email: { email: currentUser ? currentUser.email : '', isValid: true, errorMessage: '' },
     password: { password: '', isValid: true, errorMessage: '' },
     birthday: { birthday: currentUser ? currentUser.birthday || '' : '', isValid: true, errorMessage: '' },
     atCompanySince: { atCompanySince: currentUser ? currentUser.memberSince || '' : '', isValid: true, errorMessage: '' },
