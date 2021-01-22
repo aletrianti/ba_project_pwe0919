@@ -42,7 +42,11 @@ class Users extends React.Component<UsersProps, UserState> {
     const employeesTable: ITableUser[] = users.map(employee => {
       const user: ITableUser = {
         id: employee.ID,
-        name: `${employee.firstName} ${employee.lastName}`,
+        name: employee.firstName
+          ? employee.lastName
+            ? `${employee.firstName} ${employee.lastName}`
+            : `${employee.firstName}`
+          : '',
         email: employee.email,
         isAvailableToBuddy: employee.availableToBuddy,
         assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName || ''}  ${employee.buddyLastName || ''}` : '',

@@ -10,7 +10,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { postEmployee } from '../../../../utils/httpRequests';
+import { postEmployeeAdminPanel } from '../../../../utils/httpRequests';
 
 interface AddUsersFormProps {
   userEmail: IUserEmail;
@@ -64,11 +64,8 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
 
   // Form events
   inviteUser = async (event: FormEvent): Promise<void> => {
-    const data: INewEmployees = {
-      newUsers: [this.props.userEmail.email],
-      companyId: '52', // TODO: Get current company id
-    };
-    await postEmployee(data);
+    const data = { newUser: this.props.userEmail.email };
+    await postEmployeeAdminPanel(data);
   };
 
   // Fields

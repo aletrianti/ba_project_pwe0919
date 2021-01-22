@@ -84,13 +84,12 @@ router.post('/invite-employees', async (req: Request, res: Response, next) => {
   try {
     const { newUsers, companyId }: INewEmployees = req.body;
 
-    console.log(req.body);
     const createdUsers: any[] = [];
     newUsers.forEach(async newUser => {
       const userCreated = await knex('user').insert({
         email: newUser,
         companyId: Number(companyId),
-        active: false,
+        active: true,
         isAdmin: false,
         createdAt: dateDB(),
         updatedAt: dateDB(),
@@ -310,6 +309,53 @@ router.post('/delete-employee', jwtMW, async (req, res, next) => {
       active: false,
       updatedAt: dateDB(),
     });
+
+    Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/invite-employee-admin', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const newUser: string = req.body.newUser;
+
+    const userCreated = await knex('user').insert({
+      email: newUser,
+      companyId: Number(companyId),
+      active: true,
+      isAdmin: false,
+      createdAt: dateDB(),
+      updatedAt: dateDB(),
+      availableToBuddy: true,
+    });
+
+    const [user, company]: [IUser, ICompany] = await Promise.all([
+      knex('user').whereIn('ID', userCreated).first(),
+      knex('company').where('ID', Number(companyId)).first(),
+    ]);
+
+    sendmail(
+      {
+        from: 'info@hoppin.com',
+        to: `${newUser.toString()}`,
+        subject: `Welcome to ${company.name}`,
+        html: `<p>Hi,</p>
+              <p>We are really excited to work with you at ${company.name}. To join the team create aprofile <a href="https://hoppin.herokuapp.com/sign-up">here</a>, don't forget to user the company code: ${company.companyCode}.</p>
+              <p>Kind regards,</p>
+              <p>${company.name}.</p>
+        `,
+      },
+      function (err, reply) {
+        // console.log(err && err.stack);
+        // console.dir(reply);
+      }
+    );
 
     Api.sendSuccess<IUser>(req, res, user);
   } catch (err) {
