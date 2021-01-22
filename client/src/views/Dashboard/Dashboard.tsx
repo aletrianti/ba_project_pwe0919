@@ -50,6 +50,9 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     description: 'I love making music and programming.',
   };
 
+  // TODO: Dynamic data
+  doesUserHaveBuddy: boolean = false;
+
   render() {
     return (
       <div className="app__container">
@@ -71,14 +74,18 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
               <div id="dashboard__second-half">
                 <SectionBar sections={this.secondComponentSections} activeSection={'buddy'} />
 
-                <Member
-                  fullName={this.buddy.fullName}
-                  jobTitle={this.buddy.jobTitle}
-                  department={this.buddy.department}
-                  birthday={this.buddy.birthday}
-                  memberSince={this.buddy.memberSince}
-                  description={this.buddy.description}
-                />
+                {this.doesUserHaveBuddy ? (
+                  <Member
+                    fullName={this.buddy.fullName}
+                    jobTitle={this.buddy.jobTitle}
+                    department={this.buddy.department}
+                    birthday={this.buddy.birthday}
+                    memberSince={this.buddy.memberSince}
+                    description={this.buddy.description}
+                  />
+                ) : (
+                  <div id="no-buddy__div">No buddy for now!</div>
+                )}
               </div>
             </div>
           </div>

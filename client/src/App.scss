@@ -186,6 +186,14 @@ body {
     overflow-y: auto;
 }
 
+#no-buddy__div {
+    width: 100%;
+    text-align: center;
+    padding: 2em 1em;
+    font-style: italic;
+    color: $primary-grey;
+}
+
 @media all and (max-width: 1180px) {
     #company-and-team__achievements__container {
         width: 100%;
