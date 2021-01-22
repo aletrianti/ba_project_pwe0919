@@ -54,13 +54,13 @@ class RolesAndResponsibilitiesForms extends React.Component<
     super(props);
 
     const responsibilitiesArray = this.props.role.responsibilities.responsibilities;
-    const responsibilities = responsibilitiesArray.map(item => item.description);
+    const responsibilities = responsibilitiesArray ? responsibilitiesArray.map(item => item.description) : [];
 
     this.state = {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
-      responsibilities: responsibilities || [],
+      responsibilities: responsibilities,
     };
   }
 

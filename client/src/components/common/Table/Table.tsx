@@ -39,22 +39,28 @@ class Table extends React.Component<TableProps> {
         <table>
           <thead>
             <tr className="header__tr">
-              {columns.map((column, i) => {
-                return <th key={i}>{column.title}</th>;
-              })}
+              {columns
+                ? columns.map((column, i) => {
+                    return <th key={i}>{column.title}</th>;
+                  })
+                : null}
             </tr>
           </thead>
 
           <tbody>
-            {data.map((item, i) => {
-              return (
-                <tr key={i}>
-                  {columns.map((column, i) => {
-                    return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
-                  })}
-                </tr>
-              );
-            })}
+            {data
+              ? data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      {columns
+                        ? columns.map((column, i) => {
+                            return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
+                          })
+                        : null}
+                    </tr>
+                  );
+                })
+              : null}
           </tbody>
         </table>
       </div>
