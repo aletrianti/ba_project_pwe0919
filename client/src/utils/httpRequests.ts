@@ -57,6 +57,11 @@ export const getCategories = async (): Promise<any> => {
                     .then(res => res.data)
                     .catch(err => console.error(err));
 };
+export const getCategory = async (id: number): Promise<any> => {
+  return await axios.get(`/api/category/specific/${id}`, httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
+};
 export const postCategory = async (data: any): Promise<any> => {
   return await axios.post('/api/category', data, httpRequestsConfig)
                     .catch(err => console.error(err));
@@ -83,6 +88,11 @@ export const getDepartments = async (): Promise<any> => {
 };
 export const getCompanyDepartments = async (): Promise<any> => {
   return await axios.get('/api/department/company-view', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
+};
+export const getDepartment = async (id: number): Promise<any> => {
+  return await axios.get(`/api/department/specific/${id}`, httpRequestsConfig)
                     .then(res => res.data)
                     .catch(err => console.error(err));
 };
@@ -129,9 +139,13 @@ export const getRolesResponsibilities = async (): Promise<any> => {
                     .then(res => res.data)
                     .catch(err => console.error(err));
 };
-
 export const getRolesResponsibilitiesCompany = async (): Promise<any> => {
   return await axios.get('/api/role/responsibilities', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
+};
+export const getRole = async (id: number): Promise<any> => {
+  return await axios.get(`/api/role/specific/${id}`, httpRequestsConfig)
                     .then(res => res.data)
                     .catch(err => console.error(err));
 };
