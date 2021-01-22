@@ -17,7 +17,7 @@ class AddButton extends React.Component<AddButtonProps> {
   render() {
     return (
       <>
-        {isCurrentUserAnAdmin() ? (
+        {isCurrentUserAnAdmin ? (
           <button className="add-btn__container" onClick={this.props.function}>
             <span>{this.props.name}</span> <AddIcon />
           </button>

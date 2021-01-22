@@ -22,7 +22,7 @@ const App = () => {
   const PrivateRoute: React.FC<CustomRouteProps> = ({ component: Component, ...rest }) => (
     <Route
       {...rest}
-      render={props => (getTokenFromLocalStorage() !== undefined ? <Component {...props} /> : <Redirect to="/sign-in" />)}
+      render={props => (getTokenFromLocalStorage !== undefined ? <Component {...props} /> : <Redirect to="/sign-in" />)}
     />
   );
 
@@ -31,7 +31,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {getTokenFromLocalStorage() !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/sign-in" />}
+            {getTokenFromLocalStorage !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/sign-in" />}
           </Route>
           <Route path="/sign-in" component={SignIn} />
 

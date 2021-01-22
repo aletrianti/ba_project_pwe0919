@@ -3,7 +3,7 @@ import { TOGGLE_EDIT_PROFILE_MODAL } from "../../actions/forms/forms.types";
 import { STORE_PROFILE_FIRST_NAME, STORE_PROFILE_LAST_NAME, STORE_PROFILE_EMAIL, STORE_PROFILE_PASSWORD, STORE_PROFILE_BIRTHDAY, STORE_PROFILE_AT_COMPANY_SINCE, STORE_PROFILE_DESCRIPTION, STORE_PROFILE_CONTACT_LINK, PROFILE } from "../../actions/forms/profile/profile.types";
 import { IProfileFirstName, IStoreProfileFirstNameAction, IProfileLastName, IStoreProfileLastNameAction, IProfileEmail, IStoreProfileEmailAction, IProfilePassword, IStoreProfilePasswordAction, IProfileBirthday, IStoreProfileBirthdayAction, IProfileAtCompanySince, IStoreProfileAtCompanySinceAction, IProfileDescription, IStoreProfileDescriptionAction, IProfileContactLink, IStoreProfileContactLinkAction, IEditProfileModal, IToggleEditProfileModalAction, IStoreProfileAction, IProfile } from "../../interfaces/forms/profile.interfaces";
 
-const currentUser = getUserInfoFromLocalStorage();
+const currentUser = getUserInfoFromLocalStorage;
 
 export const storeProfileFirstNameReducer = (
   state: IProfileFirstName = { firstName: '', isValid: false, errorMessage: '' },

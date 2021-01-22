@@ -26,7 +26,7 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
 
     this.state = {
       isOpen: false,
-      currentUser: getUserInfoFromLocalStorage(),
+      currentUser: getUserInfoFromLocalStorage,
     };
   }
 

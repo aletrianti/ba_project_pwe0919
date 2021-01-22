@@ -33,7 +33,7 @@ class Actions extends React.Component<ActionsProps> {
           </div>
         ) : (
           [
-            isCurrentUserAnAdmin() ? (
+            isCurrentUserAnAdmin ? (
               <div className="actions__btns__wrapper" key={'actions__btns__wrapper'}>
                 {this.props.actions &&
                   this.props.actions.map((action, i) => {

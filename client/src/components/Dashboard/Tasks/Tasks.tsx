@@ -39,7 +39,7 @@ class Tasks extends React.Component<TasksProps> {
 
   render() {
     const { tasks, taskFive } = this.props;
-    const currentUser = getUserInfoFromLocalStorage();
+    const currentUser = getUserInfoFromLocalStorage;
 
     return (
       <div id="dashboard__tasks">

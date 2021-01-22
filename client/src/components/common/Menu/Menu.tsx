@@ -44,7 +44,7 @@ class Menu extends React.Component<RouteComponentProps & MenuProps> {
             <HelpIcon fontSize={'large'} />
             <span className="menu__link__text">FAQs</span>
           </Link>
-          {isCurrentUserAnAdmin() ? (
+          {isCurrentUserAnAdmin ? (
             <Link
               to={'/admin-panel/users'}
               className={activeSection === 'admin-panel' ? 'menu__link menu__link--active' : 'menu__link'}

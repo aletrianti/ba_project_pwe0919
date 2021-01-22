@@ -28,7 +28,7 @@ class Dashboard extends React.Component<DashboardProps, DashboardState> {
     super(props);
 
     this.state = {
-      currentUser: getUserInfoFromLocalStorage(),
+      currentUser: getUserInfoFromLocalStorage,
     };
   }
 

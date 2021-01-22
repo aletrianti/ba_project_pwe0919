@@ -9,11 +9,10 @@ import Switch from '@material-ui/core/Switch';
 import { withStyles } from '@material-ui/core/styles';
 
 // localStorage
-import { updateCurrentUserAvailability } from '../../../../utils/localStorageActions';
 import { connect } from 'react-redux';
 import { ToggleEditProfileModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IEditProfileModal } from '../../../../store/interfaces/forms/profile.interfaces';
-import ProfileForm from './ProfileForm/ProfileForm';
+import { updateCurrentUserAvailability } from '../../../../utils/httpRequests';
 
 interface ProfileProps {
   firstName: string;
@@ -63,7 +62,7 @@ class Profile extends React.Component<ProfileProps, ProfileState> {
 
   setAvailability = () => {
     this.setState({ isChecked: !this.state.isChecked });
-    updateCurrentUserAvailability(!this.state.isChecked);
+    updateCurrentUserAvailability({ availableToBuddy: !this.state.isChecked });
   };
 
   openEditProfileModal = (e: MouseEvent): void => {

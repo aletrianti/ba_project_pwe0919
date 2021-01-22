@@ -53,29 +53,16 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage.setItem('current_user', JSON.stringify(currentUser));
 };
 
-export const updateCurrentUserAvailability = (availability: boolean) => {
-  const token = getTokenFromLocalStorage();
-
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  axios
-    .post('/api/auth/update-user', { availableToBuddy: availability }, config)
-    .then(res => updateCurrentUserInLocalStorage(res))
-    .catch(err => console.error(err));
-};
-
 export const removeAllItemsFromLocalStorage = () => {
   localStorage.clear();
 };
 
-export const getTokenFromLocalStorage = (): string => localStorage['user_token'];
+export const getTokenFromLocalStorage: string = localStorage['user_token'];
 
 export const httpRequestsConfig = {
-  headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+  headers: { Authorization: `Bearer ${getTokenFromLocalStorage}` },
 };
 
-export const getUserInfoFromLocalStorage = (): IProfile => JSON.parse(localStorage['current_user']);
+export const getUserInfoFromLocalStorage: IProfile = JSON.parse(localStorage['current_user']);
 
-export const isCurrentUserAnAdmin = (): boolean => getUserInfoFromLocalStorage().isAdmin;
+export const isCurrentUserAnAdmin: boolean = getUserInfoFromLocalStorage.isAdmin;

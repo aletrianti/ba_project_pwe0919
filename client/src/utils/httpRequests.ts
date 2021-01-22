@@ -4,12 +4,14 @@ import axios from 'axios';
 import store from '../index';
 import { ICompanyTask } from '../../../types/companyTask.types';
 import { SET_TASK_FOUR, SET_TASK_ONE, SET_TASK_THREE, SET_TASK_TWO } from '../store/actions/tasks/tasks.types';
-import { httpRequestsConfig } from './localStorageActions';
+import { httpRequestsConfig, updateCurrentUserInLocalStorage } from './localStorageActions';
 import { IAssignedTask } from '../../../types/assignedTask.types';
 
 // Company Tasks
 export const getTasks = async () => {
-  return await axios.get('/api/companytask', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/companytask', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const storeTasks = async (): Promise<void> => {
   const tasks: ICompanyTask[] = await getTasks();
@@ -26,107 +28,155 @@ export const storeTasks = async (): Promise<void> => {
   });
 };
 export const postCompanyTask = async (data: any): Promise<any> => {
-  return await axios.post('/api/companytask', data, httpRequestsConfig);
+  return await axios.post('/api/companytask', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // Achievements
 export const getAchievements = async (): Promise<any> => {
-  return await axios.get('/api/company-achievement', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/company-achievement', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const postAchievement = async (data: any): Promise<any> => {
-  return await axios.post('/api/company-achievement', data, httpRequestsConfig);
+  return await axios.post('/api/company-achievement', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const updateAchievement = async (data: any): Promise<any> => {
-  return await axios.post('/api/company-achievement/update', data, httpRequestsConfig);
+  return await axios.post('/api/company-achievement/update', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const deleteAchievement = async (data: any): Promise<any> => {
-  return await axios.post('/api/company-achievement/delete', data, httpRequestsConfig);
+  return await axios.post('/api/company-achievement/delete', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // Categories
 export const getCategories = async (): Promise<any> => {
-  return await axios.get('/api/category', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/category', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const postCategory = async (data: any): Promise<any> => {
-  return await axios.post('/api/category', data, httpRequestsConfig);
+  return await axios.post('/api/category', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const updateCategory = async (data: any): Promise<any> => {
-  return await axios.post('/api/category/update', data, httpRequestsConfig);
+  return await axios.post('/api/category/update', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const deleteCategory = async (data: any): Promise<any> => {
-  return await axios.post('/api/category/delete', data, httpRequestsConfig);
+  return await axios.post('/api/category/delete', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // Departments
 export const getDepartmentsTableInfo = async (): Promise<any> => {
-  return await axios.get('/api/department/table', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/department/table', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const getDepartments = async (): Promise<any> => {
-  return await axios.get('/api/department', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/department', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const getCompanyDepartments = async (): Promise<any> => {
-  return await axios.get('/api/department/company-view', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/department/company-view', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const postDepartment = async (data: any): Promise<any> => {
-  return await axios.post('/api/department', data, httpRequestsConfig);
+  return await axios.post('/api/department', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const updateDepartment = async (data: any): Promise<any> => {
-  return await axios.post('/api/department/update', data, httpRequestsConfig);
+  return await axios.post('/api/department/update', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const deleteDepartment = async (data: any): Promise<any> => {
-  return await axios.post('/api/department/delete', data, httpRequestsConfig);
+  return await axios.post('/api/department/delete', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // FAQ
 export const getFAQs = async (): Promise<any> => {
-  return await axios.get('/api/faq', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/faq', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const postFAQ = async (data: any): Promise<any> => {
-  return await axios.post('/api/faq', data, httpRequestsConfig);
+  return await axios.post('/api/faq', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const updateFAQ = async (data: any): Promise<any> => {
-  return await axios.post('/api/faq/update', data, httpRequestsConfig);
+  return await axios.post('/api/faq/update', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 export const deleteFAQ = async (data: any): Promise<any> => {
-  return await axios.post('/api/faq/delete', data, httpRequestsConfig);
+  return await axios.post('/api/faq/delete', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // Roles
 export const getRolesTableInfo = async (): Promise<any> => {
-  return await axios.get('/api/role/table', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/role/table', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const getRolesResponsibilities = async (): Promise<any> => {
-  return await axios.get('/api/role/responsibilities/admin', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/role/responsibilities/admin', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 
 export const getRolesResponsibilitiesCompany = async (): Promise<any> => {
-  return await axios.get('/api/role/responsibilities', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/role/responsibilities', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 
 // Users
 export const getBuddiesTableInfo = async (): Promise<any> => {
-  return await axios.get('/api/company/buddy-table', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/company/buddy-table', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const getEmployees = async (): Promise<any> => {
-  return await axios.get('/api/company/employees', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/company/employees', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const getCompanyEmployees = async (): Promise<any> => {
-  return await axios.get('/api/company', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/company', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
+};
+export const postEmployee = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/invite-employees', data, httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
+};
+export const updateCurrentUserAvailability = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/update-user', data, httpRequestsConfig)
+                    .then(res => updateCurrentUserInLocalStorage(res))
+                    .catch(err => console.error(err));
 };
 export const deleteEmployee = async (data: any): Promise<any> => {
-  return await axios.post('/api/auth/delete-employee', data, httpRequestsConfig);
-};
-
-export const postEmployee = async (data: any): Promise<any> => {
-  return await axios.post('/api/auth/invite-employees', data, httpRequestsConfig).then(res => res.data);
+  return await axios.post('/api/auth/delete-employee', data, httpRequestsConfig)
+                    .catch(err => console.error(err));
 };
 
 // Dashboard
 export const getAssignedTasks = async (): Promise<any> => {
-  return await axios.get('/api/assignedtask', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/assignedtask', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const submitAssignedTask = async (data: any): Promise<any> => {
-  return await axios.post('/api/assignedtask', data, httpRequestsConfig).then(res => res.data);
+  return await axios.post('/api/assignedtask', data, httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
 export const storeAssignedTasks = async (): Promise<void> => {
   const tasks: IAssignedTask[] = await getAssignedTasks();
@@ -145,5 +195,7 @@ export const storeAssignedTasks = async (): Promise<void> => {
 
 //Auth
 export const getCurrentUser = async (): Promise<any> => {
-  return await axios.get('/api/auth/current-user', httpRequestsConfig).then(res => res.data);
+  return await axios.get('/api/auth/current-user', httpRequestsConfig)
+                    .then(res => res.data)
+                    .catch(err => console.error(err));
 };
