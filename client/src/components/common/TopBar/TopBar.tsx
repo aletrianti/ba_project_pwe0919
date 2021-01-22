@@ -4,8 +4,6 @@ import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 import Profile from './Profile/Profile';
 
-import { IProfile } from '../../../store/interfaces/members.interfaces';
-
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 // localStorage
@@ -17,7 +15,6 @@ interface TopBarProps {
 
 interface TopBarState {
   isOpen: boolean;
-  currentUser: IProfile;
 }
 
 class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarState> {
@@ -26,7 +23,6 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
 
     this.state = {
       isOpen: false,
-      currentUser: getUserInfoFromLocalStorage,
     };
   }
 
@@ -36,7 +32,17 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
 
   render() {
     const { sectionName } = this.props;
-    const { isOpen, currentUser } = this.state;
+    const { isOpen } = this.state;
+    const {
+      firstName,
+      lastName,
+      jobTitle,
+      department,
+      birthday,
+      memberSince,
+      description,
+      isAvailable,
+    } = getUserInfoFromLocalStorage;
 
     return (
       <div id="topbar">
@@ -49,18 +55,18 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
             <AccountCircleIcon id="topbar__img__no-picture" fontSize={'large'} />
           </div>
           <button id="topbar__name" onClick={() => this.toggleProfile()}>
-            {currentUser.firstName} {currentUser.lastName}
+            {firstName} {lastName}
           </button>
           {isOpen ? (
             <Profile
-              firstName={currentUser.firstName}
-              lastName={currentUser.lastName}
-              jobTitle={currentUser.jobTitle}
-              department={currentUser.department}
-              birthday={currentUser.birthday}
-              memberSince={currentUser.memberSince}
-              description={currentUser.description}
-              isAvailable={currentUser.isAvailable}
+              firstName={firstName}
+              lastName={lastName}
+              jobTitle={jobTitle}
+              department={department}
+              birthday={birthday}
+              memberSince={memberSince}
+              description={description}
+              isAvailable={isAvailable}
             />
           ) : null}
         </div>

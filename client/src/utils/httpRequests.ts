@@ -208,13 +208,6 @@ export const storeAssignedTasks = async (): Promise<void> => {
   });
 };
 
-// Auth
-export const getCurrentUser = async (): Promise<any> => {
-  return await axios.get('/api/auth/current-user', httpRequestsConfig)
-                    .then(res => res.data)
-                    .catch(err => console.error(err));
-};
-
 // Sign up - Company
 export const inviteUsers = async (data: any): Promise<any> => {
   return await axios.post('/api/auth/invite-employees', data)
