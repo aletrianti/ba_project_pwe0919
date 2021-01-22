@@ -51,13 +51,14 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
 
     this.setState({ categories: categories });
 
-    categories.map(category => {
-      this.setState(state => {
-        return {
-          content: [...state.content, { category: category, data: this.data }],
-        };
+    if (categories)
+      categories.map(category => {
+        this.setState(state => {
+          return {
+            content: [...state.content, { category: category, data: this.data }],
+          };
+        });
       });
-    });
   }
 
   sections = [{ name: 'Files', pathname: 'documents' }];

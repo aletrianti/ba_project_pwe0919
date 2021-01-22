@@ -38,7 +38,7 @@ class CompanyAndTeam extends React.Component<CompanyAndTeamProps, CompanyState> 
 
   async componentDidMount() {
     const departments: any[] = await this.getDepartments();
-    departments.unshift({ id: 0, title: 'All' });
+    if (departments) departments.unshift({ id: 0, title: 'All' });
     this.setState({ departments: departments });
   }
 

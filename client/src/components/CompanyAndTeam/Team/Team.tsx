@@ -32,17 +32,19 @@ class Team extends React.Component<{}, companyState> {
     return (
       <div className="team__members__container">
         <div className="team__members">
-          {this.state.employees.map((member, i) => (
-            <Member
-              fullName={member.firstName}
-              jobTitle={member.jobTitle}
-              department={member.department}
-              birthday={member.birthday}
-              memberSince={member.memberSince}
-              description={member.description}
-              key={i}
-            />
-          ))}
+          {this.state.employees
+            ? this.state.employees.map((member, i) => (
+                <Member
+                  fullName={member.firstName}
+                  jobTitle={member.jobTitle}
+                  department={member.department}
+                  birthday={member.birthday}
+                  memberSince={member.memberSince}
+                  description={member.description}
+                  key={i}
+                />
+              ))
+            : null}
         </div>
       </div>
     );

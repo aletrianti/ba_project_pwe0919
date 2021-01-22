@@ -63,6 +63,6 @@ export const httpRequestsConfig = {
   headers: { Authorization: `Bearer ${getTokenFromLocalStorage}` },
 };
 
-export const getUserInfoFromLocalStorage: IProfile = JSON.parse(localStorage['current_user']);
+export const getUserInfoFromLocalStorage: IProfile = localStorage['current_user'] ? JSON.parse(localStorage['current_user']) : null;
 
-export const isCurrentUserAnAdmin: boolean = getUserInfoFromLocalStorage.isAdmin;
+export const isCurrentUserAnAdmin: boolean = getUserInfoFromLocalStorage ? getUserInfoFromLocalStorage.isAdmin : false;

@@ -136,13 +136,13 @@ export const storeProfileContactLinkReducer = (
 
 export const storeProfileReducer = (
   state: IProfile = {
-    firstName: { firstName: currentUser.firstName, isValid: true, errorMessage: '' },
-    lastName: { lastName: currentUser.lastName, isValid: true, errorMessage: '' },
+    firstName: { firstName: currentUser ? currentUser.firstName : '', isValid: true, errorMessage: '' },
+    lastName: { lastName: currentUser ? currentUser.lastName : '', isValid: true, errorMessage: '' },
     email: { email: '', isValid: true, errorMessage: '' },
     password: { password: '', isValid: true, errorMessage: '' },
-    birthday: { birthday: currentUser.birthday || '', isValid: true, errorMessage: '' },
-    atCompanySince: { atCompanySince: currentUser.memberSince || '', isValid: true, errorMessage: '' },
-    description: { description: currentUser.description || '', isValid: true, errorMessage: '' },
+    birthday: { birthday: currentUser ? currentUser.birthday || '' : '', isValid: true, errorMessage: '' },
+    atCompanySince: { atCompanySince: currentUser ? currentUser.memberSince || '' : '', isValid: true, errorMessage: '' },
+    description: { description: currentUser ? currentUser.description || '' : '', isValid: true, errorMessage: '' },
     contactLink: { contactLink: '', isValid: true, errorMessage: '' }
   },
   action: IStoreProfileAction

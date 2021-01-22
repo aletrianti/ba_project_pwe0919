@@ -4,8 +4,9 @@ import axios from 'axios';
 import store from '../index';
 import { ICompanyTask } from '../../../types/companyTask.types';
 import { SET_TASK_FOUR, SET_TASK_ONE, SET_TASK_THREE, SET_TASK_TWO } from '../store/actions/tasks/tasks.types';
-import { httpRequestsConfig, updateCurrentUserInLocalStorage } from './localStorageActions';
+import { httpRequestsConfig, storeTokenInLocalStorage, updateCurrentUserInLocalStorage } from './localStorageActions';
 import { IAssignedTask } from '../../../types/assignedTask.types';
+import { goToNextStep } from './changeFormStep';
 
 // Company Tasks
 export const getTasks = async () => {
@@ -16,7 +17,7 @@ export const getTasks = async () => {
 export const storeTasks = async (): Promise<void> => {
   const tasks: ICompanyTask[] = await getTasks();
 
-  tasks.forEach(task => {
+  if (tasks) tasks.forEach(task => {
     if (task.taskID === 1)
       store.dispatch({ type: SET_TASK_ONE, payload: { ...store.getState().taskOne, deadline: task.deadline } });
     if (task.taskID === 2)
@@ -195,7 +196,7 @@ export const submitAssignedTask = async (data: any): Promise<any> => {
 export const storeAssignedTasks = async (): Promise<void> => {
   const tasks: IAssignedTask[] = await getAssignedTasks();
 
-  tasks.forEach(task => {
+  if (tasks) tasks.forEach(task => {
     if (task.taskId === 1)
       store.dispatch({ type: SET_TASK_ONE, payload: { ...store.getState().taskOne, isCompleted: task.completed } });
     if (task.taskId === 2)
@@ -207,9 +208,27 @@ export const storeAssignedTasks = async (): Promise<void> => {
   });
 };
 
-//Auth
+// Auth
 export const getCurrentUser = async (): Promise<any> => {
   return await axios.get('/api/auth/current-user', httpRequestsConfig)
                     .then(res => res.data)
+                    .catch(err => console.error(err));
+};
+
+// Sign up - Company
+export const inviteUsers = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/invite-employees', data)
+                    .then(() => console.log('Sent emails!'))
+                    .catch(err => console.error(err));
+};
+export const postCompany = async (data: any): Promise<any> => {
+  return await axios.post('/api/auth/register-company', data);
+};
+
+// Sign up - Employee
+export const registerEmployee = async (data: any, nextStepFunction: any): Promise<any> => {
+  return await axios.post('/api/auth/register-employee', data)
+                    .then(res => storeTokenInLocalStorage(res))
+                    .then(() => nextStepFunction)
                     .catch(err => console.error(err));
 };

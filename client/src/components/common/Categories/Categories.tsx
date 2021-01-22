@@ -21,9 +21,11 @@ class Categories extends React.Component<CategoriesProps> {
       <>
         {!isInAchievements ? (
           <div className="categories__container">
-            {categories.map((category, i) => {
-              return <Category id={category.id} name={category.title} isAll={category.title === 'All'} key={i} />;
-            })}
+            {categories
+              ? categories.map((category, i) => {
+                  return <Category id={category.id} name={category.title} isAll={category.title === 'All'} key={i} />;
+                })
+              : null}
           </div>
         ) : null}
       </>
