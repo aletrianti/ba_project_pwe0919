@@ -197,32 +197,27 @@ class ProfileForm extends React.Component<ProfileFormProps, ProfileFormState> {
   };
 
   saveProfileToDB = async (): Promise<void> => {
-    const data = {};
-    // @ts-ignore
-    if (this.props.profileDescription.description) data.description = this.props.profileDescription.description;
-    // @ts-ignore
-    if (this.props.profileFirstName.firstName) data.firsName = this.props.profileFirstName.firstName;
-    // @ts-ignore
-    if (this.props.profileLastName.lastName) data.lastName = this.props.profileLastName.lastName;
-    // @ts-ignore
-    if (this.props.profilePassword.password) data.password = this.props.profilePassword.password;
-    // @ts-ignore
-    if (this.props.profileEmail.email) data.email = this.props.profileEmail.email;
-    // @ts-ignore
-    if (this.props.profileBirthday.birthday) data.birthday = this.props.profileBirthday.birthday;
-    // @ts-ignore
-    if (this.props.profileContactLink.contactLink) data.contactLink = this.props.profileContactLink.contactLink;
-    // @ts-ignore
-    if (this.props.profileAtCompanySince.atCompanySince) data.atCompanySince = this.props.profileAtCompanySince.atCompanySince;
+    const data = {
+      firstName: this.props.profileFirstName.firstName || '',
+      lastName: this.props.profileLastName.lastName || '',
+      email: this.props.profileEmail.email || '',
+      password: this.props.profilePassword.password || '',
+      birthday: this.props.profileBirthday.birthday || '',
+      atCompanySince: this.props.profileAtCompanySince.atCompanySince || '',
+      description: this.props.profileDescription.description || '',
+      contactLink: this.props.profileContactLink.contactLink || '',
+    };
+
     await updateCurrentUserAvailability(data);
   };
 
   editProfile = async (event: FormEvent): Promise<void> => {
+    event.preventDefault();
+
     await this.saveProfileToRedux();
     await this.saveProfileToDB();
 
     this.closeEditProfileModal(event);
-    event.preventDefault();
   };
 
   render() {

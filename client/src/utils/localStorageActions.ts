@@ -13,6 +13,7 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   const currentUser: IProfile = {
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
     jobTitle: role.title,
     department: department !== '' ? department.name : department,
     birthday: user.birthday,
@@ -40,6 +41,7 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   const currentUser: IProfile = {
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
     jobTitle: role.title,
     department: department !== '' ? department.name : department,
     birthday: user.birthday,

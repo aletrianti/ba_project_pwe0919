@@ -18,6 +18,7 @@ export interface IMemberCompany extends IMember {
 export interface IProfile {
   firstName: string;
   lastName: string;
+  email: string;
   jobTitle: string;
   department?: string;
   birthday?: string; // Date
