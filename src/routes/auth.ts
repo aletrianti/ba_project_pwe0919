@@ -139,13 +139,13 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     if (userToUpdate.password) throw Error(`User already in use`);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Add hashed password to userData
-    userData.password = hashedPassword;
-    userData.active = true;
-
+    // // Add hashed password to userData
+    // userData.password = hashedPassword;
+    // userData.active = true;
+    userData.password = password;
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
     const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
