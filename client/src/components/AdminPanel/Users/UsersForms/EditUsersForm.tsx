@@ -21,7 +21,12 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { IDepartmentTable } from '../../../../../../types/department.types';
-import { getDepartmentsTableInfo, getRolesTableInfo, getBuddiesTableInfo } from '../../../../utils/httpRequests';
+import {
+  getDepartmentsTableInfo,
+  getRolesTableInfo,
+  getBuddiesTableInfo,
+  updateUserAdminPanel,
+} from '../../../../utils/httpRequests';
 
 interface EditUsersFormProps {
   user: IUser;
@@ -111,18 +116,38 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
     });
   };
 
-  saveUserToDB = (): void => {
+  saveUserToDB = async (): Promise<void> => {
     // TODO: add axios call here - use this.state.userId and this.props.user
     // the last one is an object containing these objects: buddy, department, role
+    let data = { userToUpdate: {} };
+    // @ts-ignore
+    if (this.props.editUserModal.id && this.props.editUserModal.id != 0) data.ID = this.props.editUserModal.id;
+    // @ts-ignore
+    if (this.props.userBuddy.buddy != 0) {
+      // @ts-ignore
+      this.props.userBuddy.buddy === 'No buddy assigned'
+        ? // @ts-ignore
+          (data.userToUpdate.assignedBuddy = null)
+        : // @ts-ignore
+          (data.userToUpdate.assignedBuddy = this.props.userBuddy.buddy);
+    }
+    // @ts-ignore
+    if (this.props.userDepartment.department && this.props.userDepartment.department != 0) {
+      // @ts-ignore
+      data.userToUpdate.departmentId = this.props.userDepartment.department;
+    }
+    // @ts-ignore
+    if (this.props.userRole.role && this.props.userRole.role != 0) data.userToUpdate.roleId = this.props.userRole.role;
+
+    await updateUserAdminPanel(data);
   };
 
   editUser = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveUserToRedux();
     await this.saveUserToDB();
 
     this.closeEditUserModal(event);
+    event.preventDefault();
   };
 
   getDepartments = async () => {
@@ -134,7 +159,10 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
   };
 
   getBuddies = async () => {
-    return await getBuddiesTableInfo();
+    let buddies = await getBuddiesTableInfo();
+    buddies.unshift({ value: null, label: 'No buddy assigned' });
+
+    return buddies;
   };
 
   // Fields

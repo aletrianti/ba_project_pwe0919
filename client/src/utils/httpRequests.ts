@@ -182,6 +182,14 @@ export const updateCurrentUserAvailability = async (data: any): Promise<any> => 
     .then(res => updateCurrentUserInLocalStorage(res))
     .catch(err => console.error(err));
 };
+
+export const updateUserAdminPanel = async (data: any): Promise<any> => {
+  return await axios
+    .post('/api/auth/update-user-admin-panel', data, httpRequestsConfig)
+    .then(res => res.data)
+    .catch(err => console.error(err));
+};
+
 export const deleteEmployee = async (data: any): Promise<any> => {
   return await axios.post('/api/auth/delete-employee', data, httpRequestsConfig).catch(err => console.error(err));
 };

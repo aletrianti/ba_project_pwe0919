@@ -395,4 +395,31 @@ router.get('/user-buddy', jwtMW, async (req, res, next) => {
   }
 });
 
+router.post('/update-user-admin-panel', jwtMW, async (req: Request, res: Response, next) => {
+  try {
+    const { ID, userToUpdate } = req.body;
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const updatedUser = await updateUser(userToUpdate, Number(ID));
+
+    const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
+    const userDepartment: IDepartment = updatedUser.departmentId
+      ? await knex('department').where('ID', updatedUser.departmentId).first()
+      : '';
+
+    const signupUser = {
+      user: updatedUser,
+      userRole: userRole,
+      userDepartment: userDepartment,
+    };
+
+    Api.sendSuccess<IUpdatedUser>(req, res, signupUser);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
 module.exports = router;
