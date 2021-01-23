@@ -28,6 +28,7 @@ import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 // localStorage
 import { logIn } from '../../../utils/httpRequests';
+import { storeTokenInLocalStorage } from '../../../utils/localStorageActions';
 
 interface SignInFormState {
   areAllFieldsValid: boolean;
@@ -99,15 +100,12 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       password: state.signIn.password,
     };
 
-    logIn(data)
-      .then(() => {
-        console.log('Logged in!');
-        history.push('/dashboard');
-      })
-      .catch(err => {
-        this.setState({ areCredentialsValid: false });
-        console.error(err);
-      });
+    const logInError = err => {
+      this.setState({ areCredentialsValid: false });
+      console.error(err);
+    };
+
+    logIn(data, history, logInError);
   };
 
   signIn = async (event: FormEvent): Promise<any> => {

@@ -179,7 +179,7 @@ export const postEmployee = async (data: any): Promise<any> => {
 export const updateCurrentUserAvailability = async (data: any): Promise<any> => {
   return await axios
     .post('/api/auth/update-user', data, httpRequestsConfig)
-    .then(res => updateCurrentUserInLocalStorage(res))
+    .then(res => { updateCurrentUserInLocalStorage(res); })
     .catch(err => console.error(err));
 };
 
@@ -251,12 +251,19 @@ export const postCompany = async (data: any): Promise<any> => {
 export const registerEmployee = async (data: any, nextStepFunction: any): Promise<any> => {
   return await axios
     .post('/api/auth/register-employee', data)
-    .then(res => storeTokenInLocalStorage(res))
+    .then(res => { storeTokenInLocalStorage(res); })
     .then(() => nextStepFunction)
     .catch(err => console.error(err));
 };
 
 // Login
-export const logIn = async (data: any): Promise<any> => {
-  return await axios.post('/api/auth/login', data).then(res => storeTokenInLocalStorage(res));
+export const logIn = async (data: any, history: any, errorFunction: any): Promise<any> => {
+  return await axios
+    .post('/api/auth/login', data)
+    .then(res => { storeTokenInLocalStorage(res); })
+    .then(() => {
+      console.log('Logged in!');
+      history.push('/dashboard');
+    })
+    .catch(errorFunction);
 };
