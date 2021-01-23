@@ -6,8 +6,8 @@
         padding: 20px 130px;
 
         .member__info {
-            top: -215px;
-            left: 66px;
+            top: 70px;
+            left: 50px;
         }
     }
 }
@@ -113,7 +113,7 @@
     background-color: $white;
     position: absolute;
     top: -20px;
-    left: -40px;
+    left: -30px;
     width: 17em;
     padding: 2em;
     z-index: 1000;
@@ -152,6 +152,10 @@
             flex-direction: column;
         }
     }
+}
+
+.team__members .member__card {
+    width: 13em;
 }
 
 
