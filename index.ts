@@ -8,7 +8,7 @@ var port = process.env.PORT || 4000;
 const app = express();
 require('dotenv').config({ path: 'variables.env' });
 // Serve static files from the React app
-if (process.env.NODE_ENV !== 'development') app.use('/', express.static(path.join(__dirname, 'client/build'))); //app.use(express.static('client/build'));
+// if (process.env.NODE_ENV !== 'development') app.use('/', express.static(path.join(__dirname, 'client/build'))); //app.use(express.static('client/build'));
 
 // If url used by user is HTTP, redirect to HTTPS
 if (process.env.NODE_ENV !== 'development') {
