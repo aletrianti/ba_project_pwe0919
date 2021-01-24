@@ -148,7 +148,7 @@ class SecondStepCompanyForm extends React.Component<RouteComponentProps, SecondS
           <InputField name={'Last name*'} onchange={this.storeLastName} />
         </div>
         <InputField name={'Email*'} onchange={this.storeEmail} />
-        <InputField name={'Password*'} onchange={this.storePassword} />
+        <InputField name={'Password*'} onchange={this.storePassword} isPassword={true} />
         <InputField name={'Role*'} onchange={this.storeRole} />
 
         <span className="required-field__span">* required field</span>
