@@ -1,14 +1,10 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './Actions.scss';
 
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 
 import { isCurrentUserAnAdmin } from '../../../utils/localStorageActions';
-
-interface ActionsState {
-  isOpen: boolean;
-}
 
 interface IAction {
   name: string;
@@ -20,31 +16,24 @@ interface ActionsProps {
   type?: string;
 }
 
-class Actions extends React.Component<ActionsProps, ActionsState> {
-  constructor(props: any) {
-    super(props);
-
-    this.state = {
-      isOpen: false,
-    };
-  }
-
-  toggleActions = (): void => {
-    this.setState({ isOpen: !this.state.isOpen });
-  };
-
+class Actions extends React.Component<ActionsProps> {
   render() {
     return (
       <>
         {this.props.type === 'profile' ? (
           <div className="actions__container">
-            <div className="actions__icon" onClick={() => this.toggleActions()}>
-              <EditIcon />
-            </div>
+            {this.props.actions &&
+              this.props.actions.map((action, i) => {
+                return (
+                  <div className="actions__icon" onClick={action.function} key={i}>
+                    <EditIcon />
+                  </div>
+                );
+              })}
           </div>
         ) : (
           [
-            isCurrentUserAnAdmin() ? (
+            isCurrentUserAnAdmin ? (
               <div className="actions__btns__wrapper" key={'actions__btns__wrapper'}>
                 {this.props.actions &&
                   this.props.actions.map((action, i) => {

@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { INewEmployees } from '../../../../../../types/auth.types';
 import { ToggleAddUserModalAction } from '../../../../store/actions/forms/forms.actions';
@@ -11,6 +10,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { postEmployeeAdminPanel } from '../../../../utils/httpRequests';
 
 interface AddUsersFormProps {
   userEmail: IUserEmail;
@@ -63,20 +63,9 @@ class AddUsersForm extends React.Component<AddUsersFormProps, AddUsersFormState>
   };
 
   // Form events
-  inviteUser = (event: FormEvent): void => {
-    const data: INewEmployees = {
-      newUsers: [this.props.userEmail.email],
-      companyId: '43', // TODO: Get current company id
-    };
-
-    axios
-      .post('/api/auth/invite-employees', data)
-      .then(() => {
-        console.log('Sent emails!');
-
-        this.closeAddUserModal(event);
-      })
-      .catch(err => console.error(err));
+  inviteUser = async (event: FormEvent): Promise<void> => {
+    const data = { newUser: this.props.userEmail.email };
+    await postEmployeeAdminPanel(data);
   };
 
   // Fields

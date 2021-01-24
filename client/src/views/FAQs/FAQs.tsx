@@ -3,34 +3,49 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
-import AddButton from '../../components/common/AddButton/AddButton';
 import HorizontalAccordion from '../../components/common/HorizontalAccordion/HorizontalAccordion';
 import { IQuestion } from '../../store/interfaces/questions.interfaces';
-import { isCurrentUserAnAdmin } from '../../utils/localStorageActions';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
+import { getCategories, getFAQs } from '../../utils/httpRequests';
+import { ITableCategory } from '../../store/interfaces/tables.interfaces';
 
-class FAQs extends React.Component {
+interface FaqState {
+  faqs: IQuestion[];
+  categories: ITableCategory[];
+}
+
+interface FaqProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class FAQs extends React.Component<FaqProps, FaqState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      faqs: [],
+      categories: [],
+    };
+  }
+
+  getFaqs = async () => {
+    return await getFAQs();
+  };
+
+  getCategories = async () => {
+    return await getCategories();
+  };
+  async componentDidMount() {
+    const faqs = await this.getFaqs();
+    const categories = await this.getCategories();
+
+    this.setState({ faqs: faqs });
+    this.setState({ categories: categories });
+  }
+
   sections = [{ name: 'FAQs', pathname: 'faqs' }];
-
-  // TODO: Replace this with categories from the DB
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
-
-  // TODO: Replace this with roles & responsibilities from the DB
-  questions: IQuestion[] = [
-    {
-      question: 'Who can I ask for help?',
-      answer:
-        'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
-    },
-    {
-      question: 'Who can I ask for help?',
-      answer:
-        'In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.',
-    },
-  ];
 
   openAddFAQModal = (): void => {};
 
@@ -48,16 +63,22 @@ class FAQs extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={this.categories} />
+            <Categories categories={this.state.categories} />
 
-            <AddButton name={'Add FAQ'} function={this.openAddFAQModal} />
-
-            {sectionName === 'faqs' ? <HorizontalAccordion questions={this.questions} section={sectionName} /> : null}
+            {sectionName === 'faqs' ? <HorizontalAccordion questions={this.state.faqs} section={sectionName} /> : null}
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default FAQs;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(FAQs);

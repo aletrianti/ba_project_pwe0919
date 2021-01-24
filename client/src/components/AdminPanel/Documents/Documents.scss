@@ -1,22 +1,27 @@
 @import '../../../variables';
 
-#admin-panel__documents__content {
-    display: flex;
-    flex-direction: column;
-    margin: 30px 20px;
-    width: 40em;
+#admin-panel__documents {
+    height: calc(100% - 41px);
+    overflow-y: auto;
 
-    #admin-panel__documents__content__headers {
+    #admin-panel__documents__content {
         display: flex;
-        align-items: center;
-        
-        h3 {
-            font-size: $font-medium;
-            width: 50%;
-        }
-    }
+        flex-direction: column;
+        margin: 30px 20px;
+        width: 40em;
 
-    #admin-panel__documents__content__items {
-        margin-top: 20px;
+        #admin-panel__documents__content__headers {
+            display: flex;
+            align-items: center;
+            
+            h3 {
+                font-size: $font-medium;
+                width: 50%;
+            }
+        }
+
+        #admin-panel__documents__content__items {
+            margin-top: 20px;
+        }
     }
 }

@@ -10,7 +10,7 @@ export interface ITask {
   role?: string;
 }
 
-export interface ISetTaskAsCompletedAction {
+export interface ISetTask {
   type: string;
   payload: ITask;
 }
@@ -19,7 +19,7 @@ export interface ICustomTasks {
   customTasks: ITask[];
 }
 
-export interface ISetCustomTaskAsCompletedAction {
+export interface ISetCustomTask {
   type: string;
   payload: ICustomTasks;
 }

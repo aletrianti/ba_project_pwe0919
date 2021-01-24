@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-import axios from 'axios';
 import './ThirdStepCompanyForm.scss';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
@@ -30,6 +29,7 @@ import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields
 
 // localStorage
 import { storeTokenInLocalStorage } from '../../../../utils/localStorageActions';
+import { inviteUsers, postCompany } from '../../../../utils/httpRequests';
 
 interface ThirdStepCompanyFormState {
   areAllFieldsValid: boolean;
@@ -87,7 +87,7 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
     await this.storeInvitedEmployees();
   };
 
-  inviteUsers = (companyId: string): void => {
+  inviteUsers = async (companyId: string): Promise<void> => {
     const state = store.getState();
 
     const emails = state.signUpLastInvitedEmployees.emails;
@@ -97,13 +97,10 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       companyId: companyId,
     };
 
-    axios
-      .post('/api/auth/invite-employees', data)
-      .then(() => console.log('Sent emails!'))
-      .catch(err => console.error(err));
+    await inviteUsers(data);
   };
 
-  registerCompany = (event: FormEvent, history = this.props.history): void => {
+  registerCompany = async (event: FormEvent, history = this.props.history): Promise<void> => {
     event.preventDefault();
 
     const state = store.getState();
@@ -124,15 +121,11 @@ class ThirdStepCompanyForm extends React.Component<RouteComponentProps, ThirdSte
       password: state.signUpAdminInfo.password,
     };
 
-    // add validation
-
     // add http request
-    axios
-      .post('/api/auth/register-company', data)
+    await postCompany(data)
       .then(res => {
         storeTokenInLocalStorage(res);
         this.inviteUsers(res.data.user.companyId);
-        console.log(res);
       })
       .then(() => goToNextStep(event, history))
       .catch(err => console.error(err));

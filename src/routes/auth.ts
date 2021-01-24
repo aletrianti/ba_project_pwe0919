@@ -1,6 +1,14 @@
 import { Router, Request, Response } from 'express';
 import { jwtMW } from '../..';
-import { ILoginInput, INewCompanyInput, INewEmployees, ISignUpUser, IUpdatedUser, IUser } from '../../types/auth.types';
+import {
+  ICurrentUser,
+  ILoginInput,
+  INewCompanyInput,
+  INewEmployees,
+  ISignUpUser,
+  IUpdatedUser,
+  IUser,
+} from '../../types/auth.types';
 import { ICompany } from '../../types/company.types';
 import { IDepartment } from '../../types/department.types';
 import { IRole } from '../../types/role.types';
@@ -81,7 +89,7 @@ router.post('/invite-employees', async (req: Request, res: Response, next) => {
       const userCreated = await knex('user').insert({
         email: newUser,
         companyId: Number(companyId),
-        active: false,
+        active: true,
         isAdmin: false,
         createdAt: dateDB(),
         updatedAt: dateDB(),
@@ -131,13 +139,13 @@ router.post('/register-employee', async (req: Request, res: Response, next) => {
 
     if (userToUpdate.password) throw Error(`User already in use`);
 
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    // const salt = await bcrypt.genSalt(10);
+    // const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Add hashed password to userData
-    userData.password = hashedPassword;
-    userData.active = true;
-
+    // // Add hashed password to userData
+    // userData.password = hashedPassword;
+    // userData.active = true;
+    userData.password = password;
     const updatedUser = await updateUser(userData, Number(userToUpdate.ID));
 
     const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
@@ -191,7 +199,6 @@ router.post('/login', async (req: Request, res: Response, next) => {
     const { email, password }: ILoginInput = req.body;
 
     const user: IUser = await knex('user').where('email', email).first();
-    console.log(user.password);
 
     const passwordValid = await bcrypt.compare(password, user.password);
     if (!passwordValid) throw new Error(`Invalid password for email ${email}`);
@@ -260,8 +267,14 @@ router.get('/current-user', jwtMW, async (req, res, next) => {
     if (!companyId) throw new Error('User not assigned to a company');
 
     const user: IUser = await knex('user').where('ID', userId).first();
+    const company: ICompany = await knex('company').where('ID', companyId).first();
 
-    Api.sendSuccess<IUser>(req, res, user);
+    const currentUser = {
+      user,
+      companyName: company.name,
+    };
+
+    Api.sendSuccess<ICurrentUser>(req, res, currentUser);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);
@@ -298,6 +311,111 @@ router.post('/delete-employee', jwtMW, async (req, res, next) => {
     });
 
     Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/invite-employee-admin', async (req: Request, res: Response, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const newUser: string = req.body.newUser;
+
+    const userCreated = await knex('user').insert({
+      email: newUser,
+      companyId: Number(companyId),
+      active: true,
+      isAdmin: false,
+      createdAt: dateDB(),
+      updatedAt: dateDB(),
+      availableToBuddy: true,
+    });
+
+    const [user, company]: [IUser, ICompany] = await Promise.all([
+      knex('user').whereIn('ID', userCreated).first(),
+      knex('company').where('ID', Number(companyId)).first(),
+    ]);
+
+    sendmail(
+      {
+        from: 'info@hoppin.com',
+        to: `${newUser.toString()}`,
+        subject: `Welcome to ${company.name}`,
+        html: `<p>Hi,</p>
+              <p>We are really excited to work with you at ${company.name}. To join the team create aprofile <a href="https://hoppin.herokuapp.com/sign-up">here</a>, don't forget to user the company code: ${company.companyCode}.</p>
+              <p>Kind regards,</p>
+              <p>${company.name}.</p>
+        `,
+      },
+      function (err, reply) {
+        // console.log(err && err.stack);
+        // console.dir(reply);
+      }
+    );
+
+    Api.sendSuccess<IUser>(req, res, user);
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.get('/user-buddy', jwtMW, async (req, res, next) => {
+  try {
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const user: IUser = await knex('user').where('ID', userId).first();
+
+    if (user.assignedBuddy) {
+      const buddy: IUser = await knex('user').where('ID', Number(user.assignedBuddy)).first();
+      const role: IRole = await knex('role').where('ID', buddy.roleId).first();
+      const department: IDepartment = await knex('department').where('ID', buddy.departmentId).first();
+
+      const data = {
+        buddy,
+        role,
+        department,
+      };
+
+      Api.sendSuccess<any>(req, res, data);
+    } else {
+      const buddy = {};
+
+      Api.sendSuccess<any>(req, res, buddy);
+    }
+  } catch (err) {
+    console.error(err);
+    Api.sendError(req, res, err);
+  }
+});
+
+router.post('/update-user-admin-panel', jwtMW, async (req: Request, res: Response, next) => {
+  try {
+    const { ID, userToUpdate } = req.body;
+    const { userId, companyId } = getUserIds(req);
+    if (!userId) throw new Error('User does not exists');
+    if (!companyId) throw new Error('User not assigned to a company');
+
+    const updatedUser = await updateUser(userToUpdate, Number(ID));
+
+    const userRole: IRole = updatedUser.roleId ? await knex('role').where('ID', updatedUser.roleId).first() : '';
+    const userDepartment: IDepartment = updatedUser.departmentId
+      ? await knex('department').where('ID', updatedUser.departmentId).first()
+      : '';
+
+    const signupUser = {
+      user: updatedUser,
+      userRole: userRole,
+      userDepartment: userDepartment,
+    };
+
+    Api.sendSuccess<IUpdatedUser>(req, res, signupUser);
   } catch (err) {
     console.error(err);
     Api.sendError(req, res, err);

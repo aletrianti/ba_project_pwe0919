@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import moment from 'moment';
 
 import { ToggleAddAchievementModalAction, ToggleEditAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
@@ -22,6 +22,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { postAchievement, updateAchievement } from '../../../../utils/httpRequests';
 
 interface AchievementsFormsProps {
   achievementTitle: IAchievementTitle;
@@ -59,6 +60,11 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
 
     this.props.toggleAddAchievementModal({ isOpen: false });
 
+    this.props.storeAchievement({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      date: { date: '', isValid: false, errorMessage: '' },
+    });
     this.props.storeAchievementTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeAchievementDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeAchievementDate({ date: '', isValid: false, errorMessage: '' });
@@ -66,6 +72,14 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   closeEditAchievementModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeAchievement({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      date: { date: '', isValid: false, errorMessage: '' },
+    });
+    this.props.storeAchievementTitle({ title: '', isValid: false, errorMessage: '' });
+    this.props.storeAchievementDescription({ description: '', isValid: false, errorMessage: '' });
+    this.props.storeAchievementDate({ date: '', isValid: false, errorMessage: '' });
     this.props.toggleEditAchievementModal({ id: 0, isOpen: false });
   };
 
@@ -115,19 +129,32 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
     });
   };
 
-  saveAchievementToDB = (): void => {
-    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
-    // the last one is an object containing these objects: title, description, responsibilities
+  saveAchievementToDB = async (): Promise<void> => {
+    const data = {
+      name: this.props.achievement.title.title,
+      description: this.props.achievement.description.description,
+      date: moment(this.props.achievement.date.date, 'DD-MM-YYYY').format(),
+    };
+
+    await postAchievement(data);
   };
 
-  saveEditedAchievementToDB = (): void => {
-    // TODO: add axios call here - use this.state.achievementId and this.props.achievement
-    // the last one is an object containing these objects: title, description, responsibilities
+  saveEditedAchievementToDB = async (): Promise<void> => {
+    const data = {
+      ID: this.props.editAchievementModal.id,
+      name: this.props.achievementTitle.title ? this.props.achievementTitle.title : this.props.achievement.title.title,
+      description: this.props.achievementDescription.description
+        ? this.props.achievementDescription.description
+        : this.props.achievement.description.description,
+      date: this.props.achievementDate.date
+        ? moment(this.props.achievementDate.date, 'DD-MM-YYYY').format()
+        : this.props.achievement.date.date,
+    };
+
+    await updateAchievement(data);
   };
 
   addAchievement = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveAchievementToRedux();
     await this.saveAchievementToDB();
 
@@ -135,32 +162,41 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
   };
 
   editAchievement = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveEditedAchievementToDB();
-    await this.saveAchievementToDB();
+    // await this.saveAchievementToDB();
 
     this.closeEditAchievementModal(event);
   };
 
-  // Fields
-  addAchievementModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle },
-    { name: 'Description', type: 'text', onchange: this.storeDescription },
-    { name: 'Date', type: 'text', onchange: this.storeDate },
-  ];
-  // TODO: Add dynamic value depending on selected item
-  editAchievementModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle, value: '' },
-    { name: 'Description', type: 'text', onchange: this.storeDescription, value: '' },
-    { name: 'Date', type: 'text', onchange: this.storeDate, value: '' },
-  ];
-
   render() {
+    // Fields
+    const addAchievementModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle },
+      { name: 'Description', type: 'text', onchange: this.storeDescription },
+      { name: 'Date', type: 'text', onchange: this.storeDate },
+    ];
+    // TODO: Add dynamic value depending on selected item
+
+    const editAchievementModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle, value: this.props.achievement.title.title },
+      {
+        name: 'Description',
+        type: 'text',
+        onchange: this.storeDescription,
+        value: this.props.achievement.description.description,
+      },
+      {
+        name: 'Date',
+        type: 'text',
+        onchange: this.storeDate,
+        value: this.props.achievement.date.date ? moment(this.props.achievement.date.date).format('DD-MM-YYYY') : '',
+      },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addAchievementModalFields}
+          fields={addAchievementModalFields}
           header={'Add a achievement'}
           submitFunction={this.addAchievement}
           closeFunction={this.closeAddAchievementModal}
@@ -169,11 +205,11 @@ class AchievementsForms extends React.Component<AchievementsFormsProps, Achievem
         />
 
         <Form
-          fields={this.editAchievementModalFields}
+          fields={editAchievementModalFields}
           header={'Edit a achievement'}
           submitFunction={this.editAchievement}
           closeFunction={this.closeEditAchievementModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editAchievementModal.isOpen}
         />
       </>

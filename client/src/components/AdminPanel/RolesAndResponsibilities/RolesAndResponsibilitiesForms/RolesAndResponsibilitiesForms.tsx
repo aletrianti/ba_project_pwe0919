@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { checkFormFields, ICheckFields } from '../../../../utils/checkFormFields';
 import {
@@ -43,7 +42,7 @@ interface RolesAndResponsibilitiesFormsProps {
 
 interface RolesAndResponsibilitiesFormsState {
   areFieldsValid: ICheckFields;
-  responsibilities: string[];
+  responsibilities: any[];
 }
 
 class RolesAndResponsibilitiesForms extends React.Component<
@@ -53,11 +52,14 @@ class RolesAndResponsibilitiesForms extends React.Component<
   constructor(props: any) {
     super(props);
 
+    const responsibilitiesArray = this.props.role.responsibilities.responsibilities;
+    const responsibilities = responsibilitiesArray ? responsibilitiesArray.map(item => item.description) : [];
+
     this.state = {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
-      responsibilities: [],
+      responsibilities: responsibilities,
     };
   }
 
@@ -67,13 +69,28 @@ class RolesAndResponsibilitiesForms extends React.Component<
 
     this.props.toggleAddRoleModal({ isOpen: false });
 
+    this.props.storeRole({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: [] },
+    });
     this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
     this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
     this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibilities({ responsibilities: [] });
   };
   closeEditRoleModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeRole({
+      title: { title: '', isValid: false, errorMessage: '' },
+      description: { description: '', isValid: false, errorMessage: '' },
+      responsibilities: { responsibilities: [] },
+    });
+    this.props.storeRoleTitle({ title: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleDescription({ description: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibility({ responsibility: '', isValid: false, errorMessage: '' });
+    this.props.storeRoleResponsibilities({ responsibilities: [] });
     this.props.toggleEditRoleModal({ id: 0, isOpen: false });
   };
 
@@ -138,7 +155,7 @@ class RolesAndResponsibilitiesForms extends React.Component<
   };
 
   saveRoleToDB = (): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
+    // TODO: add axios call here - use this.props.role
     // the last one is an object containing these objects: title, description, responsibilities
   };
 
@@ -165,24 +182,29 @@ class RolesAndResponsibilitiesForms extends React.Component<
     this.closeEditRoleModal(event);
   };
 
-  // Fields
-  addRoleModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription },
-    { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true },
-  ];
-  // TODO: Add dynamic value depending on selected item
-  editRoleModalFields: IField[] = [
-    { name: 'Title', type: 'text', onchange: this.storeTitle, value: '' },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: '' },
-    { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true, value: '' },
-  ];
-
   render() {
+    // Fields
+    const addRoleModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription },
+      { name: 'Responsibility', type: 'text', onchange: this.storeResponsibility, isShortField: true },
+    ];
+    // TODO: Add dynamic value depending on selected item
+    const editRoleModalFields: IField[] = [
+      { name: 'Title', type: 'text', onchange: this.storeTitle, value: this.props.role.title.title },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: this.props.role.description.description },
+      {
+        name: 'Responsibility',
+        type: 'text',
+        onchange: this.storeResponsibility,
+        isShortField: true,
+      },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addRoleModalFields}
+          fields={addRoleModalFields}
           header={'Add a role'}
           submitFunction={this.addRole}
           closeFunction={this.closeAddRoleModal}
@@ -193,11 +215,11 @@ class RolesAndResponsibilitiesForms extends React.Component<
         />
 
         <Form
-          fields={this.editRoleModalFields}
+          fields={editRoleModalFields}
           header={'Edit a role'}
           submitFunction={this.editRole}
           closeFunction={this.closeEditRoleModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editRoleModal.isOpen}
           shortFieldFunction={this.displayResponsibilities}
           list={this.state.responsibilities}

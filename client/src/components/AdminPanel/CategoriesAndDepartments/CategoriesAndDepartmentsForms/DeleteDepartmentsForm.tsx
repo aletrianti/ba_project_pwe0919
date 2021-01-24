@@ -1,13 +1,13 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteDepartmentModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteDepartmentModal, IDeleteDepartment } from '../../../../store/interfaces/forms/departments.interfaces';
 import { DeleteDepartmentAction } from '../../../../store/actions/forms/departments/departments.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { deleteDepartment } from '../../../../utils/httpRequests';
 
 interface DeleteDepartmentsFormProps {
   deleteDepartmentModal: IDeleteDepartmentModal;
@@ -36,11 +36,10 @@ class DeleteDepartmentsForm extends React.Component<DeleteDepartmentsFormProps, 
   };
 
   // Form events
-  deleteDepartment = (e: MouseEvent): void => {
-    e.preventDefault();
+  deleteDepartment = async (): Promise<void> => {
+    // e.preventDefault();
 
-    // TODO: add axios call here - use departmentId
-    // this.props.toggleDeleteDepartmentModal({ id: 0, isOpen: false });
+    await deleteDepartment(this.props.deleteDepartmentModal);
   };
 
   render() {

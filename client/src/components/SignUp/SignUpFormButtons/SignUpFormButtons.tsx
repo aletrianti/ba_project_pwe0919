@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 
 import Button from '../../common/Button/Button';
 
@@ -8,6 +8,12 @@ interface SignUpFormButtonProps {
 }
 
 class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
+  setLocalStorageItem = (e: MouseEvent): void => {
+    e.preventDefault();
+
+    localStorage['hasJustSignedIn'] = true;
+  };
+
   render() {
     const { isFinalStep, areFieldsValid } = this.props;
 
@@ -15,7 +21,9 @@ class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
       <div className="sign-up__form__btns">
         <Button btnText={'Back'} isRegular={true} isBackFormBtn={true} isConfirmBtn={false} />
         {isFinalStep ? (
-          <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} isConfirmBtn={false} />
+          <div onClick={(e: MouseEvent) => this.setLocalStorageItem(e)}>
+            <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} isConfirmBtn={false} />
+          </div>
         ) : (
           <Button btnText={'Next'} isRegular={false} isConfirmBtn={true} areAllFieldsValid={areFieldsValid} />
         )}

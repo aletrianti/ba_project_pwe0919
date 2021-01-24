@@ -1,13 +1,13 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteCategoryModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteCategoryModal, IDeleteCategory } from '../../../../store/interfaces/forms/categories.interfaces';
 import { DeleteCategoryAction } from '../../../../store/actions/forms/categories/categories.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { deleteCategory } from '../../../../utils/httpRequests';
 
 interface DeleteCategorysFormProps {
   deleteCategoryModal: IDeleteCategoryModal;
@@ -36,9 +36,8 @@ class DeleteCategorysForm extends React.Component<DeleteCategorysFormProps, Dele
   };
 
   // Form events
-  deleteCategory = (e: MouseEvent): void => {
-    // TODO: add axios call here - use categoryId
-    // this.props.toggleDeleteCategoryModal({ id: 0, isOpen: false });
+  deleteCategory = async (): Promise<void> => {
+    await deleteCategory(this.props.deleteCategoryModal);
   };
 
   render() {

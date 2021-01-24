@@ -14,9 +14,8 @@ import { connect } from 'react-redux';
 import { ToggleAddCategoryModalAction, ToggleAddDepartmentModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddCategoryModal } from '../../../store/interfaces/forms/categories.interfaces';
 import { IAddDepartmentModal } from '../../../store/interfaces/forms/departments.interfaces';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 import { IDepartment } from '../../../../../types/department.types';
-import axios from 'axios';
+import { getCategories, getDepartments } from '../../../utils/httpRequests';
 
 interface CategoriesAndDepartmentsProps {
   toggleAddCategoryModal: (addCategoryModal: IAddCategoryModal) => any;
@@ -25,6 +24,7 @@ interface CategoriesAndDepartmentsProps {
 
 interface DepartmentsState {
   companyDepartments: ITableDepartment[];
+  companyCategories: ITableCategory[];
 }
 
 class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsProps, DepartmentsState> {
@@ -33,6 +33,7 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
 
     this.state = {
       companyDepartments: [],
+      companyCategories: [],
     };
   }
   openCategoriesModal = (e: MouseEvent) => {
@@ -47,14 +48,8 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
     this.props.toggleAddDepartmentModal({ isOpen: true });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getDepartments = async () => {
-    const departments: IDepartment[] = await axios.get('/api/department', this.config).then(res => {
-      return res.data;
-    });
+    const departments: IDepartment[] = await getDepartments();
 
     const departmentsTable: ITableDepartment[] = departments.map(department => {
       const departmentTable = {
@@ -67,13 +62,18 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
     this.setState({ companyDepartments: departmentsTable });
   };
 
+  getCategories = async () => {
+    const categories: ITableCategory[] = await getCategories();
+
+    this.setState({ companyCategories: categories });
+  };
+
   async componentDidMount() {
     await this.getDepartments();
+    await this.getCategories();
   }
 
   categories: ITableCategory[] = [{ id: 1, title: 'General' }];
-
-  departments: ITableDepartment[] = [{ id: 1, title: 'Engineering' }];
 
   render() {
     return (
@@ -82,7 +82,7 @@ class CategoriesAndDepartments extends React.Component<CategoriesAndDepartmentsP
           <AddButton name={'Add category'} function={this.openCategoriesModal} />
 
           <div id="admin-panel__categories__content" className="admin-panel__content">
-            <CategoriesTable categories={this.categories} />
+            <CategoriesTable categories={this.state.companyCategories} />
           </div>
         </div>
         <div id="admin-panel__categories__second-half" className="admin-panel__categories__sections">

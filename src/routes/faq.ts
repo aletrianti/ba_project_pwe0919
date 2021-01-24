@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { ITableAchievement } from '../../client/src/store/interfaces/tables.interfaces';
-import { ICompanyAchievement, INewCompanyAchievementInput } from '../../types/companyAchievement.types';
+import { IFaq, IFAQInput, IFAQUpdate } from '../../types/faq.types';
 import knex from '../knex';
 import { Api, dateDB, getUserIds } from '../utils';
 
@@ -11,10 +10,8 @@ router.get('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const companyAchievements: ITableAchievement[] = await knex('companyachievement')
-      .select('ID as id', 'name as title', 'description', 'date')
-      .where('companyId', companyId);
-    Api.sendSuccess<ITableAchievement[]>(req, res, companyAchievements);
+    const faqs: IFaq[] = await knex('faq').where('companyId', companyId);
+    Api.sendSuccess<IFaq[]>(req, res, faqs);
   } catch (err) {
     Api.sendError(req, res, err);
   }
@@ -26,20 +23,18 @@ router.post('/', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const body: INewCompanyAchievementInput = req.body;
+    const body: IFAQInput = req.body;
 
-    const newCompanyAcievement = await knex('companyachievement').insert({
-      name: body.name,
-      description: body.description,
+    const faq: IFaq = await knex('faq').where('companyId', companyId).insert({
+      question: body.question,
+      answer: body.answer,
       companyId: companyId,
+      categoryId: 1,
       createdAt: dateDB(),
       updatedAt: dateDB(),
-      date: dateDB(body.date),
     });
 
-    const companyachievement = await knex('companyachievement').where('ID', newCompanyAcievement).first();
-
-    Api.sendSuccess<ICompanyAchievement>(req, res, companyachievement);
+    Api.sendSuccess<IFaq>(req, res, faq);
   } catch (err) {
     Api.sendError(req, res, err);
   }
@@ -51,17 +46,16 @@ router.post('/update', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    const body: Partial<ICompanyAchievement> = req.body;
+    const { ID, body }: IFAQUpdate = req.body;
 
-    const { ID, ...reqbody } = body;
+    const updatedFaq: IFaq = await knex('faq')
+      .where({
+        companyID: companyId,
+        ID: ID,
+      })
+      .update(body);
 
-    const updatedCompanyAcievement = await knex('companyachievement')
-      .where({ ID: Number(ID), companyId: Number(companyId) })
-      .update(reqbody);
-
-    const companyAcievement: ICompanyAchievement = await knex('companyachievement').where('ID', updatedCompanyAcievement).first();
-
-    Api.sendSuccess<ICompanyAchievement>(req, res, companyAcievement);
+    Api.sendSuccess<IFaq>(req, res, updatedFaq);
   } catch (err) {
     Api.sendError(req, res, err);
   }
@@ -73,11 +67,14 @@ router.post('/delete', async (req: Request, res: Response, next) => {
     if (!userId) throw new Error('User does not exists');
     if (!companyId) throw new Error('User not assigned to a company');
 
-    await knex('companyachievement')
-      .where({ ID: Number(req.body.id), companyId: Number(companyId) })
+    await knex('faq')
+      .where({
+        companyID: companyId,
+        ID: req.body.id,
+      })
       .del();
 
-    Api.sendSuccess<string>(req, res, `CompanyAchievement ${req.body.id} deleted`);
+    Api.sendSuccess<string>(req, res, `FAQ ${req.body.id} deleted`);
   } catch (err) {
     Api.sendError(req, res, err);
   }

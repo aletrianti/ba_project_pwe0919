@@ -1,13 +1,13 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteAchievementModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteAchievementModal, IDeleteAchievement } from '../../../../store/interfaces/forms/achievements.interfaces';
 import { DeleteAchievementAction } from '../../../../store/actions/forms/achievements/achievements.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { deleteAchievement } from '../../../../utils/httpRequests';
 
 interface DeleteAchievementsFormProps {
   deleteAchievementModal: IDeleteAchievementModal;
@@ -36,11 +36,8 @@ class DeleteAchievementsForm extends React.Component<DeleteAchievementsFormProps
   };
 
   // Form events
-  deleteAchievement = (e: MouseEvent): void => {
-    e.preventDefault();
-
-    // TODO: add axios call here - use achievementId
-    // call this after the call succeeds: this.props.toggleDeleteAchievementModal({ id: 0, isOpen: false });
+  deleteAchievement = async (): Promise<void> => {
+    await deleteAchievement(this.props.deleteAchievementModal);
   };
 
   render() {

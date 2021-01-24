@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { IRole } from '../../../store/interfaces/roles.interfaces';
+import { IRole, IRolesAndResponsibilitiesCompany } from '../../../store/interfaces/roles.interfaces';
+import { getRolesResponsibilitiesCompany } from '../../../utils/httpRequests';
 
 import HorizontalAccordion from '../../common/HorizontalAccordion/HorizontalAccordion';
 
@@ -8,7 +9,24 @@ interface RolesAndResponsibilitiesProps {
   sectionName: string;
 }
 
-class RolesAndResponsibilities extends React.Component<RolesAndResponsibilitiesProps> {
+interface RolesAndResponsibilitiesState {
+  rolesAndResponsibilities: IRolesAndResponsibilitiesCompany[];
+}
+
+class RolesAndResponsibilities extends React.Component<RolesAndResponsibilitiesProps, RolesAndResponsibilitiesState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      rolesAndResponsibilities: [],
+    };
+  }
+
+  getRoles = async () => {
+    const roles = await getRolesResponsibilitiesCompany();
+
+    this.setState({ rolesAndResponsibilities: roles });
+  };
   // TODO: Replace this with roles & responsibilities from the DB
   roles: IRole[] = [
     {
@@ -30,9 +48,11 @@ class RolesAndResponsibilities extends React.Component<RolesAndResponsibilitiesP
       ],
     },
   ];
-
+  async componentDidMount() {
+    await this.getRoles();
+  }
   render() {
-    return <HorizontalAccordion roles={this.roles} section={this.props.sectionName} />;
+    return <HorizontalAccordion roles={this.state.rolesAndResponsibilities} section={this.props.sectionName} />;
   }
 }
 

@@ -34,13 +34,7 @@ class Form extends React.Component<FormProps> {
                 field.isShortField ? (
                   <>
                     <div className="form__short-field" key={i}>
-                      <InputField
-                        name={field.name}
-                        onchange={field.onchange}
-                        value={field.value || ''}
-                        isTextarea={field.type === 'textarea'}
-                        isShortField={true}
-                      />
+                      <InputField name={field.name} onchange={field.onchange} value={field.value} isShortField={true} />
                       <Button
                         btnText={'Add'}
                         isInviteBtn={true}
@@ -57,7 +51,7 @@ class Form extends React.Component<FormProps> {
                   <InputField
                     name={field.name}
                     onchange={field.onchange}
-                    value={field.value || ''}
+                    value={field.value}
                     isTextarea={field.type === 'textarea'}
                     key={i}
                   />

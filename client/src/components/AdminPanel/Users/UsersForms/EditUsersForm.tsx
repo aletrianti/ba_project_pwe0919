@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleEditUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import {
@@ -21,8 +20,13 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
 import { IDepartmentTable } from '../../../../../../types/department.types';
+import {
+  getDepartmentsTableInfo,
+  getRolesTableInfo,
+  getBuddiesTableInfo,
+  updateUserAdminPanel,
+} from '../../../../utils/httpRequests';
 
 interface EditUsersFormProps {
   user: IUser;
@@ -112,40 +116,53 @@ class EditUsersForm extends React.Component<EditUsersFormProps, CompanyDepartmen
     });
   };
 
-  saveUserToDB = (): void => {
+  saveUserToDB = async (): Promise<void> => {
     // TODO: add axios call here - use this.state.userId and this.props.user
     // the last one is an object containing these objects: buddy, department, role
+    let data = { userToUpdate: {} };
+    // @ts-ignore
+    if (this.props.editUserModal.id && this.props.editUserModal.id != 0) data.ID = this.props.editUserModal.id;
+    // @ts-ignore
+    if (this.props.userBuddy.buddy != 0) {
+      // @ts-ignore
+      this.props.userBuddy.buddy === 'No buddy assigned'
+        ? // @ts-ignore
+          (data.userToUpdate.assignedBuddy = null)
+        : // @ts-ignore
+          (data.userToUpdate.assignedBuddy = this.props.userBuddy.buddy);
+    }
+    // @ts-ignore
+    if (this.props.userDepartment.department && this.props.userDepartment.department != 0) {
+      // @ts-ignore
+      data.userToUpdate.departmentId = this.props.userDepartment.department;
+    }
+    // @ts-ignore
+    if (this.props.userRole.role && this.props.userRole.role != 0) data.userToUpdate.roleId = this.props.userRole.role;
+
+    await updateUserAdminPanel(data);
   };
 
   editUser = async (event: FormEvent): Promise<void> => {
-    event.preventDefault();
-
     await this.saveUserToRedux();
     await this.saveUserToDB();
 
     this.closeEditUserModal(event);
-  };
-
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
+    event.preventDefault();
   };
 
   getDepartments = async () => {
-    return await axios.get('/api/department/table', this.config).then(res => {
-      return res.data;
-    });
+    return await getDepartmentsTableInfo();
   };
 
   getRoles = async () => {
-    return await axios.get('/api/role/table', this.config).then(res => {
-      return res.data;
-    });
+    return await getRolesTableInfo();
   };
 
   getBuddies = async () => {
-    return await axios.get('/api/company/buddy-table', this.config).then(res => {
-      return res.data;
-    });
+    let buddies = await getBuddiesTableInfo();
+    buddies.unshift({ value: null, label: 'No buddy assigned' });
+
+    return buddies;
   };
 
   // Fields

@@ -22,7 +22,7 @@ class Member extends React.Component<MemberProps> {
         <div className="member__card">
           <div className="member__card__photo__container">
             {profilePicture ? (
-              <img src={profilePicture} className="member__card__photo__img" />
+              <img src={profilePicture} className="member__card__photo__img" alt="member" />
             ) : (
               <div className="member__card__photo__img img--no-picture"></div>
             )}

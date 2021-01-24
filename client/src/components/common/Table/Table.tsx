@@ -12,16 +12,22 @@ interface TableProps {
 }
 
 class Table extends React.Component<TableProps> {
-  truncateData = (data: string | string[]) => {
+  truncateData = (data: any | any[]) => {
     const limit: number = 25;
 
-    data = Array.isArray(data) ? data.toString() : data;
+    if (!data) return '';
 
-    if (data.length > limit) {
-      data = data.substring(0, limit);
-      return `${data}...`;
+    let dataToTruncate = Array.isArray(data)
+      ? [
+          data.map(item => item.description + ', '), // Modify if it happens with more than just roles
+        ]
+      : data;
+
+    if (dataToTruncate.length > limit) {
+      dataToTruncate = dataToTruncate.substring(0, limit);
+      return `${dataToTruncate}...`;
     } else {
-      return data;
+      return dataToTruncate;
     }
   };
 
@@ -33,22 +39,28 @@ class Table extends React.Component<TableProps> {
         <table>
           <thead>
             <tr className="header__tr">
-              {columns.map((column, i) => {
-                return <th key={i}>{column.title}</th>;
-              })}
+              {columns
+                ? columns.map((column, i) => {
+                    return <th key={i}>{column.title}</th>;
+                  })
+                : null}
             </tr>
           </thead>
 
           <tbody>
-            {data.map((item, i) => {
-              return (
-                <tr key={i}>
-                  {columns.map((column, i) => {
-                    return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
-                  })}
-                </tr>
-              );
-            })}
+            {data
+              ? data.map((item, i) => {
+                  return (
+                    <tr key={i}>
+                      {columns
+                        ? columns.map((column, i) => {
+                            return <td key={i}>{this.truncateData(column.columnData(item))}</td>;
+                          })
+                        : null}
+                    </tr>
+                  );
+                })
+              : null}
           </tbody>
         </table>
       </div>

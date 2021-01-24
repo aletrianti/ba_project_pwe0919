@@ -1,13 +1,13 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteFaqModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteFaqModal, IDeleteFaq } from '../../../../store/interfaces/forms/faqs.interfaces';
 import { DeleteFaqAction } from '../../../../store/actions/forms/faqs/faqs.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
+import { deleteFAQ } from '../../../../utils/httpRequests';
 
 interface DeleteFaqsFormProps {
   deleteFaqModal: IDeleteFaqModal;
@@ -36,11 +36,10 @@ class DeleteFaqsForm extends React.Component<DeleteFaqsFormProps, DeleteFaqsForm
   };
 
   // Form events
-  deleteFaq = (e: MouseEvent): void => {
-    e.preventDefault();
+  deleteFaq = async (): Promise<void> => {
+    // e.preventDefault();
 
-    // TODO: add axios call here - use faqId
-    // this.props.toggleDeleteFaqModal({ id: 0, isOpen: false });
+    await deleteFAQ(this.props.deleteFaqModal);
   };
 
   render() {

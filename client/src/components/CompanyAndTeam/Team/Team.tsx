@@ -1,125 +1,49 @@
 import React from 'react';
 
-import { IMember } from '../../../store/interfaces/members.interfaces';
+import { IMemberCompany } from '../../../store/interfaces/members.interfaces';
+import { getCompanyEmployees } from '../../../utils/httpRequests';
 
 import Member from '../../common/Member/Member';
-
-class Team extends React.Component {
+interface companyState {
+  employees: IMemberCompany[];
+}
+class Team extends React.Component<{}, companyState> {
   // TODO: Dynamic content/data for users/members
-  members: IMember[] = [
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-    {
-      fullName: 'Mathias Nielsen',
-      jobTitle: 'Software Developer',
-      department: 'Engineering',
-      birthday: '19-03',
-      memberSince: '18-02-19',
-      description: 'I love making music and programming.',
-    },
-  ];
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      employees: [],
+    };
+  }
+
+  getEmployees = async () => {
+    return await getCompanyEmployees();
+  };
+
+  async componentDidMount() {
+    const employees = await this.getEmployees();
+
+    this.setState({ employees: employees });
+  }
 
   render() {
     return (
       <div className="team__members__container">
         <div className="team__members">
-          {this.members.map((member, i) => (
-            <Member
-              fullName={member.fullName}
-              jobTitle={member.jobTitle}
-              department={member.department}
-              birthday={member.birthday}
-              memberSince={member.memberSince}
-              description={member.description}
-              key={i}
-            />
-          ))}
+          {this.state.employees
+            ? this.state.employees.map((member, i) => (
+                <Member
+                  fullName={member.firstName}
+                  jobTitle={member.jobTitle}
+                  department={member.department}
+                  birthday={member.birthday}
+                  memberSince={member.memberSince}
+                  description={member.description}
+                  key={i}
+                />
+              ))
+            : null}
         </div>
       </div>
     );

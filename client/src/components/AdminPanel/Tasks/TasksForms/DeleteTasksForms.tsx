@@ -1,7 +1,6 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteTaskModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteTaskModal, IDeleteTask } from '../../../../store/interfaces/forms/tasks.interfaces';

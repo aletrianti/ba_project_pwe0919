@@ -5,7 +5,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 import store from '../../../..';
-import { ISetTaskAsCompletedAction, ITask } from '../../../../store/interfaces/tasks.interfaces';
+import { ISetTask, ITask } from '../../../../store/interfaces/tasks.interfaces';
+import { submitAssignedTask } from '../../../../utils/httpRequests';
+import { IAssignedTaskInput } from '../../../../../../types/assignedTask.types';
 
 interface TaskProps {
   name: string;
@@ -41,7 +43,7 @@ class Task extends React.Component<TaskProps, TaskState> {
     });
   };
 
-  confirmTask = (): void => {
+  confirmTask = async (): Promise<void> => {
     const payload: ITask = {
       num: this.props.taskNum,
       name: this.props.name,
@@ -51,7 +53,14 @@ class Task extends React.Component<TaskProps, TaskState> {
       assignedTo: this.props.assignedTo,
     };
 
-    const action: ISetTaskAsCompletedAction = { type: this.props.actionType, payload };
+    const data: IAssignedTaskInput = {
+      taskId: payload.num,
+      completed: payload.isCompleted,
+    };
+
+    await submitAssignedTask(data);
+
+    const action: ISetTask = { type: this.props.actionType, payload };
 
     store.dispatch(action);
   };
@@ -65,7 +74,7 @@ class Task extends React.Component<TaskProps, TaskState> {
         <div className="task__info">
           <div id={`name__task__${taskNum}`} className={!this.state.isOpen ? 'task__name' : 'task__name task__name--open'}>
             <h3>
-              {name} <span>{deadline}</span>
+              {name} <span>{`(${deadline})`}</span>
             </h3>
             <div className="task__info__actions">
               {!isCompleted ? (

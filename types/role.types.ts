@@ -8,6 +8,7 @@ export interface IRole {
   companyId: number;
   createdAt: string;
   updatedAt: string;
+  deleted: boolean;
 }
 
 export interface INewRoleInput {

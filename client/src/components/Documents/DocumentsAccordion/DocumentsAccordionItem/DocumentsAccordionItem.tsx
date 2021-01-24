@@ -4,7 +4,6 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { ITableDocumentsContent } from '../../../../store/interfaces/tables.interfaces';
 import DocumentsTable from '../../DocumentsTable/DocumentsTable';
-import Actions from '../../../common/Actions/Actions';
 import AddButton from '../../../common/AddButton/AddButton';
 
 interface DocumentsAccordionItemState {
@@ -43,12 +42,6 @@ class DocumentsAccordionItem extends React.Component<DocumentsAccordionItemProps
             <AddButton name={'Add a file'} function={() => {}} />
           </div>
           <div className="item__category__actions">
-            <Actions
-              actions={[
-                { name: 'Edit', function: () => {} },
-                { name: 'Delete', function: () => {} },
-              ]}
-            />
             <div className="task__arrow" onClick={this.toggleInfo}>
               {!this.state.isOpen ? <ExpandMore /> : <ExpandLess />}
             </div>

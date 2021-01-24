@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { IAddUserModal } from '../../../store/interfaces/forms/users.interfaces';
 import { ITableUser } from '../../../store/interfaces/tables.interfaces';
@@ -11,8 +10,8 @@ import UsersTable from './UsersTable/UsersTable';
 import AddUsersForm from './UsersForms/AddUsersForm';
 import EditUsersForm from './UsersForms/EditUsersForm';
 import DeleteUsersForm from './UsersForms/DeleteUsersForm';
-import { getTokenFromLocalStorage } from '../../../utils/localStorageActions';
 import { IEmployeeTable } from '../../../../../types/company.types';
+import { getEmployees } from '../../../utils/httpRequests';
 
 interface UsersProps {
   toggleAddUserModal: (addUserModal: IAddUserModal) => any;
@@ -37,19 +36,17 @@ class Users extends React.Component<UsersProps, UserState> {
     this.props.toggleAddUserModal({ isOpen: true });
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   getCompanyUsers = async () => {
-    const users: IEmployeeTable[] = await axios.get('/api/company/employees', this.config).then(res => {
-      return res.data;
-    });
+    const users: IEmployeeTable[] = await getEmployees();
 
     const employeesTable: ITableUser[] = users.map(employee => {
       const user: ITableUser = {
         id: employee.ID,
-        name: `${employee.firstName} ${employee.lastName}`,
+        name: employee.firstName
+          ? employee.lastName
+            ? `${employee.firstName} ${employee.lastName}`
+            : `${employee.firstName}`
+          : '',
         email: employee.email,
         isAvailableToBuddy: employee.availableToBuddy,
         assignedTo: employee?.availableToBuddy ? `${employee.buddyFirstName || ''}  ${employee.buddyLastName || ''}` : '',

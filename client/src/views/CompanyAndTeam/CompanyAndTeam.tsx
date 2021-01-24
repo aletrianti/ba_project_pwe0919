@@ -3,20 +3,42 @@ import Menu from '../../components/common/Menu/Menu';
 import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
+import { getCompanyDepartments } from '../../utils/httpRequests';
 
-class CompanyAndTeam extends React.Component {
+interface CompanyState {
+  departments: any[];
+}
+
+interface CompanyAndTeamProps {
+  editProfileModal: IEditProfileModal;
+}
+
+class CompanyAndTeam extends React.Component<CompanyAndTeamProps, CompanyState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      departments: [],
+    };
+  }
   sections = [
     { name: 'Team', pathname: 'team' },
     { name: 'Roles & Responsibilities', pathname: 'roles-and-responsibilities' },
     { name: 'Achievements', pathname: 'achievements' },
   ];
 
-  // TODO: Replace this with categories from the DB
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
+  getDepartments = async () => {
+    return await getCompanyDepartments();
+  };
+
+  async componentDidMount() {
+    const departments: any[] = await this.getDepartments();
+    if (departments) departments.unshift({ id: 0, title: 'All' });
+    this.setState({ departments: departments });
+  }
 
   // Dynamic components (performance)
   Team = lazy(() => import('../../components/CompanyAndTeam/Team/Team'));
@@ -39,7 +61,7 @@ class CompanyAndTeam extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={this.categories} />
+            <Categories categories={this.state.departments} />
 
             <Suspense fallback={<span className="loading">Loading...</span>}>
               {sectionName === 'team' ? (
@@ -56,9 +78,17 @@ class CompanyAndTeam extends React.Component {
             </Suspense>
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default CompanyAndTeam;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(CompanyAndTeam);

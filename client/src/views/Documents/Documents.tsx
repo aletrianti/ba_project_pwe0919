@@ -4,17 +4,32 @@ import TopBar from '../../components/common/TopBar/TopBar';
 import SectionBar from '../../components/common/SectionBar/SectionBar';
 import Categories from '../../components/common/Categories/Categories';
 import DocumentsAccordion from '../../components/Documents/DocumentsAccordion/DocumentsAccordion';
-import Actions from '../../components/common/Actions/Actions';
+import { connect } from 'react-redux';
+import { IEditProfileModal } from '../../store/interfaces/forms/profile.interfaces';
+import ProfileForm from '../../components/common/TopBar/Profile/ProfileForm/ProfileForm';
+import { getCategories } from '../../utils/httpRequests';
+import { ITableCategory } from '../../store/interfaces/tables.interfaces';
 
-class Documents extends React.Component {
-  sections = [{ name: 'Files', pathname: 'documents' }];
+interface DocumentsProps {
+  editProfileModal: IEditProfileModal;
+}
+interface DocumentsState {
+  categories: ITableCategory[];
+  content: any[];
+}
+class Documents extends React.Component<DocumentsProps, DocumentsState> {
+  constructor(props: any) {
+    super(props);
 
-  // TODO: Replace this with categories from the DB
-  categories = [
-    { id: 1, title: 'All' },
-    { id: 2, title: 'Engineering' },
-    { id: 3, title: 'Design' },
-  ];
+    this.state = {
+      categories: [],
+      content: [],
+    };
+  }
+
+  getCategories = async () => {
+    return await getCategories();
+  };
 
   // TODO: Replace this with documents' data from the DB
   data = [
@@ -30,12 +45,22 @@ class Documents extends React.Component {
     },
   ];
 
-  content = [
-    {
-      category: this.categories[2],
-      data: this.data,
-    },
-  ];
+  async componentDidMount() {
+    const categories = await this.getCategories();
+
+    this.setState({ categories: categories });
+
+    if (categories)
+      categories.map(category => {
+        return this.setState(state => {
+          return {
+            content: [...state.content, { category: category, data: this.data }],
+          };
+        });
+      });
+  }
+
+  sections = [{ name: 'Files', pathname: 'documents' }];
 
   render() {
     const pathname = window.location.pathname.split('/');
@@ -51,16 +76,24 @@ class Documents extends React.Component {
           <div className="app__content">
             <SectionBar sections={this.sections} activeSection={sectionName} />
 
-            <Categories categories={this.categories} />
+            <Categories categories={this.state.categories} />
 
             <div id="documents__content">
-              <DocumentsAccordion content={this.content} />
+              <DocumentsAccordion content={this.state.content} />
             </div>
           </div>
         </div>
+
+        <ProfileForm isModalOpen={this.props.editProfileModal.isOpen} />
       </div>
     );
   }
 }
 
-export default Documents;
+const mapStateToProps = (state: any) => {
+  return {
+    editProfileModal: state.editProfileModal,
+  };
+};
+
+export default connect(mapStateToProps)(Documents);

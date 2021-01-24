@@ -1,5 +1,4 @@
 import React, { FormEvent } from 'react';
-import axios from 'axios';
 import './SignInForm.scss';
 import { AnyAction } from '@reduxjs/toolkit';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
@@ -28,6 +27,7 @@ import { validator, validatorTypes } from '../../../utils/formValidation';
 import { checkFormFields, ICheckFields } from '../../../utils/checkFormFields';
 
 // localStorage
+import { logIn } from '../../../utils/httpRequests';
 import { storeTokenInLocalStorage } from '../../../utils/localStorageActions';
 
 interface SignInFormState {
@@ -100,19 +100,12 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
       password: state.signIn.password,
     };
 
-    axios
-      .post('/api/auth/login', data)
-      .then(res => {
-        storeTokenInLocalStorage(res);
-      })
-      .then(() => {
-        console.log('Logged in!');
-        history.push('/dashboard');
-      })
-      .catch(err => {
-        this.setState({ areCredentialsValid: false });
-        console.error(err);
-      });
+    const logInError = err => {
+      this.setState({ areCredentialsValid: false });
+      console.error(err);
+    };
+
+    logIn(data, history, logInError);
   };
 
   signIn = async (event: FormEvent): Promise<any> => {
@@ -120,6 +113,8 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
 
     await this.dispatchSignInAction();
     await this.signInRequest();
+
+    localStorage['hasJustSignedIn'] = true;
   };
 
   render() {

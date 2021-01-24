@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleAddDepartmentModalAction, ToggleEditDepartmentModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreDepartmentAction } from '../../../../store/actions/forms/departments/departments.actions';
@@ -14,9 +13,9 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { postDepartment, updateDepartment } from '../../../../utils/httpRequests';
 
-interface CategoriesFormsProps {
+interface DepartmentsFormsProps {
   department: IDepartment;
   addDepartmentModal: IAddDepartmentModal;
   editDepartmentModal: IEditDepartmentModal;
@@ -25,11 +24,11 @@ interface CategoriesFormsProps {
   toggleEditDepartmentModal: (editDepartmentModal: IEditDepartmentModal) => any;
 }
 
-interface CategoriesFormsState {
+interface DepartmentsFormsState {
   areFieldsValid: ICheckFields;
 }
 
-class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFormsState> {
+class DepartmentsForms extends React.Component<DepartmentsFormsProps, DepartmentsFormsState> {
   constructor(props: any) {
     super(props);
 
@@ -44,13 +43,13 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   closeAddDepartmentModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
-    this.props.toggleAddDepartmentModal({ isOpen: false });
-
     this.props.storeDepartment({ department: '', isValid: false, errorMessage: '' });
+    this.props.toggleAddDepartmentModal({ isOpen: false });
   };
   closeEditDepartmentModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeDepartment({ department: '', isValid: false, errorMessage: '' });
     this.props.toggleEditDepartmentModal({ id: 0, isOpen: false });
   };
 
@@ -73,34 +72,39 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
     return { isValid, message };
   };
 
-  config = {
-    headers: { Authorization: `Bearer ${getTokenFromLocalStorage()}` },
-  };
-
   // Form events
-  saveDepartmentToDB = (event: FormEvent): void => {
+  saveDepartmentToDB = async (event: FormEvent) => {
     const data = {
       name: this.props.department.department,
     };
-    axios.post('/api/department', data, this.config).then(() => this.closeAddDepartmentModal(event));
+
+    await postDepartment(data).then(() => this.closeAddDepartmentModal(event));
   };
 
-  saveEditedDepartmentToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
-    // call this after the request succeeds: this.closeEditDepartmentModal(event)
+  saveEditedDepartmentToDB = async (event: FormEvent): Promise<void> => {
+    const data = {
+      ID: this.props.editDepartmentModal.id,
+      body: {
+        name: this.props.department.department,
+      },
+    };
+    await updateDepartment(data).then(() => {
+      this.closeEditDepartmentModal(event);
+    });
   };
-
-  // Fields
-  addDepartmentModalFields: IField[] = [{ name: 'Department', type: 'text', onchange: this.storeDepartment }];
-  // TODO: Add dynamic value depending on selected item
-  editDepartmentModalFields: IField[] = [{ name: 'Department', type: 'text', onchange: this.storeDepartment, value: '' }];
 
   render() {
+    // Fields
+    const addDepartmentModalFields: IField[] = [{ name: 'Department', type: 'text', onchange: this.storeDepartment }];
+    // TODO: Add dynamic value depending on selected item
+    const editDepartmentModalFields: IField[] = [
+      { name: 'Department', type: 'text', onchange: this.storeDepartment, value: this.props.department.department },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addDepartmentModalFields}
+          fields={addDepartmentModalFields}
           header={'Add a department'}
           submitFunction={this.saveDepartmentToDB}
           closeFunction={this.closeAddDepartmentModal}
@@ -109,11 +113,11 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
         />
 
         <Form
-          fields={this.editDepartmentModalFields}
+          fields={editDepartmentModalFields}
           header={'Edit a department'}
           submitFunction={this.saveEditedDepartmentToDB}
           closeFunction={this.closeEditDepartmentModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editDepartmentModal.isOpen}
         />
       </>
@@ -139,4 +143,4 @@ const mapDisparchToProps = (dispatch: any) => {
   };
 };
 
-export default connect(mapStateToProps, mapDisparchToProps)(CategoriesForms);
+export default connect(mapStateToProps, mapDisparchToProps)(DepartmentsForms);

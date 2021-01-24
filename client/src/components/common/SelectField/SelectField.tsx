@@ -17,20 +17,19 @@ class SelectField extends React.Component<SelectFieldProps> {
 
   render() {
     const { name, options } = this.props;
-    let opts;
-
-    if (options) opts = options;
 
     return (
       <div className="select-field__container" onChange={this.handleOnChange}>
         <label htmlFor={`Select[${name}]`}>{name}</label>
 
         <select name={`Select[${name}]`}>
-          {opts.list.map((option, i) => (
-            <option value={option.value} key={i}>
-              {option.label}
-            </option>
-          ))}
+          {options && options.list
+            ? options.list.map((option, i) => (
+                <option value={option.value} key={i}>
+                  {option.label}
+                </option>
+              ))
+            : null}
         </select>
       </div>
     );

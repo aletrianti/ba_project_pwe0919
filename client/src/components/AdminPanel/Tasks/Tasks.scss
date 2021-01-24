@@ -1,80 +1,85 @@
 @import '../../../variables';
 
-#admin-panel__tasks__content {
-    display: flex;
-    flex-direction: column;
-    margin: 30px 20px;
-    width: 37em;
+#admin-panel__tasks {
+    height: calc(100% - 41px);
+    overflow-y: auto;
 
-    #admin-panel__tasks__content__headers {
+    #admin-panel__tasks__content {
         display: flex;
-        align-items: center;
-        
-        h3 {
-            font-size: $font-medium;
-            width: 50%;
-        }
-    }
+        flex-direction: column;
+        margin: 30px 20px;
+        width: 37em;
 
-    #admin-panel__tasks__content__items {
-        margin-top: 20px;
-    }
-
-    #admin-panel__tasks__content__custom {
-        margin-top: 30px;
-        width: 20em;
-
-        #admin-panel__tasks__content__custom__title {
-            font-size: $font-big;
-            margin-bottom: 20px;
-        }
-
-        #admin-panel__tasks__content__custom__tasks {
+        #admin-panel__tasks__content__headers {
             display: flex;
-            flex-direction: column;
-            border: 1px solid $primary-grey;
-            border-radius: 8px;
-            height: 12em;
-            max-height: 12em;
-            margin-bottom: 20px;
-            width: 100%;
-            overflow-y: auto;
+            align-items: center;
+            
+            h3 {
+                font-size: $font-medium;
+                width: 50%;
+            }
+        }
 
-            .admin-panel__tasks__content__custom__tasks__item {
+        #admin-panel__tasks__content__items {
+            margin-top: 20px;
+        }
+
+        #admin-panel__tasks__content__custom {
+            margin-top: 30px;
+            width: 20em;
+
+            #admin-panel__tasks__content__custom__title {
+                font-size: $font-big;
+                margin-bottom: 20px;
+            }
+
+            #admin-panel__tasks__content__custom__tasks {
                 display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin: 0 20px;
-                padding: 15px 0;
-                width: calc(100% - 40px);
-                border: none;
-                border-bottom: 1px solid $lighter-grey;
-                font-size: $font-regular;
+                flex-direction: column;
+                border: 1px solid $primary-grey;
+                border-radius: 8px;
+                height: 12em;
+                max-height: 12em;
+                margin-bottom: 20px;
+                width: 100%;
+                overflow-y: auto;
 
-                span {
-                    margin-right: 20px;
-                    word-break: break-all;
+                .admin-panel__tasks__content__custom__tasks__item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin: 0 20px;
+                    padding: 15px 0;
+                    width: calc(100% - 40px);
+                    border: none;
+                    border-bottom: 1px solid $lighter-grey;
+                    font-size: $font-regular;
+
+                    span {
+                        margin-right: 20px;
+                        word-break: break-all;
+                    }
+                }
+
+                .admin-panel__tasks__content__custom__tasks__item:first-of-type {
+                    padding-top: 20px;
+                }
+                .admin-panel__tasks__content__custom__tasks__item:last-of-type {
+                    padding-bottom: 20px;
+                    border-bottom: none;
                 }
             }
 
-            .admin-panel__tasks__content__custom__tasks__item:first-of-type {
-                padding-top: 20px;
+            #admin-panel__tasks__content__custom__btn {
+                width: 100%;
+                border: 1px solid transparent;
+                border-radius: 8px;
+                padding: 8px 20px;
+                background-color: $orange-accent;
+                font-weight: $thick;
+                cursor: pointer;
+                
             }
-            .admin-panel__tasks__content__custom__tasks__item:last-of-type {
-                padding-bottom: 20px;
-                border-bottom: none;
-            }
-        }
-
-        #admin-panel__tasks__content__custom__btn {
-            width: 100%;
-            border: 1px solid transparent;
-            border-radius: 8px;
-            padding: 8px 20px;
-            background-color: $orange-accent;
-            font-weight: $thick;
-            cursor: pointer;
-            
         }
     }
 }

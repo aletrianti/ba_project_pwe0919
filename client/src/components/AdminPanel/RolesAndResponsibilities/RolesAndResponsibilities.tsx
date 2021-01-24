@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 
 import { ToggleAddRoleModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddRoleModal } from '../../../store/interfaces/forms/roles.interfaces';
-import { ITableRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
+import { IRolesAndResponsibilities } from '../../../store/interfaces/tables.interfaces';
+import { getRolesResponsibilities } from '../../../utils/httpRequests';
 
 import AddButton from '../../common/AddButton/AddButton';
 import DeleteRolesAndResponsibilitiesForm from './RolesAndResponsibilitiesForms/DeleteRolesAndResponsibilitiesForm';
@@ -14,21 +15,33 @@ interface RolesProps {
   toggleAddRoleModal: (addRoleModal: IAddRoleModal) => any;
 }
 
-class RolesAndResponsibilities extends React.Component<RolesProps> {
+interface RolesAndResponsibilitiesState {
+  rolesAndResponsibilities: IRolesAndResponsibilities[];
+}
+class RolesAndResponsibilities extends React.Component<RolesProps, RolesAndResponsibilitiesState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      rolesAndResponsibilities: [],
+    };
+  }
+
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddRoleModal({ isOpen: true });
   };
 
-  rolesAndResponsibilities: ITableRolesAndResponsibilities[] = [
-    {
-      id: 1,
-      role: 'Software engineer',
-      description: `A Software Developer serves as a member of the software development team. They aid in the innovation and creation of company software and programs. Generally found in tech-heavy industries and large corporations, a Software Developer will work alongside a team of programmers to code programs that meet the need of the company or client.`,
-      responsibilities: ['Design and develop software, test-automation suites, and infrastructure.', 'Review other peers’ code.'],
-    },
-  ];
+  getRoles = async () => {
+    const roles = await getRolesResponsibilities();
+
+    this.setState({ rolesAndResponsibilities: roles });
+  };
+
+  async componentDidMount() {
+    await this.getRoles();
+  }
 
   render() {
     return (
@@ -36,7 +49,7 @@ class RolesAndResponsibilities extends React.Component<RolesProps> {
         <AddButton name={'Add role'} function={this.openModal} />
 
         <div id="admin-panel__roles__content" className="admin-panel__content">
-          <RolesAndResponsibilitiesTable rolesAndResponsibilities={this.rolesAndResponsibilities} />
+          <RolesAndResponsibilitiesTable rolesAndResponsibilities={this.state.rolesAndResponsibilities} />
         </div>
 
         <RolesAndResponsibilitiesForms />

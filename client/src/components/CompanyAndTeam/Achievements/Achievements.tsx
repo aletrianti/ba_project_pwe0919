@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 import { withStyles } from '@material-ui/core/styles';
 import Timeline from '@material-ui/lab/Timeline';
@@ -13,6 +14,8 @@ import StarIcon from '@material-ui/icons/Star';
 import HelpIcon from '@material-ui/icons/Help';
 import Paper from '@material-ui/core/Paper';
 import Box from '@material-ui/core/Box';
+import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
+import { getAchievements } from '../../../utils/httpRequests';
 
 const styles = {
   paper: {
@@ -33,22 +36,46 @@ interface AchievementsProps {
   classes: any;
 }
 
-class Achievements extends React.Component<AchievementsProps> {
+interface AchievevementsState {
+  achievements: ITableAchievement[];
+}
+
+class Achievements extends React.Component<AchievementsProps, AchievevementsState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      achievements: [],
+    };
+  }
   // TODO: Display achievements from DB
   achievements = [
     { title: 'NewCompany was founded', description: 'With only 2 members!', date: 'March 2018' },
     { title: 'First office', description: 'Finally settling down!', date: 'August 2018' },
   ];
 
+  async componentDidMount() {
+    const achievements: ITableAchievement[] = await getAchievements();
+
+    if (achievements) {
+      const achievementsSorted = achievements.sort(function (a, b) {
+        // @ts-ignore
+        return new Date(a.date) - new Date(b.date);
+      });
+
+      this.setState({ achievements: achievementsSorted });
+    }
+  }
+
   render() {
     return (
       <div id="company-and-team__achievements__container">
         <Timeline align="alternate">
-          {this.achievements.map((achievement, i) => {
-            return i % 2 == 0 ? (
+          {this.state.achievements.map((achievement, i) => {
+            return i % 2 === 0 ? (
               <TimelineItem key={i} className={this.props.classes.timelineItem}>
                 <TimelineOppositeContent>
-                  <Typography className={this.props.classes.date}>{achievement.date}</Typography>
+                  <Typography className={this.props.classes.date}>{moment(achievement.date).format('MMMM YYYY')}</Typography>
                 </TimelineOppositeContent>
                 <TimelineSeparator>
                   <TimelineDot className={this.props.classes.item}>
@@ -75,7 +102,7 @@ class Achievements extends React.Component<AchievementsProps> {
               <TimelineItem key={i} className={this.props.classes.timelineItem}>
                 <TimelineContent>
                   <Typography align={'left'} className={this.props.classes.date}>
-                    {achievement.date}
+                    {moment(achievement.date).format('MMMM YYYY')}
                   </Typography>
                 </TimelineContent>
                 <TimelineSeparator>

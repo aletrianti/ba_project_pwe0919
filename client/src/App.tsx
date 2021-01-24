@@ -11,19 +11,13 @@ import Documents from './views/Documents/Documents';
 import FAQs from './views/FAQs/FAQs';
 import AdminPanel from './views/AdminPanel/AdminPanel';
 
-// localStorage
-import { getTokenFromLocalStorage } from './utils/localStorageActions';
-
 const App = () => {
   interface CustomRouteProps extends Omit<RouteProps, 'component'> {
     component: React.ElementType;
   }
 
   const PrivateRoute: React.FC<CustomRouteProps> = ({ component: Component, ...rest }) => (
-    <Route
-      {...rest}
-      render={props => (getTokenFromLocalStorage() !== undefined ? <Component {...props} /> : <Redirect to="/sign-in" />)}
-    />
+    <Route {...rest} render={props => (localStorage['user_token'] ? <Component {...props} /> : <Redirect to="/sign-in" />)} />
   );
 
   return (
@@ -31,7 +25,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            {getTokenFromLocalStorage() !== undefined ? <Redirect to="/dashboard" /> : <Redirect to="/sign-in" />}
+            {localStorage['user_token'] ? <Redirect to="/dashboard" /> : <Redirect to="/sign-in" />}
           </Route>
           <Route path="/sign-in" component={SignIn} />
 

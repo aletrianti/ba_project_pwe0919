@@ -10,10 +10,6 @@ interface DocumentsItemProps {
 }
 
 class DocumentsItem extends React.Component<DocumentsItemProps> {
-  constructor(props: any) {
-    super(props);
-  }
-
   openModal = () => {};
 
   render() {

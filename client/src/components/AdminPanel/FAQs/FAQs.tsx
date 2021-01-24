@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ToggleAddFaqModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddFaqModal } from '../../../store/interfaces/forms/faqs.interfaces';
 import { ITableFAQ } from '../../../store/interfaces/tables.interfaces';
+import { getFAQs } from '../../../utils/httpRequests';
 
 import AddButton from '../../common/AddButton/AddButton';
 import DeleteFAQsForm from './FAQsForms/DeleteFAQsForm';
@@ -14,20 +15,30 @@ interface FaqsProps {
   toggleAddFaqModal: (addFaqModal: IAddFaqModal) => any;
 }
 
-class FAQs extends React.Component<FaqsProps> {
+interface FaqState {
+  faqs: ITableFAQ[];
+}
+
+class FAQs extends React.Component<FaqsProps, FaqState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      faqs: [],
+    };
+  }
+
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
     this.props.toggleAddFaqModal({ isOpen: true });
   };
 
-  faqs: ITableFAQ[] = [
-    {
-      id: 1,
-      question: 'Who can I ask for help?',
-      answer: `In the dashboard, you can see a name under the section “Buddy”: this is the name of the person you had been assigned to. Your “buddy” will give you all the help you need to start at NewCompany.`,
-    },
-  ];
+  async componentDidMount() {
+    const faqs = await getFAQs();
+
+    this.setState({ faqs: faqs });
+  }
 
   render() {
     return (
@@ -35,7 +46,7 @@ class FAQs extends React.Component<FaqsProps> {
         <AddButton name={'Add FAQ'} function={this.openModal} />
 
         <div id="admin-panel__faqs__content" className="admin-panel__content">
-          <FAQsTable faqs={this.faqs} />
+          <FAQsTable faqs={this.state.faqs} />
         </div>
 
         <FAQsForms />

@@ -6,39 +6,42 @@ import Actions from '../../../common/Actions/Actions';
 import { ITableCategory } from '../../../../store/interfaces/tables.interfaces';
 import { connect } from 'react-redux';
 import { ToggleEditCategoryModalAction, ToggleDeleteCategoryModalAction } from '../../../../store/actions/forms/forms.actions';
-import { IEditCategoryModal, IDeleteCategoryModal } from '../../../../store/interfaces/forms/categories.interfaces';
+import { IEditCategoryModal, IDeleteCategoryModal, ICategory } from '../../../../store/interfaces/forms/categories.interfaces';
+import { StoreCategoryAction } from '../../../../store/actions/forms/categories/categories.actions';
 
 interface CategoriesTableProps {
   categories: ITableCategory[];
+  storeCategory: (category: ICategory) => any;
   toggleEditCategoryModal: (editCategoryModal: IEditCategoryModal) => any;
   toggleDeleteCategoryModal: (deleteCategoryModal: IDeleteCategoryModal) => any;
 }
 
 class CategoriesTable extends React.Component<CategoriesTableProps> {
-  editCategory = (id: number, e: MouseEvent) => {
+  editCategory = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleEditCategoryModal({ id, isOpen: true });
+    this.props.storeCategory({ category: data.title, isValid: true, errorMessage: '' });
+    this.props.toggleEditCategoryModal({ id: data.id, isOpen: true });
   };
 
-  deleteCategory = (id: number, e: MouseEvent) => {
+  deleteCategory = (data: any, e: MouseEvent) => {
     e.preventDefault();
 
-    this.props.toggleDeleteCategoryModal({ id, isOpen: true });
+    this.props.toggleDeleteCategoryModal({ id: data.id, isOpen: true });
   };
 
-  actions = (id: number) => (
+  actions = (data: any) => (
     <Actions
       actions={[
-        { name: 'Edit', function: (e: MouseEvent) => this.editCategory(id, e) },
-        { name: 'Delete', function: (e: MouseEvent) => this.deleteCategory(id, e) },
+        { name: 'Edit', function: (e: MouseEvent) => this.editCategory(data, e) },
+        { name: 'Delete', function: (e: MouseEvent) => this.deleteCategory(data, e) },
       ]}
     />
   );
 
   columns = [
     { title: 'Category', columnData: (data: any) => data.title },
-    { title: '', columnData: (data: any) => this.actions(data.id) },
+    { title: '', columnData: (data: any) => this.actions(data) },
   ];
 
   render() {
@@ -52,6 +55,7 @@ class CategoriesTable extends React.Component<CategoriesTableProps> {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    storeCategory: (category: ICategory) => dispatch(StoreCategoryAction(category)),
     toggleEditCategoryModal: (editCategoryModal: IEditCategoryModal) =>
       dispatch(ToggleEditCategoryModalAction(editCategoryModal)),
     toggleDeleteCategoryModal: (deleteCategoryModal: IDeleteCategoryModal) =>

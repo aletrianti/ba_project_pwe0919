@@ -1,14 +1,13 @@
-import React, { FormEvent, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleDeleteUserModalAction } from '../../../../store/actions/forms/forms.actions';
 import { IDeleteUserModal, IDeleteUser } from '../../../../store/interfaces/forms/users.interfaces';
 import { DeleteUserAction } from '../../../../store/actions/forms/users/users.actions';
 
 import DeleteForm from '../../../common/Form/DeleteForm';
-import { getTokenFromLocalStorage } from '../../../../utils/localStorageActions';
+import { deleteEmployee } from '../../../../utils/httpRequests';
 
 interface DeleteUsersFormProps {
   deleteUserModal: IDeleteUserModal;
@@ -36,17 +35,9 @@ class DeleteUsersForm extends React.Component<DeleteUsersFormProps, DeleteUsersF
     this.props.toggleDeleteUserModal({ id: 0, isOpen: false });
   };
 
-  token = getTokenFromLocalStorage();
-
-  config = {
-    headers: { Authorization: `Bearer ${this.token}` },
-  };
   // Form events
-
   deleteUser = async (e: MouseEvent) => {
-    await axios.post('/api/auth/delete-employee', this.props.deleteUserModal, this.config).then(() => {
-      this.closeEditUserModal(e);
-    });
+    await deleteEmployee(this.props.deleteUserModal).then(() => this.closeEditUserModal(e));
   };
 
   render() {

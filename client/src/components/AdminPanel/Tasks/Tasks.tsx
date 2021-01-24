@@ -3,13 +3,7 @@ import './Tasks.scss';
 
 import Title from '../../common/Title/Title';
 import TasksItem from './TasksItem/TasksItem';
-import {
-  setTaskOneAsCompletedAction,
-  setTaskTwoAsCompletedAction,
-  setTaskThreeAsCompletedAction,
-  setTaskFourAsCompletedAction,
-  setCustomTaskAsCompletedAction,
-} from '../../../store/actions/tasks/tasks.actions';
+import { setTaskOne, setTaskTwo, setTaskThree, setTaskFour, setCustomTask } from '../../../store/actions/tasks/tasks.actions';
 import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 
 import { connect } from 'react-redux';
@@ -22,6 +16,7 @@ import {
 import { IAddTaskModal, IDeleteTaskModal, IEditTaskModal } from '../../../store/interfaces/forms/tasks.interfaces';
 import DeleteTasksForms from './TasksForms/DeleteTasksForms';
 import Actions from '../../common/Actions/Actions';
+import { postCompanyTask } from '../../../utils/httpRequests';
 
 interface TaskProps {
   taskOne: ITask;
@@ -80,8 +75,13 @@ class Tasks extends React.Component<TaskProps> {
     this.setDeadline(task, this.props.taskFour, e.target.value, this.props.setTaskFour);
   };
 
-  saveDeadlineToDB = (task): void => {
-    // TODO: add axios call here
+  saveDeadlineToDB = async (task): Promise<void> => {
+    const data = {
+      taskId: task.num,
+      deadline: task.deadline,
+    };
+
+    await postCompanyTask(data);
   };
 
   modalDescription: string = 'Give a general idea of how much time your new employee should spend on each task.';
@@ -106,25 +106,25 @@ class Tasks extends React.Component<TaskProps> {
               taskName={taskOne.name}
               deadline={taskOne.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskOne(taskOne, e)}
-              saveDeadline={this.saveDeadlineToDB(taskOne)}
+              saveDeadline={() => this.saveDeadlineToDB(taskOne)}
             />
             <TasksItem
               taskName={taskTwo.name}
               deadline={taskTwo.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskTwo(taskTwo, e)}
-              saveDeadline={this.saveDeadlineToDB(taskTwo)}
+              saveDeadline={() => this.saveDeadlineToDB(taskTwo)}
             />
             <TasksItem
               taskName={taskThree.name}
               deadline={taskThree.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskThree(taskThree, e)}
-              saveDeadline={this.saveDeadlineToDB(taskThree)}
+              saveDeadline={() => this.saveDeadlineToDB(taskThree)}
             />
             <TasksItem
               taskName={taskFour.name}
               deadline={taskFour.deadline}
               setDeadline={(e: any) => this.setDeadlineTaskFour(taskFour, e)}
-              saveDeadline={this.saveDeadlineToDB(taskFour)}
+              saveDeadline={() => this.saveDeadlineToDB(taskFour)}
             />
 
             <div id="admin-panel__tasks__content__custom">
@@ -172,11 +172,11 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    setTaskOne: (taskOne: ITask) => dispatch(setTaskOneAsCompletedAction(taskOne)),
-    setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwoAsCompletedAction(taskTwo)),
-    setTaskThree: (taskThree: ITask) => dispatch(setTaskThreeAsCompletedAction(taskThree)),
-    setTaskFour: (taskFour: ITask) => dispatch(setTaskFourAsCompletedAction(taskFour)),
-    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTaskAsCompletedAction(taskFive)),
+    setTaskOne: (taskOne: ITask) => dispatch(setTaskOne(taskOne)),
+    setTaskTwo: (taskTwo: ITask) => dispatch(setTaskTwo(taskTwo)),
+    setTaskThree: (taskThree: ITask) => dispatch(setTaskThree(taskThree)),
+    setTaskFour: (taskFour: ITask) => dispatch(setTaskFour(taskFour)),
+    setTaskFive: (taskFive: ICustomTasks) => dispatch(setCustomTask(taskFive)),
     toggleAddTaskModal: (addTaskModal: IAddTaskModal) => dispatch(ToggleAddTaskModalAction(addTaskModal)),
     toggleEditTaskModal: (editTaskModal: IEditTaskModal) => dispatch(ToggleEditTaskModalAction(editTaskModal)),
     toggleDeleteTaskModal: (deleteTaskModal: IDeleteTaskModal) => dispatch(ToggleDeleteTaskModalAction(deleteTaskModal)),

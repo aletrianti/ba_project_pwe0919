@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React from 'react';
 import './AddButton.scss';
 
 import AddIcon from '@material-ui/icons/Add';
@@ -10,14 +10,10 @@ interface AddButtonProps {
 }
 
 class AddButton extends React.Component<AddButtonProps> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     return (
       <>
-        {isCurrentUserAnAdmin() ? (
+        {isCurrentUserAnAdmin ? (
           <button className="add-btn__container" onClick={this.props.function}>
             <span>{this.props.name}</span> <AddIcon />
           </button>

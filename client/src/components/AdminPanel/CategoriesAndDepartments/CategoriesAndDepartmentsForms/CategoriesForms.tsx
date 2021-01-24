@@ -1,6 +1,5 @@
 import React, { FormEvent } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 
 import { ToggleAddCategoryModalAction, ToggleEditCategoryModalAction } from '../../../../store/actions/forms/forms.actions';
 import { StoreCategoryAction } from '../../../../store/actions/forms/categories/categories.actions';
@@ -10,6 +9,7 @@ import { validator, validatorTypes } from '../../../../utils/formValidation';
 
 import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
+import { postCategory, updateCategory } from '../../../../utils/httpRequests';
 
 interface CategoriesFormsProps {
   category: ICategory;
@@ -39,13 +39,13 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   closeAddCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
-    this.props.toggleAddCategoryModal({ isOpen: false });
-
     this.props.storeCategory({ category: '', isValid: false, errorMessage: '' });
+    this.props.toggleAddCategoryModal({ isOpen: false });
   };
   closeEditCategoryModal = (e: MouseEvent | FormEvent) => {
     e.preventDefault();
 
+    this.props.storeCategory({ category: '', isValid: false, errorMessage: '' });
     this.props.toggleEditCategoryModal({ id: 0, isOpen: false });
   };
 
@@ -69,28 +69,36 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
   };
 
   // Form events
-  saveCategoryToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
-    // call this after the request succeeds: this.closeAddCategoryModal(event)
+  saveCategoryToDB = async (): Promise<void> => {
+    // TODO: add axios call here - use this.props.category
+    const data = {
+      name: this.props.category.category,
+    };
+    await postCategory(data);
   };
 
-  saveEditedCategoryToDB = (event: FormEvent): void => {
-    // TODO: add axios call here - use this.state.roleId and this.props.role
-    // the last one is an object containing these objects: title, description, responsibilities
-    // call this after the request succeeds: this.closeEditCategoryModal(event)
+  saveEditedCategoryToDB = async (event: FormEvent): Promise<void> => {
+    const data = {
+      ID: this.props.editCategoryModal.id,
+      body: {
+        name: this.props.category.category,
+      },
+    };
+    await updateCategory(data).then(() => this.closeEditCategoryModal(event));
   };
-
-  // Fields
-  addCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory }];
-  // TODO: Add dynamic value depending on selected item
-  editCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory, value: '' }];
 
   render() {
+    // Fields
+    const addCategoryModalFields: IField[] = [{ name: 'Category', type: 'text', onchange: this.storeCategory }];
+    // TODO: Add dynamic value depending on selected item
+    const editCategoryModalFields: IField[] = [
+      { name: 'Category', type: 'text', onchange: this.storeCategory, value: this.props.category.category },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addCategoryModalFields}
+          fields={addCategoryModalFields}
           header={'Add a category'}
           submitFunction={this.saveCategoryToDB}
           closeFunction={this.closeAddCategoryModal}
@@ -99,11 +107,11 @@ class CategoriesForms extends React.Component<CategoriesFormsProps, CategoriesFo
         />
 
         <Form
-          fields={this.editCategoryModalFields}
+          fields={editCategoryModalFields}
           header={'Edit a category'}
           submitFunction={this.saveEditedCategoryToDB}
           closeFunction={this.closeEditCategoryModal}
-          areFieldsValid={this.state.areFieldsValid.areAllFieldsValid}
+          areFieldsValid={true}
           isModalOpen={this.props.editCategoryModal.isOpen}
         />
       </>

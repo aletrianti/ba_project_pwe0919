@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { ToggleAddAchievementModalAction } from '../../../store/actions/forms/forms.actions';
 import { IAddAchievementModal } from '../../../store/interfaces/forms/achievements.interfaces';
 import { ITableAchievement } from '../../../store/interfaces/tables.interfaces';
+import { getAchievements } from '../../../utils/httpRequests';
 
 import AddButton from '../../common/AddButton/AddButton';
 import AchievementsForms from './AchievementsForms/AchievementsForms';
@@ -14,7 +15,18 @@ interface AchievementsProps {
   toggleAddAchievementModal: (addAchievementModal: IAddAchievementModal) => any;
 }
 
-class Achievements extends React.Component<AchievementsProps> {
+interface AchievevementsState {
+  achievements: ITableAchievement[];
+}
+
+class Achievements extends React.Component<AchievementsProps, AchievevementsState> {
+  constructor(props: any) {
+    super(props);
+
+    this.state = {
+      achievements: [],
+    };
+  }
   openModal = (e: MouseEvent) => {
     e.preventDefault();
 
@@ -31,13 +43,24 @@ class Achievements extends React.Component<AchievementsProps> {
     },
   ];
 
+  async componentDidMount() {
+    const achievements = await getAchievements();
+
+    const achievementsSorted = achievements.sort(function (a, b) {
+      // @ts-ignore
+      return new Date(a.date) - new Date(b.date);
+    });
+
+    this.setState({ achievements: achievementsSorted });
+  }
+
   render() {
     return (
       <div id="admin-panel__achievements">
         <AddButton name={'Add achievement'} function={(e: MouseEvent) => this.openModal(e)} />
 
         <div id="admin-panel__achievements__content" className="admin-panel__content">
-          <AchievementsTable achievements={this.achievements} />
+          <AchievementsTable achievements={this.state.achievements} />
         </div>
 
         <AchievementsForms />

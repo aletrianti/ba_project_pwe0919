@@ -1,8 +1,8 @@
 // localStorage
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { IProfile } from '../store/interfaces/members.interfaces';
 
-export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
+export const storeTokenInLocalStorage = (res: AxiosResponse<any>): void => {
   const user = res.data.user;
   const role = res.data.userRole;
   const department = res.data.userDepartment;
@@ -13,6 +13,7 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   const currentUser: IProfile = {
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
     jobTitle: role.title,
     department: department !== '' ? department.name : department,
     birthday: user.birthday,
@@ -26,11 +27,10 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage['user_token'] = res.data.token;
   localStorage['current_user'] = JSON.stringify(currentUser);
 
-  console.log('Stored token.');
+  // console.log('Stored token.');
 };
 
-export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
-  console.log(res);
+export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>): void => {
   const user = res.data.user;
   const role = res.data.userRole;
   const department = res.data.userDepartment;
@@ -41,6 +41,7 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   const currentUser: IProfile = {
     firstName: user.firstName,
     lastName: user.lastName,
+    email: user.email,
     jobTitle: role.title,
     department: department !== '' ? department.name : department,
     birthday: user.birthday,
@@ -54,25 +55,19 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage.setItem('current_user', JSON.stringify(currentUser));
 };
 
-export const updateCurrentUserAvailability = (availability: boolean) => {
-  const token = getTokenFromLocalStorage();
-
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-  };
-
-  axios
-    .post('/api/auth/update-user', { availableToBuddy: availability }, config)
-    .then(res => updateCurrentUserInLocalStorage(res))
-    .catch(err => console.error(err));
-};
-
-export const removeAllItemsFromLocalStorage = () => {
+export const removeAllItemsFromLocalStorage = (): void => {
   localStorage.clear();
 };
 
-export const getTokenFromLocalStorage = (): string => localStorage['user_token'];
+export const httpRequestsConfig = {
+  headers: { Authorization: `Bearer ${localStorage['user_token']}` },
+};
 
-export const getUserInfoFromLocalStorage = (): IProfile => JSON.parse(localStorage['current_user']);
+export const isCurrentUserAnAdmin: boolean = localStorage['current_user'] ? JSON.parse(localStorage['current_user']).isAdmin : false;
 
-export const isCurrentUserAnAdmin = (): boolean => getUserInfoFromLocalStorage().isAdmin;
+export const reloadPageAfterSignIn = (): void => {
+  if (localStorage['hasJustSignedIn'] === 'true') {
+    localStorage.removeItem('hasJustSignedIn');
+    window.location.reload();
+  }
+};

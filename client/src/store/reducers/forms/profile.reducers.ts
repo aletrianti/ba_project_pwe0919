@@ -1,6 +1,6 @@
 import { TOGGLE_EDIT_PROFILE_MODAL } from "../../actions/forms/forms.types";
-import { STORE_PROFILE_FIRST_NAME, STORE_PROFILE_LAST_NAME, STORE_PROFILE_EMAIL, STORE_PROFILE_PASSWORD, STORE_PROFILE_BIRTHDAY, STORE_PROFILE_AT_COMPANY_SINCE, STORE_PROFILE_DESCRIPTION, STORE_PROFILE_CONTACT_LINK } from "../../actions/forms/profile/profile.types";
-import { IProfileFirstName, IStoreProfileFirstNameAction, IProfileLastName, IStoreProfileLastNameAction, IProfileEmail, IStoreProfileEmailAction, IProfilePassword, IStoreProfilePasswordAction, IProfileBirthday, IStoreProfileBirthdayAction, IProfileAtCompanySince, IStoreProfileAtCompanySinceAction, IProfileDescription, IStoreProfileDescriptionAction, IProfileContactLink, IStoreProfileContactLinkAction, IEditProfileModal, IToggleEditProfileModalAction } from "../../interfaces/forms/profile.interfaces";
+import { STORE_PROFILE_FIRST_NAME, STORE_PROFILE_LAST_NAME, STORE_PROFILE_EMAIL, STORE_PROFILE_PASSWORD, STORE_PROFILE_BIRTHDAY, STORE_PROFILE_AT_COMPANY_SINCE, STORE_PROFILE_DESCRIPTION, STORE_PROFILE_CONTACT_LINK, PROFILE } from "../../actions/forms/profile/profile.types";
+import { IProfileFirstName, IStoreProfileFirstNameAction, IProfileLastName, IStoreProfileLastNameAction, IProfileEmail, IStoreProfileEmailAction, IProfilePassword, IStoreProfilePasswordAction, IProfileBirthday, IStoreProfileBirthdayAction, IProfileAtCompanySince, IStoreProfileAtCompanySinceAction, IProfileDescription, IStoreProfileDescriptionAction, IProfileContactLink, IStoreProfileContactLinkAction, IEditProfileModal, IToggleEditProfileModalAction, IStoreProfileAction, IProfile } from "../../interfaces/forms/profile.interfaces";
 
 export const storeProfileFirstNameReducer = (
   state: IProfileFirstName = { firstName: '', isValid: false, errorMessage: '' },
@@ -125,6 +125,48 @@ export const storeProfileContactLinkReducer = (
         contactLink: action.payload.contactLink,
         isValid: action.payload.isValid,
         errorMessage: action.payload.errorMessage,
+      };
+    default:
+      return state;
+  }
+};
+
+const currentUser = localStorage['current_user'] ? JSON.parse(localStorage['current_user']) : {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  birthday: '',
+  memberSince: '',
+  description: '',
+  contactLink: ''
+};
+
+export const storeProfileReducer = (
+  state: IProfile = {
+    firstName: { firstName: currentUser ? currentUser.firstName : '', isValid: true, errorMessage: '' },
+    lastName: { lastName: currentUser ? currentUser.lastName : '', isValid: true, errorMessage: '' },
+    email: { email: currentUser ? currentUser.email : '', isValid: true, errorMessage: '' },
+    password: { password: '', isValid: true, errorMessage: '' },
+    birthday: { birthday: currentUser ? currentUser.birthday || '' : '', isValid: true, errorMessage: '' },
+    atCompanySince: { atCompanySince: currentUser ? currentUser.memberSince || '' : '', isValid: true, errorMessage: '' },
+    description: { description: currentUser ? currentUser.description || '' : '', isValid: true, errorMessage: '' },
+    contactLink: { contactLink: '', isValid: true, errorMessage: '' }
+  },
+  action: IStoreProfileAction
+) => {
+  switch (action.type) {
+    case PROFILE:
+      return {
+        ...state,
+        firstName: action.payload.firstName,
+        lastName: action.payload.lastName,
+        email: action.payload.email,
+        password: action.payload.password,
+        birthday: action.payload.birthday,
+        atCompanySince: action.payload.atCompanySince,
+        description: action.payload.description,
+        contactLink: action.payload.contactLink,
       };
     default:
       return state;
