@@ -8,12 +8,7 @@ var port = process.env.PORT || 4000;
 const app = express();
 require('dotenv').config({ path: 'variables.env' });
 // Serve static files from the React app
-if (process.env.NODE_ENV !== 'development') {
-  app.use('/', express.static(path.join(__dirname, '/client/build'))); //app.use(express.static('client/build'));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  });
-}
+
 // If url used by user is HTTP, redirect to HTTPS
 if (process.env.NODE_ENV !== 'development') {
   app.use((req, res, next) => {
@@ -55,7 +50,12 @@ router.use('/companytask', jwtMW, require('./src/routes/companyTasks'));
 router.use('/assignedtask', jwtMW, require('./src/routes/assignedTask'));
 // Initialize routes
 app.use('/api', router);
-
+if (process.env.NODE_ENV !== 'development') {
+  app.use('/', express.static(path.join(__dirname, '/client/build'))); //app.use(express.static('client/build'));
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file for prod.
 // if (process.env.NODE_ENV !== 'development') {
