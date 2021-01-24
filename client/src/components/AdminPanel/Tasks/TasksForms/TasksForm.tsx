@@ -25,6 +25,9 @@ import Form from '../../../common/Form/Form';
 import { IField } from '../../../../store/interfaces/forms.interfaces';
 import { setCustomTask } from '../../../../store/actions/tasks/tasks.actions';
 import { ICustomTasks, ITask as IITask } from '../../../../store/interfaces/tasks.interfaces';
+import { IRole } from '../../../../store/interfaces/forms/roles.interfaces';
+import { getRolesResponsibilities } from '../../../../utils/httpRequests';
+import { IOption } from '../../../../store/interfaces/selectOptions.interfaces';
 
 interface TasksFormsProps {
   taskName: ITaskName;
@@ -47,6 +50,7 @@ interface TasksFormsProps {
 
 interface TasksFormsState {
   areFieldsValid: ICheckFields;
+  roles: any[];
 }
 
 class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
@@ -57,6 +61,7 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
       areFieldsValid: {
         areAllFieldsValid: false,
       },
+      roles: [],
     };
   }
 
@@ -180,28 +185,36 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
     this.closeEditTaskModal(event);
   };
 
-  // Fields
-  // TODO: Add dynamic data (options)
-  addTaskModalFields: IField[] = [
-    { name: 'Name', type: 'text', onchange: this.storeName },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription },
-    { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] } },
-    { name: 'Deadline', type: 'text', onchange: this.storeDeadline },
-  ];
-  // TODO: Add dynamic value depending on selected item
-  // TODO: Add dynamic data (options)
-  editTaskModalFields: IField[] = [
-    { name: 'Name', type: 'text', onchange: this.storeName, value: '' },
-    { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: '' },
-    { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: [] }, value: '' },
-    { name: 'Deadline', type: 'text', onchange: this.storeDeadline, value: '' },
-  ];
+  async componentDidMount() {
+    const roles = await getRolesResponsibilities();
+
+    const rolesList: IOption[] = roles.map(role => {
+      return { label: role.role, value: role.id };
+    });
+
+    this.setState({ roles: rolesList });
+  }
 
   render() {
+    // Fields
+    const addTaskModalFields: IField[] = [
+      { name: 'Name', type: 'text', onchange: this.storeName },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription },
+      { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: this.state.roles } },
+      { name: 'Deadline', type: 'text', onchange: this.storeDeadline },
+    ];
+    // TODO: Add dynamic value depending on selected item
+    const editTaskModalFields: IField[] = [
+      { name: 'Name', type: 'text', onchange: this.storeName, value: '' },
+      { name: 'Description', type: 'textarea', onchange: this.storeDescription, value: '' },
+      { name: 'Role', type: 'select', onchange: this.storeRole, options: { list: this.state.roles }, value: '' },
+      { name: 'Deadline', type: 'text', onchange: this.storeDeadline, value: '' },
+    ];
+
     return (
       <>
         <Form
-          fields={this.addTaskModalFields}
+          fields={addTaskModalFields}
           header={'Add a task'}
           submitFunction={this.addTask}
           closeFunction={this.closeAddTaskModal}
@@ -210,7 +223,7 @@ class TasksForms extends React.Component<TasksFormsProps, TasksFormsState> {
         />
 
         <Form
-          fields={this.editTaskModalFields}
+          fields={editTaskModalFields}
           header={'Edit a task'}
           submitFunction={this.editTask}
           closeFunction={this.closeEditTaskModal}
