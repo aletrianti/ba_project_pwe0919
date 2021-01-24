@@ -12,7 +12,6 @@ import {
 } from '../../../store/actions/tasks/tasks.types';
 import { ICustomTasks, ITask } from '../../../store/interfaces/tasks.interfaces';
 import { connect } from 'react-redux';
-import { getUserInfoFromLocalStorage } from '../../../utils/localStorageActions';
 
 interface TasksProps {
   tasks?: ITask[];
@@ -39,7 +38,7 @@ class Tasks extends React.Component<TasksProps> {
 
   render() {
     const { tasks, taskFive } = this.props;
-    const currentUser = getUserInfoFromLocalStorage;
+    const currentUser = JSON.parse(localStorage['current_user']);
 
     return (
       <div id="dashboard__tasks">

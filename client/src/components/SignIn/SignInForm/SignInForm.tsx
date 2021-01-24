@@ -113,6 +113,8 @@ class SignInForm extends React.Component<RouteComponentProps, SignInFormState> {
 
     await this.dispatchSignInAction();
     await this.signInRequest();
+
+    localStorage['hasJustSignedIn'] = true;
   };
 
   render() {

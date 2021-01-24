@@ -6,9 +6,6 @@ import Profile from './Profile/Profile';
 
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-// localStorage
-import { getUserInfoFromLocalStorage } from '../../../utils/localStorageActions';
-
 interface TopBarProps {
   sectionName: string;
 }
@@ -33,16 +30,9 @@ class TopBar extends React.Component<RouteComponentProps & TopBarProps, TopBarSt
   render() {
     const { sectionName } = this.props;
     const { isOpen } = this.state;
-    const {
-      firstName,
-      lastName,
-      jobTitle,
-      department,
-      birthday,
-      memberSince,
-      description,
-      isAvailable,
-    } = getUserInfoFromLocalStorage;
+    const { firstName, lastName, jobTitle, department, birthday, memberSince, description, isAvailable } = JSON.parse(
+      localStorage['current_user']
+    );
 
     return (
       <div id="topbar">

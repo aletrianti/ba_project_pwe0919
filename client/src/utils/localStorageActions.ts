@@ -2,7 +2,7 @@
 import { AxiosResponse } from 'axios';
 import { IProfile } from '../store/interfaces/members.interfaces';
 
-export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
+export const storeTokenInLocalStorage = (res: AxiosResponse<any>): void => {
   const user = res.data.user;
   const role = res.data.userRole;
   const department = res.data.userDepartment;
@@ -30,7 +30,7 @@ export const storeTokenInLocalStorage = (res: AxiosResponse<any>) => {
   // console.log('Stored token.');
 };
 
-export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
+export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>): void => {
   const user = res.data.user;
   const role = res.data.userRole;
   const department = res.data.userDepartment;
@@ -55,16 +55,19 @@ export const updateCurrentUserInLocalStorage = (res: AxiosResponse<any>) => {
   localStorage.setItem('current_user', JSON.stringify(currentUser));
 };
 
-export const removeAllItemsFromLocalStorage = () => {
+export const removeAllItemsFromLocalStorage = (): void => {
   localStorage.clear();
 };
 
-export const getTokenFromLocalStorage: string = localStorage['user_token'];
-
 export const httpRequestsConfig = {
-  headers: { Authorization: `Bearer ${getTokenFromLocalStorage}` },
+  headers: { Authorization: `Bearer ${localStorage['user_token']}` },
 };
 
-export const getUserInfoFromLocalStorage: IProfile = localStorage['current_user'] ? JSON.parse(localStorage['current_user']) : null;
+export const isCurrentUserAnAdmin: boolean = localStorage['current_user'] ? JSON.parse(localStorage['current_user']).isAdmin : false;
 
-export const isCurrentUserAnAdmin: boolean = getUserInfoFromLocalStorage ? getUserInfoFromLocalStorage.isAdmin : false;
+export const reloadPageAfterSignIn = (): void => {
+  if (localStorage['hasJustSignedIn'] === 'true') {
+    localStorage.removeItem('hasJustSignedIn');
+    window.location.reload();
+  }
+};
