@@ -40,6 +40,7 @@ class FAQs extends React.Component<FaqProps, FaqState> {
   async componentDidMount() {
     const faqs = await this.getFaqs();
     const categories = await this.getCategories();
+    if (categories) categories.unshift({ id: 0, title: 'All' });
 
     this.setState({ faqs: faqs });
     this.setState({ categories: categories });

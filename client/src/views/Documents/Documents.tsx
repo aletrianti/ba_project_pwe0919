@@ -35,29 +35,33 @@ class Documents extends React.Component<DocumentsProps, DocumentsState> {
   data = [
     {
       id: 1,
-      filename: 'PDF',
+      filename: 'document.pdf',
       created: '10-03-19',
     },
     {
       id: 2,
-      filename: 'PNG',
+      filename: 'image.png',
       created: '09-06-20',
     },
   ];
 
   async componentDidMount() {
     const categories = await this.getCategories();
+    if (categories) categories.unshift({ id: 0, title: 'All' });
 
     this.setState({ categories: categories });
 
-    if (categories)
-      categories.map(category => {
+    if (categories) {
+      const filteredCategories = categories.filter(c => c.title !== 'All');
+
+      filteredCategories.map(category => {
         return this.setState(state => {
           return {
             content: [...state.content, { category: category, data: this.data }],
           };
         });
       });
+    }
   }
 
   sections = [{ name: 'Files', pathname: 'documents' }];

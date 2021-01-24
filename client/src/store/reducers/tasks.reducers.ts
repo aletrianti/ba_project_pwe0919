@@ -122,7 +122,31 @@ export const storeTaskFourReducer = (
   }
 };
 
-export const storeTaskFiveReducer = (state: ICustomTasks = { customTasks: [] }, action: ISetCustomTask) => {
+const customTasks: ITask[] = [
+  {
+    num: 5, 
+    name: 'Find a bug', 
+    deadline: 'within 2 days', 
+    description: 'This is your chance to get to know our codebase...',
+    isCompleted: false, assignedTo: '', role: 'FrontEnd Dev'
+  },
+  {
+    num: 5, 
+    name: 'Solve a coding challenge', 
+    deadline: 'within 2 days', 
+    description: 'This is your chance to get to know our codebase...',
+    isCompleted: false, assignedTo: '', role: 'BackEnd Dev'
+  },
+  {
+    num: 5, 
+    name: 'Check out our website', 
+    deadline: 'within 2 days', 
+    description: 'Find as many problems as you can...',
+    isCompleted: false, assignedTo: '', role: 'SEO Expert'
+  }
+];
+
+export const storeTaskFiveReducer = (state: ICustomTasks = { customTasks }, action: ISetCustomTask) => {
   switch (action.type) {
     case SET_TASK_FIVE:
       return {
