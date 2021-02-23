@@ -3,6 +3,7 @@ import React, { MouseEvent } from 'react';
 import Button from '../../common/Button/Button';
 
 interface SignUpFormButtonProps {
+  isFirstStep?: boolean;
   isFinalStep?: boolean;
   areFieldsValid?: boolean;
 }
@@ -15,11 +16,12 @@ class SignUpFormButtons extends React.Component<SignUpFormButtonProps> {
   };
 
   render() {
-    const { isFinalStep, areFieldsValid } = this.props;
+    const { isFirstStep, isFinalStep, areFieldsValid } = this.props;
 
     return (
       <div className="sign-up__form__btns">
-        <Button btnText={'Back'} isRegular={true} isBackFormBtn={true} isConfirmBtn={false} />
+        {!isFirstStep ? <Button btnText={'Back'} isRegular={true} isBackFormBtn={true} isConfirmBtn={false} /> : <div></div>}
+
         {isFinalStep ? (
           <div onClick={(e: MouseEvent) => this.setLocalStorageItem(e)}>
             <Button btnText={'Confirm'} isLink={true} link={'/dashboard'} isRegular={false} isConfirmBtn={false} />

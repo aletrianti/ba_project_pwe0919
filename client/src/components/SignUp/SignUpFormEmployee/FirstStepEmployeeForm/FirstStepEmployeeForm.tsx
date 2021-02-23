@@ -60,7 +60,7 @@ class FirstStepEmployeeForm extends React.Component<RouteComponentProps, FirstSt
 
         <span className="required-field__span">* required field</span>
 
-        <SignUpFormButtons areFieldsValid={this.state.areAllFieldsValid} />
+        <SignUpFormButtons isFirstStep={true} areFieldsValid={this.state.areAllFieldsValid} />
 
         <SignUpProgressCircles currentStep={1} signUpMode={'employee'} totalSteps={3} />
       </form>
